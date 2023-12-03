@@ -5,7 +5,7 @@
 }
 
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'JetBrains Mono', sans-serif;
     color: var(--ctp-mocha-text);
     background: var(--ctp-frappe-base);
 }
