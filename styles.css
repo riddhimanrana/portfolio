@@ -22,7 +22,7 @@ header {
     border-radius: 50%;
     width: 150px;
     height: 150px;
-    /*animation: profileAnimation 1s ease-in-out forwards;*/
+    animation: profileAnimation 1s ease-in-out forwards;
     box-shadow: 0 0 20px rgb(138, 173, 244);
 }
 
@@ -75,16 +75,28 @@ section {
 .btn:hover {
     background-color: var(--ctp-mocha-text);
 }
-/*
+
 @keyframes profileAnimation {
     0% {
-        width: 150px;
-        height: 150px;
-    }
-    100% {
         width: 130px;
         height: 130px;
     }
+    100% {
+        width: 150px;
+        height: 150px;
+    }
 }
-*/
 
+
+#cursor {
+    border-right: 2px solid;
+    width: 0;
+    height: 1em;
+    display: inline-block;
+    margin-left: 2px;
+    animation: blink 0.3s infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
