@@ -8,13 +8,13 @@
 body {
     font-family: 'JetBrains Mono', sans-serif;
     color: var(--ctp-mocha-text);
-    background: var(--ctp-frappe-base);
+    background: var(--ctp-mocha-base);
 }
 
 header {
     text-align: center;
     padding: 40px 0;
-    background-color: var(--ctp-frappe-base);
+    background-color: var(--ctp-mocha-base);
     color: var(--ctp-mocha-text);
 }
 
@@ -30,14 +30,24 @@ nav ul {
     list-style: none;
     display: flex;
     justify-content: center;
-    background-color: var(--ctp-frappe-base);
+    background-color: var(--ctp-mocha-surface0);
     padding: 10px 0;
+    transition: ease-in-out 0.3s;
+}
+
+nav ul:hover {
+    background-color: var(--ctp-mocha-surface1);
 }
 
 nav a {
     text-decoration: none;
     padding: 10px 20px;
     color: var(--ctp-mocha-text);
+    transition: ease-in-out 0.3s;
+}
+
+nav a:hover {
+    color: var(--ctp-mocha-mauve);
 }
 
 section {
@@ -56,14 +66,14 @@ section {
     display: inline-block;
     padding: 10px 20px;
     background-color: var(--ctp-mocha-text);
-    color: var(--ctp-frappe-base);
+    color: var(--ctp-mocha-base);
     text-decoration: none;
     margin-top: 10px;
     border-radius: 5px;
 }
 
 .btn:hover {
-    background-color: var(--ctp-frappe-text);
+    background-color: var(--ctp-mocha-text);
 }
 /*
 @keyframes profileAnimation {
