@@ -107,3 +107,9 @@ section {
 .title-text {
     height: 1em;
 }
+#status-container {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
