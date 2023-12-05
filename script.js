@@ -61,17 +61,20 @@ const discordCard = document.getElementById('discord-status');
 fetch('https://api.lanyard.rest/v1/users/870936028108705803')
   .then(response => response.json())
   .then(data => {
-    const status = data.data.discord_status;
-    discordCard.textContent = status;
-    console.log(status);
-  });
+    if (data.success) {
+      const username = data.data.discord_user.username;
+      const avatarURL = data.data.discord_user.avatar;
+      const currentActivity = data.data.activities[1].name;
 
-setInterval(() => {
-  fetch('https://api.lanyard.rest/v1/users/870936028108705803')
-    .then(response => response.json())
-    .then(data => {
-      const status = data.data.discord_status;
-      discordCard.textContent = status;
-      console.log(status);
-    });
-}, 5000); // Update the status every 5 seconds
+      const avatarImage = new Image();
+      avatarImage.src = `https://cdn.discordapp.com/avatars/${data.data.discord_user.id}/${avatarURL}`;
+      avatarImage.alt = `${username}'s Discord avatar`;
+
+      discordCard.textContent = `${username} - ${currentActivity} - `;
+      discordCard.appendChild(avatarImage);
+
+      console.log(username, avatarURL, currentActivity);
+    } else {
+      console.error('Error fetching Discord status:', data.error);
+    }
+  });
