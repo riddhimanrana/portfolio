@@ -107,9 +107,22 @@ section {
 .title-text {
     height: 1em;
 }
-#status-container {
+.discord-card {
+    width: 300px;
+    height: 200px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    padding: 20px;
+  }
+  
+  .discord-card h2 {
+    margin-bottom: 10px;
     font-size: 24px;
-    font-weight: bold;
-    text-align: center;
+  }
+  
+  .discord-card p {
+    margin-bottom: 0;
+    font-size: 16px;
   }
   

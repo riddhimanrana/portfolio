@@ -56,28 +56,22 @@ function typeWriter() {
 
 typeWriter(); // start the typewriter
 
-const statusContainer = document.getElementById('status-container');
+const discordCard = document.getElementById('discord-status');
 
 fetch('https://api.lanyard.rest/v1/users/870936028108705803')
   .then(response => response.json())
   .then(data => {
-    if (data.success) {
-      const status = data.data.discord_status;
-      statusContainer.textContent = status;
-    } else {
-      console.error('Error fetching Discord status:', data.error);
-    }
+    const status = data.data.discord_status;
+    discordCard.textContent = status;
+    console.log(status);
   });
 
 setInterval(() => {
   fetch('https://api.lanyard.rest/v1/users/870936028108705803')
     .then(response => response.json())
     .then(data => {
-      if (data.success) {
-        const status = data.data.discord_status;
-        statusContainer.textContent = status;
-      } else {
-        console.error('Error fetching Discord status:', data.error);
-      }
+      const status = data.data.discord_status;
+      discordCard.textContent = status;
+      console.log(status);
     });
 }, 5000); // Update the status every 5 seconds
