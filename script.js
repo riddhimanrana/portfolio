@@ -23,30 +23,35 @@ function updateActiveLink() {
 // Call the function to update the active link when the page loads
 updateActiveLink();
 
-const words = ["Full Stack Developer", "An amazing person", "Compassionate"];
-        let wordIndex = 0;
-        let isDeleting = false;
-        let text = "";
+const words = ["Full Stack Developer", "Python Master", "Front-End Web Dev", "NextJS Web Dev", "Backend Developer"];
+let wordIndex = 0;
+let isDeleting = false;
+let text = "";
+let typingSpeed = 160;
+let pauseTime = 1000; // pause time in milliseconds
 
-        function typeWriter() {
-            const current = words[wordIndex];
-            const endOfWord = text.length === current.length;
-            const deletedAll = text.length === 0;
+function typeWriter() {
+    const current = words[wordIndex];
+    const endOfWord = text.length === current.length;
+    const deletedAll = text.length === 0;
 
-            if (endOfWord && !isDeleting) {
-                isDeleting = true;
-            } else if (deletedAll && isDeleting) {
-                isDeleting = false;
-                wordIndex = (wordIndex + 1) % words.length;
-            }
-
-            if (isDeleting) {
-                text = current.substring(0, text.length - 1);
-            } else {
-                text = current.substring(0, text.length + 1);
-            }
-
-            document.getElementById('text').innerText = text;
+    if (endOfWord && !isDeleting) {
+        isDeleting = true;
+        setTimeout(typeWriter, pauseTime); // pause at the end of the word
+    } else if (deletedAll && isDeleting) {
+        isDeleting = false;
+        wordIndex = (wordIndex + 1) % words.length;
+        setTimeout(typeWriter, pauseTime); // pause at the beginning of the word
+    } else {
+        if (isDeleting) {
+            text = current.substring(0, text.length - 1);
+        } else {
+            text = current.substring(0, text.length + 1);
         }
 
-        setInterval(typeWriter, 200);
+        document.getElementById('title-text').innerText = text;
+        setTimeout(typeWriter, typingSpeed);
+    }
+}
+
+typeWriter(); // start the typewriter
