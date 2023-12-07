@@ -80,3 +80,11 @@ fetch('https://api.lanyard.rest/v1/users/870936028108705803')
       console.error('Error fetching Discord status:', data.error);
     }
   });
+
+  function openModal() {
+    document.getElementById("discModal").style.display = "block";
+  }
+  
+  document.getElementsByClassName("close")[0].onclick = function() {
+    document.getElementById("discModal").style.display = "none";
+  }

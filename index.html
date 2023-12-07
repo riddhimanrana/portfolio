@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://unpkg.com/@catppuccin/palette/css/catppuccin.css">
+    <script src="https://kit.fontawesome.com/3e19042953.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -14,9 +15,20 @@
     <nav>
         <ul>
             <li><a href="index.html" class="nav-link">Home</a></li>
-<li><a href="projects.html" class="nav-link">Projects</a></li>
-<li><a href="contact.html" class="nav-link">Contact</a></li>
+            <li><a href="projects.html" class="nav-link">Projects</a></li>
+            <li><a href="contact.html" class="nav-link">Contact</a></li>
         </ul>
+        <div class="icons">
+            <a href="https://github.com/rrcoder0167" class="fa-brands fa-github"></a>
+            <a class="fa-brands fa-discord" onclick="openModal(); return false;"></a>
+            <div id="discModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p>@rrplayzlife</p>
+            </div>
+            </div>
+            <!-- Add more icons here -->
+        </div>
     </nav>
 
     <header>
