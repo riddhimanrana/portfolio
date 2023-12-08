@@ -84,7 +84,7 @@ fetch("https://api.lanyard.rest/v1/users/870936028108705803")
       userInfo.textContent = `${username} - ${currentActivity}`;
 
       const discStatus = document.getElementById("discStatus-dot");
-      discStatus.style.backgroundColor = "red";
+      discStatus.style.backgroundColor = "#fff";
 
       console.log(username, avatarURL, currentActivity);
     } else {

@@ -178,7 +178,6 @@ section {
   height: 10px;
   border-radius: 50%;
   display: inline-block;
-  background-color: var(--ctp-mocha-green);
   position: absolute;
   right: 7px;
   bottom: 4px;
