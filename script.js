@@ -83,6 +83,9 @@ fetch("https://api.lanyard.rest/v1/users/870936028108705803")
       const userInfo = document.getElementById("userInfo");
       userInfo.textContent = `${username} - ${currentActivity}`;
 
+      const discStatus = document.getElementById("discStatus-dot");
+      discStatus.style.backgroundColor = "red";
+
       console.log(username, avatarURL, currentActivity);
     } else {
       console.error("Error fetching Discord status:", data.error);

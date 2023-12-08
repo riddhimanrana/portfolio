@@ -177,8 +177,8 @@ section {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background-color: var(--ctp-mocha-green);
   display: inline-block;
+  background-color: var(--ctp-mocha-green);
   position: absolute;
   right: 7px;
   bottom: 4px;
