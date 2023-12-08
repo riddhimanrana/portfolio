@@ -75,16 +75,12 @@ fetch("https://api.lanyard.rest/v1/users/870936028108705803")
           ? data.data.activities[0].name
           : "Not doing anything";
 
-      const avatarImage = new Image();
+      const avatarImage = document.getElementById('avatarImage');
       avatarImage.src = `https://cdn.discordapp.com/avatars/${data.data.discord_user.id}/${avatarURL}`;
       avatarImage.alt = `${username}'s Discord avatar`;
 
-      discordCard.textContent = ""; // Clear the existing content
-      discordCard.appendChild(avatarImage);
-      discordCard.appendChild(document.createElement("br")); // Add a line break
-      discordCard.appendChild(
-        document.createTextNode(`${username} - ${currentActivity}`),
-      );
+      const userInfo = document.getElementById('userInfo');
+      userInfo.textContent = `${username} - ${currentActivity}`;
 
       console.log(username, avatarURL, currentActivity);
     } else {

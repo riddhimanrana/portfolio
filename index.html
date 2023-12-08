@@ -14,11 +14,17 @@
 <body>
     <nav>
         <div>
-            <a onclick="openModal(); return false;" classname="discModal">rrcoder0167</a>
-                <div id="discModal" classname="discModal-content">
+            <a onclick="openModal(); return false;">rrcoder0167</a>
+            <div id="discModal" class="discModal">
+                <div class="discModal-content">
                     <span class="close">&times;</span>
-                    <p @rrplayzlife>
+                    <div id="discordCard">
+                        <img id="avatarImage" alt="Discord avatar">
+                        <br>
+                        <span id="userInfo"></span>
+                    </div>
                 </div>
+            </div>
         </div>
         <ul>
             <li><a href="index.html" class="nav-link">Home</a></li>
@@ -28,6 +34,12 @@
         <div class="icons">
             <a href="https://github.com/rrcoder0167" class="fa-brands fa-github"></a>
             <a class="fa-brands fa-discord" onclick="openModal(); return false;"></a>
+            <div id="discModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p>@rrplayzlife</p>
+            </div>
+            </div>
             <!-- Add more icons here -->
         </div>
     </nav>

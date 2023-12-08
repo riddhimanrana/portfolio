@@ -194,14 +194,3 @@ section {
   height: 15%;
   border-radius: 10px;
 }
-
-.discModal h2 {
-  margin-bottom: 10px;
-  font-size: 24px;
-  color: var(--ctp-mocha-text); /* Catpuccin Mocha - Primary */
-}
-
-.discModal p {
-  margin-bottom: 0;
-  font-size: 16px;
-}
