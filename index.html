@@ -14,12 +14,18 @@
 <body>
     <nav>
         <div>
-            <a onclick="openModal(); return false;">rrcoder0167</a>
+            <div class="discStatus">
+                <div class="user-avatar">
+                    <img class="discAvatar" id="avatarImage" alt="Discord avatar" />
+                    <span class="discStatus-dot"></span>
+                </div>
+                <a onclick="openModal(); return false;">rrcoder0167</a>
+            </div>
             <div id="discModal" class="discModal">
                 <div class="discModal-content">
                     <span class="close">&times;</span>
                     <div id="discordCard">
-                        <img id="avatarImage" alt="Discord avatar">
+                        
                         <br>
                         <span id="userInfo"></span>
                     </div>

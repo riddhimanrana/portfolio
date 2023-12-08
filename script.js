@@ -69,17 +69,18 @@ fetch("https://api.lanyard.rest/v1/users/870936028108705803")
   .then((data) => {
     if (data.success) {
       const avatarURL = data.data.discord_user.avatar;
+      const discordStatus = data.data.discord_status; // online, idle, dnd, offline
       const username = data.data.discord_user.username;
       const currentActivity =
         data.data.activities.length > 0
           ? data.data.activities[0].name
           : "Not doing anything";
 
-      const avatarImage = document.getElementById('avatarImage');
-      avatarImage.src = `https://cdn.discordapp.com/avatars/${data.data.discord_user.id}/${avatarURL}`;
+      const avatarImage = document.getElementById("avatarImage");
+      avatarImage.src = "https://avatars.githubusercontent.com/u/106852975?v=4"; //`https://cdn.discordapp.com/avatars/${data.data.discord_user.id}/${avatarURL}`;
       avatarImage.alt = `${username}'s Discord avatar`;
 
-      const userInfo = document.getElementById('userInfo');
+      const userInfo = document.getElementById("userInfo");
       userInfo.textContent = `${username} - ${currentActivity}`;
 
       console.log(username, avatarURL, currentActivity);
