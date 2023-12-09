@@ -69,7 +69,7 @@ fetch("https://api.lanyard.rest/v1/users/870936028108705803")
   .then((data) => {
     if (data.success) {
       const avatarURL = data.data.discord_user.avatar;
-      const discordStatus = data.data.discord_status; // online, idle, dnd, offline
+      const discordOnline = data.data.discord_status; // online, idle, dnd, offline
       const username = data.data.discord_user.username;
       const currentActivity =
         data.data.activities.length > 0
@@ -84,7 +84,17 @@ fetch("https://api.lanyard.rest/v1/users/870936028108705803")
       userInfo.textContent = `${username} - ${currentActivity}`;
 
       const discStatus = document.getElementById("discStatus-dot");
-      discStatus.style.backgroundColor = "#fff";
+      if (discordOnline === "offline") {
+        discStatus.style.backgroundColor = "var(--ctp-mocha-subtext1)";
+      } else if (discordOnline === "idle") {
+        discStatus.style.backgroundColor = "var(--ctp-mocha-yellow)";
+      } else if (discordOnline === "dnd") {
+        discStatus.style.backgroundColor = "var(--ctp-mocha-red)";
+      } else if (discordOnline === "online") {
+        discStatus.style.backgroundColor = "var(--ctp-mocha-green)";
+      } else {
+        discStatus.style.backgroundColor = "var(--ctp-mocha-red)";
+      }
 
       console.log(username, avatarURL, currentActivity);
     } else {
