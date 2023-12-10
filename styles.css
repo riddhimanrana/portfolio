@@ -44,6 +44,11 @@ nav:hover {
   background-color: var(--ctp-mocha-surface1);
 }
 
+nav:hover .discStatus-dot {
+  transition: ease-in-out 0.3s;
+  border-color: var(--ctp-mocha-surface1);
+}
+
 .nav-link {
   text-decoration: none;
   padding: 0 15px;
@@ -179,14 +184,54 @@ section {
   height: 15px;
   border-radius: 50%;
   display: inline-block;
-  position: absolute;
-  right: 5px;
-  bottom: 2px;
+  z-index: 1;
+  position: relative;
+  right: 10px;
+  top: 11px;
 }
 
 .user-avatar {
+  /* Existing styles */
+  cursor: pointer;
   position: relative;
+  border-radius: 50%;
+  width: 33px;
+  height: 33px;
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
 }
+
+@keyframes shine {
+  0% {
+    left: -50%;
+  }
+  100% {
+    left: 150%;
+  }
+}
+
+.user-avatar:hover {
+
+  transform: scale(1.1);
+  /* Add animation container */
+  &::after {
+    content: "";
+    background: linear-gradient(
+      to right,
+      #fff 0%,
+      rgba(255, 255, 255, 0.7) 100%
+    );
+    position: absolute;
+    top: 0;
+    left: -50%;
+    width: 100%;
+    height: 100%;
+    transform: skewX(-25deg);
+    animation: shine 0.85s infinite;
+    z-index: 1;
+  }
+}
+
 
 .discStatus {
   display: flex;
