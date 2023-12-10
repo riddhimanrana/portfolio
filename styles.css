@@ -178,6 +178,7 @@ section {
   margin-right: 7px;
 }
 
+
 .discStatus-dot {
   width: 15px;
   border: 3px solid var(--ctp-mocha-surface0);
@@ -198,7 +199,6 @@ section {
   width: 33px;
   height: 33px;
   overflow: hidden;
-  transition: transform 0.3s ease-in-out;
 }
 
 @keyframes shine {
@@ -211,8 +211,6 @@ section {
 }
 
 .user-avatar:hover {
-
-  transform: scale(1.1);
   /* Add animation container */
   &::after {
     content: "";
@@ -236,7 +234,12 @@ section {
 .discStatus {
   display: flex;
   align-items: center;
+  transition: transform ease-in-out 0.3s;
   justify-content: center;
+}
+
+.discStatus:hover {
+  transform: scale(1.1);
 }
 
 .discModal {
@@ -244,12 +247,11 @@ section {
   position: fixed;
   z-index: 1;
   color: var(--ctp-mocha-text);
-  left: 0;
-  top: 0;
   width: 100%;
   height: 100%;
+  right: 37%;
+  bottom: 17%;
   overflow: auto;
-  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .discModal-content {
@@ -259,4 +261,12 @@ section {
   width: 25%;
   height: 15%;
   border-radius: 10px;
+}
+
+.discModal-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 7px;
 }

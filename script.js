@@ -77,8 +77,8 @@ fetch("https://api.lanyard.rest/v1/users/870936028108705803")
           : "Not doing anything";
 
       const avatarImage = document.getElementById("avatarImage");
-      avatarImage.src = "https://avatars.githubusercontent.com/u/106852975?v=4"; //`https://cdn.discordapp.com/avatars/${data.data.discord_user.id}/${avatarURL}`;
-      avatarImage.alt = `${username}'s Discord avatar`;
+      avatarImage.src = `https://cdn.discordapp.com/avatars/${data.data.discord_user.id}/${avatarURL}`;
+      avatarImage.alt = `Discord avatar`;
 
       const userInfo = document.getElementById("userInfo");
       userInfo.textContent = `${username} - ${currentActivity}`;
