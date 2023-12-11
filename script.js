@@ -80,6 +80,12 @@ fetch("https://api.lanyard.rest/v1/users/870936028108705803")
       avatarImage.src = `https://cdn.discordapp.com/avatars/${data.data.discord_user.id}/${avatarURL}`;
       avatarImage.alt = `Discord avatar`;
 
+      const avatarImageBig = document.getElementById("avatarImage-big");
+      avatarImageBig.src = `https://cdn.discordapp.com/avatars/${data.data.discord_user.id}/${avatarURL}`;
+      avatarImageBig.alt = `Discord avatar`;
+
+      const usernameText = document.getElementById("username");
+      usernameText.textContent = username;
       const userInfo = document.getElementById("userInfo");
       userInfo.textContent = `${username} - ${currentActivity}`;
 

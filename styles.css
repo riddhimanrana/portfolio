@@ -264,9 +264,16 @@ section {
 }
 
 .discModal-avatar {
-  width: 100px;
-  height: 100px;
+  width: 75px;
+  height: 75px;
   border-radius: 50%;
   object-fit: cover;
   margin-right: 7px;
+}
+
+.discordCard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform ease-in-out 0.3s;
 }
