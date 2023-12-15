@@ -63,9 +63,33 @@ header {
   border-radius: 50%;
   width: 150px;
   height: 150px;
-  animation: profileAnimation 1s ease-in-out forwards;
+  animation: profileAnimation 1s ease-in-out forwards, profileShadow 3s ease-in-out infinite;
   box-shadow: 0 0 20px rgb(138, 173, 244);
 }
+
+@keyframes profileAnimation {
+  0% {
+    width: 130px;
+    height: 130px;
+  }
+  100% {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+@keyframes profileShadow {
+  0% {
+    box-shadow: 0 0 20px rgb(138, 173, 244);
+  }
+  50% {
+    box-shadow: 0 0 25px rgb(158, 193, 255);
+  }
+  100% {
+    box-shadow: 0 0 20px rgb(138, 173, 244);
+  }
+}
+
 
 nav {
   background-color: var(--ctp-mocha-surface0);
@@ -184,17 +208,6 @@ nav a:hover {
 
 .btn:hover {
   background-color: var(--ctp-mocha-text);
-}
-
-@keyframes profileAnimation {
-  0% {
-    width: 130px;
-    height: 130px;
-  }
-  100% {
-    width: 150px;
-    height: 150px;
-  }
 }
 
 #cursor {
