@@ -24,6 +24,15 @@ h3 {
   font-size: 1.3em;
 }
 
+button {
+  border-radius: 7px;
+  background: var(--ctp-mocha-green);
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
 section {
   opacity: 0;
   transform: translateY(20px);
