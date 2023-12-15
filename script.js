@@ -1,4 +1,4 @@
-// Add this JavaScript file to your project folder and link it in your HTML files.
+
 
 // Function to determine the current page URL
 function getCurrentPageUrl() {

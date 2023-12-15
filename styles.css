@@ -6,10 +6,51 @@
 }
 
 body {
-  font-family: "JetBrains Mono", sans-serif;
+  font-family: "Rubik", sans-serif;
   color: var(--ctp-mocha-text);
   background: var(--ctp-mocha-base);
 }
+
+h1 {
+  font-weight: 500;
+  font-size: 2.1em;
+}
+h2 {
+  font-weight: 500;
+  font-size: 1.7em;
+}
+h3 {
+  font-weight: 500;
+  font-size: 1.3em;
+}
+
+section {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  /* Your existing styles */
+  padding: 20px;
+  background-color: var(--ctp-mocha-surface0);
+  margin: 0 auto;
+  margin-bottom: 50px;
+  width: 80%;
+  border-radius: 10px;
+  box-shadow: 0 0 20px var(--ctp-mocha-surface0);
+  animation: fadeIn 1s ease-in-out forwards;
+}
+
+/* Apply styles when the section becomes visible */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 
 header {
   text-align: center;
@@ -31,13 +72,14 @@ nav {
   transition: ease-in-out 0.3s;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  font-family: "JetBrains Mono", monospace;
   padding: 10px 20px;
 }
 
 nav ul {
   list-style: none;
   display: flex;
+  margin: 0 auto;
 }
 
 nav:hover {
@@ -71,6 +113,16 @@ nav a:hover {
   padding: 0 5px;
   color: var(--ctp-mocha-text);
   transition: ease-in-out 0.3s;
+}
+
+.user-avatar {
+  /* Existing styles */
+  cursor: pointer;
+  position: relative;
+  border-radius: 50%;
+  width: 33px;
+  height: 33px;
+  overflow: hidden;
 }
 
 .modal {
@@ -110,10 +162,6 @@ nav a:hover {
   color: var(--ctp-mocha-subtext0);
   text-decoration: none;
   cursor: pointer;
-}
-
-section {
-  padding: 40px;
 }
 
 .project {
@@ -191,16 +239,6 @@ section {
   top: 11px;
 }
 
-.user-avatar {
-  /* Existing styles */
-  cursor: pointer;
-  position: relative;
-  border-radius: 50%;
-  width: 33px;
-  height: 33px;
-  overflow: hidden;
-}
-
 @keyframes shine {
   0% {
     left: -50%;
@@ -276,4 +314,8 @@ section {
   align-items: center;
   justify-content: center;
   transition: transform ease-in-out 0.3s;
+}
+
+p {
+  line-height: 1.7em;
 }
