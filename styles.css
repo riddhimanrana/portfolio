@@ -103,8 +103,10 @@ header {
 nav {
   background-color: var(--ctp-mocha-surface0);
   transition: ease-in-out 0.3s;
-  display: flex;
   align-items: center;
+  position: relative;
+  text-align: center;
+  overflow: hidden;
   font-family: "JetBrains Mono", monospace;
   padding: 10px 20px;
 }
@@ -124,11 +126,33 @@ nav:hover .discStatus-dot {
   border-color: var(--ctp-mocha-surface1);
 }
 
-.nav-link {
+.nav-left {
+  float: left;
+}
+
+.nav-center {
+  float: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  float: right;
+}
+
+
+nav a {
   text-decoration: none;
-  padding: 0 15px;
   color: var(--ctp-mocha-text);
   transition: ease-in-out 0.3s;
+}
+
+.nav-link {
+  padding: 0 15px;
 }
 
 nav a:hover {
@@ -137,15 +161,7 @@ nav a:hover {
 }
 
 .icons {
-  display: flex;
   font-size: 1.5em;
-}
-
-.icons a {
-  text-decoration: none;
-  padding: 0 5px;
-  color: var(--ctp-mocha-text);
-  transition: ease-in-out 0.3s;
 }
 
 .user-avatar {
