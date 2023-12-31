@@ -111,12 +111,6 @@ nav {
   padding: 10px 20px;
 }
 
-nav ul {
-  list-style: none;
-  display: flex;
-  margin: 0 auto;
-}
-
 nav:hover {
   background-color: var(--ctp-mocha-surface1);
 }
@@ -126,9 +120,21 @@ nav:hover .discStatus-dot {
   border-color: var(--ctp-mocha-surface1);
 }
 
+nav a {
+  text-decoration: none;
+  color: var(--ctp-mocha-text);
+  transition: ease-in-out 0.3s;
+}
+
+nav a:hover {
+  cursor: pointer;
+  color: var(--ctp-mocha-blue);
+}
+
 .nav-left {
   float: left;
 }
+
 
 .nav-center {
   float: none;
@@ -136,28 +142,19 @@ nav:hover .discStatus-dot {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  display: flex;
+  margin: 0 auto;
 }
+
+.nav-center a {
+  padding: 0 15px;
+}
+
 
 .nav-right {
   display: flex;
   align-items: center;
   float: right;
-}
-
-
-nav a {
-  text-decoration: none;
-  color: var(--ctp-mocha-text);
-  transition: ease-in-out 0.3s;
-}
-
-.nav-link {
-  padding: 0 15px;
-}
-
-nav a:hover {
-  cursor: pointer;
-  color: var(--ctp-mocha-mauve);
 }
 
 .icons {
@@ -219,20 +216,6 @@ nav a:hover {
   width: 500px;
   margin: 20px 0;
   border-radius: 6px;
-}
-
-.btn {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: var(--ctp-mocha-text);
-  color: var(--ctp-mocha-base);
-  text-decoration: none;
-  margin-top: 10px;
-  border-radius: 5px;
-}
-
-.btn:hover {
-  background-color: var(--ctp-mocha-text);
 }
 
 #cursor {
