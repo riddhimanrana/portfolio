@@ -2,3 +2,4 @@
 .devcontainer
 .codesandbox
 .vscode
+yarn.lock
