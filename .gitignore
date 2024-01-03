@@ -3,3 +3,4 @@
 .codesandbox
 .vscode
 yarn.lock
+.eslintrc.json
