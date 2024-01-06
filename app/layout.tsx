@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { Rubik } from 'next/font/google'
-
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import './globals.css'
 import Navbar from '@/components/Navbar'
 import '@fortawesome/fontawesome-svg-core/styles.css'
