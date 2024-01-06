@@ -99,117 +99,6 @@ header {
   }
 }
 
-
-nav {
-  background-color: var(--ctp-mocha-surface0);
-  transition: ease-in-out 0.3s;
-  align-items: center;
-  position: relative;
-  text-align: center;
-  overflow: hidden;
-  font-family: "JetBrains Mono", monospace;
-  padding: 10px 20px;
-}
-
-nav:hover {
-  background-color: var(--ctp-mocha-surface1);
-}
-
-nav:hover .discStatus-dot {
-  transition: ease-in-out 0.3s;
-  border-color: var(--ctp-mocha-surface1);
-}
-
-nav a {
-  text-decoration: none;
-  color: var(--ctp-mocha-text);
-  transition: ease-in-out 0.3s;
-}
-
-nav a:hover {
-  cursor: pointer;
-  color: var(--ctp-mocha-blue);
-}
-
-.nav-left {
-  float: left;
-}
-
-
-.nav-center {
-  float: none;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  margin: 0 auto;
-}
-
-.nav-center a {
-  padding: 0 15px;
-}
-
-
-.nav-right {
-  display: flex;
-  align-items: center;
-  float: right;
-}
-
-.icons {
-  font-size: 1.5em;
-}
-
-.user-avatar {
-  /* Existing styles */
-  cursor: pointer;
-  position: relative;
-  border-radius: 50%;
-  width: 33px;
-  height: 33px;
-  overflow: hidden;
-}
-
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.3);
-}
-
-.modal p {
-  font-size: 0.7em;
-}
-
-.modal-content {
-  background-color: var(--ctp-mocha-surface0);
-  margin: 15% auto;
-  padding: 20px;
-  width: 25%;
-  height: 15%;
-  border-radius: 10px;
-}
-
-.close {
-  color: var(--ctp-mocha-subtext1);
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: var(--ctp-mocha-subtext0);
-  text-decoration: none;
-  cursor: pointer;
-}
-
 .project {
   border: 2px solid #ddd;
   padding: 20px;
@@ -218,25 +107,20 @@ nav a:hover {
   border-radius: 6px;
 }
 
-#cursor {
-  border-right: 2px solid;
-  display: inline-block;
-  animation: blink 0.6s infinite;
+.profile-title {
+  justify-content: center;
+  display: flex;
+}
+
+.cursor::after {
+  content: "|";
+  animation: blink 0.7s infinite;
 }
 
 @keyframes blink {
   50% {
     opacity: 0;
   }
-}
-
-.profile-title {
-  justify-content: center;
-  display: flex;
-}
-
-.title-text {
-  height: 1em;
 }
 
 .discAvatar {
