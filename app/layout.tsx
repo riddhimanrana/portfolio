@@ -5,6 +5,9 @@ import './globals.css'
 import Navbar from '@/components/Navbar'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 
+// Cloudflare Pages Edge Runtime
+export const runtime = 'edge';
+
 const rubik = Rubik({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
