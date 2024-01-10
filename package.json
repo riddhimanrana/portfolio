@@ -21,6 +21,7 @@
     "react-type-animation": "^3.2.0"
   },
   "devDependencies": {
+    "@catppuccin/tailwindcss": "^0.1.6",
     "@cloudflare/next-on-pages": "^1.8.3",
     "@types/node": "^20",
     "@types/react": "^18",

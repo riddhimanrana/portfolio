@@ -26,14 +26,14 @@ export default function RootLayout({
     <>
       <html lang="en">
         <head>
+          <link
+            rel="stylesheet"
+            href="https://unpkg.com/@catppuccin/palette/css/catppuccin.css"
+          />
           <script
             defer
             data-domain="rrcoder0167.is-a.dev"
             src="https://analytics.is-a.dev/js/script.js"
-          ></script>
-          <link
-            rel="stylesheet"
-            href="https://unpkg.com/@catppuccin/palette/css/catppuccin.css"
           />
         </head>
         <body className={rubik.className}>
