@@ -60,9 +60,7 @@ export default function Home() {
       </section>
 
       <section id="contact">
-        <p className="frappe"> 
-        <h2 className="text-pink">Contact Me</h2>
-        </p>
+        <h2 className="text-blue">Contact Me</h2>
       </section>
     </>
   );
