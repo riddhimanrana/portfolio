@@ -43,7 +43,10 @@ export default function Home() {
         </div>
       </header>
 
-      <section id="about">
+      <section
+        className="opacity-0 translate-y-20 p-20 bg-surface0 "
+        id="about"
+      >
         <h2 className="text-3xl font-medium">Hi!</h2>
         <p>
           I&apos;m Riddhiman Rana, a 13 year-old middle schooler with a life
