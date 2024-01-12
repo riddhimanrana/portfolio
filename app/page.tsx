@@ -15,7 +15,7 @@ export default function Home() {
             />
           </div>
           <div className="profile-details">
-            <h1 className="profile-name">Riddhiman Rana</h1>
+            <h1 className="text-4xl font-medium">Riddhiman Rana</h1>
             <span className="profile-title">
               <TypeAnimation
                 sequence={[
@@ -44,7 +44,7 @@ export default function Home() {
       </header>
 
       <section id="about">
-        <h2>Hi!</h2>
+        <h2 className="text-3xl font-medium">Hi!</h2>
         <p>
           I&apos;m Riddhiman Rana, a 13 year-old middle schooler with a life
           passion for technology. When I was 7, after a long exhausting business
@@ -59,8 +59,8 @@ export default function Home() {
         </p>
       </section>
 
-      <section id="contact">
-        <h2 className="text-blue">Contact Me</h2>
+      <section className="" id="contact">
+        <h2 className="text-3xl font-medium">Contact Me</h2>
       </section>
     </>
   );

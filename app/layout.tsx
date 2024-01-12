@@ -36,7 +36,7 @@ export default function RootLayout({
             src="https://analytics.is-a.dev/js/script.js"
           />
         </head>
-        <body className={rubik.className}>
+        <body className={`mocha text-text bg-base ${rubik.className}`}>
           <Navbar />
           {children}
           <Analytics />
