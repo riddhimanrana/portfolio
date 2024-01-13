@@ -44,7 +44,7 @@ export default function Home() {
       </header>
 
       <section
-        className="opacity-0 translate-y-20 p-20 bg-surface0 "
+        className="bg-surface0 opacity-1 translate-y-20 p-5 mx-auto w-5/6 rounded-lg shadow-2xl shadow-surface2"
         id="about"
       >
         <h2 className="text-3xl font-medium">Hi!</h2>
@@ -62,7 +62,10 @@ export default function Home() {
         </p>
       </section>
 
-      <section className="" id="contact">
+      <section
+        className="bg-surface0 opacity-1 translate-y-20 p-5 mx-auto my-3 w-5/6 rounded-lg shadow-2xl shadow-surface2"
+        id="contact"
+      >
         <h2 className="text-3xl font-medium">Contact Me</h2>
       </section>
     </>
