@@ -5,18 +5,14 @@ import "./page.css";
 export default function Home() {
   return (
     <>
-      <header>
-        <div className="profile-container">
-          <div className="profile">
+      <header className="text-center p-10">
             <img
               src="https://avatars.githubusercontent.com/u/106852975"
               alt="Riddhiman Rana"
-              className="profile-image"
+              className="rounded-full w-40 h-40 mx-auto shadow-3xl shadow-blue animate-profileAnimation"
             />
-          </div>
-          <div className="profile-details">
             <h1 className="text-4xl font-medium">Riddhiman Rana</h1>
-            <span className="profile-title">
+            <span className="flex justify-center">
               <TypeAnimation
                 sequence={[
                   "Full Stack Developer",
@@ -39,12 +35,10 @@ export default function Home() {
                 repeat={Infinity}
               />
             </span>
-          </div>
-        </div>
       </header>
 
       <section
-        className="bg-surface0 opacity-1 translate-y-20 p-5 mx-auto w-5/6 rounded-lg shadow-2xl shadow-surface2"
+        className="bg-surface0 animate-fadeIn p-5 mx-auto w-5/6 rounded-lg mb-14 shadow-3xl shadow-surface2"
         id="about"
       >
         <h2 className="text-3xl font-medium">Hi!</h2>
@@ -63,7 +57,7 @@ export default function Home() {
       </section>
 
       <section
-        className="bg-surface0 opacity-1 translate-y-20 p-5 mx-auto my-3 w-5/6 rounded-lg shadow-2xl shadow-surface2"
+        className="bg-surface0 animate-fadeIn p-5 mx-auto w-5/6 rounded-lg mb-14 shadow-3xl shadow-surface2"
         id="contact"
       >
         <h2 className="text-3xl font-medium">Contact Me</h2>

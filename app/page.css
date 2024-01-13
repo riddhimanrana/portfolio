@@ -37,9 +37,8 @@ section {
   border-radius: 10px;
   box-shadow: 0 0 20px var(--ctp-mocha-surface0);
   animation: fadeIn 1s ease-in-out forwards;
-}*/
+}
 
-/* Apply styles when the section becomes visible */
 @keyframes fadeIn {
   0% {
     opacity: 0;
@@ -79,7 +78,7 @@ header {
     height: 150px;
   }
 }
-
+PROFILE SHADOW
 @keyframes profileShadow {
   0% {
     box-shadow: 0 0 20px rgb(138, 173, 244);
@@ -92,18 +91,10 @@ header {
   }
 }
 
-.project {
-  border: 2px solid #ddd;
-  padding: 20px;
-  width: 500px;
-  margin: 20px 0;
-  border-radius: 6px;
-}
-
 .profile-title {
   justify-content: center;
   display: flex;
-}
+}*/
 
 .cursor::after {
   content: "|";
