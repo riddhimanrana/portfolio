@@ -94,18 +94,7 @@ PROFILE SHADOW
 .profile-title {
   justify-content: center;
   display: flex;
-}*/
 
-.cursor::after {
-  content: "|";
-  animation: blink 0.7s infinite;
-}
-
-@keyframes blink {
-  50% {
-    opacity: 0;
-  }
-}
 
 .discAvatar {
   width: 33px;
@@ -113,6 +102,7 @@ PROFILE SHADOW
   border-radius: 50%;
   object-fit: cover;
   margin-right: 7px;
+}
 }
 
 .discStatus-dot {
@@ -127,35 +117,6 @@ PROFILE SHADOW
   top: 11px;
 }
 
-@keyframes shine {
-  0% {
-    left: -50%;
-  }
-  100% {
-    left: 150%;
-  }
-}
-
-.user-avatar:hover {
-  /* Add animation container */
-  &::after {
-    content: "";
-    background: linear-gradient(
-      to right,
-      #fff 0%,
-      rgba(255, 255, 255, 0.7) 100%
-    );
-    position: absolute;
-    top: 0;
-    left: -50%;
-    width: 100%;
-    height: 100%;
-    transform: skewX(-25deg);
-    animation: shine 0.85s infinite;
-    z-index: 1;
-  }
-}
-
 .discStatus {
   display: flex;
   align-items: center;
@@ -167,42 +128,16 @@ PROFILE SHADOW
   transform: scale(1.1);
 }
 
-.discModal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  color: var(--ctp-mocha-text);
-  width: 100%;
-  height: 100%;
-  right: 37%;
-  bottom: 17%;
-  overflow: auto;
+*/
+
+.cursor::after {
+  content: "|";
+  animation: blink 0.7s infinite;
 }
 
-.discModal-content {
-  background-color: var(--ctp-mocha-surface0);
-  margin: 15% auto;
-  padding: 20px;
-  width: 25%;
-  height: 15%;
-  border-radius: 10px;
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
 }
 
-.discModal-avatar {
-  width: 75px;
-  height: 75px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-right: 7px;
-}
-
-.discordCard {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform ease-in-out 0.3s;
-}
-
-p {
-  line-height: 1.7em;
-}

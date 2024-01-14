@@ -1,4 +1,4 @@
-nav {
+/*nav {
     background-color: var(--ctp-mocha-surface0);
     transition: ease-in-out 0.3s;
     align-items: center;
@@ -73,7 +73,7 @@ nav {
 
   .nav-right a {
     padding: 0 5px;
-  }
+  }*/
   
   .user-avatar {
     /* Existing styles */
@@ -84,7 +84,10 @@ nav {
     height: 33px;
     overflow: hidden;
   }
+
   
+  
+  /* Add animation container 
   .modal {
     display: none;
     position: fixed;
@@ -123,3 +126,72 @@ nav {
     text-decoration: none;
     cursor: pointer;
   }
+  */
+
+
+@keyframes shine {
+  0% {
+    left: -50%;
+  }
+  100% {
+    left: 150%;
+  }
+}
+
+.user-avatar:hover {
+  /* Add animation container */
+  &::after {
+    content: "";
+    background: linear-gradient(
+      to right,
+      #fff 0%,
+      rgba(255, 255, 255, 0.7) 100%
+    );
+    position: absolute;
+    top: 0;
+    left: -50%;
+    width: 100%;
+    height: 100%;
+    transform: skewX(-25deg);
+    animation: shine 0.85s infinite;
+    z-index: 1;
+  }
+}
+
+/* no use right now
+.discModal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  color: var(--ctp-mocha-text);
+  width: 100%;
+  height: 100%;
+  right: 37%;
+  bottom: 17%;
+  overflow: auto;
+}
+
+.discModal-content {
+  background-color: var(--ctp-mocha-surface0);
+  margin: 15% auto;
+  padding: 20px;
+  width: 25%;
+  height: 15%;
+  border-radius: 10px;
+}
+
+.discModal-avatar {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 7px;
+}
+
+.discordCard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform ease-in-out 0.3s;
+}
+*/

@@ -16,7 +16,7 @@ const config: Config = {
        profileAnimation: {
         '0%' : { width: '130px', height: '130px'},
          '100%' : { width: '150px', height: '150px' },
-      }
+      },
     },
       boxShadow: {
         '3xl': '0 0 20px',

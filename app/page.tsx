@@ -42,7 +42,7 @@ export default function Home() {
         id="about"
       >
         <h2 className="text-3xl font-medium">Hi!</h2>
-        <p>
+        <p className="leading-7">
           I&apos;m Riddhiman Rana, a 13 year-old middle schooler with a life
           passion for technology. When I was 7, after a long exhausting business
           trip to London, my dad brought me home a book called &quot;Coding for
