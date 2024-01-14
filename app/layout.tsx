@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import "@fortawesome/fontawesome-svg-core/styles.css";
+import { Providers } from "@/components/providers";
 
 // Cloudflare Pages Edge Runtime
 export const runtime = "edge";
@@ -38,7 +39,7 @@ export default function RootLayout({
         </head>
         <body className={`mocha text-text bg-base ${rubik.className}`}>
           <Navbar />
-          {children}
+          <Providers>{children}</Providers>
           <Analytics />
           <SpeedInsights />
         </body>

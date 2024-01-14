@@ -18,6 +18,7 @@ export default function Navbar() {
             <img className="w-8 h-8 rounded-full object-cover mr-2" id="avatarImage" alt="Discord avatar" src="https://avatars.githubusercontent.com/u/106852975"/>
           </div>
           <span className="bg-green w-5 border-4 border-surface0 h-5 rounded-full inline-block z-10 relative right-3 top-3" id="discStatus-dot"></span>
+          <span className="">rrcoder0167</span>
         </div>
         {/* Modal
         <div id="discModal" className="discModal">
