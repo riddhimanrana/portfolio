@@ -5,7 +5,7 @@ import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import "@fortawesome/fontawesome-svg-core/styles.css";
-import { Providers } from "@/components/providers";
+import { Providers } from "@/components/Providers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 // Cloudflare Pages Edge Runtime
@@ -43,7 +43,7 @@ export default function RootLayout({
           <Providers>{children}</Providers>
           <Analytics />
           <SpeedInsights />
-          <button className="fixed bottom-4 right-4 w-10 h-9 rounded-md bg-surface0 hover:bg-surface1 transition ease-in-out duration-300 text-text text-lg">
+          <button className="fixed bottom-4 right-4 w-10 h-10 rounded-md bg-surface0 hover:bg-surface1 transition ease-in-out duration-300 text-text text-lg">
             <FontAwesomeIcon icon={faSun} />
           </button>
         </body>

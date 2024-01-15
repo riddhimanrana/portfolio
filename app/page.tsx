@@ -1,14 +1,17 @@
 "use client";
 import { TypeAnimation } from "react-type-animation";
 import "./page.css";
+import Image from "next/image";
 
 export default function Home() {
   return (
     <>
       <header className="text-center p-10">
-            <img
-              src="https://avatars.githubusercontent.com/u/106852975"
-              alt="Riddhiman Rana"
+            <Image
+              src="/rrcoder0167_avatar.jpeg"
+              alt="rrcoder0167's avatar"
+              width="256"
+              height="256"
               className="rounded-full w-40 h-40 mx-auto shadow-3xl shadow-blue animate-profileAnimation"
             />
             <h1 className="text-4xl font-medium">Riddhiman Rana</h1>

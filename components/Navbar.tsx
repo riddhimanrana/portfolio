@@ -1,6 +1,7 @@
 import "./Navbar.css"; // CSS file for Navbar
 import { JetBrains_Mono } from "next/font/google";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Image from "next/image"
 import {
   faYoutube,
   faDiscord,
@@ -15,10 +16,9 @@ export default function Navbar() {
       <div className="float-left">
         <div className="flex items-center transition-transform ease-in-out duration-300 justify-center hover:scale-110">
           <div className="user-avatar">
-            <img className="w-8 h-8 rounded-full object-cover mr-2" id="avatarImage" alt="Discord avatar" src="https://avatars.githubusercontent.com/u/106852975"/>
+            <Image className="w-8 h-8 rounded-full object-cover mr-2" width="32" height="32" alt="rrcoder0167's avatar" src="/rrcoder0167_avatar.jpeg"/>
           </div>
           <span className="bg-green w-5 border-4 border-surface0 h-5 rounded-full inline-block z-10 relative right-3 top-3" id="discStatus-dot"></span>
-          <span className="">rrcoder0167</span>
         </div>
         {/* Modal
         <div id="discModal" className="discModal">
