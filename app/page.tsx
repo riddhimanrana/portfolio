@@ -2,6 +2,8 @@
 import { TypeAnimation } from "react-type-animation";
 import "./page.css";
 import Image from "next/image";
+import { JetBrains_Mono } from "next/font/google";
+const jetbrains = JetBrains_Mono({ subsets: ["latin"] });
 
 export default function Home() {
   return (
@@ -14,7 +16,7 @@ export default function Home() {
               height="256"
               className="rounded-full w-40 h-40 mx-auto shadow-3xl shadow-blue animate-profileAnimation"
             />
-            <h1 className="text-4xl font-medium">Riddhiman Rana</h1>
+            <h1 className="text-4xl font-extrabold">Riddhiman Rana</h1>
             <span className="flex justify-center">
               <TypeAnimation
                 sequence={[
@@ -44,7 +46,7 @@ export default function Home() {
         className="bg-surface0 animate-fadeIn p-5 mx-auto w-5/6 rounded-lg mb-14 shadow-3xl shadow-surface2"
         id="about"
       >
-        <h2 className="text-3xl font-medium">Hi!</h2>
+        <h2 className="text-3xl font-bold">Hi!</h2>
         <p className="leading-7">
           I&apos;m Riddhiman Rana, a 13 year-old middle schooler with a life
           passion for technology. When I was 7, after a long exhausting business
@@ -63,7 +65,7 @@ export default function Home() {
         className="bg-surface0 animate-fadeIn p-5 mx-auto w-5/6 rounded-lg mb-14 shadow-3xl shadow-surface2"
         id="contact"
       >
-        <h2 className="text-3xl font-medium">Contact Me</h2>
+        <h2 className="text-3xl font-bold">Contact Me</h2>
       </section>
     </>
   );

@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     darkMode: "class",
+    colors: {
+      
+    },
     extend: {
       keyframes: {
         fadeIn: {

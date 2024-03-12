@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Rubik } from "next/font/google";
+import { Inter } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
@@ -11,7 +11,7 @@ import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 // Cloudflare Pages Edge Runtime
 export const runtime = "edge";
 
-const rubik = Rubik({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Riddhiman Rana - Developer Portfolio",
@@ -35,10 +35,10 @@ export default function RootLayout({
           <script
             defer
             data-domain="rrcoder0167.is-a.dev"
-            src="https://analytics.is-a.dev/js/script.js"
+            src="https://analytics.is-a.dev/js/scri7:51 PMpt.js"
           />
         </head>
-        <body className={`mocha text-text bg-base ${rubik.className}`}>
+        <body className={`macchiato text-text bg-base ${inter.className}`}>
           <Navbar />
           <Providers>{children}</Providers>
           <Analytics />
