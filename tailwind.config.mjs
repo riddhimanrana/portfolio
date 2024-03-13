@@ -4,6 +4,9 @@ export default {
 	theme: {
 		darkMode: "class",
 		extend: {
+		fontFamily: {
+			'mono': ['JetBrains Mono', 'monospace'],
+		},
 		  keyframes: {
 			fadeIn: {
 			  '0%' : { opacity: '0', transform: 'translateY(40px)' },
