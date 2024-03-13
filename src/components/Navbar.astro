@@ -1,5 +1,7 @@
 ---
 import { Icon } from 'astro-icon/components';
+import { Image } from 'astro:assets';
+import avatarImage from "../assets/rrcoder0167_avatar.jpeg";
 import '@fontsource-variable/jetbrains-mono';
 ---
 
@@ -47,7 +49,7 @@ import '@fontsource-variable/jetbrains-mono';
   <div class="float-left">
     <div class="flex items-center justify-center transition-transform duration-300 ease-in-out hover:scale-110">
       <div class="user-avatar">
-        <img class="mr-2 h-8 w-8 rounded-full object-cover" width="32" height="32" alt="rrcoder0167's avatar" src="/rrcoder0167_avatar.jpeg" />
+        <Image src={avatarImage} class="mr-2 h-8 w-8 rounded-full object-cover" loading="eager" width="32" height="32" alt="rrcoder0167's avatar" />
       </div>
       <span class="bg-green border-surface0 relative right-3 top-3 z-10 inline-block h-5 w-5 rounded-full border-4" id="discStatus-dot"></span>
     </div>
@@ -60,14 +62,14 @@ import '@fontsource-variable/jetbrains-mono';
     <a href="/blogs" class="text-subtext0 hover:text-text px-4 no-underline transition duration-300 ease-in-out hover:cursor-pointer hover:font-semibold">Blogs</a>
   </div>
   <div class="absolute float-right text-2xl flex items-center top-1/2 m-auto -translate-y-1/2 right-0 p-6">
-      <a href="https://github.com/rrcoder0167" class="hover:text-green px-2 transition duration-300 ease-in-out transform hover:scale-110">
-        <Icon name="fa-brands:github"></Icon>
-      </a>
-      <a href="https://youtube.com/@ridztechtube" class="hover:text-red px-2 transition duration-300 ease-in-out transform hover:scale-110">
-        <Icon name="fa-brands:youtube"></Icon>
-      </a>
-      <a href="" class="hover:text-lavender px-2 transition duration-300 ease-in-out transform hover:scale-110">
-        <Icon name="fa-brands:discord"></Icon>
-      </a>
+    <a href="https://youtube.com/@ridztechtube" class="hover:text-red px-2 transition duration-300 ease-in-out transform hover:scale-110" aria-label="YouTube">
+      <Icon name="fa-brands:youtube"></Icon>
+    </a>
+    <a href="https://discord.com" class="hover:text-lavender px-2 transition duration-300 ease-in-out transform hover:scale-110" aria-label="Discord">
+      <Icon name="fa-brands:discord"></Icon>
+    </a>
+    <a href="https://github.com/rrcoder0167" class="hover:text-green px-2 transition duration-300 ease-in-out transform hover:scale-110" aria-label="GitHub">
+      <Icon name="fa-brands:github"></Icon>
+    </a>
   </div>
 </nav>

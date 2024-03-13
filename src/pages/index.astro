@@ -3,17 +3,13 @@
 //import "./page.css";
 import '@fontsource-variable/inter';
 import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import avatarImage from "../assets/rrcoder0167_avatar.jpeg";
 ---
 <Layout title="Riddhiman Rana - Developer Portfolio">
 
 <header class="text-center p-10">
-  <img 
-    src="/rrcoder0167_avatar.jpeg" 
-    alt="rrcoder0167's avatar" 
-    width="256" 
-    height="256" 
-    class="rounded-full w-40 h-40 mx-auto shadow-3xl shadow-blue animate-profileAnimation" 
-  />
+  <Image src={avatarImage} alt="rrcoder0167's avatar" width="256" height="256" loading="eager" class="rounded-full w-40 h-40 mx-auto shadow-3xl shadow-blue animate-profileAnimation"/>
   <h1 class="text-4xl font-extrabold">Riddhiman Rana</h1>
   <span class="flex justify-center">
     <!--
