@@ -8,5 +8,5 @@ import robotsTxt from "astro-robots-txt";
 // https://astro.build/config
 export default defineConfig({
   site: 'https://rrcoder0167.is-a.dev',
-  integrations: [tailwind(), icon(), react(), robotsTxt()]
+  integrations: [tailwind({ nesting:true, }), icon(), react(), robotsTxt()]
 });
