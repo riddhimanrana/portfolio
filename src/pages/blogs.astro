@@ -1,15 +1,17 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import BlogPost from '../components/BlogPost.astro';
+import BlogPost from '../components/BlogCard.astro';
 const allPosts = await Astro.glob("./posts/*.md");
 ---
 
 <Layout title="Riddhiman Rana - My Dev Blog">
-    <p>
-        Hi! Welcome to my blog.
-    </p>
-    <!-- Display the list of blog posts -->
-    <ul>
-        {allPosts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} />)}
-      </ul>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 class="text-3xl font-bold text-center my-8">
+            Hi! Welcome to my blog.
+        </h1>
+        <!-- Display the list of blog posts -->
+        <ul>
+            {allPosts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} description={post.frontmatter.description}/>)}
+        </ul>
+    </div>
 </Layout>

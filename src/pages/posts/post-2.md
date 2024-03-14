@@ -1,4 +1,5 @@
 ---
+layout: "../../layouts/MarkdownPostLayout.astro"
 title: 'Bye woorld'
 pubDate: 2022-07-01
 description: 'bye webdev, hello cp'

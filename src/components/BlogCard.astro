@@ -1,0 +1,12 @@
+---
+const { title, url, description, image } = Astro.props
+---
+
+
+<li class="bg-crust bg-cover bg-center bg-no-repeat bg-opacity-50 rounded-xl p-6 m-4 relative">
+  <div class="relative z-10">
+    <h2 class="text-2xl font-bold mb-2 text-text">{title}</h2>
+    <p class="mb-4 text-text">{description}</p>
+    <a href={url} class="bg-surface1 text-text px-4 py-2 rounded hover:bg-surface2 transition-colors">Read More</a>
+  </div>
+</li>

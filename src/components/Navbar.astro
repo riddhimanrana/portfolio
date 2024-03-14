@@ -3,6 +3,8 @@ import { Icon } from 'astro-icon/components';
 import { Image } from 'astro:assets';
 import avatarImage from "../assets/rrcoder0167_avatar.jpeg";
 import '@fontsource-variable/jetbrains-mono';
+const pathname = new URL(Astro.request.url).pathname;
+const currentPath = pathname.slice(1); // remove the first "/"
 ---
 
 <style>
@@ -55,11 +57,11 @@ import '@fontsource-variable/jetbrains-mono';
     </div>
   </div>
   <div class="absolute left-1/2 top-1/2 float-none m-auto flex -translate-x-1/2 -translate-y-1/2 transform px-4 transition duration-300 ease-in-out">
-    <a href="/" class="text-mauve hover:text-blue px-4 font-bold no-underline transition duration-300 ease-in-out hover:cursor-pointer hover:font-black">Home</a>
-    <a href="/projects" class="text-subtext0 hover:text-text px-4 no-underline transition duration-300 ease-in-out hover:cursor-pointer hover:font-semibold">Projects</a>
-    <a href="/contact" class="text-subtext0 hover:text-text px-4 no-underline transition duration-300 ease-in-out hover:cursor-pointer hover:font-semibold">Contact</a>
-    <a href="/awards" class="text-subtext0 hover:text-text px-4 no-underline transition duration-300 ease-in-out hover:cursor-pointer hover:font-semibold">Awards</a>
-    <a href="/blogs" class="text-subtext0 hover:text-text px-4 no-underline transition duration-300 ease-in-out hover:cursor-pointer hover:font-semibold">Blogs</a>
+    <a href="/" class={`text-${currentPath === "" ? "mauve font-extrabold" : "subtext0"} hover:text-${currentPath === "" ? "blue" : "text"} px-4 font-${currentPath === "" ? "bold" : "semibold"} no-underline transition duration-300 ease-in-out hover:cursor-pointer hover:font-${currentPath === "" ? "black" : "semibold"}`}>Home</a>
+    <a href="/projects" class={`text-${currentPath === "projects" ? "mauve font-extrabold" : "subtext0"} hover:text-${currentPath === "projects" ? "blue" : "text"} px-4 no-underline transition duration-300 ease-in-out hover:cursor-pointer hover:font-${currentPath === "projects" ? "black" : "semibold"}`}>Projects</a>
+    <a href="/contact" class={`text-${currentPath === "contact" ? "mauve font-extrabold" : "subtext0"} hover:text-${currentPath === "contact" ? "blue" : "text"} px-4 no-underline transition duration-300 ease-in-out hover:cursor-pointer hover:font-${currentPath === "contact" ? "black" : "semibold"}`}>Contact</a>
+    <a href="/awards" class={`text-${currentPath === "awards" ? "mauve font-extrabold" : "subtext0"} hover:text-${currentPath === "awards" ? "blue" : "text"} px-4 no-underline transition duration-300 ease-in-out hover:cursor-pointer hover:font-${currentPath === "awards" ? "black" : "semibold"}`}>Awards</a>
+    <a href="/blogs" class={`text-${currentPath === "blogs" ? "mauve font-extrabold" : "subtext0"} hover:text-${currentPath === "blogs" ? "blue" : "text"} px-4 no-underline transition duration-300 ease-in-out hover:cursor-pointer hover:font-${currentPath === "blogs" ? "black" : "semibold"}`}>Blogs</a>
   </div>
   <div class="absolute float-right text-2xl flex items-center top-1/2 m-auto -translate-y-1/2 right-0 p-6">
     <a href="https://youtube.com/@ridztechtube" class="hover:text-red px-2 transition duration-300 ease-in-out transform hover:scale-110" aria-label="YouTube">

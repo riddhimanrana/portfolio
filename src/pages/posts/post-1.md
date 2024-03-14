@@ -1,5 +1,5 @@
 ---
-layout: "../../MarkdownPostLayout.astro"
+layout: "../../layouts/MarkdownPostLayout.astro"
 title: 'Helloooo World'
 pubDate: 2022-07-01
 description: 'Welcome astro, buh bye nextjs.'
@@ -9,7 +9,8 @@ image:
     alt: 'The full Astro logo.'
 tags: ["astro", "blogging", "learning in public"]
 ---
-# Helloooo World
+
+## Helloooo World
 
 ## This is a test post
 
