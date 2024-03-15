@@ -1,20 +1,78 @@
 ---
+//import TypeAnimation from "react-type-animation";
 //import "./page.css";
-import TypeAnimation from '../components/TypeAnimation.astro';
 import '@fontsource-variable/inter';
 import Layout from '../layouts/Layout.astro';
 import { Image } from 'astro:assets';
 import avatarImage from "../assets/rrcoder0167_avatar.jpeg";
 ---
+<script>
+  // JavaScript for Typing Effect
+  const texts = [["Aspiring", "Entrepreneur"], ["Full Stack", "Developer"], ["Competitive", "Programmer"], ["Hackathon", "Competitor"]];
+  const coloredTexts = [['font-bold text-green', 'text-text'], ['text-text', 'font-bold text-blue'], ['font-bold text-red', 'text-text'], ['font-bold text-yellow', 'text-text']];
+  const typingContainer1 = document.getElementById("typing-container1");
+  const typingContainer2 = document.getElementById("typing-container2");
+  let currentTextIndex = 0;
+  let currentText1 = "";
+  let currentText2 = "";
+  let isDeleting = false;
+  let typingSpeed = 90; // Adjust the typing speed (milliseconds per character)
+
+  function type() {
+    const text1 = texts[currentTextIndex][0];
+    const text2 = texts[currentTextIndex][1];
+    let typingDelay = typingSpeed;
+
+    if (!isDeleting) {
+      if (currentText1 !== text1) {
+        currentText1 = text1.substring(0, currentText1.length + 1);
+      } else if (currentText2 !== text2) {
+        currentText2 = text2.substring(0, currentText2.length + 1);
+      }
+
+      if (currentText1 === text1 && currentText2 === text2) {
+        typingDelay = 2000; // Pause after typing
+        isDeleting = true;
+      }
+    } else {
+      if (currentText2 !== "") {
+        currentText2 = text2.substring(0, currentText2.length - 1);
+      } else if (currentText1 !== "") {
+        currentText1 = text1.substring(0, currentText1.length - 1);
+      }
+
+      if (currentText1 === "" && currentText2 === "") {
+        isDeleting = false;
+        currentTextIndex++;
+        if (currentTextIndex === texts.length) {
+          currentTextIndex = 0;
+        }
+      }
+    }
+
+    if (typingContainer1 && typingContainer2) {
+      typingContainer1.innerHTML = currentText1 || '&nbsp;';
+      typingContainer2.innerHTML = currentText2 || '&nbsp;';
+      typingContainer1.className = coloredTexts[currentTextIndex][0];
+      typingContainer2.className = coloredTexts[currentTextIndex][1];
+    }
+
+    setTimeout(type, typingDelay);
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    type();
+  });
+</script>
 
 <Layout title="Riddhiman Rana - Developer Portfolio">
-
 <header class="text-center p-10">
   <Image src={avatarImage} alt="rrcoder0167's avatar" width="256" height="256" loading="eager" class="rounded-full w-40 h-40 mx-auto shadow-3xl shadow-blue animate-profileAnimation"/>
   <h1 class="text-4xl font-extrabold">Riddhiman Rana</h1>
-  <span class="flex justify-center type-titles text-md">
-    &nbsp;
-  </span>
+  <div class="font-mono">
+    <span class="text-md font-mono text-text" id="typing-container1" />
+    <span class="text-md font-mono text-text" id="typing-container2" />
+  </div>
 </header>
 
 <section
