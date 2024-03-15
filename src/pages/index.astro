@@ -1,39 +1,19 @@
 ---
-//import TypeAnimation from "react-type-animation";
 //import "./page.css";
+import TypeAnimation from '../components/TypeAnimation.astro';
 import '@fontsource-variable/inter';
 import Layout from '../layouts/Layout.astro';
 import { Image } from 'astro:assets';
 import avatarImage from "../assets/rrcoder0167_avatar.jpeg";
 ---
+
 <Layout title="Riddhiman Rana - Developer Portfolio">
 
 <header class="text-center p-10">
   <Image src={avatarImage} alt="rrcoder0167's avatar" width="256" height="256" loading="eager" class="rounded-full w-40 h-40 mx-auto shadow-3xl shadow-blue animate-profileAnimation"/>
   <h1 class="text-4xl font-extrabold">Riddhiman Rana</h1>
-  <span class="flex justify-center">
-    <!--
-    <TypeAnimation
-      sequence={[
-        "Full Stack Developer",
-        1500,
-        "Competitive Programmer",
-        1500,
-        "Hackathon Enthusiast",
-        1500,
-        "Python Master",
-        1500,
-        "NextJS Web Dev",
-        1500,
-        "Arduino Expert",
-        1500,
-      ]}
-      speed={6}
-      deletionSpeed={40}
-      cursor={false}
-      class="cursor"
-      repeat={Infinity}
-    /> -->
+  <span class="flex justify-center type-titles text-md">
+    &nbsp;
   </span>
 </header>
 
