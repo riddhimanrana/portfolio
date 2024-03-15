@@ -3,10 +3,10 @@ import Layout from "./Layout.astro";
 const { frontmatter } = Astro.props;
 ---
 
-<Layout pageTitle={frontmatter.title}>
-  <article class="max-w-3xl mx-auto">
+<Layout title={frontmatter.title}>
+  <article class="max-w-5xl mx-auto">
     <header>
-      <h1 class="text-3xl font-bold mb-4">{frontmatter.title}</h1>
+      <h1 class="text-5xl font-extrabold mb-4 mt-8">{frontmatter.title}</h1>
       <p class="text-gray-500 mb-2">{frontmatter.pubDate.slice(0, 10)}</p>
       <p class="italic mb-4">{frontmatter.description}</p>
       <p class="mb-4">Written by: {frontmatter.author}</p>
