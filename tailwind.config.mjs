@@ -30,19 +30,7 @@ export default {
 		},
 	  },
 	  plugins: [
-		require('tailwind-typewriter')({
-			wordsets: {
-                titles: {
-                    words: ['Full-Stack Developer', 'Competitive Programmer', 'Aspiring Entrepreneur', 'Hackathon Enthusiast'],
-					delay: 0,
-					repeat: -1,
-					writeSpeed: 0.1,
-					eraseSpeed: 0.05,
-                    pauseBetween: 1.5,
-					caretWidth: '2px',
-                }
-            }
-		}),
+		require('@tailwindcss/typography'),
 		require("@catppuccin/tailwindcss")({
 		  defaultFlavor: "macchiato",
 		}),

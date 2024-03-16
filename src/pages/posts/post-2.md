@@ -9,13 +9,9 @@ image:
     alt: 'The full Astro logo.'
 tags: ["astro", "blogging", "learning in public"]
 ---
+
 # Helloooo World
 
 ## This is a test post
 
 trying out my system
-
-```python
-print("Hello Bob");
-
-```
