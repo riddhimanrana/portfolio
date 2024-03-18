@@ -1,0 +1,11 @@
+---
+const { src: { src = "", width = "10px", height = "10px" } = {}, alt = "" } =
+  Astro.props;
+---
+ 
+<div class="image-container">
+  <a href=`${Astro.props.src?.src ?? '#'}`>
+    <span class="enlarge">Click to enlarge</span>
+    <img src={src} alt={alt} width={width} height={height} />
+  </a>
+</div>

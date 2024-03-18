@@ -16,11 +16,10 @@ It's me Riddhiman! This is my first blog post, here and it's also kind of a test
 
 ### USACO
 
-I'm a *passionate* competitive programmer, so I'm also going to be writing about my journey in competitive programming and my experience with USACO. I'm really excited to be sharing more about that in the future. I'm also looking forward to learning more about Astro and writing more blog posts. I'm really excited about this new website and I'm looking forward to sharing more about it in the future.
+I'm a *passionate* `competitive` programmer, so I'm also going to be writing about my journey in competitive programming and my experience with USACO. I'm really excited to be sharing more about that in the future. I'm also looking forward to learning more about Astro and writing more blog posts. I'm really excited about this new website and I'm looking forward to sharing more about it in the future.
 
-```python
-def main():
-    print("Welcome USACO US Open 2024!")
+```html
+<h1>Crazy</h1>
 ```
 
 As always, thank you for reading!

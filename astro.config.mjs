@@ -3,25 +3,19 @@ import tailwind from "@astrojs/tailwind";
 import icon from "astro-icon";
 import robotsTxt from "astro-robots-txt";
 import pageInsight from "astro-page-insight";
+import rehypePrettyCode from "rehype-pretty-code";
 
-
-// https://astro.build/config
 export default defineConfig({
   markdown: {
-    render: [
-      '@astrojs/markdown-remark',
-      {
-        syntaxHighlight: 'shiki',
-        shikiConfig: {
-          theme: 'nord',
-          langs: ['js', 'html', 'css', 'astro'],
-          wrap: false,
-        },
-      },
-    ],
+    rehypePlugins: [],
+    shikiConfig: {
+      // Choose from Shiki's built-in themes (or add your own)
+      // https://shiki.style/themes
+      theme: 'catppuccin-macchiato',
+    },
   },
   site: 'https://rrcoder0167.is-a.dev',
   integrations: [tailwind({
     nesting: true
-  }), icon(), robotsTxt(), pageInsight()]
+  }), icon(), robotsTxt(), pageInsight()],
 });
