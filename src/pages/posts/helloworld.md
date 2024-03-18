@@ -18,8 +18,14 @@ It's me Riddhiman! This is my first blog post, here and it's also kind of a test
 
 I'm a *passionate* `competitive` programmer, so I'm also going to be writing about my journey in competitive programming and my experience with USACO. I'm really excited to be sharing more about that in the future. I'm also looking forward to learning more about Astro and writing more blog posts. I'm really excited about this new website and I'm looking forward to sharing more about it in the future.
 
-```html
-<h1>Crazy</h1>
+use the {2, 4} to properly specify which lines to highlight or do smth like this: del={2} ins={3-4} or do stuff like wrap=false
+
+```python del={2} ins={3-4}
+N, M = map(int, input().split())
+lists = list(map(int, input().split())
+for i in range(M):
+    a, b = map(int, input().split())
+    print(lists[a:b])
 ```
 
 As always, thank you for reading!
