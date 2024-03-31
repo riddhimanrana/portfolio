@@ -11,7 +11,7 @@ const allPosts = await Astro.glob("./posts/*.md");
         </h1>
         <!-- Display the list of blog posts -->
         <ul>
-            {allPosts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} description={post.frontmatter.description}/>)}
+            {allPosts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} image={post.frontmatter.image.url} description={post.frontmatter.description}/>)}
         </ul>
     </div>
 </Layout>

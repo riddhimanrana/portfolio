@@ -1,46 +1,105 @@
-body {
+.markdown-content p {
     line-height: 2;
 }
-h1 {
+.markdown-content h1 {
     color: var(text-text);
-    font-size: 3em;
+    font-size: 4em;
 }
 
-h2 {
+h1 {
+    font-size: 10em;
+}
+
+
+.markdown-content h2 {
     font-size: 1.75em;
     font-weight: bold;
     margin-top: 8px;
     margin-bottom: 8px;
 }
 
-h3 {
+.markdown-content h3 {
     font-size: 1.3em;
     font-weight: bold;
     margin-top: 5px;
     margin-bottom: 5px;
 }
 
-h4 {
+.markdown-content h4 {
     font-size: 1.1em;
     font-weight: bold;
     margin-top: 4px;
     margin-bottom: 4px;
 }
 
-h5 {
+.markdown-content h5 {
     font-size: 1em;
     font-weight: bold;
     margin-top: 3px;
     margin-bottom: 3px;
 }
 
-h6 {
+.markdown-content h6 {
     font-size: 0.9em;
     font-weight: bold;
     margin-top: 2px;
     margin-bottom: 2px;
 }
 
-code {
+.markdown-content code {
     font-family: "JetBrains Mono";
+}
+
+.markdown-content p > code {
+    padding: 4px;
+    border-radius: 4px;
+    background: #1e2030;
+    direction: ltr;
+    font-size: 14px;
+}
+
+.markdown-content blockquote {
+    margin: 20px 0;
+    padding: 10px;
+    border-left: 6px solid #8aadf4;
+    background-color: #1e2030;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 7px;
+    border-top-right-radius: 7px;    
+    font-style: italic;
+}
+
+.markdown-content img {
+    margin: 20px;
+    border-radius: 10px;
+    transition: transform 0.3s;
+}
+
+.markdown-content img:hover {
+    transform: scale(1.1);
+}
+
+.markdown-content a {
+    color: #8aadf4;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+}
+
+.markdown-content a::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #8aadf4;
+    transition: width .3s;
+}
+
+.markdown-content a:hover::after {
+    width: 100%;
 }

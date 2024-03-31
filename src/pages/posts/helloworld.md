@@ -29,3 +29,11 @@ for i in range(M):
 ```
 
 As always, thank you for reading!
+
+![rrcoder0167's avatar](../../assets/rrcoder0167_avatar.jpeg)
+
+My favorite search engine is [Duck Duck Go](https://duckduckgo.com).
+
+quote of the day:
+
+> Expect Dissapointment and youll never be dissapointed
