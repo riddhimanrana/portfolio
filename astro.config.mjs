@@ -1,7 +1,6 @@
 import { defineConfig } from 'astro/config';
 import tailwind from "@astrojs/tailwind";
 import icon from "astro-icon";
-import robotsTxt from "astro-robots-txt";
 import pageInsight from "astro-page-insight";
 import expressiveCode, { ExpressiveCodeTheme } from "astro-expressive-code";
 
@@ -14,7 +13,7 @@ export default defineConfig({
   integrations: [
   tailwind({
     nesting: true
-  }), icon(), robotsTxt(), pageInsight(),
+  }), icon(), pageInsight(),
   expressiveCode({
     styleOverrides: {
       codeFontFamily: "JetBrains Mono",

@@ -1,0 +1,13 @@
+---
+import { Astro } from 'astro';
+---
+<astro-component>
+  <div>
+    <h2>{Astro.props.project.projectName}</h2>
+    <p>{Astro.props.project.projectDescription}</p>
+    <p>{Astro.props.project.projectTags.join(', ')}</p>
+    <img src={Astro.props.project.projectImage} alt={Astro.props.project.projectName} />
+    <a href={Astro.props.project.projectGithub}>GitHub</a>
+    {Astro.props.project.projectLink && <a href={Astro.props.project.projectLink}>Project Link</a>}
+  </div>
+</astro-component>
