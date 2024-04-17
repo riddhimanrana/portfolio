@@ -1,13 +1,23 @@
 ---
-import { Astro } from 'astro';
+const { title, description, tags, image, github, link } = Astro.props
 ---
-<astro-component>
-  <div>
-    <h2>{Astro.props.project.projectName}</h2>
-    <p>{Astro.props.project.projectDescription}</p>
-    <p>{Astro.props.project.projectTags.join(', ')}</p>
-    <img src={Astro.props.project.projectImage} alt={Astro.props.project.projectName} />
-    <a href={Astro.props.project.projectGithub}>GitHub</a>
-    {Astro.props.project.projectLink && <a href={Astro.props.project.projectLink}>Project Link</a>}
+
+
+<div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl m-3">
+  <div class="md:flex">
+    <div class="md:flex-shrink-0">
+      <img class="h-48 w-full object-cover md:w-48" src={image} alt={title} />
+    </div>
+    <div class="p-8">
+      <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">{title}</div>
+      <p class="mt-2 text-gray-500">{description}</p>
+      <div class="mt-2">
+        {tags.map(tag => <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{tag}</span>)}
+      </div>
+      <div class="mt-2">
+        <a href={github} class="text-blue-500 hover:text-blue-800">GitHub</a>
+        {link && <a href={link} class="ml-4 text-blue-500 hover:text-blue-800">Project Link</a>}
+      </div>
+    </div>
   </div>
-</astro-component>
+</div>

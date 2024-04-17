@@ -1,0 +1,8 @@
+{
+    {
+        "projectName": "Lets Assist",
+        "projectDescription": "Give back to your community, your way.",
+        "projectTags": ["NextJS", "Typescript", "MongoDB", "Auth.js", "Cloudinary", "Prisma", "Bootstrap"],
+        "projectImage": ""
+    },
+}
