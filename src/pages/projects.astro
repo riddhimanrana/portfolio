@@ -1,9 +1,0 @@
----
-import ProjectCard from '../components/ProjectCard.astro';
-import projects from '../../public/projects.json';
----
-<div>
-  {projects.map((project, index) => (
-    <ProjectCard key={index} project={project} />
-  ))}
-</div>
