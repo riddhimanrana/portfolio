@@ -1,12 +1,9 @@
 ---
 layout: "../../layouts/MarkdownPostLayout.astro"
 title: 'My Tech Stack for this website'
-pubDate: 2024-03-15
+date: 2024-05-22
 description: 'Welcome astro, buh bye nextjs.'
 author: 'Riddhiman Rana'
-image:
-    url: 'https://docs.astro.build/assets/full-logo-light.png'
-    alt: 'The full Astro logo.'
 tags: ["astro", "blogging", "learning in public"]
 ---
 

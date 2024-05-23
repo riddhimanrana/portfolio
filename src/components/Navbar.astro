@@ -12,6 +12,7 @@ let links = [
 ];
 
 let currentPath = new URL(Astro.request.url).pathname;
+let isPostsPage = currentPath.startsWith("/posts/");
 ---
 
 <style>
@@ -67,7 +68,7 @@ let currentPath = new URL(Astro.request.url).pathname;
     {links.map(link => (
       <a 
         href={link.href} 
-        class={`px-4 no-underline transition duration-300 ease-in-out hover:cursor-pointer ${currentPath === link.href ? 'text-mauve font-extrabold hover:text-blue hover:font-black' : 'text-subtext0 hover:text-text hover:font-semibold'}`}
+        class={`px-4 no-underline transition duration-300 ease-in-out hover:cursor-pointer ${isPostsPage && link.href === '/posts/' ? 'text-mauve font-extrabold hover:text-blue hover:font-black' : (currentPath === link.href ? 'text-mauve font-extrabold hover:text-blue hover:font-black' : 'text-subtext0 hover:text-text hover:font-semibold')}`}
       >
         {link.text}
       </a>

@@ -6,12 +6,12 @@ const allPosts = await Astro.glob("./posts/*.md");
 
 <Layout title="Riddhiman Rana - My Dev Blog">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 class="text-3xl font-bold text-center my-8">
-            Hi! Welcome to my blog. Here are some of my latest posts.
+        <h1 class="text-5xl font-bold text-center my-8">
+            Posts
         </h1>
         <!-- Display the list of blog posts -->
         <ul>
-            {allPosts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} image={post.frontmatter.image.url} description={post.frontmatter.description}/>)}
+            {allPosts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} description={post.frontmatter.description} date={post.frontmatter.date}/>)}
         </ul>
     </div>
 </Layout>
