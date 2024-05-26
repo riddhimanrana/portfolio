@@ -1,0 +1,16 @@
+[
+    {
+        "project_name": "Let's Assist",
+        "project_description": "Give back to your community, your way",
+        "project_link": "https://letsassist.vercel.app",
+        "github_link": "https://github.com/rrcoder0167/lets-assist",
+        "project_image": "../src/assets/letsassist-logo.png"
+    },
+    {
+        "project_name": "Chomp",
+        "project_description": "A diabetes app tracker.",
+        "project_link": "https://wechomp.vercel.app",
+        "github_link": "https://github.com/rrcoder0167/chomp",
+        "project_image": "../src/assets/chomp-logo.png"
+    }
+]

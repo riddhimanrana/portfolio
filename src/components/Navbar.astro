@@ -13,6 +13,7 @@ let links = [
 
 let currentPath = new URL(Astro.request.url).pathname;
 let isPostsPage = currentPath.startsWith("/posts/");
+import DiscordCard from './DiscordCard.astro';
 ---
 
 <style>
@@ -55,10 +56,12 @@ let isPostsPage = currentPath.startsWith("/posts/");
   }
 </style>
 
+
+
 <nav class="bg-surface0 hover:bg-surface1 font-mono relative items-center overflow-hidden px-5 py-2.5 text-center transition-all duration-300 ease-in-out">
   <div class="float-left">
     <div class="flex items-center justify-center transition-transform duration-300 ease-in-out hover:scale-110">
-      <div class="user-avatar">
+      <div>
         <Image src={avatarImage} class="mr-2 h-8 w-8 rounded-full object-cover" loading="eager" width="32" height="32" alt="rrcoder0167's avatar" />
       </div>
       <span class="bg-green border-surface0 relative right-3 top-3 z-10 inline-block h-5 w-5 rounded-full border-4" id="discStatus-dot"></span>
