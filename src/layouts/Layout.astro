@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar.astro";
 import { Icon } from 'astro-icon/components';
 import '@fontsource-variable/inter';
 const { title } = Astro.props;
+import { ViewTransitions } from 'astro:transitions';
 ---
 <script defer data-domain="rrcoder0167.is-a.dev" src="https://analytics.is-a.dev/js/script.js"></script>
 
@@ -13,7 +14,7 @@ const { title } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="My name is Riddhiman Rana and I am a full stack developer. Find out more about me and my projects." />
     <script defer data-domain="rrcoder0167.is-a.dev" src="https://analytics.is-a.dev/js/script.js"></script>
-
+    <ViewTransitions />
   </head>
   <body class="macchiato text-text bg-base">
     <Navbar />
