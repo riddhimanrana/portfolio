@@ -5,6 +5,7 @@ import '@fontsource-variable/inter';
 import Layout from '../layouts/Layout.astro';
 import { Image } from 'astro:assets';
 import avatarImage from "../assets/rrcoder0167_avatar.jpeg";
+import { Icon } from 'astro-icon/components';
 ---
 <script>
   // JavaScript for Typing Effect
@@ -99,7 +100,7 @@ import avatarImage from "../assets/rrcoder0167_avatar.jpeg";
   class="bg-surface0 animate-fadeIn p-5 mx-auto w-5/6 rounded-lg mb-14 shadow-3xl shadow-surface2"
   id="contact"
 >
-  <h2 class="text-3xl font-bold">Contact Me</h2>
-  <a rel="me" href="https://mastodon.online/@rrcoder0167">Mastodon</a>
+  <h2 class="text-3xl font-bold mb-5">Contact Me</h2>
+  <Icon class="text-4xl bg-surface1 p-1 rounded-md" name="fa-brands:mastodon"></Icon>
 </section>
 </Layout>
