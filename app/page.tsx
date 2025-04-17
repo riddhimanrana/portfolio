@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useTheme } from "next-themes"
-import { Code, Briefcase, Cpu, Trophy, FileText, ExternalLink } from 'lucide-react'
+import { Code, Briefcase, Cpu, Trophy, GraduationCap, ExternalLink } from 'lucide-react'
 import Link from "next/link"
 import Image from "next/image"
 
@@ -31,16 +31,33 @@ export default function Home() {
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* Hero Section */}
         <section id="about" className="py-16">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               className="mb-4"
             >
-              <span className="text-sm text-gray-600 dark:text-gray-400 flex items-center">
-                <Trophy className="inline-block mr-2 h-4 w-4" />
-                USACO Gold Medalist
+              <span className="flex items-center text-sm text-gray-600 dark:text-gray-400">
+              <span>Founder of</span>
+              <Link 
+                href="https://lets-assist.com" 
+                target="_blank"
+                rel="noopener noreferrer" 
+                className="flex items-center hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-100 group"
+              >
+                <Image
+                src="/letsassist-logo.png"
+                alt="Let's Assist Logo"
+                width={24}
+                height={24}
+                className="mx-2 h-5 w-5 group-hover:scale-110 transition-transform"
+                />
+                <span className="inline-flex items-center">
+                Let's Assist
+                <ExternalLink className="ml-1 h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                </span>
+              </Link>
               </span>
             </motion.div>
 
@@ -48,12 +65,24 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4"
+              className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 flex items-center gap-2"
             >
-              Hey, I'm{" "}
-              <span className="relative inline-block">
-                Riddhiman Rana
-                <span className="absolute bottom-0 left-0 w-full h-1 bg-blue-500 dark:bg-blue-400"></span>
+              Hey, I'm
+                <div className="rounded-2xl transition-transform hover:scale-105 duration-300">
+                <Image 
+                  src="/profile.jpeg" 
+                  alt="Riddhiman Rana" 
+                  width={70} 
+                  height={70} 
+                  className="-rotate-6 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.4)] border-2 border-white dark:border-gray-700"
+                />
+                </div>
+              {" "}
+              
+              <span className="relative inline-flex items-center">
+              
+              Riddhiman Rana
+              <span className="absolute bottom-0 left-0 w-full h-1 bg-blue-500 dark:bg-blue-400"></span>
               </span>
             </motion.h1>
 
@@ -80,10 +109,15 @@ export default function Home() {
               transition={{ duration: 0.5, delay: 0.3 }}
               className="flex flex-wrap gap-4 mb-8"
             >
-              <div className="flex items-center text-sm bg-gray-100 dark:bg-gray-800 px-4 py-2 rounded-full">
-                <FileText className="mr-2 h-4 w-4" />
+                <Link 
+                href="https://dvhs.srvusd.net/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center text-sm bg-gray-100 dark:bg-gray-800 px-4 py-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                >
+                <GraduationCap className="mr-2 h-4 w-4" />
                 Freshman at Dougherty Valley High School
-              </div>
+                </Link>
               <div className="flex items-center text-sm bg-gray-100 dark:bg-gray-800 px-4 py-2 rounded-full">
                 <Briefcase className="mr-2 h-4 w-4" />
                 Web Developer
