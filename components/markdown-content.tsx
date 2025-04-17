@@ -4,6 +4,7 @@ import React, { useEffect } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import { useTheme } from 'next-themes'
 import remarkGfm from 'remark-gfm'
 
 interface MarkdownContentProps {
@@ -11,6 +12,7 @@ interface MarkdownContentProps {
 }
 
 export function MarkdownContent({ content }: MarkdownContentProps) {
+  const { theme } = useTheme()
   const [mounted, setMounted] = React.useState(false)
 
   useEffect(() => {
@@ -24,18 +26,7 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
-          code(
-            {
-              inline,
-              className,
-              children,
-              ...props
-            }: {
-              inline?: boolean
-              className?: string
-              children?: React.ReactNode
-            } & React.HTMLAttributes<HTMLElement>
-          ) {
+          code({ node, inline, className, children, ...props }) {
             const match = /language-(\w+)/.exec(className || '')
             return !inline && match ? (
               <SyntaxHighlighter
@@ -47,7 +38,7 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
                 {String(children).replace(/\n$/, '')}
               </SyntaxHighlighter>
             ) : (
-              <code className={className} {...props}>
+              <code {...props}>
                 {children}
               </code>
             )

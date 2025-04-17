@@ -1,20 +1,20 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { motion } from "framer-motion"
-// import { useTheme } from "next-themes"
+import { motion, AnimatePresence } from "framer-motion"
+import { useTheme } from "next-themes"
 import { Code, Briefcase, Cpu, Trophy, FileText, ExternalLink } from 'lucide-react'
 import Link from "next/link"
 import Image from "next/image"
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
-  // const { theme, setTheme } = useTheme()
+  const { theme, setTheme } = useTheme()
 
   // Theme toggle handler
-  // const toggleTheme = () => {
-  //   setTheme(theme === "dark" ? "light" : "dark")
-  // }
+  const toggleTheme = () => {
+    setTheme(theme === "dark" ? "light" : "dark")
+  }
 
   // Handle mounting for theme
   useEffect(() => {
@@ -50,7 +50,7 @@ export default function Home() {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4"
             >
-              Hey, I&apos;m{" "}
+              Hey, I'm{" "}
               <span className="relative inline-block">
                 Riddhiman Rana
                 <span className="absolute bottom-0 left-0 w-full h-1 bg-blue-500 dark:bg-blue-400"></span>
@@ -63,7 +63,7 @@ export default function Home() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="text-3xl sm:text-4xl font-bold mb-8 flex flex-wrap items-center gap-2"
             >
-              And I&apos;m a{" "}
+              And I'm a{" "}
               <span className="flex items-center">
                 <Code className="inline-block mr-2 h-8 w-8 p-1 bg-gray-200 dark:bg-gray-800 rounded-md" /> Web Developer
               </span>{" "}

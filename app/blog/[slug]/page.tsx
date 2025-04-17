@@ -6,7 +6,7 @@ import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const post = getPostBySlug(params.slug)
+  const post = await getPostBySlug(await params.slug); // Add await here
   
   if (!post) {
     return {
@@ -23,12 +23,19 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 export async function generateStaticParams() {
-  const slugs = getAllSlugs()
+  const slugs = await getAllSlugs(); // Add await here
+
+  // Ensure slugs is an array before mapping
+  if (!Array.isArray(slugs)) {
+    console.error("generateStaticParams: getAllSlugs did not return an array", slugs);
+    return []; // Return empty array or handle error appropriately
+  }
+
   return slugs.map((slug) => ({ slug }))
 }
 
-export default function BlogPostPage({ params }: { params: { slug: string } }) {
-  const post = getPostBySlug(params.slug)
+export default async function BlogPostPage({ params }: { params: { slug: string } }) {
+  const post = await getPostBySlug(params.slug)
   
   if (!post) {
     notFound()

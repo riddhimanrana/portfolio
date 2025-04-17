@@ -5,7 +5,7 @@ import type { BlogPost } from '@/types/blog'
 
 const postsDirectory = path.join(process.cwd(), 'data/blog')
 
-export function getAllPosts(): BlogPost[] {
+export async function getAllPosts(): Promise<BlogPost[]> {
   const fileNames = fs.readdirSync(postsDirectory)
   const allPostsData = fileNames
     .filter(fileName => fileName.endsWith('.md'))
@@ -41,7 +41,7 @@ export function getAllPosts(): BlogPost[] {
   })
 }
 
-export function getPostBySlug(slug: string): BlogPost | null {
+export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
   try {
     const fullPath = path.join(postsDirectory, `${slug}.md`)
     const fileContents = fs.readFileSync(fullPath, 'utf8')
@@ -58,12 +58,12 @@ export function getPostBySlug(slug: string): BlogPost | null {
       excerpt: matterResult.data.excerpt || '',
       tags: matterResult.data.tags || [],
     } as BlogPost
-  } catch {
+  } catch (error) {
     return null
   }
 }
 
-export function getAllSlugs(): string[] {
+export async function getAllSlugs(): Promise<string[]> {
   const fileNames = fs.readdirSync(postsDirectory)
   return fileNames
     .filter(fileName => fileName.endsWith('.md'))
