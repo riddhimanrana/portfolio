@@ -7,6 +7,9 @@ import { Code, Briefcase, Cpu, Trophy, GraduationCap, ExternalLink } from 'lucid
 import Link from "next/link"
 import Image from "next/image"
 import { ContactModal } from "@/components/contact-modal"
+import { AboutSection } from "@/components/about-section"
+import { EducationSection } from "@/components/education-section"
+import { SkillsSection } from "@/components/skills-section"
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
@@ -152,9 +155,18 @@ export default function Home() {
         </motion.div>
           </div>
         </section>
+        
+        {/* About Section */}
+        <AboutSection />
+        
+        {/* Education Section */}
+        <EducationSection />
+        
+        {/* Skills Section */}
+        <SkillsSection />
 
         {/* Projects Section */}
-        <section className="py-8 sm:py-16 bg-gray-50 dark:bg-gray-900 rounded-3xl">
+        <section className="py-8 sm:py-16 bg-gray-50 dark:bg-gray-900 rounded-3xl my-8">
           <div className="px-4 sm:px-6 lg:px-8 py-6">
             <div className="max-w-6xl mx-auto">
               <motion.div
