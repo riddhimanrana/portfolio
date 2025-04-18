@@ -6,10 +6,12 @@ import { useTheme } from "next-themes"
 import { Code, Briefcase, Cpu, Trophy, GraduationCap, ExternalLink } from 'lucide-react'
 import Link from "next/link"
 import Image from "next/image"
+import { ContactModal } from "@/components/contact-modal"
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
   const { theme, setTheme } = useTheme()
+  const [contactModalOpen, setContactModalOpen] = useState(false)
 
   // Theme toggle handler
   const toggleTheme = () => {
@@ -27,6 +29,12 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+      {/* Contact Modal */}
+      <ContactModal 
+        isOpen={contactModalOpen} 
+        onClose={() => setContactModalOpen(false)} 
+      />
+      
       {/* Main Content */}
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16">
         {/* Hero Section */}
@@ -49,8 +57,8 @@ export default function Home() {
             <Image
             src="/letsassist-logo.png"
             alt="Let's Assist Logo"
-            width={24}
-            height={24}
+            width={36}
+            height={36}
             className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform"
             />
             <span className="inline-flex items-center">
@@ -106,7 +114,7 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="flex flex-col sm:flex-row gap-3 mb-6"
+          className="hidden sm:flex flex-col sm:flex-row gap-3 mb-6"
         >
           <Link 
             href="https://dvhs.srvusd.net/" 
@@ -135,12 +143,12 @@ export default function Home() {
           >
             View Projects <ExternalLink className="ml-2 h-4 w-4" />
           </Link>
-          <Link
-            href="#contact"
+          <button
+            onClick={() => setContactModalOpen(true)}
             className="px-6 py-3 bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-md transition-colors duration-300 text-center"
           >
             Contact Me
-          </Link>
+          </button>
         </motion.div>
           </div>
         </section>
@@ -158,7 +166,7 @@ export default function Home() {
           <div className="p-2 bg-gray-200 dark:bg-gray-800 rounded-xl shadow-md mr-3">
             <Briefcase className="h-8 w-8" />
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold">Meet some of my Works</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold">Meet some of my work</h2>
               </motion.div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -272,6 +280,12 @@ export default function Home() {
               >
                 Email
               </Link>
+              <button
+                onClick={() => setContactModalOpen(true)}
+                className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+              >
+                Contact
+              </button>
             </div>
           </div>
           <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-800 text-center text-gray-600 dark:text-gray-400 text-sm">

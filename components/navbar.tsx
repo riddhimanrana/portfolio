@@ -42,7 +42,7 @@ export default function NavBar() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 bg-white/80 dark:bg-gray-950/80 backdrop-blur-sm border-b border-gray-100 dark:border-gray-800">
+      <header className=" bg-white/80 dark:bg-gray-950/80 backdrop-blur-sm ">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative h-16 flex items-center">
           {/* Logo (left) */}
           
