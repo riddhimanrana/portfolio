@@ -9,15 +9,18 @@ import { AwardGrid } from "@/components/award-grid"
 import { AwardDetail } from "@/components/award-detail"
 import { AwardTimelineNav } from "@/components/award-timeline-nav"
 import { AwardTimeline } from "@/components/award-timeline"
-import type { Award } from "@/types/award"
-import awards from "@/data/awards.json"
+import type { Award, AwardDifficulty } from "@/types/award"
+import awardsData from "@/data/awards.json"
+
+// Add type assertion for the imported awards
+const awards = awardsData as Award[]
 
 export default function AwardsPage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [viewMode, setViewMode] = useState<"grid" | "timeline">("grid")
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const [activeFilters, setActiveFilters] = useState<{
-    difficulty: ("major" | "minor" | "honorable")[]
+    difficulty: AwardDifficulty[]
     year: string[]
   }>({
     difficulty: ["major", "minor", "honorable"],
@@ -40,7 +43,7 @@ export default function AwardsPage() {
       const searchContent = `${award.name} ${award.description} ${award.detailedDescription}`.toLowerCase()
       const matchesSearch = searchContent.includes(searchQuery.toLowerCase())
 
-      const matchesDifficulty = activeFilters.difficulty.includes(award.difficulty)
+      const matchesDifficulty = activeFilters.difficulty.includes(award.difficulty as AwardDifficulty)
 
       const awardYear = new Date(award.date).getFullYear().toString()
       const matchesYear = activeFilters.year.length === 0 || activeFilters.year.includes(awardYear)
@@ -60,7 +63,7 @@ export default function AwardsPage() {
   }, [selectedId, filteredAwards])
 
   // Toggle difficulty filter
-  const toggleDifficultyFilter = (difficulty: "major" | "minor" | "honorable") => {
+  const toggleDifficultyFilter = (difficulty: AwardDifficulty) => {
     setActiveFilters(prev => {
       if (prev.difficulty.includes(difficulty)) {
         return {
@@ -186,7 +189,7 @@ export default function AwardsPage() {
                   className={`px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5
                     ${activeFilters.difficulty.includes("major")
                       ? "bg-blue-200/30 dark:bg-blue-600/30 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-500/50"
-                      : "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-400 border border-gray-300 dark:border-gray-700"
+                      : "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-400 border border-gray-300 dark:border-gray-700"}`}
                 >
                   <Trophy className="w-3 h-3" /> Major
                 </button>
@@ -196,7 +199,7 @@ export default function AwardsPage() {
                   className={`px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5
                     ${activeFilters.difficulty.includes("minor")
                       ? "bg-amber-200/30 dark:bg-amber-600/30 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-500/50"
-                      : "bg-gray-800 text-gray-400 border border-gray-700"}`}
+                      : "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-400 border border-gray-300 dark:border-gray-700"}`}
                 >
                   <Trophy className="w-3 h-3" /> Notable
                 </button>
@@ -206,7 +209,7 @@ export default function AwardsPage() {
                   className={`px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5
                     ${activeFilters.difficulty.includes("honorable")
                       ? "bg-purple-200/30 dark:bg-purple-600/30 text-purple-600 dark:text-purple-400 border border-purple-200 dark:border-purple-500/50"
-                      : "bg-gray-800 text-gray-400 border border-gray-700"}`}
+                      : "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-400 border border-gray-300 dark:border-gray-700"}`}
                 >
                   <Trophy className="w-3 h-3" /> Honorable
                 </button>
@@ -217,9 +220,9 @@ export default function AwardsPage() {
                     key={year}
                     onClick={() => toggleYearFilter(year)}
                     className={`px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5
-                      ${activeFilters.year.includes(year)
-                        ? "bg-blue-600/30 text-blue-400 border border-blue-500/50"
-                        : "bg-gray-800 text-gray-400 border border-gray-700"}`}
+                        ${activeFilters.year.includes(year)
+                          ? "bg-blue-200/30 dark:bg-blue-600/30 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-500/50"
+                          : "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-400 border border-gray-300 dark:border-gray-700"}`}
                   >
                     <Calendar className="w-3 h-3" /> {year}
                   </button>

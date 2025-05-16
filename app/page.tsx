@@ -142,13 +142,13 @@ export default function Home() {
         >
           <Link
             href="/projects"
-            className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors duration-300 flex items-center justify-center"
+            className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-300 flex items-center justify-center"
           >
             View Projects <ExternalLink className="ml-2 h-4 w-4" />
           </Link>
           <button
             onClick={() => setContactModalOpen(true)}
-            className="px-6 py-3 bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-md transition-colors duration-300 text-center"
+            className="px-6 py-3 bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg transition-colors duration-300 text-center"
           >
             Contact Me
           </button>

@@ -1,3 +1,5 @@
+export type AwardDifficulty = "major" | "minor" | "honorable";
+
 export interface Award {
   id: string
   name: string
@@ -5,6 +7,6 @@ export interface Award {
   detailedDescription: string
   date: string
   image: string
-  difficulty: "major" | "minor" | "honorable"
+  difficulty: AwardDifficulty
   link?: string
 }

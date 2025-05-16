@@ -41,7 +41,7 @@ export function AwardTimelineNav({ awards, selectedId, onSelectAward }: AwardTim
   return (
     <div className="relative">
       {/* Timeline line */}
-      <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gray-700/50" />
+      <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gray-300/50 dark:bg-gray-700/50 transition-colors duration-300" />
       
       <div className="space-y-5">
         {years.map((year, yearIndex) => (
@@ -52,10 +52,10 @@ export function AwardTimelineNav({ awards, selectedId, onSelectAward }: AwardTim
             transition={{ delay: yearIndex * 0.1 }}
           >
             <div className="flex items-center mb-2">
-              <div className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center relative z-10">
-                <Calendar className="w-4 h-4 text-gray-300" />
+              <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center relative z-10 transition-colors duration-300">
+                <Calendar className="w-4 h-4 text-gray-600 dark:text-gray-400 transition-colors duration-300" />
               </div>
-              <h3 className="ml-3 text-white font-medium">{year}</h3>
+              <h3 className="ml-3 text-gray-900 dark:text-white font-medium transition-colors duration-300">{year}</h3>
             </div>
             
             <div className="ml-4 space-y-2">
@@ -65,10 +65,15 @@ export function AwardTimelineNav({ awards, selectedId, onSelectAward }: AwardTim
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: yearIndex * 0.1 + awardIndex * 0.05 + 0.1 }}
-                  className={`flex items-center pl-4 pr-2 py-2 rounded-lg transition-colors w-full text-left
-                    ${selectedId === award.id 
-                      ? `bg-${award.difficulty === "major" ? "blue" : award.difficulty === "minor" ? "amber" : "purple"}-950/50 border border-${award.difficulty === "major" ? "blue" : award.difficulty === "minor" ? "amber" : "purple"}-500/30` 
-                      : "hover:bg-gray-800/50"}`}
+                  className={`flex items-center pl-4 pr-2 py-2 rounded-lg w-full text-left transition-colors duration-300 ${
+                    selectedId === award.id
+                      ? award.difficulty === "major"
+                        ? "bg-blue-50 dark:bg-blue-900 border border-blue-500/30"
+                        : award.difficulty === "minor"
+                          ? "bg-amber-50 dark:bg-amber-900 border border-amber-500/30"
+                          : "bg-purple-50 dark:bg-purple-900 border border-purple-500/30"
+                      : "bg-white dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800"
+                  }`}
                   onClick={() => onSelectAward(award.id)}
                 >
                   <div className={`w-2 h-2 rounded-full mr-3 flex-shrink-0
@@ -80,12 +85,12 @@ export function AwardTimelineNav({ awards, selectedId, onSelectAward }: AwardTim
                   />
                   <div className="flex-grow">
                     <p className={`text-sm font-medium line-clamp-1 
-                      ${selectedId === award.id 
-                        ? "text-white" 
-                        : "text-gray-300"}`}>
+                                          ${selectedId === award.id 
+                                            ? "text-gray-900 dark:text-white" 
+                                            : "text-gray-600 dark:text-gray-400"}`}>
                       {award.name}
                     </p>
-                    <p className="text-xs text-gray-400 line-clamp-1">
+                    <p className="text-xs text-gray-600 dark:text-gray-400 line-clamp-1 transition-colors duration-300">
                       {award.description}
                     </p>
                   </div>
