@@ -32,7 +32,7 @@ export function AboutSection() {
                 <div className="absolute inset-0 bg-purple-500/10 dark:bg-purple-500/20 rounded-3xl transform -rotate-3"></div>
                 <div className="relative h-full w-full overflow-hidden rounded-2xl border-2 border-gray-200 dark:border-gray-700">
                     <Image
-                        src="/aboutme.jpeg"
+                        src="/images/aboutme.jpeg"
                         alt="Riddhiman Rana"
                         width={600}
                         height={600}

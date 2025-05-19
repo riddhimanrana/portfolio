@@ -48,7 +48,7 @@ export default function NavBar() {
           
           <Link href="/" className="relative z-10 flex items-center">
             <Image
-              src="/avatar_logo.jpeg"      // put your avatar file in /public/logo.png
+              src="/images/avatar.jpeg"      // put your avatar file in /public/logo.png
               alt="riddhiman logo"
               width={30}
               height={30}

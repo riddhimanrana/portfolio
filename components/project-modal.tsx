@@ -56,12 +56,12 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
             {/* Header with image */}
             <div className="relative h-64 sm:h-72 md:h-80 bg-gradient-to-br from-blue-400 to-purple-500">
               <Image
-                src={project.image || "/placeholder.svg?height=400&width=600"}
+                src={project.image || "/images/placeholder.svg?height=400&width=600"}
                 alt={project.title}
                 fill
                 className="object-cover"
                 onError={(e) => {
-                  e.currentTarget.src = "/placeholder.svg?height=400&width=600"
+                  e.currentTarget.src = "/images/placeholder.svg?height=400&width=600"
                 }}
               />
               <button

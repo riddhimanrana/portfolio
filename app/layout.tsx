@@ -43,6 +43,11 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <NavBar />
           {children}
+          <footer className="bg-transparent pb-8">
+        <div className="text-center text-sm text-gray-600 dark:text-gray-400">
+          © {new Date().getFullYear()} Riddhiman Rana. All rights reserved.
+        </div>
+      </footer>
         </ThemeProvider>
         <Toaster />
       </body>

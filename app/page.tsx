@@ -3,13 +3,15 @@
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useTheme } from "next-themes"
-import { Code, Briefcase, Cpu, Trophy, GraduationCap, ExternalLink } from 'lucide-react'
+import { Code, Briefcase, Cpu, Trophy, GraduationCap, ExternalLink, Globe } from 'lucide-react'
+import { SiGithub, SiYoutube } from 'react-icons/si'
 import Link from "next/link"
 import Image from "next/image"
 import { ContactModal } from "@/components/contact-modal"
 import { AboutSection } from "@/components/about-section"
 import { EducationSection } from "@/components/education-section"
 import { SkillsSection } from "@/components/skills-section"
+import { WorkExperience } from "@/components/work-experience"
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
@@ -39,7 +41,7 @@ export default function Home() {
       />
       
       {/* Main Content */}
-      <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16">
+      <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Hero Section */}
         <section id="about" className="py-8 sm:py-16">
           <div className="max-w-6xl mx-auto">
@@ -58,7 +60,7 @@ export default function Home() {
             className="flex items-center hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-100 group ml-2"
           >
             <Image
-            src="/letsassist-logo.png"
+            src="/images/logos/lets-assist.png"
             alt="Let's Assist Logo"
             width={36}
             height={36}
@@ -81,7 +83,7 @@ export default function Home() {
           <span>Hey, I'm</span>
           <div className="rounded-2xl transition-transform hover:scale-105 duration-300">
             <Image 
-              src="/profile.jpeg" 
+              src="/images/profile.jpeg" 
               alt="Riddhiman Rana" 
               width={48} 
               height={48} 
@@ -148,7 +150,7 @@ export default function Home() {
           </Link>
           <button
             onClick={() => setContactModalOpen(true)}
-            className="px-6 py-3 bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg transition-colors duration-300 text-center"
+            className="px-6 py-3 bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-xl transition-colors duration-300 text-center"
           >
             Contact Me
           </button>
@@ -159,6 +161,9 @@ export default function Home() {
         {/* About Section */}
         <AboutSection />
         
+        {/* Work Experience Section */}
+        <WorkExperience />
+        
         {/* Education Section */}
         <EducationSection />
         
@@ -166,145 +171,128 @@ export default function Home() {
         <SkillsSection />
 
         {/* Projects Section */}
-        <section className="py-8 sm:py-16 bg-gray-50 dark:bg-gray-900 rounded-3xl my-8">
-          <div className="px-4 sm:px-6 lg:px-8 py-6">
+        <section id="projects" className="py-8 sm:py-12 bg-gray-50 dark:bg-gray-900 rounded-3xl my-6">
+          <div className="px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
             <div className="max-w-6xl mx-auto">
               <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="flex items-center mb-8"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="flex flex-col md:flex-row md:items-center justify-between mb-8"
               >
-          <div className="p-2 bg-gray-200 dark:bg-gray-800 rounded-xl shadow-md mr-3">
-            <Briefcase className="h-8 w-8" />
-          </div>
-          <h2 className="text-2xl sm:text-3xl font-bold">Meet some of my work</h2>
+                <div className="flex items-center mb-3 pt-2 md:mb-0">
+                  <div className="p-2 bg-gray-100 dark:bg-gray-600/20 rounded-xl shadow-sm mr-3">
+                    <Briefcase className="h-8 w-8 " />
+                  </div>
+                  <h2 className="text-2xl sm:text-3xl font-bold">Featured Projects</h2>
+                </div>
+                {/* <p className="text-gray-600 dark:text-gray-400 text-sm max-w-md">
+                  A showcase of my recent work and personal projects
+                </p> */}
               </motion.div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="bg-white dark:bg-gray-950 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
-          >
-            <div className="p-4 flex flex-wrap gap-2">
-              <span className="text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100 px-3 py-1 rounded-full">
-                UI Design
-              </span>
-              <span className="text-xs bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-100 px-3 py-1 rounded-full">
-                Framer Development
-              </span>
-              <span className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-100 px-3 py-1 rounded-full">
-                2025
-              </span>
-            </div>
-            <div className="h-64 px-6 relative overflow-hidden">
-              <Image
-                src="/placeholder.svg?height=400&width=600"
-                alt="Tesla Landing Page"
-                width={600}
-                height={400}
-                className="object-cover w-full h-full rounded-2xl "
-              />
-            </div>
-            <div className="p-6">
-              <h3 className="text-xl font-semibold mb-2">Tesla Landing Page</h3>
-              <p className="text-gray-600 dark:text-gray-400 mb-4">
-                Tesla is a pioneering electric vehicle and clean energy company founded by Elon Musk, known for its high-performance electric cars.
-              </p>
-              <Link href="#" className="text-blue-600 dark:text-blue-400 hover:underline inline-flex items-center">
-                View Project <ExternalLink className="ml-1 h-4 w-4" />
-              </Link>
-            </div>
-          </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.1 }}
+                  className="bg-white dark:bg-gray-950 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:translate-y-[-5px] border border-gray-100 dark:border-gray-800 group p-6"
+                >
+                  <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">Let&apos;s Assist</h3>
+                  
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    <span className="text-xs bg-purple-100 dark:bg-purple-900/50 text-purple-800 dark:text-purple-200 px-2.5 py-1 rounded-full font-medium">
+                      Next.js
+                    </span>
+                    <span className="text-xs bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200 px-2.5 py-1 rounded-full font-medium">
+                      Typescript
+                    </span>
+                    <span className="text-xs bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800 dark:text-emerald-200 px-2.5 py-1 rounded-full font-medium">
+                      Supabase
+                    </span>
+                    <span className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 px-2.5 py-1 rounded-full font-medium">
+                      2025
+                    </span>
+                  </div>
+                  
+                  <p className="text-gray-600 dark:text-gray-400 text-sm mb-5">
+                    A comprehensive online volunteering platform that helps organizations and high school CSF programs manage, track, and coordinate volunteering activities for students and communities.
+                  </p>
+                  
+                  <div className="flex items-center gap-5 mt-auto">
+                    <Link href="https://github.com/rrcoder0167/lets-assist" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all inline-flex items-center gap-1.5 text-sm font-medium group-hover:translate-x-0.5 ">
+                      <SiGithub className="h-6 w-6" />
+                      <span>Code</span>
+                    </Link>
+                    <Link href="https://lets-assist.com" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400  inline-flex items-center gap-1.5 text-sm font-medium group-hover:translate-x-0.5 transition-all">
+                      <Globe className="h-4.5 w-4.5" />
+                      <span>Website</span>
+                    </Link>
+                  </div>
+                </motion.div>
 
-          {/* Project 2 */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="bg-white dark:bg-gray-950 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
-          >
-            <div className="p-4 flex flex-wrap gap-2">
-              <span className="text-xs bg-cyan-100 dark:bg-cyan-900 text-cyan-800 dark:text-cyan-100 px-3 py-1 rounded-full">
-                Product Design
-              </span>
-              <span className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-100 px-3 py-1 rounded-full">
-                2024
-              </span>
-            </div>
-            <div className="h-64 px-6 relative overflow-hidden">
-              <Image
-                src="/placeholder.svg?height=400&width=600"
-                alt="Grok Dashboard"
-                width={600}
-                height={400}
-                className="object-cover rounded-2xl w-full h-full"
-              />
-            </div>
-            <div className="p-6">
-              <h3 className="text-xl font-semibold mb-2">Grok Dashboard</h3>
-              <p className="text-gray-600 dark:text-gray-400 mb-4">
-                Grok is a generative AI chatbot developed by Elon Musk's company, xAI. Launched in November of 2023, Grok is designed to be a more conversational and creative AI assistant.
-              </p>
-              <Link href="#" className="text-blue-600 dark:text-blue-400 hover:underline inline-flex items-center">
-                View Project <ExternalLink className="ml-1 h-4 w-4" />
-              </Link>
-            </div>
-          </motion.div>
+                {/* Grok Dashboard Project */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                  className="bg-white dark:bg-gray-950 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:translate-y-[-5px] border border-gray-100 dark:border-gray-800 group p-6"
+                >
+                  <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">PyEcoHome Energy Tracker</h3>
+                  
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    <span className="text-xs bg-cyan-100 dark:bg-cyan-900/50 text-cyan-800 dark:text-cyan-200 px-2.5 py-1 rounded-full font-medium">
+                      Python
+                    </span>
+                    <span className="text-xs bg-emerald-100 dark:bg-yellow-900/50 text-yellow-800 dark:text-yellow-200 px-2.5 py-1 rounded-full font-medium">
+                      Tkinter
+                    </span>
+                    <span className="text-xs bg-indigo-100 dark:bg-indigo-900/50 text-indigo-800 dark:text-indigo-200 px-2.5 py-1 rounded-full font-medium">
+                      Pandas
+                    </span>
+                    <span className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 px-2.5 py-1 rounded-full font-medium">
+                      2022
+                    </span>
+                  </div>
+                  
+                  <p className="text-gray-600 dark:text-gray-400 text-sm mb-5">
+                    A home energy tracker built using python machine learning designed to identify patterns, provide insights, and suggest personalized recommendations to reduce consumption and costs.
+                  </p>
+                  
+                  <div className="flex items-center gap-5 mt-auto">
+                    <Link href="https://github.com/rrcoder0167/PyEcoHome-Energy-Tracker" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all inline-flex items-center gap-1.5 text-sm font-medium group-hover:translate-x-0.5">
+                      <SiGithub className="h-6 w-6" />
+                      <span>Code</span>
+                    </Link>
+                    <Link href="https://youtu.be/F_EsDD1HGjE?si=XhfiDFwxzMGKyfAV" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all inline-flex items-center gap-1.5 text-sm font-medium group-hover:translate-x-0.5">
+                      <SiYoutube className="h-6 w-6" />
+                      <span>Project Demo</span>
+                    </Link>
+                  </div>
+                </motion.div>
               </div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="flex justify-center mt-10"
+              >
+                <Link
+                  href="/projects"
+                  className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-300 flex items-center justify-center group text-sm font-medium"
+                >
+                  View All Projects 
+                  <ExternalLink className="ml-2 h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
+                </Link>
+              </motion.div>
             </div>
           </div>
         </section>
       </main>
-
+       
       {/* Footer */}
-      <footer className="bg-gray-100 dark:bg-gray-900 py-12 border-t border-gray-200 dark:border-gray-800">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="mb-6 md:mb-0">
-              <h3 className="text-xl font-bold mb-2">Riddhiman Rana</h3>
-              <p className="text-gray-600 dark:text-gray-400">Web Developer & Competitive Programmer</p>
-            </div>
-            <div className="flex space-x-6">
-              <Link
-                href="#"
-                className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
-              >
-                GitHub
-              </Link>
-              <Link
-                href="#"
-                className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
-              >
-                LinkedIn
-              </Link>
-              <Link
-                href="#"
-                className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
-              >
-                Twitter
-              </Link>
-              <Link
-                href="#"
-                className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
-              >
-                Email
-              </Link>
-              <button
-                onClick={() => setContactModalOpen(true)}
-                className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
-              >
-                Contact
-              </button>
-            </div>
-          </div>
-          <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-800 text-center text-gray-600 dark:text-gray-400 text-sm">
-            © {new Date().getFullYear()} Riddhiman Rana. All rights reserved.
-          </div>
-        </div>
-      </footer>
+      
     </div>
   )
 }

@@ -106,7 +106,7 @@ export default function AwardsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 pb-20 transition-colors duration-300">
+    <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100  transition-colors duration-300">
       <div className="container mx-auto px-4 py-16">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -114,7 +114,7 @@ export default function AwardsPage() {
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">
             Awards & Achievements
           </h1>
           <p className="text-gray-400 max-w-2xl mx-auto">

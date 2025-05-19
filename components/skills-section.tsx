@@ -2,10 +2,13 @@
 
 import { motion } from "framer-motion"
 import { Cpu, Globe, Server, Database, Terminal, Braces } from "lucide-react"
+import Link from "next/link"
 
+// Updated skill interface with link property
 interface Skill {
   name: string
-  level: number // 1-5
+  color?: string // Optional color override
+  link: string // URL to the official website or documentation
 }
 
 interface SkillCategory {
@@ -22,23 +25,27 @@ export function SkillsSection() {
       icon: <Globe className="h-5 w-5" />,
       color: "bg-blue-500/10 text-blue-500 dark:text-blue-400 border-blue-500/20",
       skills: [
-        { name: "React", level: 5 },
-        { name: "Next.js", level: 5 },
-        { name: "TypeScript", level: 5 },
-        { name: "Tailwind CSS", level: 5 },
-        { name: "Framer Motion", level: 4 }
-      ]
+        { name: "React", link: "https://react.dev/" },
+        { name: "Next.js", link: "https://nextjs.org/" },
+        { name: "Astro", link: "https://astro.build/" },
+        { name: "Flask", link: "https://flask.palletsprojects.com/" },
+        { name: "Tailwind CSS", link: "https://tailwindcss.com/" },
+        { name: "Framer Motion", link: "https://www.framer.com/motion/" },
+      ],
     },
     {
       name: "Backend",
       icon: <Server className="h-5 w-5" />,
       color: "bg-green-500/10 text-green-500 dark:text-green-400 border-green-500/20",
       skills: [
-        { name: "Node.js", level: 4 },
-        { name: "Express", level: 4 },
-        { name: "Python", level: 5 },
-        { name: "FastAPI", level: 4 },
-        { name: "GraphQL", level: 3 }
+        { name: "Node.js", link: "https://nodejs.org/" },
+        { name: "CodeQL", link: "https://codeql.github.com/" },
+        { name: "Django", link: "https://www.djangoproject.com/" },
+        { name: "Vercel", link: "https://vercel.com/" },
+        { name: "Prisma", link: "https://www.prisma.io/" },
+        { name: "Cloudinary", link: "https://cloudinary.com/" },
+        { name: "Cloudflare", link: "https://www.cloudflare.com/" },
+        { name: "Auth.js", link: "https://authjs.dev/" }
       ]
     },
     {
@@ -46,22 +53,23 @@ export function SkillsSection() {
       icon: <Database className="h-5 w-5" />,
       color: "bg-amber-500/10 text-amber-500 dark:text-amber-400 border-amber-500/20",
       skills: [
-        { name: "MongoDB", level: 4 },
-        { name: "PostgreSQL", level: 4 },
-        { name: "Redis", level: 3 },
-        { name: "Firestore", level: 4 }
+        { name: "Supabase", link: "https://supabase.com/" },
+        { name: "MongoDB", link: "https://www.mongodb.com/" },
+        { name: "PostgreSQL", link: "https://www.postgresql.org/" },
+        { name: "Firebase", link: "https://firebase.google.com/" },
+        { name: "SQL", link: "https://www.w3schools.com/sql/" },
       ]
     },
     {
-      name: "Competitive Programming",
+      name: "Programming Languages",
       icon: <Braces className="h-5 w-5" />,
       color: "bg-purple-500/10 text-purple-500 dark:text-purple-400 border-purple-500/20",
       skills: [
-        { name: "C++", level: 5 },
-        { name: "Java", level: 4 },
-        { name: "Algorithms", level: 4 },
-        { name: "Data Structures", level: 5 },
-        { name: "Problem Solving", level: 5 }
+        { name: "C++", link: "https://isocpp.org/" },
+        { name: "Java", link: "https://www.java.com/" },
+        { name: "JavaScript", link: "https://developer.mozilla.org/en-US/docs/Web/JavaScript" },
+        { name: "TypeScript", link: "https://www.typescriptlang.org/" },
+        { name: "Python", link: "https://www.python.org/" },
       ]
     },
     {
@@ -69,10 +77,11 @@ export function SkillsSection() {
       icon: <Terminal className="h-5 w-5" />,
       color: "bg-red-500/10 text-red-500 dark:text-red-400 border-red-500/20",
       skills: [
-        { name: "Git", level: 4 },
-        { name: "Docker", level: 3 },
-        { name: "VS Code", level: 5 },
-        { name: "Linux", level: 4 }
+        { name: "Git", link: "https://git-scm.com/" },
+        { name: "Docker", link: "https://www.docker.com/" },
+        { name: "VS Code", link: "https://code.visualstudio.com/" },
+        { name: "Linux", link: "https://www.linux.org/" },
+        { name: "GitHub", link: "https://github.com/" },
       ]
     }
   ]
@@ -93,7 +102,8 @@ export function SkillsSection() {
             <h2 className="text-2xl sm:text-3xl font-bold">Skills & Expertise</h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Detailed Categories Section */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {skillCategories.map((category, categoryIndex) => (
               <motion.div 
                 key={category.name}
@@ -111,38 +121,26 @@ export function SkillsSection() {
                   </div>
                 </div>
 
-                <div className="p-5 space-y-4">
-                  {category.skills.map((skill, skillIndex) => (
-                    <motion.div 
-                      key={skill.name} 
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, delay: categoryIndex * 0.1 + skillIndex * 0.05 + 0.2 }}
-                    >
-                      <div className="flex justify-between mb-1">
-                        <span className="text-sm font-medium">{skill.name}</span>
-                        <span className="text-xs text-gray-500 dark:text-gray-400">
-                          {skill.level === 5 ? "Expert" :
-                           skill.level === 4 ? "Advanced" :
-                           skill.level === 3 ? "Intermediate" :
-                           skill.level === 2 ? "Basic" : "Beginner"}
-                        </span>
-                      </div>
-                      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                        <motion.div 
-                          initial={{ width: 0 }}
-                          animate={{ width: `${skill.level * 20}%` }}
-                          transition={{ duration: 0.5, delay: categoryIndex * 0.1 + skillIndex * 0.05 + 0.3 }}
-                          className={`h-2 rounded-full ${
-                            skill.level >= 5 ? "bg-gradient-to-r from-green-400 to-green-500" :
-                            skill.level >= 4 ? "bg-gradient-to-r from-blue-400 to-blue-500" :
-                            skill.level >= 3 ? "bg-gradient-to-r from-cyan-400 to-cyan-500" :
-                            "bg-gradient-to-r from-gray-400 to-gray-500"
-                          }`}
-                        />
-                      </div>
-                    </motion.div>
-                  ))}
+                <div className="p-5">
+                  <div className="flex flex-wrap gap-2">
+                    {category.skills.map((skill, skillIndex) => (
+                      <motion.div
+                        key={skill.name}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.3, delay: categoryIndex * 0.1 + skillIndex * 0.05 }}
+                      >
+                        <Link 
+                          href={skill.link} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="inline-block px-3 py-1.5 bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 rounded-md text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 hover:shadow-sm cursor-pointer hover:translate-y-[-2px] hover:scale-105 transform"
+                        >
+                          {skill.name}
+                        </Link>
+                      </motion.div>
+                    ))}
+                  </div>
                 </div>
               </motion.div>
             ))}

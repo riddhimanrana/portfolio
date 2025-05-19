@@ -92,7 +92,7 @@ function AwardGridItem({
             <div className="flex-shrink-0 h-12 w-12 bg-gray-800 rounded-full overflow-hidden mr-4 relative">
               {!imageError ? (
                 <Image
-                  src={award.image || "/placeholder.svg"}
+                  src={award.image || "/images/placeholder.svg"}
                   alt={award.name}
                   fill
                   className="object-cover"

@@ -30,7 +30,7 @@ export function AwardCard({ award, isExpanded, onToggle }: AwardCardProps) {
             <div className="flex-shrink-0 h-12 w-12 bg-gray-100/50 dark:bg-gray-700/50 rounded-full overflow-hidden mr-4 relative transition-colors duration-300">
               {!imageError ? (
                 <Image
-                  src={award.image || "/placeholder.svg"}
+                  src={award.image || "/images/placeholder.svg"}
                   alt={award.name}
                   fill
                   className="object-cover"

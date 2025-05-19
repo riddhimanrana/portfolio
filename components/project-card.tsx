@@ -2,7 +2,8 @@
 
 import type { Project } from "@/types/project"
 import Image from "next/image"
-import { ExternalLink, Github } from "lucide-react"
+import { ExternalLink } from "lucide-react"
+import { SiGithub } from "react-icons/si"
 
 interface ProjectCardProps {
   project: Project
@@ -33,18 +34,18 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
           {project.year}
         </span>
       </div>
-      <div className="h-48 bg-gradient-to-br from-blue-400 to-purple-500 relative overflow-hidden">
+      {/* <div className="h-48 bg-gradient-to-br from-blue-400 to-purple-500 relative overflow-hidden">
         <Image
-          src={project.image || "/placeholder.svg?height=400&width=600"}
+          src={project.image || "/images/placeholder.svg?height=400&width=600"}
           alt={project.title}
           fill
           className="object-cover"
           onError={(e) => {
-            e.currentTarget.src = "/placeholder.svg?height=400&width=600"
+            e.currentTarget.src = "/images/placeholder.svg?height=400&width=600"
           }}
         />
-      </div>
-      <div className="p-6">
+      </div> */}
+      <div className="px-5 pb-6">
         <h3 className="text-xl font-bold mb-2">{project.title}</h3>
         <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">{project.tagline}</p>
         <div className="flex space-x-4">
@@ -56,7 +57,7 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
               className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
               onClick={(e) => e.stopPropagation()}
             >
-              <Github className="h-5 w-5" />
+              <SiGithub className="h-5 w-5" />
             </a>
           )}
           {project.projectLink && (

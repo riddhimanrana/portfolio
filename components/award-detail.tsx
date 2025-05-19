@@ -63,7 +63,7 @@ export function AwardDetail({ award, onClose }: AwardDetailProps) {
         <div className="flex-shrink-0 h-24 w-24 md:h-32 md:w-32 bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden relative transition-colors duration-300">
           {!imageError ? (
             <Image
-              src={award.image || "/placeholder.svg"}
+              src={award.image || "/images/placeholder.svg"}
               alt={award.name}
               fill
               className="object-cover"

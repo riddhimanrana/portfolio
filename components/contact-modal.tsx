@@ -2,18 +2,15 @@
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+import { X } from "lucide-react"
 import { 
-  X, 
-  Mail, 
-  MessageCircle, 
-  Github, 
-  Twitter, 
-  Youtube, 
-  Linkedin,
-  Copy,
-  Check
-} from "lucide-react"
+  SiGithub, 
+  SiDiscord, 
+  SiYoutube 
+} from 'react-icons/si'
 import { Button } from "@/components/ui/button"
+
+import { Copy, Check, ExternalLink, Mail } from "lucide-react"
 
 interface ContactModalProps {
   isOpen: boolean
@@ -26,6 +23,7 @@ interface ContactMethod {
   icon: React.ReactNode
   link?: string
   color: string
+  buttonHoverClass?: string
 }
 
 export function ContactModal({ isOpen, onClose }: ContactModalProps) {
@@ -56,45 +54,35 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
   
   const contactMethods: ContactMethod[] = [
     {
+      name: "GitHub",
+      value: "@rrcoder0167",
+      icon: <SiGithub className="h-5 w-5" />,
+      link: "https://github.com/rrcoder0167",
+      color: "bg-zinc-100 text-zinc-900 dark:bg-zinc-800/80 dark:text-zinc-100 hover:bg-zinc-200 dark:hover:bg-zinc-800",
+      buttonHoverClass: "hover:bg-zinc-300 dark:hover:bg-zinc-700"
+    },
+    {
       name: "Discord",
-      value: "riddhimanrana",
-      icon: <MessageCircle className="h-5 w-5" />,
-      color: "bg-indigo-500/20 text-indigo-500 dark:text-indigo-400 border-indigo-500/30"
+      value: "@riddhimanrana",
+      icon: <SiDiscord className="h-5 w-5" />,
+      color: "bg-indigo-100 text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-100 hover:bg-indigo-200 dark:hover:bg-indigo-900/40",
+      buttonHoverClass: "hover:bg-indigo-300 dark:hover:bg-indigo-800/40"
     },
     {
       name: "Email",
       value: "riddhiman.rana@gmail.com",
       icon: <Mail className="h-5 w-5" />,
       link: "mailto:riddhiman.rana@gmail.com",
-      color: "bg-blue-500/20 text-blue-600 dark:text-blue-400 border-blue-500/30"
-    },
-    {
-      name: "GitHub",
-      value: "riddhimana",
-      icon: <Github className="h-5 w-5" />,
-      link: "https://github.com/riddhimana",
-      color: "bg-gray-500/20 text-gray-700 dark:text-gray-300 border-gray-500/30"
-    },
-    {
-      name: "Twitter",
-      value: "@riddhimana",
-      icon: <Twitter className="h-5 w-5" />,
-      link: "https://twitter.com/riddhimana",
-      color: "bg-sky-500/20 text-sky-600 dark:text-sky-400 border-sky-500/30"
-    },
-    {
-      name: "LinkedIn",
-      value: "riddhiman-rana",
-      icon: <Linkedin className="h-5 w-5" />,
-      link: "https://linkedin.com/in/riddhiman-rana",
-      color: "bg-blue-700/20 text-blue-700 dark:text-blue-400 border-blue-700/30"
+      color: "bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-100 hover:bg-blue-200 dark:hover:bg-blue-900/40",
+      buttonHoverClass: "hover:bg-blue-300 dark:hover:bg-blue-800/40"
     },
     {
       name: "YouTube",
-      value: "RiddhimanRana",
-      icon: <Youtube className="h-5 w-5" />,
-      link: "https://youtube.com/c/RiddhimanRana",
-      color: "bg-red-500/20 text-red-600 dark:text-red-400 border-red-500/30"
+      value: "@riddhimanrana",
+      icon: <SiYoutube className="h-5 w-5" />,
+      link: "https://youtube.com/@riddhimanrana",
+      color: "bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-100 hover:bg-red-200 dark:hover:bg-red-900/40",
+      buttonHoverClass: "hover:bg-red-300 dark:hover:bg-red-800/40"
     }
   ]
   
@@ -119,55 +107,53 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
           />
           
           {/* Modal */}
-        <motion.div
+          <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{
-                duration: 0.3,
-                type: "spring",
-                stiffness: 400,
-                damping: 30,
+              duration: 0.2,
+              type: "spring",
+              stiffness: 400,
+              damping: 30,
             }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4"
-        >
-            <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-              {/* Header */}
-              <div className="relative p-6 pb-0">
+          >
+            <div className="w-full max-w-2xl bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800">
+              <div className="p-6 pb-0 flex items-start justify-between">
+                <div>
+                  <h2 className="text-3xl font-bold tracking-tight">Let's Connect</h2>
+                  <p className="text-gray-500 dark:text-gray-400 mt-2">
+                    Reach out through any of these platforms
+                  </p>
+                </div>
                 <button 
                   onClick={onClose}
-                  className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                  className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                 >
                   <X className="h-5 w-5 text-gray-500" />
                 </button>
-                <h2 className="text-2xl font-bold mb-1">Let's Connect</h2>
-                <p className="text-gray-600 dark:text-gray-400 mb-4">
-                  You can reach me through any of these platforms
-                </p>
               </div>
               
-              {/* Contact Methods */}
-              <div className="p-6 grid gap-4">
+              <div className="p-6 grid gap-3">
                 {contactMethods.map((method) => (
                   <div 
                     key={method.name}
-                    className={`rounded-xl border p-4 flex items-center justify-between ${method.color}`}
+                    className={`rounded-xl p-4 flex items-center justify-between transition-colors ${method.color}`}
                   >
-                    <div className="flex items-center">
-                      <div className="bg-white dark:bg-gray-800 p-2 rounded-lg mr-3 shadow-sm">
-                        {method.icon}
-                      </div>
+                    <div className="flex items-center gap-4">
+                      {method.icon}
                       <div>
-                        <p className="text-sm font-medium">{method.name}</p>
-                        <p className="text-sm opacity-80">{method.value}</p>
+                        <p className="font-medium">{method.name}</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">{method.value}</p>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center gap-2">
                       <Button
                         size="sm"
                         variant="ghost"
-                        className="h-8 px-2"
                         onClick={() => copyToClipboard(method.value, method.name)}
+                        className={`h-9 w-9 p-0 ${method.buttonHoverClass}`}
                       >
                         {copied === method.name ? (
                           <Check className="h-4 w-4" />
@@ -181,9 +167,9 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                           href={method.link} 
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex h-8 items-center rounded-md px-3 text-xs bg-white dark:bg-gray-800 shadow hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                          className={`h-9 w-9 inline-flex items-center justify-center rounded-md transition-colors ${method.buttonHoverClass}`}
                         >
-                          Open
+                          <ExternalLink className="h-4 w-4" />
                         </a>
                       )}
                     </div>
@@ -191,19 +177,17 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                 ))}
               </div>
               
-              {/* Footer */}
-              <div className="bg-gray-50 dark:bg-gray-800/50 p-4 flex justify-end">
+              <div className="p-4 flex justify-end gap-3">
                 <Button 
                   variant="outline" 
                   onClick={onClose}
-                  className="mr-2"
                 >
                   Close
                 </Button>
                 <Button 
                   onClick={() => window.open('mailto:riddhiman.rana@gmail.com')}
                 >
-                  Email Me
+                  Send Email
                 </Button>
               </div>
             </div>
@@ -213,3 +197,4 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
     </AnimatePresence>
   )
 }
+
