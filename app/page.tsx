@@ -244,7 +244,7 @@ export default function Home() {
                     <span className="text-xs bg-cyan-100 dark:bg-cyan-900/50 text-cyan-800 dark:text-cyan-200 px-2.5 py-1 rounded-full font-medium">
                       Python
                     </span>
-                    <span className="text-xs bg-emerald-100 dark:bg-yellow-900/50 text-yellow-800 dark:text-yellow-200 px-2.5 py-1 rounded-full font-medium">
+                    <span className="text-xs bg-yellow-100 dark:bg-yellow-900/50 text-yellow-800 dark:text-yellow-200 px-2.5 py-1 rounded-full font-medium">
                       Tkinter
                     </span>
                     <span className="text-xs bg-indigo-100 dark:bg-indigo-900/50 text-indigo-800 dark:text-indigo-200 px-2.5 py-1 rounded-full font-medium">
