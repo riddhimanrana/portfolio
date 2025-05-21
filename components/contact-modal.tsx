@@ -55,9 +55,9 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
   const contactMethods: ContactMethod[] = [
     {
       name: "GitHub",
-      value: "@rrcoder0167",
+      value: "@riddhimanrana",
       icon: <SiGithub className="h-5 w-5" />,
-      link: "https://github.com/rrcoder0167",
+      link: "https://github.com/riddhimanrana",
       color: "bg-zinc-100 text-zinc-900 dark:bg-zinc-800/80 dark:text-zinc-100 hover:bg-zinc-200 dark:hover:bg-zinc-800",
       buttonHoverClass: "hover:bg-zinc-300 dark:hover:bg-zinc-700"
     },

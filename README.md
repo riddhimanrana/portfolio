@@ -1,15 +1,13 @@
-# my-v0-project
+# Riddhiman Rana – Portfolio
 
-To install dependencies:
+This repository contains the source code for my personal portfolio website: [riddhimanrana.vercel.app](https://riddhimanrana.vercel.app/).
 
-```bash
-bun install
-```
+## 🛠️ Tech Stack
 
-To run:
+* **Framework**: Next.js
+* **Styling**: Tailwind CSS
+* **Deployment**: Vercel
 
-```bash
-bun run 
-```
+## 🛡️ License
 
-This project was created using `bun init` in bun v1.2.9. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+This project is licensed under the [MIT License](LICENSE).

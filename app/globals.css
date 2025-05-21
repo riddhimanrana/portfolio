@@ -2,6 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari and Opera */
+  }
+
+  /* Syntax highlighting classes for code blocks */
+  .code-highlight {
+    @apply bg-gray-50 dark:bg-gray-800 p-1 rounded;
+  }
+  
+  .code-line-highlighted {
+    @apply bg-yellow-100/20 dark:bg-yellow-800/20 border-l-4 border-yellow-500;
+  }
+  
+  .code-title {
+    @apply font-mono text-sm text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 px-4 py-2 rounded-t-lg border-b border-gray-200 dark:border-gray-700;
+  }
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

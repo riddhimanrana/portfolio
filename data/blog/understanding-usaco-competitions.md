@@ -74,3 +74,12 @@ int main() {
     
     return 0;
 }
+```
+
+> a wise man once said: "The best way to learn is to teach." Teaching others can solidify your understanding of complex topics. Consider mentoring younger students or participating in coding clubs.
+
+| f | asdfasdf | asdf | asdf | asdf |
+|---|----------|------|------|------|
+|  1 |   2       |  3    |  4    |   5   |
+|   |          |      |      |      |
+|   |          |      |      |      |

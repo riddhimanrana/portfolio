@@ -220,7 +220,7 @@ export default function Home() {
                   </p>
                   
                   <div className="flex items-center gap-5 mt-auto">
-                    <Link href="https://github.com/rrcoder0167/lets-assist" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all inline-flex items-center gap-1.5 text-sm font-medium group-hover:translate-x-0.5 ">
+                    <Link href="https://github.com/riddhimanrana/lets-assist" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all inline-flex items-center gap-1.5 text-sm font-medium group-hover:translate-x-0.5 ">
                       <SiGithub className="h-6 w-6" />
                       <span>Code</span>
                     </Link>
@@ -260,7 +260,7 @@ export default function Home() {
                   </p>
                   
                   <div className="flex items-center gap-5 mt-auto">
-                    <Link href="https://github.com/rrcoder0167/PyEcoHome-Energy-Tracker" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all inline-flex items-center gap-1.5 text-sm font-medium group-hover:translate-x-0.5">
+                    <Link href="https://github.com/riddhimanrana/PyEcoHome-Energy-Tracker" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all inline-flex items-center gap-1.5 text-sm font-medium group-hover:translate-x-0.5">
                       <SiGithub className="h-6 w-6" />
                       <span>Code</span>
                     </Link>
