@@ -1,13 +1,13 @@
-# Riddhiman Rana – Portfolio
+# Portfolio
 
-This repository contains the source code for my personal portfolio website: [riddhimanrana.vercel.app](https://riddhimanrana.vercel.app/).
+This repo contains the source code for my personal portfolio website: [rrcoder0167.is-a.dev](https://rrcoder0167.is-a.dev/).
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 * **Framework**: Next.js
 * **Styling**: Tailwind CSS
 * **Deployment**: Vercel
 
-## 🛡️ License
+## License
 
 This project is licensed under the [MIT License](LICENSE).
