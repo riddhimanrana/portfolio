@@ -11,17 +11,20 @@ interface AwardTimelineNavProps {
 }
 
 export function AwardTimelineNav({ awards, selectedId, onSelectAward }: AwardTimelineNavProps) {
-  // Group awards by year
+  // Group awards by year using UTC dates
   const awardsByYear = useMemo(() => {
     const grouped: Record<string, Award[]> = {}
     
-    // Sort by date (newest first)
-    const sortedAwards = [...awards].sort((a, b) => 
-      new Date(b.date).getTime() - new Date(a.date).getTime()
-    )
+    // Sort by date (newest first) using UTC
+    const sortedAwards = [...awards].sort((a, b) => {
+      const dateA = new Date(a.date + 'T00:00:00Z');
+      const dateB = new Date(b.date + 'T00:00:00Z');
+      return dateB.getTime() - dateA.getTime();
+    });
     
     sortedAwards.forEach(award => {
-      const year = new Date(award.date).getFullYear().toString()
+      const date = new Date(award.date + 'T00:00:00Z');
+      const year = date.getUTCFullYear().toString();
       if (!grouped[year]) {
         grouped[year] = []
       }
@@ -132,9 +135,10 @@ export function AwardTimelineNav({ awards, selectedId, onSelectAward }: AwardTim
                         {award.description}
                       </p>
                       <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
-                        {new Date(award.date).toLocaleDateString('en-US', { 
+                        {new Date(award.date + 'T00:00:00Z').toLocaleDateString('en-US', { 
                           month: 'short', 
-                          day: 'numeric' 
+                          day: 'numeric',
+                          timeZone: 'UTC'
                         })}
                       </p>
                     </div>

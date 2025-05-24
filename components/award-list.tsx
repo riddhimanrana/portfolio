@@ -11,6 +11,13 @@ interface AwardTimelineProps {
 }
 
 export function AwardTimeline({ awards }: AwardTimelineProps) {
+  // Sort awards by date using UTC
+  const sortedAwards = [...awards].sort((a, b) => {
+    const dateA = new Date(a.date + 'T00:00:00Z');
+    const dateB = new Date(b.date + 'T00:00:00Z');
+    return dateB.getTime() - dateA.getTime();
+  });
+
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
   const toggleExpand = (id: string) => {
@@ -52,7 +59,7 @@ export function AwardTimeline({ awards }: AwardTimelineProps) {
         {/* Timeline items */}
         <div className="space-y-8 sm:space-y-12">
           <AnimatePresence>
-            {awards.map((award, index) => {
+            {sortedAwards.map((award, index) => {
               const config = getDifficultyConfig(award.difficulty)
               
               return (

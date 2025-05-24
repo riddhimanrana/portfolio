@@ -4,88 +4,9 @@
     "name": "USACO Gold Division",
     "description": "Promoted to Gold Division",
     "detailedDescription": "Achieved promotion to the Gold Division in the USA Computing Olympiad (USACO), a prestigious competitive programming contest for high school students. This places me in the top 10% of competitive programmers in the United States.\n\nThe Gold Division involves advanced algorithms and data structures including segment trees, network flow, and dynamic programming techniques.",
-    "date": "2023-02-15",
+    "date": "2024-12-15",
     "image": "/images/awards/usaco.png",
     "difficulty": "major",
     "link": "https://usaco.org"
-  },
-  {
-    "id": "usaco-silver",
-    "name": "USACO Silver Division",
-    "description": "Promoted to Silver Division",
-    "detailedDescription": "Advanced to the Silver Division in the USA Computing Olympiad (USACO), demonstrating proficiency in intermediate algorithms and data structures including graph theory, prefix sums, and binary search techniques.",
-    "date": "2022-12-18",
-    "image": "/images/awards/usaco.png",
-    "difficulty": "major",
-    "link": "https://usaco.org"
-  },
-  {
-    "id": "usaco-bronze",
-    "name": "USACO Bronze",
-    "description": "Scored 1000/1000",
-    "detailedDescription": "Achieved a perfect score in the USA Computing Olympiad Bronze Division contest, demonstrating strong problem-solving skills and proficiency in fundamental programming concepts including simulation, complete search, and basic data structures.",
-    "date": "2022-10-05",
-    "image": "/images/awards/usaco.png",
-    "difficulty": "major",
-    "link": "https://usaco.org"
-  },
-  {
-    "id": "ptsa-reflections-2nd",
-    "name": "PTSA Reflections",
-    "description": "Won 2nd place in videography contest",
-    "detailedDescription": "Awarded 2nd place in the PTSA Reflections videography contest for a short film exploring the theme of resilience and community. The film was recognized for its creative storytelling and technical execution.",
-    "date": "2023-04-15",
-    "image": "/images/awards/ptsa.png",
-    "difficulty": "notable",
-    "link": "https://www.pta.org/home/programs/reflections"
-  },
-  {
-    "id": "ptsa-reflections-honorable",
-    "name": "PTSA Reflections",
-    "description": "Won Honorable mention",
-    "detailedDescription": "Received Honorable Mention in the PTSA Reflections arts program for a creative writing submission exploring themes of personal growth and self-discovery.",
-    "date": "2022-04-10",
-    "image": "/images/awards/ptsa.png",
-    "difficulty": "honorable",
-    "link": "https://www.pta.org/home/programs/reflections"
-  },
-  {
-    "id": "hackathon-first",
-    "name": "Bay Area Hackathon",
-    "description": "First place in high school division",
-    "detailedDescription": "Won first place in the high school division of the Bay Area Hackathon for developing an innovative mobile application that helps connect food banks with donors to reduce food waste and address food insecurity in local communities.\n\nThe project was recognized for its technical implementation, social impact, and scalable design.",
-    "date": "2023-07-15",
-    "image": "/images/awards/hackathon.png",
-    "difficulty": "major",
-    "link": "https://example.com/hackathon"
-  },
-  {
-    "id": "math-olympiad",
-    "name": "Regional Math Olympiad",
-    "description": "Silver medal in individual competition",
-    "detailedDescription": "Earned a silver medal in the Regional Mathematics Olympiad, demonstrating strong problem-solving skills and mathematical reasoning. The competition tested knowledge in algebra, geometry, number theory, and combinatorics.",
-    "date": "2023-03-12",
-    "image": "/images/awards/math.png",
-    "difficulty": "notable",
-    "link": "https://example.com/matholympiad"
-  },
-  {
-    "id": "science-fair",
-    "name": "State Science Fair",
-    "description": "Honorable mention in Computer Science category",
-    "detailedDescription": "Received an honorable mention at the State Science Fair for a project on machine learning applications in environmental monitoring. The project used computer vision techniques to analyze satellite imagery for tracking deforestation patterns.",
-    "date": "2022-05-20",
-    "image": "/images/awards/science.png",
-    "difficulty": "honorable"
-  },
-  {
-    "id": "coding-competition",
-    "name": "Regional Coding Competition",
-    "description": "3rd place team award",
-    "detailedDescription": "Secured 3rd place in the Regional Coding Competition as part of a three-person team. The competition involved solving algorithmic problems under time constraints and implementing efficient solutions in a programming language of choice.",
-    "date": "2023-01-28",
-    "image": "/images/awards/coding.png",
-    "difficulty": "notable",
-    "link": "https://example.com/codingcomp"
   }
 ]

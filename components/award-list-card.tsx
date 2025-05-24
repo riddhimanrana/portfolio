@@ -58,7 +58,7 @@ export function AwardCard({ award, isExpanded, onToggle }: AwardCardProps) {
   }
 
   const config = getDifficultyConfig(award.difficulty)
-  const timeAgo = new Date().getTime() - new Date(award.date).getTime()
+  const timeAgo = new Date().getTime() - new Date(award.date + 'T00:00:00Z').getTime();
   const daysAgo = Math.floor(timeAgo / (1000 * 60 * 60 * 24))
   
   const getTimeAgoText = (days: number) => {
