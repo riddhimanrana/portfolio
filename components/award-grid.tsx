@@ -111,8 +111,8 @@ function AwardGridItem({ award, index, onClick }: AwardGridItemProps) {
         {/* Decorative top accent */}
         <div className={`h-1.5 ${difficultyConfig.accentColor}`} />
         
-        {/* Difficulty indicator */}
-        <div className={`absolute top-3 right-3 p-1.5 rounded-full ${difficultyConfig.accentColor} text-white shadow-sm`}>
+        {/* Difficulty indicator - moved to bottom-right */}
+        <div className={`absolute bottom-3 right-3 p-1.5 rounded-full ${difficultyConfig.accentColor} text-white shadow-2xl backdrop-blur-md`}>
           {difficultyConfig.icon}
         </div>
 
@@ -126,11 +126,11 @@ function AwardGridItem({ award, index, onClick }: AwardGridItemProps) {
         <CardHeader className="pb-3 pt-4">
           <div className="flex items-start">
             <div 
-              className="flex-shrink-0 h-14 w-14 overflow-hidden mr-3 relative"
-            >
+                className={`flex-shrink-0 h-12 w-12 overflow-hidden mr-3 relative ${award.isIconRoundedFull ? 'rounded-full shadow-lg' : 'rounded-md'} `}
+              >
               {/* <div className={`absolute inset-0 ${difficultyConfig.accentColor} opacity-20 blur-sm rounded-full`} /> */}
               <div 
-                className="relative h-full w-full overflow-hidden"
+                className={`relative h-full w-full overflow-hidden ${award.isIconRoundedFull ? 'rounded-full shadow-lg' : 'rounded-md'}`}
               >
                 {!imageError ? (
                   <Image

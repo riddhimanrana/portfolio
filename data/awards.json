@@ -8,6 +8,7 @@
     "image": "/awards/usaco.png",
     "difficulty": "major",
     "link": "https://usaco.org/",
+    "isIconRoundedFull": true,
     "submissionLink": "https://github.com/riddhimanrana/usaco-solutions/tree/main/Silver/dec%2024-25"
   },
   {
@@ -18,6 +19,7 @@
     "date": "2024-02-19",
     "image": "/awards/usaco.png",
     "difficulty": "major",
+    "isIconRoundedFull": true,
     "link": "https://usaco.org/",
     "submissionLink": "https://github.com/riddhimanrana/usaco-solutions/tree/main/Bronze/feb%2023-24"
   },
