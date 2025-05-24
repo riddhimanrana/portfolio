@@ -1,4 +1,4 @@
-export type AwardDifficulty = "major" | "minor" | "honorable";
+export type AwardDifficulty = "major" | "notable" | "honorable";
 
 export interface Award {
   id: string

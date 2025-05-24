@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Image from "next/image"
 import { motion } from "framer-motion"
-import { Calendar, ExternalLink, X, Award as AwardIcon, Trophy } from "lucide-react"
+import { X, ExternalLink, Medal, Star, AwardIcon } from "lucide-react"
 import type { Award } from "@/types/award"
 import { formatDate } from "@/lib/utils"
 
@@ -17,96 +17,120 @@ export function AwardDetail({ award, onClose }: AwardDetailProps) {
   
   if (!award) return null
   
-  // Map difficulty to display values
+  // Simplified difficulty configurations
   const difficultyConfig = {
     major: {
-      color: "text-blue-400",
-      bgColor: "bg-blue-500/20",
-      borderColor: "border-blue-500/50",
-      icon: <Trophy className="w-5 h-5 text-blue-400" />,
+      color: "text-blue-600 dark:text-blue-400",
+      bgColor: "bg-blue-200/30 dark:bg-blue-900/30",
+      borderColor: "border-blue-200 dark:border-blue-700/50",
+      icon: <Medal className="w-4 h-4" />,
       label: "Major Achievement"
     },
-    minor: {
-      color: "text-amber-400",
-      bgColor: "bg-amber-500/20",
-      borderColor: "border-amber-500/50",
-      icon: <Trophy className="w-5 h-5 text-amber-400" />,
+    notable: {
+      color: "text-purple-600 dark:text-purple-400",
+      bgColor: "bg-purple-200/30 dark:bg-purple-900/30",
+      borderColor: "border-purple-200 dark:border-purple-700/50",
+      icon: <Star className="w-4 h-4" />,
       label: "Notable Achievement"
     },
     honorable: {
-      color: "text-purple-400",
-      bgColor: "bg-purple-500/20",
-      borderColor: "border-purple-500/50",
-      icon: <AwardIcon className="w-5 h-5 text-purple-400" />,
+      color: "text-amber-600 dark:text-amber-400",
+      bgColor: "bg-amber-200/30 dark:bg-amber-900/30",
+      borderColor: "border-amber-200 dark:border-amber-700/50",
+      icon: <AwardIcon className="w-4 h-4" />,
       label: "Honorable Mention"
     }
   }
   
   const config = difficultyConfig[award.difficulty]
+  
+  // Format date
+  const formattedDate = new Date(award.date).toLocaleDateString('en-US', { 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric' 
+  })
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
-      className={`rounded-xl border ${config.borderColor} ${config.bgColor} backdrop-blur-md p-6 relative transition-colors duration-300`}
+      className={`relative rounded-xl border ${config.borderColor} ${config.bgColor} shadow-md overflow-hidden`}
     >
+      {/* Close button */}
       <button
         onClick={onClose}
-        className="absolute top-4 right-4 p-2 rounded-full bg-white/50 dark:bg-gray-800/50 hover:bg-gray-200 dark:hover:bg-gray-700/50 transition-colors duration-300"
+        className="absolute top-3 right-3 z-10 p-1.5 rounded-full bg-white/90 dark:bg-gray-800/90 hover:bg-white dark:hover:bg-gray-800 border border-gray-200 dark:border-gray-700"
         aria-label="Close"
       >
-        <X className="w-4 h-4 text-gray-900 dark:text-gray-300 transition-colors duration-300" />
+        <X className="w-4 h-4 text-gray-600 dark:text-gray-400" />
       </button>
       
-      <div className="flex flex-col md:flex-row md:items-start gap-6">
-        <div className="flex-shrink-0 h-24 w-24 md:h-32 md:w-32 bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden relative transition-colors duration-300">
-          {!imageError ? (
-            <Image
-              src={award.image || "/images/placeholder.svg"}
-              alt={award.name}
-              fill
-              className="object-cover"
-              onError={() => setImageError(true)}
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-200 transition-colors duration-300">
-              <AwardIcon className="w-12 h-12" />
+      <div className="p-4">
+        <div className="flex items-start gap-3">
+          {/* Award Image */}
+          <div className="flex-shrink-0">
+            <div className="relative h-14 w-14 rounded-full overflow-hidden border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+              {!imageError ? (
+                <Image
+                  src={award.image || "/images/placeholder.svg"}
+                  alt={award.name}
+                  fill
+                  className="object-cover"
+                  onError={() => setImageError(true)}
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-gray-800">
+                  {config.icon}
+                </div>
+              )}
             </div>
-          )}
-        </div>
-        
-        <div className="flex-grow">
-          <div className="flex flex-wrap gap-2 mb-3">
-            <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium ${config.bgColor} ${config.color}`}>
-              {config.icon}
-              {config.label}
+          </div>
+          
+          {/* Award Content */}
+          <div className="flex-grow">
+            <div className="flex items-center gap-2 mb-1.5">
+              <span className={`inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium ${config.color} ${config.bgColor} border ${config.borderColor}`}>
+                {config.icon}
+                <span>{config.label}</span>
+              </span>
+              <span className="text-xs text-gray-500 dark:text-gray-400">
+                {formattedDate}
+              </span>
             </div>
             
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium bg-gray-100 dark:bg-gray-800/60 text-gray-600 dark:text-gray-300 transition-colors duration-300">
-              <Calendar className="w-4 h-4" />
-              {formatDate(award.date)}
-            </div>
+            {/* Title and Description */}
+            <h2 className="text-base font-bold mb-1 text-gray-900 dark:text-white">
+              {award.name}
+            </h2>
+            <p className="text-sm text-gray-700 dark:text-gray-300 mb-3">
+              {award.description}
+            </p>
+            
+            {/* Detailed Description - only if available */}
+            {award.detailedDescription && (
+              <div className="text-xs text-gray-600 dark:text-gray-400 mb-3 max-h-24 overflow-y-auto">
+                {award.detailedDescription}
+              </div>
+            )}
+            
+            {/* External Link */}
+            {award.link && (
+              <div className="flex justify-start">
+                <a
+                  href={award.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium ${config.color} hover:underline`}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <ExternalLink className="w-3 h-3" />
+                  View Details
+                </a>
+              </div>
+            )}
           </div>
-          
-          <h2 className="text-2xl md:text-3xl font-bold mb-2 text-gray-900 dark:text-white transition-colors duration-300">{award.name}</h2>
-          <p className="text-gray-700 dark:text-gray-300 mb-2 transition-colors duration-300">{award.description}</p>
-          
-          <div className="mt-4 mb-4 border-t border-gray-200/50 dark:border-gray-700/50 pt-4 transition-colors duration-300">
-            <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white transition-colors duration-300">Details</h3>
-            <p className="text-gray-700 dark:text-gray-300 whitespace-pre-line transition-colors duration-300">{award.detailedDescription}</p>
-          </div>
-          
-          {award.link && (
-            <a
-              href={award.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`inline-flex items-center gap-1.5 mt-2 px-4 py-2 rounded-md ${config.bgColor} ${config.color} transition-colors hover:opacity-90`}
-            >
-              View Details <ExternalLink className="w-4 h-4" />
-            </a>
-          )}
         </div>
       </div>
     </motion.div>

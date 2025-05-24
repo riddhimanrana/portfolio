@@ -36,7 +36,7 @@
     "detailedDescription": "Awarded 2nd place in the PTSA Reflections videography contest for a short film exploring the theme of resilience and community. The film was recognized for its creative storytelling and technical execution.",
     "date": "2023-04-15",
     "image": "/images/awards/ptsa.png",
-    "difficulty": "minor",
+    "difficulty": "notable",
     "link": "https://www.pta.org/home/programs/reflections"
   },
   {
@@ -66,7 +66,7 @@
     "detailedDescription": "Earned a silver medal in the Regional Mathematics Olympiad, demonstrating strong problem-solving skills and mathematical reasoning. The competition tested knowledge in algebra, geometry, number theory, and combinatorics.",
     "date": "2023-03-12",
     "image": "/images/awards/math.png",
-    "difficulty": "minor",
+    "difficulty": "notable",
     "link": "https://example.com/matholympiad"
   },
   {
@@ -85,7 +85,7 @@
     "detailedDescription": "Secured 3rd place in the Regional Coding Competition as part of a three-person team. The competition involved solving algorithmic problems under time constraints and implementing efficient solutions in a programming language of choice.",
     "date": "2023-01-28",
     "image": "/images/awards/coding.png",
-    "difficulty": "minor",
+    "difficulty": "notable",
     "link": "https://example.com/codingcomp"
   }
 ]

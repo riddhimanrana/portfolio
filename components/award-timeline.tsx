@@ -1,56 +1,150 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { AwardCard } from "./award-card";
-import type { Award } from "@/types/award";
+import { useMemo } from "react"
+import { Calendar, Trophy, Medal, Star, Award as AwardIcon, Sparkles } from "lucide-react"
+import type { Award } from "@/types/award"
 
-interface AwardTimelineProps {
-  awards: Award[];
+interface AwardTimelineNavProps {
+  awards: Award[]
+  selectedId: string | null
+  onSelectAward: (id: string) => void
 }
 
-export function AwardTimeline({ awards }: AwardTimelineProps) {
-  const [expandedId, setExpandedId] = useState<string | null>(null);
-
-  const toggleExpand = (id: string) => {
-    setExpandedId(expandedId === id ? null : id);
-  };
-
+export function AwardTimelineNav({ awards, selectedId, onSelectAward }: AwardTimelineNavProps) {
+  // Group awards by year
+  const awardsByYear = useMemo(() => {
+    const grouped: Record<string, Award[]> = {}
+    
+    // Sort by date (newest first)
+    const sortedAwards = [...awards].sort((a, b) => 
+      new Date(b.date).getTime() - new Date(a.date).getTime()
+    )
+    
+    sortedAwards.forEach(award => {
+      const year = new Date(award.date).getFullYear().toString()
+      if (!grouped[year]) {
+        grouped[year] = []
+      }
+      grouped[year].push(award)
+    })
+    
+    return grouped
+  }, [awards])
+  
+  // Get years in order
+  const years = useMemo(() => 
+    Object.keys(awardsByYear).sort((a, b) => Number(b) - Number(a)), 
+    [awardsByYear]
+  )
+  
   return (
-    <div className="max-w-3xl mx-auto">
-      <div className="relative">
-        {/* Timeline line */}
-        <div className="absolute left-6 top-4 bottom-4 w-0.5 bg-gray-300/50 dark:bg-gray-700/50 transition-colors duration-300" />
-        {/* Timeline items */}
-        <div className="space-y-12">
-          <AnimatePresence>
-            {awards.map((award, index) => (
-              <motion.div
-                key={award.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 + 0.3 }}
-                className="relative"
-              >
-                {/* Timeline dot */}
-                <div className="absolute left-0 top-1.5 flex items-center justify-center w-12 h-12">
-                  <div
-                    className={`w-4 h-4 rounded-full transition-colors duration-300 ${award.difficulty === "major" ? "bg-blue-500 dark:bg-blue-400" : "bg-gray-400 dark:bg-gray-500"}`}
-                  />
-                </div>
+    <div className="relative">
+      {/* Simplified timeline line with solid color */}
+      <div className="absolute left-4 top-2 bottom-0 w-0.5 bg-gray-200 dark:bg-gray-600" />
+      
+      <div className="space-y-6">
+        {years.map((year, yearIndex) => (
+          <div key={year} className="relative">
+            {/* Simplified year header with solid color */}
+            <div className="flex items-center mb-3">
+              <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center relative z-10 shadow-md">
+                <Calendar className="w-4 h-4 text-gray-700 dark:text-white" />
+              </div>
+              <div className="ml-3">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                  {year}
+                </h3>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  {awardsByYear[year].length} award{awardsByYear[year].length !== 1 ? 's' : ''}
+                </p>
+              </div>
+            </div>
+            
+            {/* Award list with simplified styling */}
+            <div className="ml-4 space-y-2">
+              {awardsByYear[year].map((award, awardIndex) => {
+                const isSelected = selectedId === award.id
+                const getDifficultyConfig = (difficulty: string) => {
+                  switch (difficulty) {
+                    case "major":
+                      return {
+                        selectedBg: "bg-blue-50 dark:bg-blue-900/30",
+                        selectedBorder: "border-blue-300 dark:border-blue-500",
+                        selectedShadow: "shadow-blue-100 dark:shadow-blue-900/30",
+                        dotColor: "bg-blue-500",
+                        textColor: isSelected ? "text-blue-900 dark:text-blue-100" : "text-gray-700 dark:text-gray-300",
+                        icon: <Medal className="w-4 h-4 text-blue-500" />
+                      }
+                    case "notable":
+                      return {
+                        selectedBg: "bg-purple-50 dark:bg-purple-900/30",
+                        selectedBorder: "border-purple-300 dark:border-purple-500",
+                        selectedShadow: "shadow-purple-100 dark:shadow-purple-900/30",
+                        dotColor: "bg-purple-500",
+                        textColor: isSelected ? "text-purple-900 dark:text-purple-100" : "text-gray-700 dark:text-gray-300",
+                        icon: <Star className="w-4 h-4 text-purple-500" />
+                      }
+                    default:
+                      return {
+                        selectedBg: "bg-amber-50 dark:bg-amber-900/30",
+                        selectedBorder: "border-amber-300 dark:border-amber-500",
+                        selectedShadow: "shadow-amber-100 dark:shadow-amber-900/30",
+                        dotColor: "bg-amber-500",
+                        textColor: isSelected ? "text-amber-900 dark:text-amber-100" : "text-gray-700 dark:text-gray-300",
+                        icon: <AwardIcon className="w-4 h-4 text-amber-500" />
+                      }
+                  }
+                }
 
-                <div className="ml-16">
-                  <AwardCard
-                    award={award}
-                    isExpanded={expandedId === award.id}
-                    onToggle={() => toggleExpand(award.id)}
-                  />
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </div>
+                const config = getDifficultyConfig(award.difficulty)
+
+                return (
+                  <button
+                    key={award.id}
+                    className={`group relative flex items-center pl-4 pr-3 py-3 ml-2 rounded-xl w-full text-left transition-all duration-300 border ${
+                      isSelected
+                        ? `${config.selectedBg} ${config.selectedBorder} shadow-lg ${config.selectedShadow}`
+                        : "bg-white/70 dark:bg-gray-900/70 hover:bg-gray-50 dark:hover:bg-gray-800/80 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 hover:shadow-md"
+                    }`}
+                    onClick={() => onSelectAward(award.id)}
+                  >
+                    {/* Simplified decorative dot */}
+                    <span
+                      className={`w-3 h-3 rounded-full mr-3 flex-shrink-0 ${config.dotColor} shadow-sm`}
+                    />
+                    
+                    {/* Content */}
+                    <div className="flex-grow min-w-0">
+                      <div className="flex items-center justify-between mb-1">
+                        <p className={`text-sm font-semibold line-clamp-1 ${config.textColor} transition-colors duration-300`}>
+                          {award.name}
+                        </p>
+                        <div className="flex items-center gap-1">
+                          {award.difficulty === "major" && (
+                            <div>
+                              <Sparkles className="w-3 h-3 text-blue-400" />
+                            </div>
+                          )}
+                          {config.icon}
+                        </div>
+                      </div>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 transition-colors duration-300">
+                        {award.description}
+                      </p>
+                      <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
+                        {new Date(award.date).toLocaleDateString('en-US', { 
+                          month: 'short', 
+                          day: 'numeric' 
+                        })}
+                      </p>
+                    </div>
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
-  );
+  )
 }

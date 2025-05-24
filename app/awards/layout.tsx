@@ -3,7 +3,7 @@ import type { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "Awards | Riddhiman Rana",
-  description: "A showcase of awards, honors, and achievements throughout my academic and professional journey.",
+  description: "A showcase of awards, honors, and achievements throughout my academic journey.",
 }
 
 export default function AwardsLayout({
