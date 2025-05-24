@@ -89,7 +89,7 @@ export function AwardCard({ award, isExpanded, onToggle }: AwardCardProps) {
               >
                 {!imageError ? (
                   <Image
-                    src={award.image || "/images/placeholder.svg"}
+                    src={award.image || "/placeholder.svg"}
                     alt={award.name}
                     fill
                     className="object-cover rounded-full"

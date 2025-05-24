@@ -120,7 +120,7 @@ export function AwardModal({ award, isOpen, onClose }: AwardModalProps) {
                       <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-full overflow-hidden border-2 border-gray-200 dark:border-gray-700 shadow-lg">
                         {!imageError ? (
                           <Image
-                            src={award.image || "/images/placeholder.svg"}
+                            src={award.image || "/placeholder.svg"}
                             alt={award.name}
                             fill
                             className="object-cover rounded-full"

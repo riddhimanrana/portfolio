@@ -20,7 +20,7 @@ export function EducationSection() {
     {
       school: "Dougherty Valley High School",
       degree: "High School Diploma",
-      logo: "/images/logos/dvhs.png",
+      logo: "/logos/dvhs.png",
       url: "https://dvhs.srvusd.net/",
       period: "2024 - 2028",
       current: true
@@ -28,7 +28,7 @@ export function EducationSection() {
     {
       school: "Windemere Ranch Middle School",
       degree: "Middle School Diploma",
-      logo: "/images/logos/wrms.png",
+      logo: "/logos/wrms.png",
       url: "https://wrms.srvusd.net/",
       period: "2021 - 2024",
       description: "President's Award for Educational Excellence, CJSF Honors, 3.97uw GPA." // Added description
@@ -85,14 +85,14 @@ export function EducationSection() {
                                     {/* Logo - inside the card next to title on mobile */}
                                     <div className="h-10 w-10 rounded-lg bg-white dark:bg-gray-800 shadow-sm border border-gray-100 dark:border-gray-700 p-1 flex items-center justify-center flex-shrink-0">
                                         <Image
-                                            src={education.logo || "/images/placeholder.svg"}
+                                            src={education.logo || "/placeholder.svg"}
                                             alt={education.school}
                                             width={40}
                                             height={40}
                                             className="object-contain"
                                             onError={(e) => {
                                                 const target = e.target as HTMLImageElement;
-                                                target.src = '/images/placeholder.svg';
+                                                target.src = '/placeholder.svg';
                                             }}
                                         />
                                     </div>
@@ -150,14 +150,14 @@ export function EducationSection() {
                             <div className="flex-none flex flex-col items-center">
                                 <div className="h-20 w-20 rounded-2xl bg-white dark:bg-gray-900 shadow-md border border-gray-100 dark:border-gray-700 p-2 flex items-center justify-center relative z-10">
                                     <Image
-                                        src={education.logo || "/images/placeholder.svg"}
+                                        src={education.logo || "/placeholder.svg"}
                                         alt={education.school}
                                         width={64}
                                         height={64}
                                         className="rounded-lg object-contain"
                                         onError={(e) => {
                                             const target = e.target as HTMLImageElement;
-                                            target.src = '/images/placeholder.svg';
+                                            target.src = '/placeholder.svg';
                                         }}
                                     />
                                 </div>

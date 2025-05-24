@@ -1,12 +1,72 @@
 [
   {
-    "id": "usaco-gold",
-    "name": "USACO Gold Division",
-    "description": "Promoted to Gold Division",
-    "detailedDescription": "Achieved promotion to the Gold Division in the USA Computing Olympiad (USACO), a prestigious competitive programming contest for high school students. This places me in the top 10% of competitive programmers in the United States.\n\nThe Gold Division involves advanced algorithms and data structures including segment trees, network flow, and dynamic programming techniques.",
+    "id": "usaco-silver",
+    "name": "USACO Silver Contest",
+    "description": "Scored 800/1000 and promoted to Gold",
+    "detailedDescription": "Scored 800/1000 and ranked 574/3410 of precollege students. Achieved promotion to the Gold Division in the USA Computing Olympiad (USACO), a prestigious competitive programming contest for high school students.\n\nThe Gold Division involves advanced algorithms and data structures including segment trees, network flow, and dynamic programming techniques. You can find my solutions on my github at riddhimanrana/usaco-solutions",
     "date": "2024-12-15",
-    "image": "/images/awards/usaco.png",
+    "image": "/awards/usaco.png",
     "difficulty": "major",
-    "link": "https://usaco.org"
+    "link": "https://usaco.org/"
+  },
+  {
+    "id": "usaco-bronze",
+    "name": "USACO Bronze Contest",
+    "description": "Scored 1000/1000 and promoted to Silver",
+    "detailedDescription": "Scored 1000/1000 and ranked 1st in the Bronze Division of the USA Computing Olympiad (USACO), a prestigious competitive programming contest for high school students.\n\nThe Bronze Division focuses on fundamental algorithms and data structures, including sorting, searching, and basic dynamic programming. You can find my solutions on my github at riddhimanrana/usaco-solutions",
+    "date": "2024-02-19",
+    "image": "/awards/usaco.png",
+    "difficulty": "major",
+    "link": "https://usaco.org/"
+  },
+  {
+    "id": "amc-8-24",
+    "name": "AMC 8",
+    "description": "Scored 20/25 on the AMC 8",
+    "detailedDescription": "Scored 20/25 in the AMC 8, a mathematics competition for middle school students organized by the Mathematical Association of America (MAA).\n\nThe AMC 8 tests problem-solving skills and mathematical reasoning, covering topics such as algebra, geometry, and number theory.",
+    "date": "2024-01-18",
+    "image": "/awards/amc8.png",
+    "difficulty": "honorable",
+    "link": "https://maa.org/student-programs/amc/"
+  },
+  {
+    "id": "amc-10b-24",
+    "name": "AMC 10B",
+    "description": "Scored 81 on the AMC 10B",
+    "detailedDescription": "Scored 81 in the AMC 10B, a mathematics competition for high school students organized by the Mathematical Association of America (MAA).\n\nThe AMC 10B tests problem-solving skills and mathematical reasoning, covering topics such as algebra, geometry, and number theory.",
+    "date": "2024-02-01",
+    "image": "/awards/amc10.png",
+    "difficulty": "honorable",
+    "link": "https://maa.org/student-programs/amc/"
+  },
+  {
+    "id": "mathkangaroo-25",
+    "name": "Math Kangaroo",
+    "description": "Scored 112/120, 4th national, 3rd state",
+    "detailedDescription": "Scored 112/120 in the Math Kangaroo 2025, a mathematics competition for students from grades 1 to 12. Ranked 4th nationally and 3rd in the state.\n\nThe Math Kangaroo competition tests problem-solving skills and mathematical reasoning, covering topics such as algebra, geometry, and number theory.",
+    "date": "2025-03-20",
+    "image": "/awards/mathkangaroo.png",
+    "difficulty": "major",
+    "link": "https://mathkangaroo.org/mks/"
+  },
+  {
+    "id": "mathkangaroo-camp-25",
+    "name": "Math Kangaroo International Camp",
+    "description": "Attended International Math Kangaroo Camp in Zakopane, Poland",
+    "detailedDescription": "Attended the prestigious Math Kangaroo International Camp in Zakopane, Poland from Jul 29 to Aug 7, representing the USA in a team of the top 10 students nationally. The camp included advanced problem-solving sessions, workshops, and competitions with students from around the world.\n\nThis experience enhanced my mathematical skills and provided a unique opportunity to collaborate with international peers.",
+    "date": "2025-07-29",
+    "image": "/awards/mathkangaroo-camp.png",
+    "difficulty": "major",
+    "link": "https://zakopane.kangur-mat.pl/en/camps/2025/"
+  },
+  {
+    "id": "streetsmarts-2025",
+    "name": "Street Smarts Video Contest",
+    "description": "Won 2nd place",
+    "detailedDescription": "Got 2nd place in a local video contest organized by the City of San Ramon and Danville, focused on promoting traffic safety and awareness. The contest encouraged students to create engaging videos that highlight the importance of road safety, pedestrian awareness, and responsible driving.\n\nMy video, titled 'Stay Safe and Bike with Care', creatively addressed these issues and was recognized for its impact and creativity.",
+    "date": "2025-03-24",
+    "image": "/awards/streetsmarts.png",
+    "difficulty": "notable",
+    "link": "https://youtu.be/5cSl1WYb4-Y?si=nCcNnSVXHKEyr5pb"
   }
 ]

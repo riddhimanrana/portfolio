@@ -36,12 +36,12 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
       </div>
       {/* <div className="h-48 bg-gradient-to-br from-blue-400 to-purple-500 relative overflow-hidden">
         <Image
-          src={project.image || "/images/placeholder.svg?height=400&width=600"}
+          src={project.image || "/placeholder.svg?height=400&width=600"}
           alt={project.title}
           fill
           className="object-cover"
           onError={(e) => {
-            e.currentTarget.src = "/images/placeholder.svg?height=400&width=600"
+            e.currentTarget.src = "/placeholder.svg?height=400&width=600"
           }}
         />
       </div> */}

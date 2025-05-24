@@ -115,21 +115,26 @@ function AwardGridItem({
         {/* Decorative top accent */}
         <div className={`h-1.5 ${difficultyConfig.accentColor}`} />
         
+        {/* Difficulty indicator */}
+        <div className={`absolute top-3 right-3 p-1.5 rounded-full ${difficultyConfig.accentColor} text-white shadow-sm`}>
+          {difficultyConfig.icon}
+        </div>
+
         {/* Sparkle effect for major awards */}
         {award.difficulty === "major" && (
           <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <Sparkles className="w-4 h-4 text-yellow-400 animate-pulse mt-2" />
+            <Sparkles className="w-4 h-4 text-yellow-400 animate-pulse mt-10 mr-2.5" />
           </div>
         )}
 
         <CardHeader className="pb-3 pt-4">
-          <div className="flex items-start mb-3">
+          <div className="flex items-start">
             <div className="flex-shrink-0 h-14 w-14 overflow-hidden mr-3 relative shadow-md rounded-full">
               {/* <div className={`absolute inset-0 ${difficultyConfig.accentColor} opacity-20 blur-sm rounded-full`} /> */}
               <div className="relative h-full w-full rounded-full border overflow-hidden">
                 {!imageError ? (
                   <Image
-                    src={award.image || "/images/placeholder.svg"}
+                    src={award.image || "/placeholder.svg"}
                     alt={award.name}
                     fill
                     className="object-cover rounded-full transition-transform duration-300"
@@ -153,11 +158,7 @@ function AwardGridItem({
             </div>
           </div>
           
-          {/* Enhanced difficulty badge */}
-          <div className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold ${difficultyConfig.accentColor} text-white shadow-sm w-fit`}>
-            {difficultyConfig.icon}
-            <span>{difficultyConfig.label}</span>
-          </div>
+          {/* Removed the difficulty badge from here */}
         </CardHeader>
 
         <CardContent className="pt-0 pb-3">

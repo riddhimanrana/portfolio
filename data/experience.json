@@ -2,21 +2,21 @@
   {
     "title": "DVHS Computer Science Club",
     "subtext": "Club Secretary",
-    "logo": "/images/logos/dvhs-cs-club.png",
+    "logo": "/logos/dvhs-cs-club.png",
     "date": "August 2025 - May 2026",
     "details": "Managed club communications, organized events, and documented meeting proceedings. Helped coordinate workshops and hackathons that encouraged students to explore various aspects of computer science."
   },
   {
     "title": "Tulip Coaching",
     "subtext": "Co-Founder & Instructor",
-    "logo": "/images/logos/tulip-coaching.png",
+    "logo": "/logos/tulip-coaching.png",
     "date": "June 2025 - Present",
     "details": "Co-founded a personalized coaching platform for students seeking to excel in computer science and mathematics. Developing curriculum and instructional materials while mentoring students in competitive programming."
   },
   {
     "title": "Let's Assist",
     "subtext": "Founder CEO & Product Dev",
-    "logo": "/images/logos/lets-assist.png",
+    "logo": "/logos/lets-assist.png",
     "date": "December 2024 - Present",
     "details": "Leading the development of AI-powered assistance solutions for students and professionals. Building innovative tools that enhance productivity and learning outcomes through intelligent automation.",
     "link": "https://lets-assist.com"
@@ -24,14 +24,14 @@
   {
     "title": "Windemere Coding Club",
     "subtext": "Club Secretary",
-    "logo": "/images/logos/wrms.png",
+    "logo": "/logos/wrms.png",
     "date": "January 2024 - May 2024",
     "details": "Organized club meetings and facilitated communication between members and faculty advisors. Helped develop educational content to teach fellow students programming fundamentals through hands-on projects."
   },
   {
     "title": "Boy Scouts of America",
     "subtext": "First Class Scout at Troop 941",
-    "logo": "/images/logos/bsa.png",
+    "logo": "/logos/bsa.png",
     "date": "December 2022 - Present",
     "details": "Developed leadership skills and community service experience through active participation in troop activities. Completed numerous merit badges focused on technical skills and outdoor competencies.",
     "link": "https://troop941.org"

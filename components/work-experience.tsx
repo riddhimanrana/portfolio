@@ -65,7 +65,7 @@ export function WorkExperience() {
                     className="object-contain p-1.5 rounded-full"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
-                      target.src = '/images/placeholder.svg';
+                      target.src = '/placeholder.svg';
                     }}
                   />
                 </div>

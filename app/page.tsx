@@ -60,7 +60,7 @@ export default function Home() {
             className="flex items-center hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-100 group ml-2"
           >
             <Image
-            src="/images/logos/lets-assist.png"
+            src="/logos/lets-assist.png"
             alt="Let's Assist Logo"
             width={36}
             height={36}
@@ -83,7 +83,7 @@ export default function Home() {
           <span>Hey, I'm</span>
           <div className="rounded-2xl transition-transform hover:scale-105 duration-300">
             <Image 
-              src="/images/profile.jpeg" 
+              src="/profile.jpeg" 
               alt="Riddhiman Rana" 
               width={48} 
               height={48} 

@@ -74,7 +74,7 @@ export function AwardDetail({ award, onClose }: AwardDetailProps) {
             <div className="relative h-14 w-14 rounded-full overflow-hidden border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
               {!imageError ? (
                 <Image
-                  src={award.image || "/images/placeholder.svg"}
+                  src={award.image || "/placeholder.svg"}
                   alt={award.name}
                   fill
                   className="object-cover"
