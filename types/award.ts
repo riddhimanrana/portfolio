@@ -9,4 +9,6 @@ export interface Award {
   image: string
   difficulty: AwardDifficulty
   link?: string
+  submissionLink?: string
+  isIconRoundedFull?: boolean // Changed from iconRadius: number
 }

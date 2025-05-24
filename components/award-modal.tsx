@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ExternalLink, Medal, Star, AwardIcon, Calendar, Clock, Sparkles } from "lucide-react";
+import { X, ExternalLink, Medal, Star, AwardIcon, Calendar, Clock, Sparkles, Eye } from "lucide-react";
 import type { Award } from "@/types/award";
 import { formatDate } from "@/lib/utils";
 
@@ -117,7 +117,9 @@ export function AwardModal({ award, isOpen, onClose }: AwardModalProps) {
                   <div className="flex items-start gap-4 sm:gap-6 mb-6">
                     {/* Award image */}
                     <div className="flex-shrink-0 relative">
-                      <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-full overflow-hidden border-2 border-gray-200 dark:border-gray-700 shadow-lg">
+                      <div 
+                        className={`h-16 w-16 sm:h-20 sm:w-20 overflow-hidden border-2 border-gray-200 dark:border-gray-700 shadow-lg ${award.isIconRoundedFull ? 'rounded-full' : 'rounded-md'}`}
+                      >
                         {!imageError ? (
                           <Image
                             src={award.image || "/placeholder.svg"}
@@ -203,17 +205,33 @@ export function AwardModal({ award, isOpen, onClose }: AwardModalProps) {
                   )}
 
                   {/* External link */}
-                  {award.link && (
+                  {(award.link || award.submissionLink) && (
                     <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
-                      <a
-                        href={award.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={`inline-flex items-center gap-2 px-4 py-2 ${config.accentColor} hover:opacity-90 text-white text-sm font-medium rounded-lg shadow-md hover:shadow-lg transition-all duration-200 w-full justify-center`}
-                      >
-                        <ExternalLink className="w-4 h-4" />
-                        View Details
-                      </a>
+                      <h3 className="text-md font-semibold text-gray-900 dark:text-white mb-3">External Links</h3>
+                      <div className="flex flex-wrap gap-3">
+                        {award.link && (
+                          <a
+                            href={award.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium ${config.accentColor} text-white hover:opacity-90 transition-opacity`}
+                          >
+                            <ExternalLink className="w-4 h-4" />
+                            View Details
+                          </a>                          
+                        )}
+                        {award.submissionLink && (
+                          <a
+                            href={award.submissionLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium ${config.accentColor} text-white hover:opacity-90 transition-opacity`}
+                          >
+                            <Eye className="w-4 h-4" />
+                            View Submission
+                          </a>
+                        )}
+                      </div>
                     </div>
                   )}
                 </div>

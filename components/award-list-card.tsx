@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
-import { Calendar, ChevronDown, ExternalLink, Trophy, Award as AwardIcon, Medal, Star, Sparkles, Clock } from "lucide-react"
+import { Calendar, ChevronDown, ExternalLink, Trophy, Award as AwardIcon, Medal, Star, Sparkles, Clock, Eye } from "lucide-react"
 import type { Award } from "@/types/award"
 import { formatDate } from "@/lib/utils"
 
@@ -85,7 +85,7 @@ export function AwardCard({ award, isExpanded, onToggle }: AwardCardProps) {
             {/* Enhanced image container */}
             <div className="flex-shrink-0 relative">
               <div
-                className="h-12 w-12 sm:h-14 sm:w-14 overflow-hidden shadow-md group-hover:shadow-lg transition-shadow duration-300 rounded-full"
+                className={`h-12 w-12 sm:h-14 sm:w-14 overflow-hidden shadow-md group-hover:shadow-lg transition-shadow duration-300 ${award.isIconRoundedFull ? 'rounded-full' : 'rounded-md'}`}
               >
                 {!imageError ? (
                   <Image
@@ -185,29 +185,35 @@ export function AwardCard({ award, isExpanded, onToggle }: AwardCardProps) {
               className="overflow-hidden border-t border-gray-200/60 dark:border-gray-700/60"
             >
               <div className="p-4 sm:p-6 pt-4 bg-white/30 dark:bg-gray-800/30 backdrop-blur-sm">
-                {award.detailedDescription && (
-                  <div className="mb-4">
-                    <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2">Details</h4>
-                    <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed whitespace-pre-line">
-                      {award.detailedDescription}
-                    </p>
-                  </div>
-                )}
-                
-                {award.link && (
-                  <motion.a
-                    href={award.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium rounded-lg shadow-sm hover:shadow-md transition-all duration-300"
-                    onClick={(e) => e.stopPropagation()}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <ExternalLink className="w-4 h-4" />
-                    View Details
-                  </motion.a>
-                )}
+                <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed mb-4">
+                  {award.detailedDescription || award.description}
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  {award.link && (
+                    <a 
+                      href={award.link} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 transition-colors duration-200"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <ExternalLink className="w-3.5 h-3.5" />
+                      View Details
+                    </a>
+                  )}
+                  {award.submissionLink && (
+                    <a 
+                      href={award.submissionLink} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 transition-colors duration-200"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <Eye className="w-3.5 h-3.5" />
+                      View Submission
+                    </a>
+                  )}
+                </div>
               </div>
             </motion.div>
           )}

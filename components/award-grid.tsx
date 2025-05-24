@@ -62,11 +62,7 @@ interface AwardGridItemProps {
   onClick: () => void;
 }
 
-function AwardGridItem({
-  award,
-  index,
-  onClick,
-}: AwardGridItemProps) {
+function AwardGridItem({ award, index, onClick }: AwardGridItemProps) {
   const [imageError, setImageError] = useState(false);
 
   // Enhanced difficulty configurations
@@ -129,19 +125,23 @@ function AwardGridItem({
 
         <CardHeader className="pb-3 pt-4">
           <div className="flex items-start">
-            <div className="flex-shrink-0 h-14 w-14 overflow-hidden mr-3 relative shadow-md rounded-full">
+            <div 
+              className={`flex-shrink-0 h-14 w-14 overflow-hidden mr-3 relative shadow-md ${award.isIconRoundedFull ? 'rounded-full' : 'rounded-md'}`}
+            >
               {/* <div className={`absolute inset-0 ${difficultyConfig.accentColor} opacity-20 blur-sm rounded-full`} /> */}
-              <div className="relative h-full w-full rounded-full border overflow-hidden">
+              <div 
+                className={`relative h-full w-full border overflow-hidden ${award.isIconRoundedFull ? 'rounded-full' : 'rounded-md'}`}
+              >
                 {!imageError ? (
                   <Image
                     src={award.image || "/placeholder.svg"}
                     alt={award.name}
                     fill
-                    className="object-cover rounded-full transition-transform duration-300"
+                    className="object-cover"
                     onError={() => setImageError(true)}
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center rounded-full justify-center ">
+                  <div className="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-gray-800">
                     {difficultyConfig.icon}
                   </div>
                 )}
@@ -167,8 +167,8 @@ function AwardGridItem({
           </p>
         </CardContent>
 
-        <CardFooter className="pt-0 pb-4">
-          {award.link ? (
+        <CardFooter className="pt-0 pb-4 flex flex-wrap gap-2">
+          {award.link && (
             <a
               href={award.link}
               target="_blank"
@@ -179,9 +179,22 @@ function AwardGridItem({
               View details 
               <ExternalLink className="w-3.5 h-3.5 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
             </a>
-          ) : (
+          )}
+          {/* {award.submissionLink && (
+            <a
+              href={award.submissionLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`inline-flex items-center gap-1.5 text-sm font-medium ${difficultyConfig.textColor} hover:underline transition-all duration-200 group/link`}
+              onClick={(e) => e.stopPropagation()}
+            >
+              View Submission
+              <ExternalLink className="w-3.5 h-3.5 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
+            </a>
+          )} */}
+          {!award.link && !award.submissionLink && (
             <>
-            {/* <span className="text-xs text-gray-400 dark:text-gray-500 italic">Click to view details</span> */}
+              {/* <span className="text-xs text-gray-400 dark:text-gray-500 italic">Click to view details</span> */}
             </>
           )}
         </CardFooter>

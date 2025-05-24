@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Image from "next/image"
 import { motion } from "framer-motion"
-import { X, ExternalLink, Medal, Star, AwardIcon } from "lucide-react"
+import { X, ExternalLink, Medal, Star, AwardIcon, Eye } from "lucide-react"
 import type { Award } from "@/types/award"
 import { formatDate } from "@/lib/utils"
 
@@ -71,7 +71,9 @@ export function AwardDetail({ award, onClose }: AwardDetailProps) {
         <div className="flex items-start gap-3">
           {/* Award Image */}
           <div className="flex-shrink-0">
-            <div className="relative h-14 w-14 rounded-full overflow-hidden border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+            <div 
+              className={`relative h-14 w-14 overflow-hidden border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 ${award.isIconRoundedFull ? 'rounded-full' : 'rounded-md'}`}
+            >
               {!imageError ? (
                 <Image
                   src={award.image || "/placeholder.svg"}
@@ -115,9 +117,9 @@ export function AwardDetail({ award, onClose }: AwardDetailProps) {
               </div>
             )}
             
-            {/* External Link */}
-            {award.link && (
-              <div className="flex justify-start">
+            {/* External Links */}
+            <div className="flex flex-wrap gap-2 justify-start">
+              {award.link && (
                 <a
                   href={award.link}
                   target="_blank"
@@ -128,8 +130,20 @@ export function AwardDetail({ award, onClose }: AwardDetailProps) {
                   <ExternalLink className="w-3 h-3" />
                   View Details
                 </a>
-              </div>
-            )}
+              )}
+              {award.submissionLink && (
+                <a
+                  href={award.submissionLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium ${config.color} hover:underline`}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <Eye className="w-3 h-3" />
+                  View Submission
+                </a>
+              )}
+            </div>
           </div>
         </div>
       </div>

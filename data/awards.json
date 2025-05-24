@@ -7,7 +7,8 @@
     "date": "2024-12-15",
     "image": "/awards/usaco.png",
     "difficulty": "major",
-    "link": "https://usaco.org/"
+    "link": "https://usaco.org/",
+    "submissionLink": "https://github.com/riddhimanrana/usaco-solutions/tree/main/Silver/dec%2024-25"
   },
   {
     "id": "usaco-bronze",
@@ -17,7 +18,8 @@
     "date": "2024-02-19",
     "image": "/awards/usaco.png",
     "difficulty": "major",
-    "link": "https://usaco.org/"
+    "link": "https://usaco.org/",
+    "submissionLink": "https://github.com/riddhimanrana/usaco-solutions/tree/main/Bronze/feb%2023-24"
   },
   {
     "id": "amc-8-24",
@@ -45,8 +47,9 @@
     "description": "Scored 112/120, 4th national, 3rd state",
     "detailedDescription": "Scored 112/120 in the Math Kangaroo 2025, a mathematics competition for students from grades 1 to 12. Ranked 4th nationally and 3rd in the state.\n\nThe Math Kangaroo competition tests problem-solving skills and mathematical reasoning, covering topics such as algebra, geometry, and number theory.",
     "date": "2025-03-20",
-    "image": "/awards/mathkangaroo.png",
+    "image": "/awards/mathkangaroo.jpeg",
     "difficulty": "major",
+    "isIconRoundedFull": true,
     "link": "https://mathkangaroo.org/mks/"
   },
   {
@@ -55,8 +58,9 @@
     "description": "Attended International Math Kangaroo Camp in Zakopane, Poland",
     "detailedDescription": "Attended the prestigious Math Kangaroo International Camp in Zakopane, Poland from Jul 29 to Aug 7, representing the USA in a team of the top 10 students nationally. The camp included advanced problem-solving sessions, workshops, and competitions with students from around the world.\n\nThis experience enhanced my mathematical skills and provided a unique opportunity to collaborate with international peers.",
     "date": "2025-07-29",
-    "image": "/awards/mathkangaroo-camp.png",
+    "image": "/awards/mathkangaroo.jpeg",
     "difficulty": "major",
+    "isIconRoundedFull": true,
     "link": "https://zakopane.kangur-mat.pl/en/camps/2025/"
   },
   {
@@ -67,6 +71,7 @@
     "date": "2025-03-24",
     "image": "/awards/streetsmarts.png",
     "difficulty": "notable",
-    "link": "https://youtu.be/5cSl1WYb4-Y?si=nCcNnSVXHKEyr5pb"
+    "submissionLink": "https://youtu.be/5cSl1WYb4-Y?si=nCcNnSVXHKEyr5pb",
+    "link": "https://www.street-smarts.com/"
   }
 ]
