@@ -112,14 +112,14 @@ export function AwardTimelineNav({ awards, selectedId, onSelectAward }: AwardTim
                     onClick={() => onSelectAward(award.id)}
                   >
                     {/* Simplified decorative dot */}
-                    <span
+                    {/* <span
                       className={`w-3 h-3 rounded-full mr-3 flex-shrink-0 ${config.dotColor} shadow-sm`}
-                    />
+                    /> */}
                     
                     {/* Content */}
                     <div className="flex-grow min-w-0">
                       <div className="flex items-center justify-between mb-1">
-                        <p className={`text-sm font-semibold line-clamp-1 ${config.textColor} transition-colors duration-300`}>
+                        <p className={`text-sm font-semibold whitespace-nowrap overflow-hidden text-ellipsis ${config.textColor} transition-colors duration-300`}>
                           {award.name}
                         </p>
                         <div className="flex items-center gap-1">

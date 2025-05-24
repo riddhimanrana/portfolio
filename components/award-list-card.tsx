@@ -85,14 +85,14 @@ export function AwardCard({ award, isExpanded, onToggle }: AwardCardProps) {
             {/* Enhanced image container */}
             <div className="flex-shrink-0 relative">
               <div
-                className={`h-12 w-12 sm:h-14 sm:w-14 overflow-hidden shadow-md group-hover:shadow-lg transition-shadow duration-300 ${award.isIconRoundedFull ? 'rounded-full' : 'rounded-md'}`}
+                className={`h-12 w-12 sm:h-14 sm:w-14 transition-shadow duration-300 ${award.isIconRoundedFull ? 'rounded-full' : 'rounded-md'}`}
               >
                 {!imageError ? (
                   <Image
                     src={award.image || "/placeholder.svg"}
                     alt={award.name}
                     fill
-                    className="object-cover rounded-full"
+                    className={`object-cover ${award.isIconRoundedFull ? 'rounded-full' : 'rounded-md'}`}
                     onError={() => setImageError(true)}
                   />
                 ) : (

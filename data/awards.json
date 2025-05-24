@@ -66,10 +66,11 @@
   {
     "id": "streetsmarts-2025",
     "name": "Street Smarts Video Contest",
-    "description": "Won 2nd place",
+    "description": "Won 2nd place in high school division",
     "detailedDescription": "Got 2nd place in a local video contest organized by the City of San Ramon and Danville, focused on promoting traffic safety and awareness. The contest encouraged students to create engaging videos that highlight the importance of road safety, pedestrian awareness, and responsible driving.\n\nMy video, titled 'Stay Safe and Bike with Care', creatively addressed these issues and was recognized for its impact and creativity.",
     "date": "2025-03-24",
-    "image": "/awards/streetsmarts.png",
+    "image": "/awards/street-smarts.png",
+    "isIconRoundedFull": false,
     "difficulty": "notable",
     "submissionLink": "https://youtu.be/5cSl1WYb4-Y?si=nCcNnSVXHKEyr5pb",
     "link": "https://www.street-smarts.com/"
