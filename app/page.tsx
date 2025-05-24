@@ -264,7 +264,7 @@ export default function Home() {
                       <SiGithub className="h-6 w-6" />
                       <span>Code</span>
                     </Link>
-                    <Link href="https://youtu.be/F_EsDD1HGjE?si=XhfiDFwxzMGKyfAV" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all inline-flex items-center gap-1.5 text-sm font-medium group-hover:translate-x-0.5">
+                    <Link href="https://youtu.be/F_EsDD1HGjE?si=XhfiDFwxzMGKyfAV" className="text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 transition-all inline-flex items-center gap-1.5 text-sm font-medium group-hover:translate-x-0.5">
                       <SiYoutube className="h-6 w-6" />
                       <span>Project Demo</span>
                     </Link>

@@ -48,11 +48,11 @@ export default function NavBar() {
           
           <Link href="/" className="relative z-10 flex items-center">
             <Image
-              src="/images/avatar.jpeg"      // put your avatar file in /public/logo.png
+              src="/images/avatar.png"      // put your avatar file in /public/logo.png
               alt="riddhiman logo"
               width={30}
               height={30}
-              className="rounded-full"
+              className=""
             />
             <span className="ml-2 font-bold text-xl">riddhiman</span>
           </Link>

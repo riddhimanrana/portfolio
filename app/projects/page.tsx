@@ -1,8 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import { motion } from "framer-motion"
-import { Briefcase, Search, X, TagIcon } from "lucide-react"
+import { Briefcase, Search, X, TagIcon, ChevronRight } from "lucide-react"
 import { ProjectCard } from "@/components/project-card"
 import { ProjectModal } from "@/components/project-modal"
 import { getAllProjects } from "@/utils/projects"
@@ -13,6 +13,9 @@ export default function ProjectsPage() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedTag, setSelectedTag] = useState<string | null>(null)
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(false);
+  const tagsContainerRef = useRef<HTMLDivElement>(null)
 
   const projects = getAllProjects()
 
@@ -39,6 +42,57 @@ export default function ProjectsPage() {
   const closeProjectModal = () => {
     setIsModalOpen(false)
   }
+  
+  // Check if arrows should be shown
+  const checkArrowsVisibility = () => {
+    if (tagsContainerRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = tagsContainerRef.current;
+      setShowLeftArrow(scrollLeft > 0);
+      setShowRightArrow(scrollLeft < scrollWidth - clientWidth - 2); // -2 to account for rounding errors
+    }
+  };
+
+  // Add scroll event listener
+  useEffect(() => {
+    const tagsContainer = tagsContainerRef.current;
+    if (tagsContainer) {
+      checkArrowsVisibility();
+      tagsContainer.addEventListener('scroll', checkArrowsVisibility);
+      
+      // Check on resize too
+      window.addEventListener('resize', checkArrowsVisibility);
+      
+      // Initial check after content might have rendered
+      setTimeout(checkArrowsVisibility, 100);
+    }
+    
+    return () => {
+      if (tagsContainer) {
+        tagsContainer.removeEventListener('scroll', checkArrowsVisibility);
+      }
+      window.removeEventListener('resize', checkArrowsVisibility);
+    };
+  }, []);
+  
+  const scrollTagsRight = () => {
+    if (tagsContainerRef.current) {
+      tagsContainerRef.current.scrollBy({
+        left: 200,
+        behavior: 'smooth'
+      });
+    }
+    setTimeout(checkArrowsVisibility, 100);
+  }
+  
+  const scrollTagsLeft = () => {
+    if (tagsContainerRef.current) {
+      tagsContainerRef.current.scrollBy({
+        left: -200,
+        behavior: 'smooth'
+      });
+    }
+    setTimeout(checkArrowsVisibility, 100);
+  }
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-300">
@@ -47,7 +101,7 @@ export default function ProjectsPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6"
+          className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-5"
         >
           <div className="flex items-center">
             <div className="flex items-center justify-center w-12 h-12 bg-gray-100 dark:bg-gray-600/20 rounded-lg mr-4 shrink-0">
@@ -81,32 +135,65 @@ export default function ProjectsPage() {
         </motion.div>
 
         {/* Tags filter */}
-        <div className="mb-6 overflow-x-auto scrollbar-hide">
-          <div className="flex gap-1.5 pb-2 min-w-max">
-            <button
-              onClick={() => setSelectedTag(null)}
-              className={`px-3 py-1.5 rounded-full border text-xs font-medium transition-all ${
-                selectedTag === null
-                  ? "bg-blue-100 dark:bg-blue-900/30 border-blue-200 dark:border-blue-800 text-blue-800 dark:text-blue-300"
-                  : "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/70"
-              }`}
-            >
-              All Projects
-            </button>
-            {allTags.map((tag) => (
+        <div className="mb-6 relative">
+          <div 
+            ref={tagsContainerRef}
+            className="overflow-x-auto scrollbar-hide"
+          >
+            <div className="flex gap-1.5 pb-2 min-w-max">
               <button
-                key={tag}
-                onClick={() => setSelectedTag(tag === selectedTag ? null : tag)}
-                className={`px-3 py-1.5 rounded-full border text-xs font-medium transition-all inline-flex items-center gap-1 ${
-                  tag === selectedTag
+                onClick={() => setSelectedTag(null)}
+                className={`px-3 py-1.5 rounded-full border text-xs font-medium transition-all ${
+                  selectedTag === null
                     ? "bg-blue-100 dark:bg-blue-900/30 border-blue-200 dark:border-blue-800 text-blue-800 dark:text-blue-300"
                     : "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/70"
                 }`}
               >
-                <TagIcon className="h-3 w-3" />{tag}
+                All Projects
               </button>
-            ))}
+              {allTags.map((tag) => (
+                <button
+                  key={tag}
+                  onClick={() => setSelectedTag(tag === selectedTag ? null : tag)}
+                  className={`px-3 py-1.5 rounded-full border text-xs font-medium transition-all inline-flex items-center gap-1 ${
+                    tag === selectedTag
+                      ? "bg-blue-100 dark:bg-blue-900/30 border-blue-200 dark:border-blue-800 text-blue-800 dark:text-blue-300"
+                      : "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/70"
+                  }`}
+                >
+                  <TagIcon className="h-3 w-3" />{tag}
+                </button>
+              ))}
+            </div>
           </div>
+          
+          {showLeftArrow && (
+            <button 
+              onClick={scrollTagsLeft}
+              className="absolute left-0 top-1/4 -translate-y-1/3 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl border border-gray-200 dark:border-gray-700 rounded-full p-1.5 drop-shadow-xl hover:bg-white dark:hover:bg-gray-700 transition-colors z-10"
+              aria-label="Scroll tags left"
+            >
+              <ChevronRight className="h-4 w-4 text-gray-600 dark:text-gray-300 rotate-180" />
+            </button>
+          )}
+          
+          {showRightArrow && (
+            <button 
+              onClick={scrollTagsRight}
+              className="absolute right-0 top-1/4 -translate-y-1/3 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl border border-gray-200 dark:border-gray-700 rounded-full p-1.5 drop-shadow-xl hover:bg-white dark:hover:bg-gray-700 transition-colors z-10"
+              aria-label="Scroll tags right"
+            >
+              <ChevronRight className="h-4 w-4 text-gray-600 dark:text-gray-300" />
+            </button>
+          )}
+          
+          {showLeftArrow && (
+            <div className="absolute left-0 top-0 w-10 h-full bg-gradient-to-r from-white dark:from-gray-950 to-transparent pointer-events-none z-[5]"></div>
+          )}
+          
+          {showRightArrow && (
+            <div className="absolute right-0 top-0 w-10 h-full bg-gradient-to-l from-white dark:from-gray-950 to-transparent pointer-events-none z-[5]"></div>
+          )}
         </div>
 
         {/* Projects grid */}

@@ -1,44 +1,81 @@
 [
   {
-    "id": "personal-portfolio",
+    "id": "lets-assist",
+    "title": "Let's Assist",
+    "tagline": "End-to-end volunteering platform built for high schoolers",
+    "description": "Let's Assist is a comprehensive online volunteering platform that helps organizations and high school CSF programs manage, automatically track, and coordinate volunteering activities for students and communities. It simplifies the process for organizations to create and manage volunteer events, track student contributions, and verify hours securely using QR codes. For students, it eliminates the hassle of actively searching for opportunities by providing personalized recommendations and an easy way to log and track their hours.\n\nI started this project in Oct 2023 after a real experience where during a long weekend, I visited Santa Cruz Beachand saw tons of trash littered everywhere. This motivated me to create a platform that would make it easy for someone to see something that needs to be done about, create a project, and get volunteers to help out. I also enrolled in CJSF for the first time that year and I saw the potential in high school students who need volunteering hours to more easily give back to their communities and make a positive real-world impact.\n\nI submitted an initial version of this project to a hackathon called HarvestHacks but even though I didn't win anything, I was motivated to completely revamp it and make it a full-fledged platform. After a year of keeping this project on hold, I finally got back to it in Dec 2024 and spent the next 6 months and every weekend working on it. Eventually, I finished it in May 2025 and hopefully I will be able to fully launch and market it successfully with a huge impact in the Tri-Valley area. ",
+    "image": "/projects/lets-assist.png",
+    "logo": "/projects/logos/lets-assist.png",
+    "tags": ["Next.js", "Supabase", "TypeScript", "Tailwind CSS", "Shadcn UI"],
+    "year": "2025",
+    "projectLink": "https://lets-assist.com",
+    "repoLink": "https://github.com/riddhimanrana/lets-assist"
+  },
+  {
+    "id": "portfolio",
     "title": "Personal Portfolio Website",
-    "tagline": "A responsive portfolio website built with Next.js and Tailwind CSS",
-    "description": "This personal portfolio website showcases my skills, projects, and achievements. Built with Next.js and Tailwind CSS, it features a responsive design, dark mode support, and smooth animations powered by Framer Motion. The site is optimized for performance and SEO, with a focus on accessibility and user experience.\n\nKey features include:\n- Responsive design that works on all devices\n- Dark/light mode toggle with system preference detection\n- Smooth page transitions and scroll animations\n- SEO optimization with Next.js metadata API\n- TypeScript for type safety and better developer experience",
-    "image": "/images/placeholder.svg?height=400&width=600",
-    "tags": ["Web Development", "React", "Next.js", "Tailwind CSS"],
-    "year": "2023",
-    "projectLink": "https://riddhimanrana.com",
+    "tagline": "My developer portfolio and this website",
+    "description": "A fast, accessible, and fully responsive portfolio website showcasing my projects, skills, and experience. Designed and developed entirely by me with no templates or themes. I plan to eventually convert this project from Next.js to Astro for better performance and SEO.",
+    "tags": ["Next.js", "Tailwind CSS", "TypeScript"],
+    "year": "2025",
+    "image": "/projects/portfolio.png",
+    "logo": "/projects/logos/portfolio.png",
+    "projectLink": "https://rrcoder0167.is-a.dev",
     "repoLink": "https://github.com/riddhimanrana/portfolio"
   },
   {
-    "id": "competitive-programming-solutions",
-    "title": "Competitive Programming Solutions",
-    "tagline": "A collection of solutions to competitive programming problems",
-    "description": "This repository contains my solutions to various competitive programming problems from platforms like USACO, Codeforces, AtCoder, and more. Each solution includes a detailed explanation of the algorithm and approach used to solve the problem.\n\nThe solutions are organized by platform and difficulty, making it easy to find specific problems. I regularly update this repository with new solutions as I solve more problems.\n\nTechnologies used:\n- C++ for most solutions\n- Python for some specific problems\n- Custom testing framework for local testing",
-    "image": "/images/placeholder.svg?height=400&width=600",
-    "tags": ["Algorithm", "C++", "Competitive Programming", "USACO"],
+    "id": "usaco-solutions",
+    "title": "USACO Solutions",
+    "tagline": "My USACO solutions and contest prep",
+    "description": "A collection of my solutions for USACO problems and other competitive programming contests, written in C++ and Python. Includes code, comments, drawings and strategies for tackling many types of algorithmic challenges.",
+    "logo": "/projects/logos/usaco.png",
+    "tags": ["C++", "Python"],
     "year": "2024",
-    "repoLink": "https://github.com/riddhimanrana/competitive-programming"
+    "repoLink": "https://github.com/riddhimanrana/usaco-solutions"
+  },
+  
+  {
+    "id": "dotfiles",
+    "title": "Dotfiles & Mac Apps",
+    "tagline": "My dotfiles and Mac app configurations",
+    "description": "A collection of personal dotfiles and apps for macOS, including configurations for shell, editors, and various developer tools. You can preview my setup and my customizations in the screenshots directory of the repo.",
+    "tags": ["macOS"],
+    "year": "2024",
+    "repoLink": "https://github.com/riddhimanrana/dotfiles"
   },
   {
-    "id": "algorithm-visualizer",
-    "title": "Algorithm Visualizer",
-    "tagline": "Interactive tool for visualizing common algorithms",
-    "description": "The Algorithm Visualizer is an interactive web application that helps users understand how various algorithms work through visual representations. Users can adjust parameters, step through algorithms, and see the changes in real-time.\n\nThe visualizer currently supports sorting algorithms (bubble sort, merge sort, quick sort), graph algorithms (BFS, DFS, Dijkstra's), and dynamic programming examples. Each algorithm includes a detailed explanation and time/space complexity analysis.\n\nBuilt with React and D3.js for visualizations, with a clean, intuitive interface that makes learning algorithms more accessible to beginners.",
-    "image": "/images/placeholder.svg?height=400&width=600",
-    "tags": ["Web Development", "React", "Algorithms", "Educational"],
+    "id": "chomp",
+    "title": "Chomp",
+    "tagline": "Diabetes tracking application built for Los Altos Hacks 24",
+    "description": "Chomp is a diabetes tracking application me and my friend Abinav Venkit developed for Los Altos Hacks 2024. The primary goal of this project was to create a tool that helps people with diabetes manage their condition more effectively. Initially, I had tried to identify the nutritional information of the food by web scraping images of popular foods, taking my own data, and creating our own in-house model which we would connect to a nutritional API. However, with our 24 hour time constraint, we quickly realized that wasn't possilbe and were only able to implement the OCR recognition feature, which allows users to take a picture of their food and get the nutritional information.\n\nThe app is built using Next.js, TypeScript, and Shadcn UI and uses the Tesseract.js library for OCR recognition. While we didn't create a full implementation of this app, it was a good experience learning to use machine learning libraries in a web application.",
+    "tags": ["Next.js", "Tesseract.js", "TypeScript", "Shadcn UI"],
+    "year": "2024",
+    "image": "/projects/chomp.png",
+    "logo": "/projects/logos/chomp.png",
+    "projectLink": "https://wechomp.vercel.app",
+    "repoLink": "https://github.com/riddhimanrana/chomp"
+  },
+  {
+    "id": "orange-chat",
+    "title": "Orange Chat",
+    "tagline": "Distraction-free, fun, open-source chatting app",
+    "description": "This was my very first attempt at web development and taught me a lot about the basics of web development. I implemented the login/signup and friend request features, giving me my first experience with CSS and backend using MongoDB. However, I eventually quit the project as I realized that it wasn't anything special and would just be a waste of time.\n\nThe image above is the figma design I made as the vision for this project. You can see the screenshots of the actual app in the repo. ",
+    "image": "/projects/orange-chat.png",
+    "logo": "/projects/logos/orange-chat.png",
+    "tags": ["Flask", "MongoDB", "HTML", "CSS"],
     "year": "2023",
-    "projectLink": "https://algorithm-visualizer.riddhimanrana.com",
-    "repoLink": "https://github.com/riddhimanrana/algorithm-visualizer"
+    "projectLink": "https://orangechat.azurewebsites.net",
+    "repoLink": "https://github.com/riddhimanrana/Orange-Chat"
   },
   {
-    "id": "usaco-training-platform",
-    "title": "USACO Training Platform",
-    "tagline": "A platform for USACO training with problem sets and tutorials",
-    "description": "The USACO Training Platform is a comprehensive resource for students preparing for the USA Computing Olympiad. It features curated problem sets, detailed tutorials, and a judge system for submitting and testing solutions.\n\nThe platform organizes content by USACO division (Bronze, Silver, Gold, Platinum) and topic, making it easy for users to focus on specific areas they need to improve. Each problem includes hints, solution approaches, and complexity analysis.\n\nThe backend is built with Node.js and Express, with a PostgreSQL database for storing user progress and submissions. The frontend uses React with TypeScript and Tailwind CSS for a responsive, user-friendly interface.",
-    "image": "/images/placeholder.svg?height=400&width=600",
-    "tags": ["Full Stack", "React", "Node.js", "Educational", "USACO"],
-    "year": "2024",
-    "projectLink": "https://usaco-training.riddhimanrana.com"
+    "id": "pyecohome-energy-tracker",
+    "title": "PyEcoHome Energy Tracker",
+    "tagline": "Home energy tracking application built in Python",
+    "description": "PyEcoHome is a Python-based tool for tracking and analyzing home energy consumption. It helps users monitor usage patterns, identify savings opportunities, and make eco-friendly choices.\nI built this for the 2022 Congressional App Challenge and got selected as a finalist. Both of my demo and submission videos are available on my YouTube channel.",
+    "image": "/projects/pyecohome-energy-tracker.png",
+    "logo": "/projects/logos/pyecohome-energy-tracker.png",
+    "tags": ["Python", "Tkinter", "Pandas"],
+    "year": "2022",
+    "repoLink": "https://github.com/riddhimanrana/PyEcoHome-Energy-Tracker"
   }
 ]

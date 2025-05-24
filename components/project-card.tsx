@@ -46,7 +46,22 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
         />
       </div> */}
       <div className="px-5 pb-6">
-        <h3 className="text-xl font-bold mb-2">{project.title}</h3>
+        <div className="flex items-center gap-2.5 mb-2">
+          {project.logo && (
+            <div className="relative w-7 h-7 flex-shrink-0">
+              <Image
+                src={project.logo}
+                alt={`${project.title} logo`}
+                fill
+                className="object-contain rounded"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none'
+                }}
+              />
+            </div>
+          )}
+          <h3 className="text-xl font-bold">{project.title}</h3>
+        </div>
         <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">{project.tagline}</p>
         <div className="flex space-x-4">
           {project.repoLink && (

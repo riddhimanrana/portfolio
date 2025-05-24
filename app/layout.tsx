@@ -5,6 +5,7 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import NavBar from "@/components/navbar"
 import { Toaster } from "@/components/toaster"
+import FooterWrapper from "@/components/footer-wrapper"
 
 const geist = Geist({ subsets: ["latin"] })
 
@@ -29,7 +30,6 @@ export const metadata: Metadata = {
     description: "Personal portfolio of Riddhiman Rana, a Web Developer and Competitive Programmer",
     creator: "@riddhimanrana",
   },
-    generator: 'v0.dev'
 }
 
 export default function RootLayout({
@@ -43,17 +43,10 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <NavBar />
           {children}
-          <footer className="bg-transparent pb-8">
-        <div className="text-center text-sm text-gray-600 dark:text-gray-400">
-          © {new Date().getFullYear()} Riddhiman Rana. All rights reserved.
-        </div>
-      </footer>
         </ThemeProvider>
         <Toaster />
+        <FooterWrapper />
       </body>
     </html>
   )
 }
-
-
-import './globals.css'

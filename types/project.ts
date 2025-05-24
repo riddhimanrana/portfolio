@@ -4,6 +4,7 @@ export interface Project {
   tagline: string
   description: string
   image: string
+  logo?: string
   tags: string[]
   year: string
   projectLink?: string
