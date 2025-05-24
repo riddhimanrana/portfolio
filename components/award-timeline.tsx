@@ -125,7 +125,7 @@ export function AwardTimelineNav({ awards, selectedId, onSelectAward }: AwardTim
                         <div className="flex items-center gap-1">
                           {award.difficulty === "major" && (
                             <div>
-                              <Sparkles className="w-3 h-3 text-blue-400" />
+                              <Sparkles className="w-3 h-3 text-yellow-400" />
                             </div>
                           )}
                           {config.icon}

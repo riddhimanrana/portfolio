@@ -168,7 +168,18 @@ function AwardGridItem({ award, index, onClick }: AwardGridItemProps) {
         </CardContent>
 
         <CardFooter className="pt-0 pb-4 flex flex-wrap gap-2">
-          {award.link && (
+          {award.submissionLink ? (
+            <a
+              href={award.submissionLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`inline-flex items-center gap-1.5 text-sm font-medium ${difficultyConfig.textColor} hover:underline transition-all duration-200 group/link`}
+              onClick={(e) => e.stopPropagation()}
+            >
+              View details
+              <ExternalLink className="w-3.5 h-3.5 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
+            </a>
+          ) : award.link ? (
             <a
               href={award.link}
               target="_blank"
@@ -179,24 +190,7 @@ function AwardGridItem({ award, index, onClick }: AwardGridItemProps) {
               View details 
               <ExternalLink className="w-3.5 h-3.5 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
             </a>
-          )}
-          {/* {award.submissionLink && (
-            <a
-              href={award.submissionLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`inline-flex items-center gap-1.5 text-sm font-medium ${difficultyConfig.textColor} hover:underline transition-all duration-200 group/link`}
-              onClick={(e) => e.stopPropagation()}
-            >
-              View Submission
-              <ExternalLink className="w-3.5 h-3.5 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
-            </a>
-          )} */}
-          {!award.link && !award.submissionLink && (
-            <>
-              {/* <span className="text-xs text-gray-400 dark:text-gray-500 italic">Click to view details</span> */}
-            </>
-          )}
+          ) : null}
         </CardFooter>
       </Card>
     </motion.div>

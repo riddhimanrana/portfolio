@@ -118,14 +118,14 @@ export function AwardModal({ award, isOpen, onClose }: AwardModalProps) {
                     {/* Award image */}
                     <div className="flex-shrink-0 relative">
                       <div 
-                        className={`h-16 w-16 sm:h-20 sm:w-20 overflow-hidden border-2 border-gray-200 dark:border-gray-700 shadow-lg ${award.isIconRoundedFull ? 'rounded-full' : 'rounded-md'}`}
+                        className={`h-16 w-16 sm:h-20 sm:w-20 overflow-hidden ${award.isIconRoundedFull ? 'rounded-full shadow-lg' : 'rounded-md'}`}
                       >
                         {!imageError ? (
                           <Image
                             src={award.image || "/placeholder.svg"}
                             alt={award.name}
                             fill
-                            className="object-cover rounded-full"
+                            className={`object-cover ${award.isIconRoundedFull ? 'rounded-full shadow-lg' : 'rounded-md'}`}
                             onError={() => setImageError(true)}
                           />
                         ) : (
@@ -217,7 +217,7 @@ export function AwardModal({ award, isOpen, onClose }: AwardModalProps) {
                             className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium ${config.accentColor} text-white hover:opacity-90 transition-opacity`}
                           >
                             <ExternalLink className="w-4 h-4" />
-                            View Details
+                            Visit Website
                           </a>                          
                         )}
                         {award.submissionLink && (

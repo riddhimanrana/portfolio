@@ -72,7 +72,7 @@ export function AwardDetail({ award, onClose }: AwardDetailProps) {
           {/* Award Image */}
           <div className="flex-shrink-0">
             <div 
-              className={`relative h-14 w-14 overflow-hidden border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 ${award.isIconRoundedFull ? 'rounded-full' : 'rounded-md'}`}
+              className={`relative h-14 w-14 overflow-hidden  ${award.isIconRoundedFull ? 'rounded-full shadow-lg' : 'rounded-md'}`}
             >
               {!imageError ? (
                 <Image
@@ -83,7 +83,7 @@ export function AwardDetail({ award, onClose }: AwardDetailProps) {
                   onError={() => setImageError(true)}
                 />
               ) : (
-                <div className="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-gray-800">
+                <div className="w-full h-full flex items-center justify-center ">
                   {config.icon}
                 </div>
               )}
@@ -128,7 +128,7 @@ export function AwardDetail({ award, onClose }: AwardDetailProps) {
                   onClick={(e) => e.stopPropagation()}
                 >
                   <ExternalLink className="w-3 h-3" />
-                  View Details
+                  Visit Website
                 </a>
               )}
               {award.submissionLink && (

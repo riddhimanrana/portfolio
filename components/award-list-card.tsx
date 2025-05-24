@@ -198,7 +198,7 @@ export function AwardCard({ award, isExpanded, onToggle }: AwardCardProps) {
                       onClick={(e) => e.stopPropagation()}
                     >
                       <ExternalLink className="w-3.5 h-3.5" />
-                      View Details
+                      Visit Website
                     </a>
                   )}
                   {award.submissionLink && (
