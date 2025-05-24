@@ -230,7 +230,7 @@ export default function AwardsPage() {
                             {(activeFilters.difficulty.length < 3 || activeFilters.year.length > 0) && (
                               <button
                                 onClick={resetFilters}
-                                className="text-xs text-red-600 dark:text-red-400 hover:underline flex items-center"
+                                className="text-xs bg-red-500 hover:underline flex items-center"
                               >
                                 <X className="w-3.5 h-3.5 mr-1" /> Clear All
                               </button>
@@ -370,7 +370,7 @@ export default function AwardsPage() {
                   {(activeFilters.difficulty.length < 3 || activeFilters.year.length > 0 || searchQuery) && (
                     <button
                       onClick={resetFilters}
-                      className="px-3 py-2 rounded-full text-xs font-medium bg-gradient-to-r from-red-500 to-red-600 text-white border-0 flex items-center gap-1.5 shadow-sm hover:shadow-md shadow-red-200 dark:shadow-red-900/50 transition-all duration-200"
+                      className="px-3 py-2 rounded-full text-xs font-medium bg-red-500 text-white border-0 flex items-center gap-1.5 shadow-sm hover:shadow-md shadow-red-200 dark:shadow-red-900/50 transition-all duration-200"
                     >
                       <X className="w-3.5 h-3.5" /> Clear All
                     </button>
