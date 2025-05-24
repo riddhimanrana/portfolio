@@ -29,8 +29,9 @@
     "description": "Scored 20/25 on the AMC 8",
     "detailedDescription": "Scored 20/25 in the AMC 8, a mathematics competition for middle school students organized by the Mathematical Association of America (MAA).\n\nThe AMC 8 tests problem-solving skills and mathematical reasoning, covering topics such as algebra, geometry, and number theory.",
     "date": "2024-01-18",
-    "image": "/awards/amc8.png",
+    "image": "/awards/maa.jpeg",
     "difficulty": "honorable",
+    "isIconRoundedFull": true,
     "link": "https://maa.org/student-programs/amc/"
   },
   {
@@ -39,7 +40,8 @@
     "description": "Scored 81 on the AMC 10B",
     "detailedDescription": "Scored 81 in the AMC 10B, a mathematics competition for high school students organized by the Mathematical Association of America (MAA).\n\nThe AMC 10B tests problem-solving skills and mathematical reasoning, covering topics such as algebra, geometry, and number theory.",
     "date": "2024-02-01",
-    "image": "/awards/amc10.png",
+    "image": "/awards/maa.jpeg",
+    "isIconRoundedFull": true,
     "difficulty": "honorable",
     "link": "https://maa.org/student-programs/amc/"
   },
@@ -76,5 +78,63 @@
     "difficulty": "notable",
     "submissionLink": "https://youtu.be/5cSl1WYb4-Y?si=nCcNnSVXHKEyr5pb",
     "link": "https://www.street-smarts.com/"
+  },
+  {
+    "id": "streetsmarts-2024",
+    "name": "Street Smarts Video Contest",
+    "description": "Won 2nd place in middle school division",
+    "detailedDescription": "Got 2nd place in a local video contest organized by the City of San Ramon and Danville, focused on promoting traffic safety and awareness. The contest encouraged students to create engaging videos that highlight the importance of road safety, pedestrian awareness, and responsible driving.\n\nMy video, titled 'Better be Safe than Sorry', creatively addressed these issues and was recognized for its impact and creativity.",
+    "date": "2024-04-01",
+    "image": "/awards/street-smarts.png",
+    "isIconRoundedFull": false,
+    "difficulty": "notable",
+    "submissionLink": "https://youtu.be/FAndoWXy464?si=1fAWxEZs3kpnMNlw",
+    "link": "https://www.street-smarts.com/"
+  },
+  {
+    "id": "streetsmarts-2023",
+    "name": "Street Smarts Video Contest",
+    "description": "Won 2nd place in middle school division",
+    "detailedDescription": "Got 2nd place in a local video contest organized by the City of San Ramon and Danville, focused on promoting traffic safety and awareness. The contest encouraged students to create engaging videos that highlight the importance of road safety, pedestrian awareness, and responsible driving.\n\nMy video, titled 'Be Aware and Walk with Care', creatively addressed these issues and was recognized for its impact and creativity.",
+    "image": "/awards/street-smarts.png",
+    "isIconRoundedFull": false,
+    "difficulty": "notable",
+    "date": "2023-04-10",
+    "submissionLink": "https://youtu.be/z4snDNYCgos?si=m99xJiWfWZMJD9nO",
+    "link": "https://www.street-smarts.com/"
+  },
+  {
+    "id": "noetic-math-2024",
+    "name": "Noetic Math Contest",
+    "description": "Earned National Honorable Mention",
+    "detailedDescription": "Earned National Honorable Mention in the Noetic Math Contest, a mathematics competition for elementary and middle school students that emphasizes problem-solving skills and mathematical reasoning.\n\nThe contest includes a variety of challenging problems that test students' understanding of mathematical concepts and their ability to apply them in creative ways.",
+    "date": "2023-04-17",
+    "image": "/awards/noetic-math.jpeg",
+    "isIconRoundedFull": true,
+    "difficulty": "notable",
+    "link": "https://www.noetic-learning.com/mathcontest/"
+  },
+  {
+    "id": "ptsa-reflections-2022",
+    "name": "PTSA Reflections Contest",
+    "description": "Won Award of Excellence in Music Composition, Literature and Award of Merit in Photography at school level",
+    "detailedDescription": "Won Award of Excellence in Music Composition, Literature and Award of Merit in Photography at middle school level in the PTSA Reflections Contest, a national arts recognition program that encourages students to explore their artistic talents.\n\nMy entries included an original music composition, a short story, and a photograph, all of which were recognized for their creativity and quality.",
+    "date": "2022-10-27",
+    "image": "/awards/ptsa-reflections.jpeg",
+    "isIconRoundedFull": true,
+    "difficulty": "notable",
+    "link": "https://www.pta.org/home/programs/reflections"
+  },
+  {
+    "id": "aops-short-story-2023",
+    "name": "AoPS Short Story Contest",
+    "description": "Won 1st place in the AoPS Short Story Contest for Pleasanton Branch",
+    "detailedDescription": "Won 1st place in the AoPS Short Story Contest for the Pleasanton Branch, a competition organized by Art of Problem Solving that encourages students to write creative and engaging short stories.\n\nMy winning entry, titled 'The Battle of Kyorokana', was praised for its imaginative plot and well-developed characters, showcasing my ability to blend creativity with technical themes.",
+    "date": "2023-03-25",
+    "image": "/awards/aops.png",
+    "isIconRoundedFull": true,
+    "difficulty": "honorable",
+    "link": "https://aopsacademy.org/student-authors/",
+    "submissionLink": "https://aopsacademy.org/student-authors/2023/2902"
   }
 ]

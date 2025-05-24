@@ -118,8 +118,8 @@ function AwardGridItem({ award, index, onClick }: AwardGridItemProps) {
 
         {/* Sparkle effect for major awards */}
         {award.difficulty === "major" && (
-          <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <Sparkles className="w-4 h-4 text-yellow-400 animate-pulse mt-10 mr-2.5" />
+          <div className="absolute bottom-3 right-3 p-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <Sparkles className="w-4 h-4 text-yellow-400 animate-pulse mr-8 mt-2" />
           </div>
         )}
 
