@@ -112,7 +112,7 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
                 )}
                 <h2 className="text-2xl font-bold">{project.title}</h2>
               </div>
-              <p className="text-gray-600 dark:text-gray-400 mb-6 font-medium">{project.tagline}</p>
+              <p className="text-gray-600 dark:text-gray-400 mb-6 text-sm sm:text-base font-medium">{project.tagline}</p>
 
               <div className="prose dark:prose-invert max-w-none">
                 {project.description.split("\n\n").map((paragraph, index) => (

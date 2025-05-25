@@ -30,34 +30,34 @@ export function AwardTimeline({ awards }: AwardTimelineProps) {
         return {
           dotBg: "bg-blue-500",
           glowColor: "shadow-blue-500/50",
-          icon: <Medal className="w-3 h-3 text-white" />,
+          icon: <Medal className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white" />,
           hasSparkle: true
         }
       case "notable":
         return {
           dotBg: "bg-purple-500",
           glowColor: "shadow-purple-500/50",
-          icon: <Star className="w-3 h-3 text-white" />,
+          icon: <Star className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white" />,
           hasSparkle: false
         }
       default:
         return {
           dotBg: "bg-amber-500",
           glowColor: "shadow-amber-500/50",
-          icon: <AwardIcon className="w-3 h-3 text-white" />,
+          icon: <AwardIcon className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white" />,
           hasSparkle: false
         }
     }
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6">
+    <div className="max-w-4xl mx-auto">
       <div className="relative">
-        {/* Simplified timeline line with solid color */}
-        <div className="absolute left-4 sm:left-6 top-8 bottom-8 w-0.5 bg-blue-400 dark:bg-blue-600 opacity-60" />
+        {/* Timeline line - adjusted position for mobile */}
+        <div className="absolute left-2 sm:left-4 md:left-6 top-6 bottom-6 w-0.5 bg-blue-400 dark:bg-blue-600 opacity-60" />
         
         {/* Timeline items */}
-        <div className="space-y-8 sm:space-y-12">
+        <div className="space-y-5 sm:space-y-8">
           <AnimatePresence>
             {sortedAwards.map((award, index) => {
               const config = getDifficultyConfig(award.difficulty)
@@ -75,17 +75,17 @@ export function AwardTimeline({ awards }: AwardTimelineProps) {
                   }}
                   className="relative group"
                 >
-                  {/* Simplified timeline dot */}
-                  <div className="absolute left-0 top-2 sm:top-3 flex items-center justify-center w-8 h-8 sm:w-12 sm:h-12">
+                  {/* Smaller timeline dot on mobile */}
+                  <div className="absolute left-0 top-2 flex items-center justify-center w-4 h-4 sm:w-8 sm:h-8">
                     <motion.div
-                      className={`relative w-6 h-6 sm:w-8 sm:h-8 rounded-full ${config.dotBg} shadow-lg ${config.glowColor} flex items-center justify-center`}
+                      className={`relative w-4 h-4 sm:w-6 sm:h-6 rounded-full ${config.dotBg} shadow-lg ${config.glowColor} flex items-center justify-center`}
                       whileHover={{ scale: 1.1 }}
                       animate={expandedId === award.id ? { scale: [1, 1.1, 1] } : {}}
                       transition={{ duration: 0.3 }}
                     >
                       {config.icon}
                       
-                      {/* Sparkle animation for major awards */}
+                      {/* Smaller sparkle for mobile */}
                       {config.hasSparkle && (
                         <motion.div
                           className="absolute -top-1 -right-1"
@@ -99,14 +99,14 @@ export function AwardTimeline({ awards }: AwardTimelineProps) {
                             ease: "easeInOut"
                           }}
                         >
-                          <Sparkles className="w-3 h-3 text-yellow-300" />
+                          <Sparkles className="w-2 h-2 sm:w-3 sm:h-3 text-yellow-300" />
                         </motion.div>
                       )}
                     </motion.div>
                   </div>
 
-                  {/* Award card container - moved further right */}
-                  <div className="ml-16 sm:ml-20 lg:ml-24">
+                  {/* Reduced margin on mobile to bring cards closer to timeline */}
+                  <div className="ml-8 sm:ml-14 md:ml-20">
                     <motion.div
                       whileHover={{ y: -2 }}
                       transition={{ type: "spring", stiffness: 300 }}
@@ -124,9 +124,9 @@ export function AwardTimeline({ awards }: AwardTimelineProps) {
           </AnimatePresence>
         </div>
 
-        {/* Simplified timeline end marker */}
+        {/* Smaller end marker for mobile */}
         <div
-          className="absolute left-2 sm:left-3 bottom-0 w-4 h-4 sm:w-6 sm:h-6 ml-0.5 rounded-full bg-gray-300 dark:bg-gray-600 shadow-lg"
+          className="absolute left-1 sm:left-2 md:left-3 bottom-0 w-2 h-2 sm:w-4 sm:h-4 rounded-full bg-gray-300 dark:bg-gray-600 shadow-lg"
         />
       </div>
     </div>

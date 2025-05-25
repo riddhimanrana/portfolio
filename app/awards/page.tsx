@@ -16,6 +16,45 @@ import awardsData from "@/data/awards.json"
 // Add type assertion for the imported awards
 const awards = awardsData as Award[]
 
+// Custom hook to check media queries
+const useMediaQuery = (query: string) => {
+  const [matches, setMatches] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    const mediaQueryList = window.matchMedia(query);
+    
+    const updateMatches = () => setMatches(mediaQueryList.matches);
+    
+    // Set initial state
+    updateMatches();
+
+    // Listener for changes
+    // Using addEventListener if available, otherwise addListener
+    try {
+      mediaQueryList.addEventListener('change', updateMatches);
+    } catch (e) {
+      // Fallback for older browsers
+      mediaQueryList.addListener(updateMatches);
+    }
+
+    return () => {
+      try {
+        mediaQueryList.removeEventListener('change', updateMatches);
+      } catch (e) {
+        // Fallback for older browsers
+        mediaQueryList.removeListener(updateMatches);
+      }
+    };
+  }, [query]);
+
+  return matches;
+};
+
+
 export default function AwardsPage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [viewMode, setViewMode] = useState<"grid" | "timeline">("grid")
@@ -27,6 +66,8 @@ export default function AwardsPage() {
     difficulty: ["major", "notable", "honorable"],
     year: []
   })
+  const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
+  const isMobile = useMediaQuery("(max-width: 1023px)"); // lg breakpoint, as sidebar hides below lg
 
   // Get available years from awards
   const availableYears = useMemo(() => {
@@ -62,6 +103,21 @@ export default function AwardsPage() {
   const selectedAward = useMemo(() => {
     return filteredAwards.find(award => award.id === selectedId) || null
   }, [selectedId, filteredAwards])
+
+  const handleAwardSelection = (id: string) => {
+    setSelectedId(id);
+    if (isMobile && id) {
+      setIsDetailModalOpen(true);
+    }
+  };
+
+  const handleCloseModal = () => {
+    setIsDetailModalOpen(false);
+    // Delay setting selectedId to null to allow modal exit animation
+    setTimeout(() => {
+      setSelectedId(null);
+    }, 300); // Match modal animation duration
+  };
 
   // Toggle difficulty filter
   const toggleDifficultyFilter = (difficulty: AwardDifficulty) => {
@@ -104,41 +160,47 @@ export default function AwardsPage() {
       year: []
     })
     setSearchQuery("")
+    setSelectedId(null) // Also close any open detail/modal
+    setIsDetailModalOpen(false)
   }
 
   return (
     <div className="min-h-screen  text-gray-900 dark:text-gray-100 transition-all duration-300">
       <div className="container mx-auto px-4 py-8 md:py-16">
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-8 md:mb-12"
+          className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8 md:mb-12"
         >
-          <div className="flex items-center justify-center mb-4">
-            {/* <Trophy className="w-8 h-8 md:w-10 md:h-10 text-yellow-500 mr-3" /> */}
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white">
-              Awards & Achievements
-            </h1>
-            {/* <Trophy className="w-8 h-8 md:w-10 md:h-10 text-yellow-500 ml-3" /> */}
+          <div className="flex items-center">
+            <div className="flex items-center justify-center w-12 h-12 bg-yellow-100 dark:bg-yellow-900/20 text-yellow-500 dark:text-yellow-400 rounded-lg mr-4 shrink-0">
+              <Trophy className="h-6 w-6" />
+            </div>
+            <div>
+              <h1 className="text-3xl font-bold mb-1">
+                <span className="md:hidden">Awards</span>
+                <span className="hidden md:inline">Awards & Achievements</span>
+              </h1>
+              <p className="text-gray-600 dark:text-gray-400 text-sm">
+                Recognitions and accomplishments
+              </p>
+            </div>
           </div>
-          <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
-            A showcase of recognitions and accomplishments throughout my academic journey.
-          </p>
-          <div className="flex items-center justify-center mt-4 space-x-6 text-sm">
+          
+          <div className="flex items-center justify-start md:justify-end space-x-4 md:space-x-6 text-sm mt-4 md:mt-0">
             <div className="flex items-center">
-              <Medal className="w-4 h-4 text-blue-500 mr-1" />
+              <Medal className="w-4 h-4 text-blue-500 mr-1.5" />
               <span className="text-gray-600 dark:text-gray-400">{awards.filter(a => a.difficulty === 'major').length} Major</span>
             </div>
             <div className="flex items-center">
-              <AwardIcon className="w-4 h-4 text-amber-500 mr-1" />
+              <AwardIcon className="w-4 h-4 text-amber-500 mr-1.5" />
               <span className="text-gray-600 dark:text-gray-400">{awards.filter(a => a.difficulty === 'honorable').length} Honorable</span>
             </div>
             <div className="flex items-center">
-              <Star className="w-4 h-4 text-purple-500 mr-1" />
+              <Star className="w-4 h-4 text-purple-500 mr-1.5" />
               <span className="text-gray-600 dark:text-gray-400">{awards.filter(a => a.difficulty === 'notable').length} Notable</span>
             </div>
-            
           </div>
         </motion.div>
 
@@ -153,19 +215,19 @@ export default function AwardsPage() {
             <details className="group bg-white/70 dark:bg-gray-900/70 backdrop-blur-md rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-lg">
               <summary className="p-4 cursor-pointer flex items-center justify-between">
                 <h2 className="text-lg font-semibold flex items-center">
-                  <Calendar className="mr-2 h-5 w-5 text-white" /> Timeline Navigation
+                  <Calendar className="mr-2 h-5 w-5 text-black dark:text-white" /> Timeline Navigation
                 </h2>
                 <span className="group-open:rotate-180 transition-transform">
-                  <ChevronDown className="w-4 h-4 text-white" />
+                  <ChevronDown className="w-4 h-4 text-black dark:text-white" />
                 </span>
               </summary>
               <div className="px-4 pb-4 max-h-0 overflow-hidden opacity-0 
-                    group-open:max-h-60 group-open:overflow-y-auto group-open:opacity-100
+                    group-open:max-h-96 group-open:overflow-y-auto group-open:opacity-100
                     transition-all duration-300 ease-in-out">
                 <AwardTimelineNav
                   awards={awards}
                   selectedId={selectedId}
-                  onSelectAward={setSelectedId}
+                  onSelectAward={handleAwardSelection}
                 />
               </div>
             </details>
@@ -184,7 +246,7 @@ export default function AwardsPage() {
             <AwardTimelineNav
               awards={awards}
               selectedId={selectedId}
-              onSelectAward={setSelectedId}
+              onSelectAward={handleAwardSelection}
             />
           </motion.div>
 
@@ -379,13 +441,14 @@ export default function AwardsPage() {
               </div>
             </motion.div>
 
-            {/* Award Detail View */}
+            {/* Award Detail View (Inline for Desktop) */}
             <AnimatePresence>
-              {selectedAward && (
+              {selectedAward && !isMobile && (
                 <motion.div
                   initial={{ opacity: 0, height: 0, y: -20 }}
                   animate={{ opacity: 1, height: "auto", y: 0 }}
                   exit={{ opacity: 0, height: 0, y: -20 }}
+                  transition={{ duration: 0.3 }}
                   className="mb-6 md:mb-8 overflow-hidden"
                 >
                   <AwardDetail
@@ -445,6 +508,33 @@ export default function AwardsPage() {
           </div>
         </div>
       </div>
+
+      {/* Award Detail Modal (For Mobile) */}
+      <AnimatePresence>
+        {isMobile && isDetailModalOpen && selectedAward && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={handleCloseModal} // Close on overlay click
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.90, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.90, y: 20 }}
+              transition={{ duration: 0.3 }}
+              className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-xl w-full max-h-[90vh] overflow-hidden flex flex-col"
+              onClick={(e) => e.stopPropagation()} // Prevent close on content click
+            >
+              <div className="overflow-y-auto">
+                <AwardDetail award={selectedAward} onClose={handleCloseModal} />
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

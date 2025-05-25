@@ -117,20 +117,16 @@ function AwardGridItem({ award, index, onClick }: AwardGridItemProps) {
         </div>
 
         {/* Sparkle effect for major awards */}
-        {award.difficulty === "major" && (
-          <div className="absolute bottom-3 right-3 p-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <Sparkles className="w-4 h-4 text-yellow-400 animate-pulse mr-8 mt-2" />
-          </div>
-        )}
+        
 
         <CardHeader className="pb-3 pt-4">
           <div className="flex items-start">
             <div 
-                className={`flex-shrink-0 h-12 w-12 overflow-hidden mr-3 relative ${award.isIconRoundedFull ? 'rounded-full shadow-lg' : 'rounded-md'} `}
+                className={`flex-shrink-0  mr-3 relative ${award.isIconRoundedFull ? 'shadow-lg' : 'rounded-md'} `}
               >
               {/* <div className={`absolute inset-0 ${difficultyConfig.accentColor} opacity-20 blur-sm rounded-full`} /> */}
               <div 
-                className={`relative h-full w-full overflow-hidden ${award.isIconRoundedFull ? 'rounded-full shadow-lg' : 'rounded-md'}`}
+                className={`relative h-12 w-12  overflow-hidden ${award.isIconRoundedFull ? 'rounded-full shadow-lg' : 'rounded-md'}`}
               >
                 {!imageError ? (
                   <Image
@@ -145,8 +141,27 @@ function AwardGridItem({ award, index, onClick }: AwardGridItemProps) {
                     {difficultyConfig.icon}
                   </div>
                 )}
+                
               </div>
+              {award.difficulty === "major" && (
+          <motion.div
+                  className="absolute -top-0.5 -right-0.5"
+                  animate={{ 
+                    rotate: [0, 180, 360],
+                    scale: [1, 1.2, 1]
+                  }}
+                  transition={{ 
+                    duration: 3, 
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                >
+                  <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-yellow-400 drop-shadow-sm" />
+                </motion.div>
+        )}
+              
             </div>
+            
             <div className="flex-grow min-w-0">
               <CardTitle className="text-lg font-bold line-clamp-2 text-gray-900 dark:text-white mb-1 leading-tight group-hover:text-gray-700 dark:group-hover:text-gray-100 transition-colors duration-300">
                 {award.name}

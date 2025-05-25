@@ -89,7 +89,7 @@ export default function BlogPageClient({ posts }: BlogPageClientProps) {
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-300">
-      <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-16">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -62,7 +62,7 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
           )}
           <h3 className="text-xl font-bold">{project.title}</h3>
         </div>
-        <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">{project.tagline}</p>
+        <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-2 text-sm sm:text-base ">{project.tagline}</p>
         <div className="flex space-x-4">
           {project.repoLink && (
             <a
