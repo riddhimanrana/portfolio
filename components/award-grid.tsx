@@ -122,11 +122,11 @@ function AwardGridItem({ award, index, onClick }: AwardGridItemProps) {
         <CardHeader className="pb-3 pt-4">
           <div className="flex items-start">
             <div 
-                className={`flex-shrink-0  mr-3 relative ${award.isIconRoundedFull ? 'shadow-lg' : 'rounded-md'} `}
+                className={`flex-shrink-0  mr-3 relative ${award.isIconRoundedFull ? 'rounded-full shadow-md' : 'rounded-md'} `}
               >
               {/* <div className={`absolute inset-0 ${difficultyConfig.accentColor} opacity-20 blur-sm rounded-full`} /> */}
               <div 
-                className={`relative h-12 w-12  overflow-hidden ${award.isIconRoundedFull ? 'rounded-full shadow-lg' : 'rounded-md'}`}
+                className={`relative h-12 w-12  overflow-hidden ${award.isIconRoundedFull ? 'rounded-full shadow-md' : 'rounded-md'}`}
               >
                 {!imageError ? (
                   <Image
