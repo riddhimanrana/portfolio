@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import NavBar from "@/components/navbar"
 import { Toaster } from "@/components/toaster"
 import FooterWrapper from "@/components/footer-wrapper"
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const geist = Geist({ subsets: ["latin"] })
 
@@ -43,9 +44,11 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <NavBar />
           {children}
+          <SpeedInsights />
         </ThemeProvider>
         <Toaster />
         <FooterWrapper />
+        
       </body>
     </html>
   )

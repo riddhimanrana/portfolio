@@ -1,22 +1,20 @@
 'use client'
 
+import 'katex/dist/katex.min.css'
 import React, { useEffect } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'
-import { oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import { vscDarkPlus, oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { useTheme } from 'next-themes'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
 import rehypeSlug from 'rehype-slug'
 import rehypeCodeTitles from 'rehype-code-titles'
-import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeKatex from 'rehype-katex'
 import Image from 'next/image'
-import 'katex/dist/katex.min.css'
 import Link from 'next/link'
+import { Copy, CheckCheck, FileCode } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { Copy, CheckCheck, ExternalLink, LinkIcon, FileCode } from 'lucide-react'
 
 interface MarkdownContentProps {
   content: string
@@ -41,12 +39,7 @@ const CodeSkeleton = () => (
 
 export function MarkdownContent({ content }: MarkdownContentProps) {
   const { theme } = useTheme()
-  const [mounted, setMounted] = React.useState(false)
   const [copiedCode, setCopiedCode] = React.useState<string | null>(null)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
 
   // Handle code copy
   const handleCopyCode = (code: string) => {
@@ -57,8 +50,6 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
       setCopiedCode(null);
     }, 2000);
   };
-
-  if (!mounted) return null
 
   return (
     <div className="prose dark:prose-invert max-w-none 
@@ -142,46 +133,49 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
               </code>
             );
           },
-          img: ({ node, alt, src, ...props }: any) => {
-            const imgSrc = String(src);
-            let actualAlt = alt ? String(alt) : '';
-            let isSmall = false;
-            const smallImageWidth = 400;
+          img: ({ alt, src, ...props }: any) => {
+            const imgSrc = String(src)
+            let actualAlt = alt ? String(alt) : ''
+            let isSmall = false
+            const smallImageWidth = 400
 
             if (actualAlt.startsWith('small|')) {
-              isSmall = true;
-              actualAlt = actualAlt.substring('small|'.length);
+              isSmall = true
+              actualAlt = actualAlt.substring('small|'.length)
             }
 
-            if (isSmall) {
-              if (imgSrc && !imgSrc.startsWith('http')) {
-                return (
-                  <div className="not-prose clear-both my-4 flex justify-center">
-                    <Image
-                      src={imgSrc}
-                      alt={actualAlt}
-                      width={400}
-                      height={225}
-                      className="rounded-lg shadow-sm"
-                      quality={75}
-                      sizes="400px"
-                      loading="lazy"
-                    />
-                  </div>
-                );
-              }
+            // internal small
+            if (isSmall && imgSrc && !imgSrc.startsWith('http')) {
               return (
-                <img 
-                  src={imgSrc} 
-                  alt={actualAlt} 
+                <Image
+                  src={imgSrc}
+                  alt={actualAlt}
+                  width={smallImageWidth}
+                  height={225}
+                  className="not-prose clear-both my-4 mx-auto rounded-lg shadow-sm"
+                  quality={75}
+                  sizes="400px"
+                  loading="lazy"
+                  {...props}
+                />
+              )
+            }
+
+            // external small
+            if (isSmall) {
+              return (
+                <img
+                  src={imgSrc}
+                  alt={actualAlt}
                   className="not-prose block mx-auto my-4 rounded-lg shadow-sm clear-both"
                   style={{ width: `${smallImageWidth}px`, height: 'auto' }}
                   loading="lazy"
                   {...props}
                 />
-              );
+              )
             }
-            
+
+            // internal default
             if (imgSrc && !imgSrc.startsWith('http')) {
               return (
                 <Image
@@ -189,23 +183,25 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
                   alt={actualAlt}
                   width={800}
                   height={450}
-                  className="clear-both"
+                  className="clear-both mx-auto my-6 rounded-lg shadow-sm"
                   quality={75}
                   sizes="(max-width: 640px) 100vw, 800px"
                   loading="lazy"
+                  {...props}
                 />
-              );
+              )
             }
-            
+
+            // external default
             return (
-              <img 
-                src={imgSrc} 
-                alt={actualAlt} 
-                className="clear-both"
+              <img
+                src={imgSrc}
+                alt={actualAlt}
+                className="clear-both mx-auto my-6"
                 loading="lazy"
                 {...props}
               />
-            );
+            )
           },
           table: ({ node, ...props }) => (
             <div className="overflow-x-auto my-8">

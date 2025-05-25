@@ -39,6 +39,7 @@ export function AboutSection() {
                         priority
                         sizes="(max-width: 768px) 100vw, 459px"
                         className="object-cover"
+                        loading="eager"
                         onError={(e) => {
                             const target = e.target as HTMLImageElement
                             target.src = '/profile.jpeg'

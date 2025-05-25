@@ -56,7 +56,8 @@ export default function NavBar() {
               alt="riddhiman logo"
               width={30}
               height={30}
-              className=""
+              loading="eager"
+              decoding="async"
             />
             <span className="ml-2 font-bold text-xl">riddhiman</span>
           </Link>
