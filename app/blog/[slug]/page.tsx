@@ -4,6 +4,7 @@ import { Calendar, ArrowLeft, Tag } from 'lucide-react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
+import { formatDate } from '@/lib/utils'
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const post = await getPostBySlug(await params.slug); // Add await here
@@ -42,11 +43,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
     notFound()
   }
   
-  const formattedDate = new Date(post.date).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  })
+  const formattedDate = formatDate(post.date)
   
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-300">

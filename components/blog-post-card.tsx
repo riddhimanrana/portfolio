@@ -2,17 +2,14 @@ import Link from 'next/link'
 import type { BlogPost } from '@/types/blog'
 import { Calendar, ArrowRight, Tag, Clock } from 'lucide-react'
 import { motion } from 'framer-motion'
+import { formatDate } from "@/lib/utils";
 
 interface BlogPostCardProps {
   post: BlogPost
 }
 
 export function BlogPostCard({ post }: BlogPostCardProps) {
-  const formattedDate = new Date(post.date).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  })
+  const formattedDate = formatDate(post.date)
 
   // Estimate read time based on content length (rough calculation)
   const wordCount = post.content.split(/\s+/).length

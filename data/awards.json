@@ -344,5 +344,28 @@
     "difficulty": "notable",
     "link": "https://www.sjpl.org/fall-into-fiction/",
     "submissionLink": "https://san-jose-public-library.short-edition.com/story/a-new-dawn"
+  },
+  {
+    "id": "3m-young-scientist-challenge-2021",
+    "name": "3M Young Scientist Challenge",
+    "description": "Participated in the 3M Young Scientist Challenge with a project on energy efficiency",
+    "detailedDescription": "Participated in the 3M Young Scientist Challenge, a prestigious national competition that encourages elementary and middle school students to showcase their scientific research and innovation.\n\nMy project was basically about how we can take the heat that our laptops and computers produce and use a small TEG(Thermo Electric Generator) to use that to give back power to our laptops, similar to how regenerative braking works on electric vehicles. This could potentially reduce our energy impact and carbon emissions for many everyday items if it can be produced and implemented into real world items in an efficient and production ready design.\n\nAlthough I didn’t win anything in this contest, it was an incredible experience that taught me a lot and introduced me to the world of science and research.",
+    "date": "2021-04-07",
+    "image": "/awards/3m-company.jpeg",
+    "isIconRoundedFull": true,
+    "difficulty": "notable",
+    "link": "https://youngscientistlab.com/",
+    "submissionLink": "https://youtu.be/uXEaCCRXTCE?si=0jvAMPk51-2G1aDQ"
+  },
+  {
+    "id": "rsm-imc-2025",
+    "name": "RSM International Math Contest",
+    "description": "Scored 8/12 in Final Round, Bronze Medal, Scored 12/14 in Online Challenge",
+    "detailedDescription": "Scored 8/12 in Final Round at the San Ramon Alcosta Branch, earning a Bronze Medal in the RSM International Math Contest, a prestigious mathematics competition that brings together students from around the world to showcase their problem-solving skills.\n\nIn Round 1, I scored 12/14 in the online qualifying round, demonstrating my strong mathematical abilities and understanding of advanced concepts.",
+    "date": "2025-04-13",
+    "image": "/awards/rsm-imc.jpeg",
+    "isIconRoundedFull": true,
+    "difficulty": "honorable",
+    "link": "https://contest.rsmfoundation.org/oly/registration"
   }
 ]

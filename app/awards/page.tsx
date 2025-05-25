@@ -353,7 +353,7 @@ export default function AwardsPage() {
                   </button>
 
                   {/* Year filters */}
-                  {availableYears.slice(0, 3).map(year => (
+                  {availableYears.map(year => (
                     <button
                       key={year}
                       onClick={() => toggleYearFilter(year)}

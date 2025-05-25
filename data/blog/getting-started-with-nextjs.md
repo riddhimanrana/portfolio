@@ -5,8 +5,6 @@ excerpt: "A beginner's guide to setting up and using Next.js for your web applic
 tags: ["Next.js", "React", "Web Development"]
 ---
 
-# Getting Started with Next.js
-
 Next.js is a React framework that enables server-side rendering, static site generation, API routes, and many other features without requiring complex configuration.
 
 ## Installation
