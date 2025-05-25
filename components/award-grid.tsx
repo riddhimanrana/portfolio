@@ -126,13 +126,15 @@ function AwardGridItem({ award, index, onClick }: AwardGridItemProps) {
               >
               {/* <div className={`absolute inset-0 ${difficultyConfig.accentColor} opacity-20 blur-sm rounded-full`} /> */}
               <div 
-                className={`relative h-12 w-12  overflow-hidden ${award.isIconRoundedFull ? 'rounded-full shadow-md' : 'rounded-md'}`}
+                className={`relative h-12 w-12 overflow-hidden ${award.isIconRoundedFull ? 'rounded-full shadow-md' : 'rounded-md'}`}
               >
                 {!imageError ? (
                   <Image
                     src={award.image || "/placeholder.svg"}
                     alt={award.name}
                     fill
+                    sizes="(max-width: 640px) 40px, (max-width: 1024px) 56px, 80px"
+                    quality={100}
                     className={`object-cover ${award.isIconRoundedFull ? 'rounded-full' : 'rounded-md'}`}
                     onError={() => setImageError(true)}
                   />

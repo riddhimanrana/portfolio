@@ -3,6 +3,7 @@ import type { BlogPost } from '@/types/blog'
 import { Calendar, ArrowRight, Tag, Clock } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { formatDate } from "@/lib/utils";
+import Image from 'next/image';
 
 interface BlogPostCardProps {
   post: BlogPost

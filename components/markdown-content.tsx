@@ -141,15 +141,16 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
               if (imgSrc && !imgSrc.startsWith('http')) {
                 // Internal Next/Image - small
                 return (
-                  <div className="not-prose clear-both my-4 flex justify-center"> {/* Centering container with custom margin */}
-                    <Image
-                      src={imgSrc}
-                      alt={actualAlt}
-                      width={smallImageWidth}
-                      height={Math.round(smallImageWidth / (16/9))} // Assuming 16:9 aspect ratio for placeholder height
-                      className="rounded-lg shadow-sm" // Apply consistent styling
-                      style={{ width: `${smallImageWidth}px`, height: 'auto' }} // Ensure width and auto height
-                    />
+                  <div className="not-prose clear-both my-4 flex justify-center">
+                  <Image
+                    src={imgSrc}
+                    alt={actualAlt}
+                    width={400}
+                    height={225}
+                    className="rounded-lg shadow-sm"
+                    quality={85}
+                    sizes="400px"
+                  />
                   </div>
                 );
               }
@@ -174,9 +175,11 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
                 <Image
                     src={imgSrc}
                     alt={actualAlt}
-                    width={800} // Default width for optimization
-                    height={500} // Default height for optimization
-                    className="clear-both" // Add clear-both; other styles from prose-img
+                    width={800}
+                    height={450}
+                    className="clear-both"
+                    quality={85}
+                    sizes="(max-width: 640px) 100vw, 800px"
                 />
               );
             }

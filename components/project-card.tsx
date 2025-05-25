@@ -52,7 +52,9 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
               <Image
                 src={project.logo}
                 alt={`${project.title} logo`}
-                fill
+                width={28}
+                height={28}
+                quality={80}
                 className="object-contain rounded"
                 onError={(e) => {
                   e.currentTarget.style.display = 'none'

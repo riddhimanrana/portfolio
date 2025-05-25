@@ -62,9 +62,11 @@ export default function Home() {
             <Image
             src="/logos/lets-assist.png"
             alt="Let's Assist Logo"
-            width={36}
-            height={36}
+            width={20}  // Changed from 36
+            height={20} // Changed from 36
             className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform"
+            sizes="20px"
+            quality={80}
             />
             <span className="inline-flex items-center">
             Let's Assist
@@ -85,9 +87,11 @@ export default function Home() {
             <Image 
               src="/profile.jpeg" 
               alt="Riddhiman Rana" 
-              width={48} 
-              height={48} 
+              width={60}  // Changed from 160
+              height={60} // Changed from 160
               className="w-[40px] h-[40px] sm:w-[60px] sm:h-[60px] -rotate-6 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.4)] border-2 border-white dark:border-gray-700"
+              sizes="(max-width: 640px) 40px, 60px"
+              quality={100}
             />
           </div>
           <span className="relative inline-flex items-center">

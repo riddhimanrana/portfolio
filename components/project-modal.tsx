@@ -103,6 +103,7 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
                       src={project.logo}
                       alt={`${project.title} logo`}
                       fill
+                      sizes="(max-width: 640px) 40px, 48px *(max-width: 1024px) 56px, 80px"
                       className="object-contain rounded"
                       onError={(e) => {
                         e.currentTarget.style.display = 'none'

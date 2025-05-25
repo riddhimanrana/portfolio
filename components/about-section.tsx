@@ -34,9 +34,11 @@ export function AboutSection() {
                     <Image
                         src="/aboutme.jpeg"
                         alt="Riddhiman Rana"
-                        width={600}
-                        height={600}
+                        width={459}   // Changed from 800, match container width
+                        height={459}  // Changed from 800, maintain aspect ratio
                         quality={80}
+                        priority
+                        sizes="(max-width: 768px) 100vw, 459px"
                         className="object-cover"
                         onError={(e) => {
                             const target = e.target as HTMLImageElement
@@ -69,7 +71,7 @@ export function AboutSection() {
               
               <p className="text-gray-600 dark:text-gray-400">
                 What started as simple games and animations has evolved into a passion for creating meaningful applications that solve real problems.
-                I'm particularly interested in competitive programming, web development, and artificial intelligence.
+                I'm particularly interested in competitive programming, web development, and machine learning.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">

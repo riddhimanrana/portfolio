@@ -72,13 +72,15 @@ export function AwardDetail({ award, onClose }: AwardDetailProps) {
           {/* Award Image */}
           <div className="flex-shrink-0">
             <div 
-              className={`relative h-14 w-14 overflow-hidden  ${award.isIconRoundedFull ? 'rounded-full shadow-lg' : 'rounded-md'}`}
+              className={`relative h-14 w-14 overflow-hidden ${award.isIconRoundedFull ? 'rounded-full shadow-lg' : 'rounded-md'}`}
             >
               {!imageError ? (
                 <Image
                   src={award.image || "/placeholder.svg"}
                   alt={award.name}
-                  fill
+                  width={56}
+                  height={56}
+                  quality={80}
                   className="object-cover"
                   onError={() => setImageError(true)}
                 />

@@ -125,7 +125,10 @@ export function AwardModal({ award, isOpen, onClose }: AwardModalProps) {
                             src={award.image || "/placeholder.svg"}
                             alt={award.name}
                             fill
-                            className={`object-cover ${award.isIconRoundedFull ? 'rounded-full shadow-lg' : 'rounded-md'}`}
+                            sizes="(max-width: 640px) 40px, (max-width: 1024px) 56px, 80px"
+                            quality={100}
+                            priority
+                            className={`object-cover ${award.isIconRoundedFull ? 'rounded-full' : 'rounded-md'}`}
                             onError={() => setImageError(true)}
                           />
                         ) : (

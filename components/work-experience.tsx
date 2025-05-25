@@ -61,7 +61,10 @@ export function WorkExperience() {
                   <Image
                     src={experience.logo}
                     alt={`${experience.title} logo`}
-                    fill
+                    width={48}
+                    height={48}
+                    quality={80}
+                    sizes="(max-width: 640px) 40px, 48px"
                     className="object-contain p-1.5 rounded-full"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;

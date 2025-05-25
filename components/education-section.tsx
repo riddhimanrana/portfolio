@@ -152,8 +152,9 @@ export function EducationSection() {
                                     <Image
                                         src={education.logo || "/placeholder.svg"}
                                         alt={education.school}
-                                        width={64}
-                                        height={64}
+                                        width={80}
+                                        height={80}
+                                        quality={75}
                                         className="rounded-lg object-contain"
                                         onError={(e) => {
                                             const target = e.target as HTMLImageElement;
