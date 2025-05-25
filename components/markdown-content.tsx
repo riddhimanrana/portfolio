@@ -22,6 +22,23 @@ interface MarkdownContentProps {
   content: string
 }
 
+// Code block skeleton
+const CodeSkeleton = () => (
+  <div className="relative overflow-hidden rounded-md my-4 animate-pulse">
+    <div className="flex items-center bg-gray-200 dark:bg-gray-950 px-3 py-2 text-xs">
+      <div className="h-3.5 w-3.5 bg-gray-300 dark:bg-gray-700 rounded mr-1.5"></div>
+      <div className="h-3 w-16 bg-gray-300 dark:bg-gray-700 rounded"></div>
+    </div>
+    <div className="bg-gray-100 dark:bg-gray-900 p-4">
+      <div className="space-y-2">
+        <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-3/4"></div>
+        <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-full"></div>
+        <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-1/2"></div>
+      </div>
+    </div>
+  </div>
+);
+
 export function MarkdownContent({ content }: MarkdownContentProps) {
   const { theme } = useTheme()
   const [mounted, setMounted] = React.useState(false)
@@ -129,7 +146,7 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
             const imgSrc = String(src);
             let actualAlt = alt ? String(alt) : '';
             let isSmall = false;
-            const smallImageWidth = 400; // Width for "small" images
+            const smallImageWidth = 400;
 
             if (actualAlt.startsWith('small|')) {
               isSmall = true;
@@ -137,60 +154,55 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
             }
 
             if (isSmall) {
-              // Small image styling: centered, specific width, consistent styling but opted out of prose for size control
               if (imgSrc && !imgSrc.startsWith('http')) {
-                // Internal Next/Image - small
                 return (
                   <div className="not-prose clear-both my-4 flex justify-center">
-                  <Image
-                    src={imgSrc}
-                    alt={actualAlt}
-                    width={400}
-                    height={225}
-                    className="rounded-lg shadow-sm"
-                    quality={85}
-                    sizes="400px"
-                  />
+                    <Image
+                      src={imgSrc}
+                      alt={actualAlt}
+                      width={400}
+                      height={225}
+                      className="rounded-lg shadow-sm"
+                      quality={75}
+                      sizes="400px"
+                      loading="lazy"
+                    />
                   </div>
                 );
               }
-              // External image using <img> tag - small
               return (
                 <img 
                   src={imgSrc} 
                   alt={actualAlt} 
-                  className="not-prose block mx-auto my-4 rounded-lg shadow-sm clear-both" // Centered, custom margin, styled
+                  className="not-prose block mx-auto my-4 rounded-lg shadow-sm clear-both"
                   style={{ width: `${smallImageWidth}px`, height: 'auto' }}
+                  loading="lazy"
                   {...props}
                 />
               );
             }
             
-            // Default image handling (non-small)
-            // Relies on prose-img:* styles from the parent .prose scope (e.g., prose-img:mx-auto, prose-img:my-6)
             if (imgSrc && !imgSrc.startsWith('http')) {
-              // Internal Next/Image - default size
-              // The rendered <img> by Next/Image will be styled by prose-img utilities
               return (
                 <Image
-                    src={imgSrc}
-                    alt={actualAlt}
-                    width={800}
-                    height={450}
-                    className="clear-both"
-                    quality={85}
-                    sizes="(max-width: 640px) 100vw, 800px"
+                  src={imgSrc}
+                  alt={actualAlt}
+                  width={800}
+                  height={450}
+                  className="clear-both"
+                  quality={75}
+                  sizes="(max-width: 640px) 100vw, 800px"
+                  loading="lazy"
                 />
               );
             }
             
-            // External image using <img> tag - default size
-            // The <img> will be styled by prose-img utilities
             return (
               <img 
                 src={imgSrc} 
                 alt={actualAlt} 
-                className="clear-both" // Add clear-both; other styles from prose-img
+                className="clear-both"
+                loading="lazy"
                 {...props}
               />
             );
