@@ -36,7 +36,6 @@ export function AboutSection() {
                         alt="Riddhiman Rana"
                         width={459}   // Changed from 800, match container width
                         height={459}  // Changed from 800, maintain aspect ratio
-                        quality={80}
                         priority
                         sizes="(max-width: 768px) 100vw, 459px"
                         className="object-cover"
