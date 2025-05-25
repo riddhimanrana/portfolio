@@ -52,7 +52,7 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
       prose-h4:text-lg prose-h4:mt-5 prose-h4:mb-2
       prose-p:my-4 prose-p:leading-relaxed
       prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline
-      prose-img:rounded-lg prose-img:shadow-sm prose-img:my-6 prose-img:mx-auto
+      prose-img:rounded-lg prose-img:shadow-sm prose-img:my-6 prose-img:mx-auto prose-img:clear-both
       prose-blockquote:border-l-4 prose-blockquote:border-blue-500 prose-blockquote:bg-gray-50 dark:prose-blockquote:bg-gray-800/60 prose-blockquote:pl-4 prose-blockquote:pr-4 prose-blockquote:py-2 prose-blockquote:italic
       prose-code:font-normal prose-code:before:content-none prose-code:after:content-none
       prose-table:border prose-table:border-gray-300 dark:prose-table:border-gray-700
@@ -69,20 +69,19 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
           rehypeKatex
         ]}
         components={{
-          a: ({node, ...props}) => {
+          a: ({ node, ...props }) => {
             const href = String(props.href);
             if (href.startsWith("http")) {
               return (
-                <a 
-                  {...props} 
-                  href={href} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="inline-flex items-center gap-1"
+                <Link
+                  {...props}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-blue-600 dark:text-blue-400 hover:text-blue-500 hover:dark:text-blue-300 transition-colors transition-300 no-underline hover:no-underline"
                 >
                   {props.children}
-                  <ExternalLink className="h-3.5 w-3.5 inline-block" />
-                </a>
+                </Link>
               );
             }
             return <Link {...props} href={href} />;
@@ -127,28 +126,68 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
             );
           },
           img: ({ node, alt, src, ...props }: any) => {
-            // Use Next.js Image for optimization if it's an internal image
-            // Otherwise use regular img tag
             const imgSrc = String(src);
-            if (imgSrc && !imgSrc.startsWith('http')) {
+            let actualAlt = alt ? String(alt) : '';
+            let isSmall = false;
+            const smallImageWidth = 400; // Width for "small" images
+
+            if (actualAlt.startsWith('small|')) {
+              isSmall = true;
+              actualAlt = actualAlt.substring('small|'.length);
+            }
+
+            if (isSmall) {
+              // Small image styling: centered, specific width, consistent styling but opted out of prose for size control
+              if (imgSrc && !imgSrc.startsWith('http')) {
+                // Internal Next/Image - small
+                return (
+                  <div className="not-prose clear-both my-4 flex justify-center"> {/* Centering container with custom margin */}
+                    <Image
+                      src={imgSrc}
+                      alt={actualAlt}
+                      width={smallImageWidth}
+                      height={Math.round(smallImageWidth / (16/9))} // Assuming 16:9 aspect ratio for placeholder height
+                      className="rounded-lg shadow-sm" // Apply consistent styling
+                      style={{ width: `${smallImageWidth}px`, height: 'auto' }} // Ensure width and auto height
+                    />
+                  </div>
+                );
+              }
+              // External image using <img> tag - small
               return (
-                <div className="relative w-full h-auto my-8 rounded-lg overflow-hidden">
-                  <Image
-                    src={imgSrc}
-                    alt={alt ? String(alt) : ''}
-                    width={800}
-                    height={500}
-                    className="mx-auto rounded-lg"
-                  />
-                </div>
+                <img 
+                  src={imgSrc} 
+                  alt={actualAlt} 
+                  className="not-prose block mx-auto my-4 rounded-lg shadow-sm clear-both" // Centered, custom margin, styled
+                  style={{ width: `${smallImageWidth}px`, height: 'auto' }}
+                  {...props}
+                />
               );
             }
             
+            // Default image handling (non-small)
+            // Relies on prose-img:* styles from the parent .prose scope (e.g., prose-img:mx-auto, prose-img:my-6)
+            if (imgSrc && !imgSrc.startsWith('http')) {
+              // Internal Next/Image - default size
+              // The rendered <img> by Next/Image will be styled by prose-img utilities
+              return (
+                <Image
+                    src={imgSrc}
+                    alt={actualAlt}
+                    width={800} // Default width for optimization
+                    height={500} // Default height for optimization
+                    className="clear-both" // Add clear-both; other styles from prose-img
+                />
+              );
+            }
+            
+            // External image using <img> tag - default size
+            // The <img> will be styled by prose-img utilities
             return (
               <img 
                 src={imgSrc} 
-                alt={alt ? String(alt) : ''} 
-                className="rounded-lg mx-auto my-8"
+                alt={actualAlt} 
+                className="clear-both" // Add clear-both; other styles from prose-img
                 {...props}
               />
             );

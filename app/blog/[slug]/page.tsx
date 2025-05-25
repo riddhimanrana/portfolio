@@ -7,7 +7,8 @@ import { Metadata } from 'next'
 import { formatDate } from '@/lib/utils'
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const post = await getPostBySlug(await params.slug); // Add await here
+  const param = await params; // Ensure params is awaited
+  const post = await getPostBySlug(param.slug); // Add await here
   
   if (!post) {
     return {
@@ -87,7 +88,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
               <div className="flex flex-col sm:flex-row justify-between items-center">
                 <Link 
                   href="/blog" 
-                  className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors mb-4 sm:mb-0"
+                  className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors mb-4 sm:mb-0"
                 >
                   <ArrowLeft className="h-4 w-4 mr-1.5" /> Back to all posts
                 </Link>
