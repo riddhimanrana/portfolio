@@ -10,7 +10,7 @@ import FooterWrapper from "@/components/footer-wrapper"
 const geist = Geist({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Riddhiman Rana | Web Developer & Competitive Programmer",
+  title: "Riddhiman Rana | Full Stack Developer & Competitive Programmer",
   description:
     "Hi, I'm Riddhiman Rana, a passionate full stack developer and competitive programmer. I'm a USACO Gold medalist and a freshman at Dougherty Valley High School, eager to explore the endless possibilities of technology.",
   keywords: ["Riddhiman Rana", "Web Developer", "Competitive Programmer", "USACO", "Portfolio", "Next.js", "React"],
@@ -20,13 +20,13 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://riddhimanrana.com",
-    title: "Riddhiman Rana | Web Developer & Competitive Programmer",
+    title: "Riddhiman Rana | Full Stack Developer & Competitive Programmer",
     description: "Hi, I'm Riddhiman Rana, a passionate full stack developer and competitive programmer.",
     siteName: "Riddhiman Rana Portfolio",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Riddhiman Rana | Web Developer & Competitive Programmer",
+    title: "Riddhiman Rana | Full Stack Developer & Competitive Programmer",
     description: "Hi, I'm Riddhiman Rana, a passionate full stack developer and competitive programmer.",
     creator: "@riddhimanrana",
   },

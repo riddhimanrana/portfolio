@@ -10,13 +10,17 @@ import Image from "next/image"
 
 export default function NavBar() {
   const [mounted, setMounted] = useState(false)
-  const { theme, setTheme } = useTheme()
+  const { theme, setTheme, resolvedTheme } = useTheme()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const pathname = usePathname()
 
   // Theme toggle handler
   const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark")
+    if (resolvedTheme === "dark") {
+      setTheme("light")
+    } else {
+      setTheme("dark")
+    }
   }
 
   // Mobile menu toggle
@@ -82,7 +86,7 @@ export default function NavBar() {
               className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               aria-label="Toggle theme"
             >
-              {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+              {resolvedTheme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
             </button>
             <button
               onClick={toggleMobileMenu}

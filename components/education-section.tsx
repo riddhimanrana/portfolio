@@ -122,7 +122,7 @@ export function EducationSection() {
                                         <span className="font-medium">
                                             Freshman at Dougherty Valley High School
                                         </span>
-                                        , 4.17w, 4.0uw GPA. Currently taking Honors Chem and
+                                        , 4.17w, 4.0uw GPA. Played in School Track & Field team in Sprints for 24-25 Season. Currently taking Honors Chem and
                                         Precalc.
                                     </div>
                                 )}
@@ -208,7 +208,7 @@ export function EducationSection() {
                                             <span className="font-medium">
                                                 Freshman at Dougherty Valley High School
                                             </span>
-                                            , 4.17w, 4.0uw GPA. Currently taking Honors Chem and
+                                            , 4.17w, 4.0uw GPA. Played in school Track & Field team in Sprints for 24-25 season. Currently taking Honors Chem and
                                             Precalc.
                                         </div>
                                     )}
