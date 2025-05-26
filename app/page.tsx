@@ -51,9 +51,7 @@ export default function Home() {
       {/* Main Content */}
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Hero Section */}
-        <a rel="me" href="https://mastodon.online/@rrcoder0167">
-          Mastodon
-        </a>
+
         <section id="about" className="py-8 sm:py-16">
           <div className="max-w-6xl mx-auto">
             <motion.div
