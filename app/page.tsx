@@ -97,7 +97,7 @@ export default function Home() {
                   alt="Riddhiman Rana"
                   width={96} // Changed from 160
                   height={96} // Changed from 160
-                  className="w-[40px] h-[40px] sm:w-[96px] sm:h-[96px] -rotate-6 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.4)] border-2 border-white dark:border-gray-700"
+                  className="w-[40px] h-[40px] sm:w-[60px] sm:h-[60px] -rotate-6 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.4)] border-2 border-white dark:border-gray-700"
                   sizes="(max-width: 640px) 40px, 60px"
                   quality={100}
                 />
