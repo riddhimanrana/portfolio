@@ -162,11 +162,22 @@
     "link": "https://www.noetic-learning.com/mathcontest/"
   },
   {
-    "id": "ptsa-reflections-2022",
+    "id": "ptsa-reflections-2021",
     "name": "PTSA Reflections Contest",
     "description": "Won district-level Award of Merit in Music Composition and school-level Awards of Excellence in Music and Literature, plus Award of Merit in Photography",
     "detailedDescription": "Won Award of Excellence in Music Composition, Literature and Award of Merit in Photography at middle school level in the PTSA Reflections Contest, a national arts recognition program that encourages students to explore their artistic talents.\n\nMy entries included an original music composition, a short story, and a photograph, all of which were recognized for their creativity and quality.",
-    "date": "2022-10-27",
+    "date": "2021-10-27",
+    "image": "/awards/ptsa-reflections.jpeg",
+    "isIconRoundedFull": true,
+    "difficulty": "notable",
+    "link": "https://www.pta.org/home/programs/reflections"
+  },
+  {
+    "id": "ptsa-reflections-2022",
+    "name": "PTSA Reflections Contest",
+    "description": "Won district-level Honorable Mention for Music Composition, Award of Excellence in Music Compposition and Award of Merit in Photography for school",
+    "detailedDescription": "Won Award of Excellence in Music Composition and Award of Merit in Photography at middle school level in the PTSA Reflections Contest, a national arts recognition program that encourages students to explore their artistic talents.\n\nMy entries included an original music composition and a photograph, both of which were recognized for their creativity and quality.",
+    "date": "2022-10-15",
     "image": "/awards/ptsa-reflections.jpeg",
     "isIconRoundedFull": true,
     "difficulty": "notable",
@@ -175,20 +186,9 @@
   {
     "id": "ptsa-reflections-2023",
     "name": "PTSA Reflections Contest",
-    "description": "Won Award of Excellence in Music Compposition and Award of Merit in Photography for school",
-    "detailedDescription": "Won Award of Excellence in Music Composition and Award of Merit in Photography at middle school level in the PTSA Reflections Contest, a national arts recognition program that encourages students to explore their artistic talents.\n\nMy entries included an original music composition and a photograph, both of which were recognized for their creativity and quality.",
-    "date": "2023-10-15",
-    "image": "/awards/ptsa-reflections.jpeg",
-    "isIconRoundedFull": true,
-    "difficulty": "notable",
-    "link": "https://www.pta.org/home/programs/reflections"
-  },
-  {
-    "id": "ptsa-reflections-2024",
-    "name": "PTSA Reflections Contest",
     "description": "Won Award of Excellence in Photography and Award of Merit in Film Production for school",
     "detailedDescription": "Won Award of Excellence in Photography and Award of Merit in Film Production at middle school level in the PTSA Reflections Contest, a national arts recognition program that encourages students to explore their artistic talents.\n\nMy entries included an original music composition and a photograph, both of which were recognized for their creativity and quality.",
-    "date": "2024-10-15",
+    "date": "2023-10-15",
     "image": "/awards/ptsa-reflections.jpeg",
     "isIconRoundedFull": true,
     "difficulty": "notable",
