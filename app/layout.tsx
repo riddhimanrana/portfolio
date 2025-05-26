@@ -56,7 +56,8 @@ export default function RootLayout({
           name="google-site-verification"
           content="r_ZlioncOUkRZdQRZ9V7xI0Y9eO6wxnqD5l5-JMeqoY"
         />
-        <link rel="icon" href="/favicon.ico" />s
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="me" href="https://mastodon.social/@riddhiman" />
       </head>
       <body className={geist.className}>
         <PostHogProvider>
