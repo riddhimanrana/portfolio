@@ -57,7 +57,7 @@ export default function RootLayout({
           content="r_ZlioncOUkRZdQRZ9V7xI0Y9eO6wxnqD5l5-JMeqoY"
         />
         <link rel="icon" href="/favicon.ico" />
-        <link rel="me" href="https://mastodon.social/@riddhiman" />
+        <link rel="me" href="https://mastodon.social/@rrcoder0167" />
       </head>
       <body className={geist.className}>
         <PostHogProvider>
