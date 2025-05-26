@@ -14,6 +14,13 @@ const Footer: React.FC = () => {
     <footer className="pb-8 bg-white dark:bg-gray-950">
       <div className="text-center bg-text-sm text-gray-600 dark:text-gray-400">
         © {new Date().getFullYear()} Riddhiman Rana. All rights reserved.
+        <a
+          rel="me"
+          className="sr-only"
+          href="https://mastodon.online/@rrcoder0167"
+        >
+          Mastodon
+        </a>
       </div>
     </footer>
   );

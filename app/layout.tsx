@@ -56,13 +56,7 @@ export default function RootLayout({
           name="google-site-verification"
           content="r_ZlioncOUkRZdQRZ9V7xI0Y9eO6wxnqD5l5-JMeqoY"
         />
-        <a
-          rel="me"
-          className="sr-only"
-          href="https://mastodon.online/@rrcoder0167"
-        >
-          Mastodon
-        </a>
+        <link rel="icon" href="/favicon.ico" />s
       </head>
       <body className={geist.className}>
         <PostHogProvider>
