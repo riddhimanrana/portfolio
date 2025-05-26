@@ -56,7 +56,7 @@ export default function RootLayout({
           name="google-site-verification"
           content="r_ZlioncOUkRZdQRZ9V7xI0Y9eO6wxnqD5l5-JMeqoY"
         />
-        <meta name="p:domain_verify" content="e6f8733d4a51c0b42b10f26a628378b5"/>
+        {/* <meta name="p:domain_verify" content="e6f8733d4a51c0b42b10f26a628378b5"/> */}
         <link rel="icon" href="/favicon.ico" />
         {/* <link rel="me" href="https://mastodon.online/@rrcoder0167" /> */}
       </head>
