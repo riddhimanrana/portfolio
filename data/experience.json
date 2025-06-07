@@ -4,21 +4,22 @@
     "subtext": "Club Secretary",
     "logo": "/logos/dvhs-cs-club.png",
     "date": "August 2025 - May 2026",
-    "details": "Managed club communications, organized events, and documented meeting proceedings. Helped coordinate workshops and hackathons that encouraged students to explore various aspects of computer science."
+    "details": "Will be managing club communications, organizing events, and documenting meeting proceedings. I will also help coordinate workshops and hackathons that encourages students to explore various aspects of computer science in this role."
   },
   {
     "title": "Tulip Coaching",
-    "subtext": "Co-Founder & Instructor",
+    "subtext": "Founder & Instructor",
     "logo": "/logos/tulip-coaching.png",
     "date": "June 2025 - Present",
-    "details": "Co-founded a personalized coaching platform for students seeking to excel in computer science and mathematics. Developing curriculum and instructional materials while mentoring students in competitive programming."
+    "details": "Created a tutoring program for middle school students with no experience to learn Python. Developed a curriculum that introduces programming concepts through engaging projects and hands-on exercises. Focused on building foundational skills in coding and problem-solving.",
+    "link": "https://tulipcoaching.org"
   },
   {
     "title": "Let's Assist",
-    "subtext": "Founder CEO & Product Dev",
+    "subtext": "Founder, CEO & Product Dev",
     "logo": "/logos/lets-assist.png",
     "date": "December 2024 - Present",
-    "details": "Leading the development of AI-powered assistance solutions for students and professionals. Building innovative tools that enhance productivity and learning outcomes through intelligent automation.",
+    "details": "Created a comprehensive online volunteering platform that helps organizations and high school CSF programs manage, automatically track, and coordinate volunteering activities for students and communities. It simplifies the process for organizations to create and manage volunteer events, track student contributions, and verify hours securely using QR codes.",
     "link": "https://lets-assist.com"
   },
   {
