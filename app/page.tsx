@@ -91,7 +91,7 @@ export default function Home() {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="text-[2rem] sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 flex flex-wrap items-center gap-2"
             >
-              <span>Hey, I'm</span>
+              <span>Hi, I'm</span>
               <div className="rounded-2xl transition-transform hover:scale-105 duration-300">
                 <Image
                   src="/profile.jpeg"
