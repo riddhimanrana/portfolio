@@ -1,5 +1,13 @@
 [
   {
+    "title": "AlphaStar Academy",
+    "subtext": "Python Instructor for Paid Internship",
+    "logo": "/logos/alphastar.png",
+    "date": "September 2025 - May 2026",
+    "details": "Mentored economically disadvantaged students for Python 1 & 2 courses in a paid internship as part of the AlphaStar-Carina Scholarship Program. Provided 1:1 instruction for 32 weeks (2 hours/week) during the fall and spring terms. Responsibilities included monitoring student progress, adapting the curriculum to individual learning speeds, and participating in monthly meetings with supervisors to discuss student development.",
+    "link": "https://alphastar.academy/"
+  },
+  {
     "title": "DVHS Computer Science Club",
     "subtext": "Club Secretary",
     "logo": "/logos/dvhs-cs-club.png",
@@ -11,12 +19,12 @@
     "subtext": "Founder & Instructor",
     "logo": "/logos/tulip-coaching.png",
     "date": "June 2025 - Present",
-    "details": "Created a tutoring program for middle school students with no experience to learn Python. Developed a curriculum that introduces programming concepts through engaging projects and hands-on exercises. Focused on building foundational skills in coding and problem-solving.",
+    "details": "Ran a tutoring service for middle school students with no experience to learn Python. Developed a curriculum that introduces programming concepts through engaging projects and hands-on exercises. Currently finished a 4-week course with 5 students, focusing on fundamental foundational skills in programming and continuing in an advanced 8-week course.",
     "link": "https://tulipcoaching.org"
   },
   {
     "title": "Let's Assist",
-    "subtext": "Founder, CEO & Product Dev",
+    "subtext": "Founder, CEO & Product Developer",
     "logo": "/logos/lets-assist.png",
     "date": "December 2024 - Present",
     "details": "Created a comprehensive online volunteering platform that helps organizations and high school CSF programs manage, automatically track, and coordinate volunteering activities for students and communities. It simplifies the process for organizations to create and manage volunteer events, track student contributions, and verify hours securely using QR codes.",
