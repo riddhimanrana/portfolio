@@ -5,7 +5,7 @@ excerpt: "A quick hello and introduction to my personal blog."
 tags: ["introduction", "hello world"]
 ---
 
-Hi! Thanks for checking out my blog! I probably won’t be posting much here, this is just for stuff I feel like I want to share with the world! Here's a list of markdown features I built in and supported for this blog:
+Hi! Thanks for checking out my blog! This entire website and portfolio was completely built by me, there were no templates involved. However, I did use shadcn/ui and a few other components from pre-built UIs. I probably won’t be posting much here, this is just for stuff I feel like I want to share with the world! Here's a list of markdown features I built in and supported for this blog:
 
 **Quotes:**
 > Some wise quote

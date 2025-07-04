@@ -5,7 +5,7 @@
     "logo": "/logos/alphastar.png",
     "date": "September 2025 - May 2026",
     "details": "Mentored economically disadvantaged students for Python 1 & 2 courses in a paid internship as part of the AlphaStar-Carina Scholarship Program. Provided 1:1 instruction for 32 weeks (2 hours/week) during the fall and spring terms. Responsibilities included monitoring student progress, adapting the curriculum to individual learning speeds, and participating in monthly meetings with supervisors to discuss student development.",
-    "link": "https://alphastar.academy/"
+    "link": "https://alphastar.academy/carina-scholarship/"
   },
   {
     "title": "DVHS Computer Science Club",
@@ -13,6 +13,14 @@
     "logo": "/logos/dvhs-cs-club.png",
     "date": "August 2025 - May 2026",
     "details": "Will be managing club communications, organizing events, and documenting meeting proceedings. I will also help coordinate workshops and hackathons that encourages students to explore various aspects of computer science in this role."
+  },
+  {
+    "title": "Mustang Math",
+    "subtext": "Platform Developer for Math Tournament Tech Team",
+    "logo": "/logos/mustang-math.png",
+    "date": "July 2025 - Present",
+    "details": "Worked on the Mustang Math tech team for a national competition with 600+ participants domestically across 7+ states, and 350+ partcipants from over 16 countries internationally. Contributed to developing and maintaining COMPOSE, a custom tournament problem-writing platform used by Mustang Math and Stanford Math Tournament. Participated in weekly team meetings, collaborated with other developers, and contributed to feature development and platform improvements.",
+    "link": "https://www.mustangmath.com/our-team"
   },
   {
     "title": "Tulip Coaching",

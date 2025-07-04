@@ -119,7 +119,7 @@ export default function Home() {
               <span>And I'm a</span>
               <span className="flex items-center">
                 <Code className="inline-block mr-2 h-6 w-6 sm:h-8 sm:w-8 p-1 bg-gray-200 dark:bg-gray-800 rounded-md" />
-                Web Developer
+                Full Stack Developer
               </span>
               <span>and</span>
               <span className="flex items-center">
