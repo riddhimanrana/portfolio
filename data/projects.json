@@ -1,12 +1,36 @@
 [
   {
+    "id": "orion-live",
+    "title": "Orion Live",
+    "tagline": "The world's first real-time visual intelligence agent built to truly remember and understand the world as it unfolds",
+    "description": "Orion Live is the app behind Orion, a hybrid edge-server architecture designed to be an intelligent, interactive, and deployable visual perception agent that can truly 'remember' and 'understand', the world as it unfolds with a focus on being open-source, real-time, and privacy-first. While there are tools like OpenAI Sora and Gemini Live, the problem with them is that they are often slow, require steady cloud processing, and are solely focused on short, user-based interactions. For example, imagine you are a blind person who really needs assistance from a tool like this, and imagine that every aspect of your life and every moment and interaction is sent to some Google server hundreds of miles away and you have no clue with who's accessing that data and what they're doing with it. With Orion, I aim to change that by providing a system architecture that can run on an entirely local architecture, split processing on edge devices, and provide real-time responses to user queries while maintaining a high quality of output, privacy, and security in various types of environments, maintaining 24/7 context and memory of the world as it unfolds.\n\nThis is both a research project and consumer facing product I'm still actively working on developing and prototyping. You can find the initial prototype demo at the Orion github monorepo (riddhimanrana/orion) or see my research at orionlive.ai/research",
+    "image": "/projects/orion-live.png",
+    "logo": "/projects/logos/orion-live.png",
+    "tags": [
+      "Swift",
+      "Apple MLX",
+      "CoreML",
+      "Tensorflow",
+      "Websocket",
+      "FastAPI",
+      "Next.js",
+      "Supabase",
+      "Typescript",
+      "Tailwind CSS",
+      "Shadcn UI"
+    ],
+    "year": "2025",
+    "projectLink": "https://orionlive.ai",
+    "repoLink": "https://github.com/riddhimanrana/orion"
+  },
+  {
     "id": "lets-assist",
     "title": "Let's Assist",
     "tagline": "End-to-end volunteering platform built for high schoolers",
     "description": "Let's Assist is a comprehensive online volunteering platform that helps organizations and high school CSF programs manage, automatically track, and coordinate volunteering activities for students and communities. It simplifies the process for organizations to create and manage volunteer events, track student contributions, and verify hours securely using QR codes. For students, it eliminates the hassle of actively searching for opportunities by providing personalized recommendations and an easy way to log and track their hours.\n\nI started this project in Oct 2023 after a real experience where during a long weekend, I visited Santa Cruz Beachand saw tons of trash littered everywhere. This motivated me to create a platform that would make it easy for someone to see something that needs to be done about, create a project, and get volunteers to help out. I also enrolled in CJSF for the first time that year and I saw the potential in high school students who need volunteering hours to more easily give back to their communities and make a positive real-world impact.\n\nI submitted an initial version of this project to a hackathon called HarvestHacks but even though I didn't win anything, I was motivated to completely revamp it and make it a full-fledged platform. After a year of keeping this project on hold, I finally got back to it in Dec 2024 and spent the next 6 months and every weekend working on it. Eventually, I finished it in May 2025 and hopefully I will be able to fully launch and market it successfully with a huge impact in the Tri-Valley area. ",
     "image": "/projects/lets-assist.png",
     "logo": "/projects/logos/lets-assist.png",
-    "tags": ["Next.js", "Supabase", "TypeScript", "Tailwind CSS", "Shadcn UI"],
+    "tags": ["Next.js", "Supabase", "Typescript", "Tailwind CSS", "Shadcn UI"],
     "year": "2025",
     "projectLink": "https://lets-assist.com",
     "repoLink": "https://github.com/riddhimanrana/lets-assist"
@@ -16,7 +40,7 @@
     "title": "Personal Portfolio Website",
     "tagline": "My developer portfolio and this website",
     "description": "A fast, accessible, and fully responsive portfolio website showcasing my projects, skills, and experience. Designed and developed entirely by me with no templates or themes. I plan to eventually convert this project from Next.js to Astro for better performance and SEO.",
-    "tags": ["Next.js", "Tailwind CSS", "TypeScript"],
+    "tags": ["Next.js", "Tailwind CSS", "Typescript"],
     "year": "2025",
     "image": "/projects/portfolio.png",
     "logo": "/projects/logos/portfolio.png",
@@ -29,11 +53,11 @@
     "tagline": "My USACO solutions and contest prep",
     "description": "A collection of my solutions for USACO problems and other competitive programming contests, written in C++ and Python. Includes code, comments, drawings and strategies for tackling many types of algorithmic challenges.",
     "logo": "/projects/logos/usaco.png",
-    "tags": ["C++", "Python"],
+    "tags": ["C++", "Python", "Java"],
     "year": "2024",
     "repoLink": "https://github.com/riddhimanrana/usaco-solutions"
   },
-  
+
   {
     "id": "dotfiles",
     "title": "Dotfiles & Mac Apps",
@@ -48,7 +72,7 @@
     "title": "Chomp",
     "tagline": "Diabetes tracking application built for Los Altos Hacks 24",
     "description": "Chomp is a diabetes tracking application me and my friend Abinav Venkit developed for Los Altos Hacks 2024. The primary goal of this project was to create a tool that helps people with diabetes manage their condition more effectively. Initially, I had tried to identify the nutritional information of the food by web scraping images of popular foods, taking my own data, and creating our own in-house model which we would connect to a nutritional API. However, with our 24 hour time constraint, we quickly realized that wasn't possilbe and were only able to implement the OCR recognition feature, which allows users to take a picture of their food and get the nutritional information.\n\nThe app is built using Next.js, TypeScript, and Shadcn UI and uses the Tesseract.js library for OCR recognition. While we didn't create a full implementation of this app, it was a good experience learning to use machine learning libraries in a web application.",
-    "tags": ["Next.js", "Tesseract.js", "TypeScript", "Shadcn UI"],
+    "tags": ["Next.js", "Tesseract.js", "Typescript", "Shadcn UI"],
     "year": "2024",
     "image": "/projects/chomp.png",
     "logo": "/projects/logos/chomp.png",
@@ -59,12 +83,11 @@
     "id": "orange-chat",
     "title": "Orange Chat",
     "tagline": "Distraction-free, fun, open-source chatting app",
-    "description": "This was my very first attempt at web development and taught me a lot about the basics of web development. I implemented the login/signup and friend request features, giving me my first experience with CSS and backend using MongoDB. However, I eventually quit the project as I realized that it wasn't anything special and would just be a waste of time.\n\nThe image above is the figma design I made as the vision for this project. You can see the screenshots of the actual app in the repo. ",
+    "description": "This was my very first attempt at web development and taught me a lot about the basics of web development. I implemented the login/signup and friend request features, giving me my first experience with CSS and backend using MongoDB. However, I eventually quit the project as I realized that it wasn't anything special and would just be a waste of time.\n\nThe image above is the figma design I made as the vision for this project.",
     "image": "/projects/orange-chat.png",
     "logo": "/projects/logos/orange-chat.png",
     "tags": ["Flask", "MongoDB", "HTML", "CSS"],
     "year": "2023",
-    "projectLink": "https://orangechat.azurewebsites.net",
     "repoLink": "https://github.com/riddhimanrana/Orange-Chat"
   },
   {
@@ -76,6 +99,7 @@
     "logo": "/projects/logos/pyecohome-energy-tracker.png",
     "tags": ["Python", "Tkinter", "Pandas"],
     "year": "2022",
+    "projectLink": "https://www.youtube.com/watch?v=F_EsDD1HGjE",
     "repoLink": "https://github.com/riddhimanrana/PyEcoHome-Energy-Tracker"
   }
 ]

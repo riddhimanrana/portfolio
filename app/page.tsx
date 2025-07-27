@@ -10,6 +10,7 @@ import {
   Trophy,
   GraduationCap,
   ExternalLink,
+  FileText,
   Globe,
 } from "lucide-react";
 import { SiGithub, SiYoutube } from "react-icons/si";
@@ -71,15 +72,46 @@ export default function Home() {
                   <Image
                     src="/logos/lets-assist.png"
                     alt="Let's Assist Logo"
-                    width={20} // Changed from 36
-                    height={20} // Changed from 36
+                    width={20}
+                    height={20}
                     className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform"
                     sizes="20px"
                     quality={80}
                   />
                   <span className="inline-flex items-center">
                     Let's Assist
-                    <ExternalLink className="ml-1 h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <span
+                      className="overflow-hidden ml-0 w-0 opacity-0 transition-all duration-200 group-hover:ml-1 group-hover:w-3 group-hover:opacity-100"
+                      aria-hidden="true"
+                    >
+                      <ExternalLink className="h-3 w-3" />
+                    </span>
+                  </span>
+                </Link>
+                <span className="ml-2">and</span>
+                <Link
+                  href="https://orionlive.ai"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-100 group ml-2"
+                >
+                  <Image
+                    src="/logos/orion-live.png"
+                    alt="Orion Live Logo"
+                    width={20}
+                    height={20}
+                    className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform"
+                    sizes="20px"
+                    quality={80}
+                  />
+                  <span className="inline-flex items-center">
+                    Orion Live
+                    <span
+                      className="overflow-hidden ml-0 w-0 opacity-0 transition-all duration-200 group-hover:ml-1 group-hover:w-3 group-hover:opacity-100"
+                      aria-hidden="true"
+                    >
+                      <ExternalLink className="h-3 w-3" />
+                    </span>
                   </span>
                 </Link>
               </span>
@@ -160,6 +192,15 @@ export default function Home() {
                 className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-300 flex items-center justify-center"
               >
                 View Projects <ExternalLink className="ml-2 h-4 w-4" />
+              </Link>
+              <Link
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-3 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-xl transition-colors duration-300 flex items-center justify-center border border-gray-300 dark:border-gray-700"
+              >
+                Download Resume
+                <FileText className="ml-2 h-4 w-4 opacity-80" />
               </Link>
               <button
                 onClick={() => setContactModalOpen(true)}
@@ -262,7 +303,7 @@ export default function Home() {
                   </div>
                 </motion.div>
 
-                {/* Grok Dashboard Project */}
+                {/* Orion Live Project */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -270,34 +311,40 @@ export default function Home() {
                   className="bg-white dark:bg-gray-950 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:translate-y-[-5px] border border-gray-100 dark:border-gray-800 group p-6"
                 >
                   <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
-                    PyEcoHome Energy Tracker
+                    Orion Live
                   </h3>
 
                   <div className="flex flex-wrap gap-2 mb-4">
-                    <span className="text-xs bg-cyan-100 dark:bg-cyan-900/50 text-cyan-800 dark:text-cyan-200 px-2.5 py-1 rounded-full font-medium">
-                      Python
-                    </span>
-                    <span className="text-xs bg-yellow-100 dark:bg-yellow-900/50 text-yellow-800 dark:text-yellow-200 px-2.5 py-1 rounded-full font-medium">
-                      Tkinter
-                    </span>
-                    <span className="text-xs bg-indigo-100 dark:bg-indigo-900/50 text-indigo-800 dark:text-indigo-200 px-2.5 py-1 rounded-full font-medium">
-                      Pandas
+                    <span className="text-xs bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200 px-2.5 py-1 rounded-full font-medium">
+                      Swift
                     </span>
                     <span className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 px-2.5 py-1 rounded-full font-medium">
-                      2022
+                      Apple MLX
+                    </span>
+                    <span className="text-xs bg-yellow-100 dark:bg-yellow-900/50 text-yellow-800 dark:text-yellow-200 px-2.5 py-1 rounded-full font-medium">
+                      Tensorflow
+                    </span>
+                    <span className="text-xs bg-orange-100 dark:bg-orange-900/50 text-orange-800 dark:text-orange-200 px-2.5 py-1 rounded-full font-medium">
+                      FastAPI
+                    </span>
+                    <span className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 px-2.5 py-1 rounded-full font-medium">
+                      Websocket
+                    </span>
+                    <span className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 px-2.5 py-1 rounded-full font-medium">
+                      2025
                     </span>
                   </div>
 
                   <p className="text-gray-600 dark:text-gray-400 text-sm mb-5">
-                    A home energy tracker built using python machine learning
-                    designed to identify patterns, provide insights, and suggest
-                    personalized recommendations to reduce consumption and
-                    costs.
+                    Orion Live is the world’s first real-time visual
+                    intelligence agent that truly remembers and understands the
+                    world as it unfolds with a focus on privacy, speed, and
+                    always-on context, in a hybrid edge-server architecture.
                   </p>
 
                   <div className="flex items-center gap-5 mt-auto">
                     <Link
-                      href="https://github.com/riddhimanrana/PyEcoHome-Energy-Tracker"
+                      href="https://github.com/riddhimanrana/orion"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all inline-flex items-center gap-1.5 text-sm font-medium group-hover:translate-x-0.5"
@@ -306,11 +353,13 @@ export default function Home() {
                       <span>Code</span>
                     </Link>
                     <Link
-                      href="https://youtu.be/F_EsDD1HGjE?si=XhfiDFwxzMGKyfAV"
-                      className="text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 transition-all inline-flex items-center gap-1.5 text-sm font-medium group-hover:translate-x-0.5"
+                      href="https://orionlive.ai"
+                      className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400  inline-flex items-center gap-1.5 text-sm font-medium group-hover:translate-x-0.5 transition-all"
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
-                      <SiYoutube className="h-6 w-6" />
-                      <span>Project Demo</span>
+                      <Globe className="h-4.5 w-4.5" />
+                      <span>Website</span>
                     </Link>
                   </div>
                 </motion.div>
