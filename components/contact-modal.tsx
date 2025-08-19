@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
-import { SiGithub, SiDiscord, SiYoutube } from "react-icons/si";
+import { SiGithub, SiDiscord, SiYoutube, SiLinkedin } from "react-icons/si";
 import { Button } from "@/components/ui/button";
 
 import { Copy, Check, ExternalLink, Mail } from "lucide-react";
@@ -59,6 +59,15 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
       buttonHoverClass: "hover:bg-zinc-300 dark:hover:bg-zinc-700",
     },
     {
+      name: "Linkedin",
+      value: "@riddhimanrana",
+      icon: <SiLinkedin className="h-5 w-5" />,
+      link: "https://www.linkedin.com/in/riddhimanrana/",
+      color:
+        "bg-blue-100 text-blue-900 dark:bg-blue-900/30 dark:text-blue-100 hover:bg-blue-200 dark:hover:bg-blue-900/40",
+      buttonHoverClass: "hover:bg-blue-300 dark:hover:bg-blue-800/40",
+    },
+    {
       name: "Discord",
       value: "@riddhimanrana",
       icon: <SiDiscord className="h-5 w-5" />,
@@ -72,8 +81,8 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
       icon: <Mail className="h-5 w-5" />,
       link: "mailto:contact@riddhimanrana.com",
       color:
-        "bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-100 hover:bg-blue-200 dark:hover:bg-blue-900/40",
-      buttonHoverClass: "hover:bg-blue-300 dark:hover:bg-blue-800/40",
+        "bg-gray-100 text-gray-500 dark:bg-gray-800/80 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700/40",
+      buttonHoverClass: "hover:bg-gray-200 dark:hover:bg-gray-700",
     },
     {
       name: "YouTube",
