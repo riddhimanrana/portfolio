@@ -1,25 +1,26 @@
 [
   {
     "title": "AlphaStar Academy",
-    "subtext": "Python Instructor for Paid Internship",
+    "subtext": "CS Instructor",
     "logo": "/logos/alphastar.png",
     "date": "September 2025 - May 2026",
-    "details": "Mentored economically disadvantaged students for Python 1 & 2 courses in a paid internship as part of the AlphaStar-Carina Scholarship Program. Provided 1:1 instruction for 32 weeks (2 hours/week) during the fall and spring terms. Responsibilities included monitoring student progress, adapting the curriculum to individual learning speeds, and participating in monthly meetings with supervisors to discuss student development.",
+    "details": "Mentoring highly gifted students from the Bay Area in advanced python courses for a paid internship as part of the AlphaStar-Carina Scholarship Program. Providing 1:1 instruction for 32 weeks (2 hours/week) during the fall and spring terms. Responsibilities include teaching the cirriculum, monitoring student progress, and participating in monthly meetings with supervisors to discuss student development.",
     "link": "https://alphastar.academy/carina-scholarship/"
   },
   {
-    "title": "DVHS Computer Science Club",
-    "subtext": "Club Secretary",
-    "logo": "/logos/dvhs-cs-club.png",
-    "date": "August 2025 - May 2026",
-    "details": "Will be managing club communications, organizing events, and documenting meeting proceedings. I will also help coordinate workshops and hackathons that encourages students to explore various aspects of computer science in this role."
+    "title": "Algoverse",
+    "subtext": "Applied AI Researcher",
+    "logo": "/logos/algoverse.png",
+    "date": "August 2025 - Present",
+    "details": "Conducting a 3-month intensive applied research program focused on advancing real-time visual perception systems for privacy-sensitive and resource-constrained environments. Designing and implementing a high-dimensional vector database and dynamic relational graph model to enable persistent contextual memory, sophisticated temporal reasoning, and causal analysis of evolving visual scenes. Prioritized privacy and low-latency inference by optimizing visual encoding and captioning for mobile devices, achieving sub-1GB RAM usage and rapid response times. Extending the system to automatically detect, track, and articulate changes across video frames, supporting complex queries about temporal visual events and their contextual implications.",
+    "link": "https://algoverseairesearch.org/"
   },
   {
     "title": "Mustang Math",
     "subtext": "Platform Developer for Math Tournament Tech Team",
     "logo": "/logos/mustang-math.png",
     "date": "July 2025 - Present",
-    "details": "Worked on the Mustang Math tech team for a national competition with 600+ participants domestically across 7+ states, and 350+ partcipants from over 16 countries internationally. Contributed to developing and maintaining COMPOSE, a custom tournament problem-writing platform used by Mustang Math and Stanford Math Tournament. Participated in weekly team meetings, collaborated with other developers, and contributed to feature development and platform improvements.",
+    "details": "Working on the Mustang Math tech team for a national competition with 1800+ combined in-person participants in collaboration with the Stanford Math Tournament team. Contributed to developing and maintaining COMPOSE, a custom tournament problem-writing platform used by Mustang Math and Stanford Math Tournament. Participated in weekly team meetings, collaborated with other developers, and contributed to feature development and platform improvements.",
     "link": "https://www.mustangmath.com/our-team"
   },
   {
@@ -35,11 +36,11 @@
     "subtext": "Founder, CEO & Product Developer",
     "logo": "/logos/lets-assist.png",
     "date": "December 2024 - Present",
-    "details": "Created a comprehensive online volunteering platform that helps organizations and high school CSF programs manage, automatically track, and coordinate volunteering activities for students and communities. It simplifies the process for organizations to create and manage volunteer events, track student contributions, and verify hours securely using QR codes.",
+    "details": "Created a comprehensive online volunteering platform that helps organizations and high school CSF programs manage, automatically track, and coordinate volunteering activities for students and communities. It simplifies the process for organizations to create and manage volunteer events, track student contributions, and verify hours securely using QR codes. Currently working on expansion into Tri-Valley schools and organizations.",
     "link": "https://lets-assist.com"
   },
   {
-    "title": "Windemere Coding Club",
+    "title": "Windemere Ranch Middle School Coding Club",
     "subtext": "Club Secretary",
     "logo": "/logos/wrms.png",
     "date": "January 2024 - May 2024",
@@ -50,7 +51,7 @@
     "subtext": "First Class Scout at Troop 941",
     "logo": "/logos/bsa.png",
     "date": "December 2022 - Present",
-    "details": "Developed leadership skills and community service experience through active participation in troop activities. Completed numerous merit badges focused on technical skills and outdoor competencies.",
+    "details": "Developed leadership skills and community service experience through active participation in troop activities. Completed numerous merit badges focused on outdoor skills, citizenship, and personal development. Participated in camping trips, service projects, and leadership training sessions.",
     "link": "https://troop941.org"
   }
 ]

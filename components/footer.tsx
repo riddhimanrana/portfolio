@@ -12,8 +12,9 @@ const Footer: React.FC = () => {
 
   return (
     <footer className="pb-8 bg-white dark:bg-gray-950">
-      <div className="text-center bg-text-sm text-gray-600 dark:text-gray-400">
-        © {new Date().getFullYear()} Riddhiman Rana. All rights reserved.
+      <div className="text-center text-xs text-gray-500 dark:text-gray-400">
+        © {new Date().getFullYear()} All rights reserved &middot; Built and
+        designed by Riddhiman Rana
       </div>
     </footer>
   );

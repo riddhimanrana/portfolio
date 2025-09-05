@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { User, Code, Lightbulb, Rocket } from "lucide-react";
+import { User, Code, Box, Rocket } from "lucide-react";
 
 export function AboutSection() {
   return (
@@ -18,7 +18,9 @@ export function AboutSection() {
             <div className="p-2 bg-purple-50 dark:bg-purple-900/20 rounded-xl shadow-sm mr-3">
               <User className="h-8 w-8 text-purple-500 dark:text-purple-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold">About Me</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold">
+              A little about me
+            </h2>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
@@ -48,9 +50,9 @@ export function AboutSection() {
                 </div>
 
                 {/* Coding badge */}
-                <div className="absolute -right-5 -bottom-5 bg-white dark:bg-gray-800 rounded-full p-3 shadow-lg border border-gray-200 dark:border-gray-700">
+                {/*<div className="absolute -right-5 -bottom-5 bg-white dark:bg-gray-800 rounded-full p-3 shadow-lg border border-gray-200 dark:border-gray-700">
                   <Code className="h-8 w-8 text-blue-500" />
-                </div>
+                </div>*/}
               </div>
             </motion.div>
 
@@ -61,51 +63,57 @@ export function AboutSection() {
               className="space-y-6"
             >
               <h3 className="text-xl sm:text-2xl font-bold">
-                Ambitious high schooler with a passion for technology and
-                entrepreneurship
+                Hi, I like to build things that make the world a better place.
               </h3>
 
               <p className="text-gray-600 dark:text-gray-400">
-                Hi, I'm Riddhiman, a rising sophomore at Dougherty Valley High
-                School with a strong passion for coding and technology. I began
-                programming at 7, captivated by the ability to turn ideas into
-                reality through code.
+                I'm Riddhiman, a sophomore at Dougherty Valley High School with
+                a curiosity for building things that blend technology and
+                real-world impact. What started as tinkering with Python years
+                ago has turned into a genuine passion for coding, problem
+                solving, and creating tools that people can actually use.
               </p>
 
               <p className="text-gray-600 dark:text-gray-400">
-                What started as simple python programming has evolved into a
-                passion for creating meaningful applications that solve real
-                problems. I'm particularly interested in competitive
-                programming, web development, and machine learning.
+                These days, I spend a lot of time exploring competitive
+                programming, web development, and machine learning. I enjoy the
+                challenge of turning an idea into something functional, and I’m
+                especially motivated when it can help others or make everyday
+                life easier.
               </p>
 
               <div className="flex items-start">
-                <div className="p-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg mr-3">
-                  <Lightbulb className="h-5 w-5 text-blue-500 dark:text-blue-400" />
+                <div className="p-2 bg-green-50 dark:bg-green-900/20 rounded-lg mr-3">
+                  <Box className="h-5 w-5 text-green-500 dark:text-green-400" />
                 </div>
                 <div>
-                  <h4 className="font-medium">Applied Problem Solver</h4>
+                  <h4 className="font-medium">Abstract Problem Solver</h4>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
-                    I built an AI-powered context protocol (Orion) using a
-                    custom finetuned model from FastViTHD to enable real-time
-                    scene understanding for assistive tech.
+                    I also deeply enjoy complex abstract problems and doing
+                    things that are different, instead of just following in on
+                    the same hype train that everyone does. For example, instead
+                    of just being a volunteer at a bunch of events, I instead
+                    found that there was a problem in the system and built a
+                    solution to it in the form of Let's Assist, which is a
+                    volunteering platform specifically made for high school CSF
+                    volunteers.
                   </p>
                 </div>
               </div>
 
-              <div className="flex items-start">
+              {/*<div className="flex items-start">
                 <div className="p-2 bg-purple-50 dark:bg-purple-900/20 rounded-lg mr-3">
                   <Rocket className="h-5 w-5 text-purple-500 dark:text-purple-400" />
                 </div>
                 <div>
-                  <h4 className="font-medium">Aspiring Entrepreneur</h4>
+                  <h4 className="font-medium">Trying New Things</h4>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
-                    I'm passionate about building scalable tools like Let's
-                    Assist, a platform connecting student volunteers to local
-                    causes.
+                    I also like working on projects like Let's Assist, which
+                    connects student volunteers to local causes. It's fun to see
+                    people use something I helped build.
                   </p>
                 </div>
-              </div>
+              </div>*/}
             </motion.div>
           </div>
         </div>

@@ -173,7 +173,7 @@ export default function Home() {
                 className="flex items-center text-sm bg-gray-100 dark:bg-gray-800 px-4 py-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
               >
                 <GraduationCap className="mr-2 h-4 w-4" />
-                Freshman at Dougherty Valley High School
+                Sophomore at Dougherty Valley High School
               </Link>
               <div className="flex items-center text-sm bg-gray-100 dark:bg-gray-800 px-4 py-2 rounded-full">
                 <Trophy className="mr-2 h-4 w-4" />
