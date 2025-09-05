@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://riddhimanrana.com
+
+# Sitemaps
+Sitemap: https://riddhimanrana.com/sitemap.xml
