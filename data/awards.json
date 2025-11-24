@@ -37,13 +37,25 @@
   {
     "id": "amc-10b-24",
     "name": "AMC 10B",
-    "description": "Scored 81 on the AMC 10B",
-    "detailedDescription": "Scored 81 in the AMC 10B, a mathematics competition for high school students organized by the Mathematical Association of America (MAA).\n\nThe AMC 10B tests problem-solving skills and mathematical reasoning, covering topics such as algebra, geometry, and number theory.",
+    "description": "Scored 81/150 on the AMC 10B",
+    "detailedDescription": "Scored 81 in the 2024 AMC 10B, a mathematics competition for high school students organized by the Mathematical Association of America (MAA).\n\nThe AMC 10B tests problem-solving skills and mathematical reasoning, covering topics such as algebra, geometry, and number theory.",
     "date": "2024-11-11",
     "image": "/awards/maa.jpeg",
     "isIconRoundedFull": true,
     "difficulty": "honorable",
     "link": "https://maa.org/student-programs/amc/"
+  },
+  {
+    "id": "amc-10a-25",
+    "name": "AMC 10A",
+    "description": "Scored 132/150 on the 2025 AMC 10A",
+    "detailedDescription": "Scored 132 in the 2025 AMC 10A, a mathematics competition for high school students organized by the Mathematical Association of America (MAA).\n\nThe AMC 10A tests problem-solving skills and mathematical reasoning, covering topics such as algebra, geometry, and number theory.",
+    "date": "2025-11-5",
+    "image": "/awards/maa.jpeg",
+    "isIconRoundedFull": true,
+    "difficulty": "major",
+    "link": "https://maa.org/student-programs/amc/"
+    
   },
   {
     "id": "mathkangaroo-25",
@@ -190,6 +202,17 @@
     "description": "Won Award of Excellence in Photography and Award of Merit in Film Production for school",
     "detailedDescription": "Won Award of Excellence in Photography and Award of Merit in Film Production at middle school level in the PTSA Reflections Contest, a national arts recognition program that encourages students to explore their artistic talents.\n\nMy entries included an original music composition and a photograph, both of which were recognized for their creativity and quality.",
     "date": "2023-10-15",
+    "image": "/awards/ptsa-reflections.jpeg",
+    "isIconRoundedFull": true,
+    "difficulty": "notable",
+    "link": "https://www.pta.org/home/programs/reflections"
+  },
+  {
+    "id": "ptsa-reflections-2025",
+    "name": "PTSA Reflections Contest",
+    "description": "Won Award of Excellence in Music Composition and Honorable Mention in Literature & Photography for school",
+    "detailedDescription": "Won Award of Excellence in Music Composition and Honorable Mention in Literature & Photography at high school level in the PTSA Reflections Contest, a national arts recognition program that encourages students to explore their artistic talents.\n\nMy entries included an original music composition, a short story, and a photograph, all of which were recognized for their creativity and quality.",
+    "date": "2025-11-10",
     "image": "/awards/ptsa-reflections.jpeg",
     "isIconRoundedFull": true,
     "difficulty": "notable",

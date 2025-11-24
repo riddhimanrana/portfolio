@@ -34,7 +34,7 @@ export function AboutSection() {
                 <div className="absolute inset-0 bg-purple-500/10 dark:bg-purple-500/20 rounded-3xl transform -rotate-3"></div>
                 <div className="relative h-full w-full overflow-hidden rounded-2xl border-2 border-gray-200 dark:border-gray-700">
                   <Image
-                    src="/aboutme.jpeg"
+                    src="/aboutme.jpg"
                     alt="Riddhiman Rana"
                     width={459} // Changed from 800, match container width
                     height={459} // Changed from 800, maintain aspect ratio
@@ -62,22 +62,18 @@ export function AboutSection() {
               transition={{ duration: 0.5, delay: 0.3 }}
               className="space-y-6"
             >
-              <h3 className="text-xl sm:text-2xl font-bold">
-                Hi, I like to build things that make the world a better place.
-              </h3>
-
               <p className="text-gray-600 dark:text-gray-400">
                 I'm Riddhiman, a sophomore at Dougherty Valley High School with
-                a curiosity for building things that blend technology and
-                real-world impact. What started as tinkering with Python years
-                ago has turned into a genuine passion for coding, problem
-                solving, and creating tools that people can actually use.
+                a curiosity for building things that combine technology and
+                real-world impact. What started as tinkering with Python over 8
+                years ago has turned into a genuine passion for coding, problem
+                solving, and creating things that people can actually use.
               </p>
 
               <p className="text-gray-600 dark:text-gray-400">
-                These days, I spend a lot of time exploring competitive
-                programming, web development, and machine learning. I enjoy the
-                challenge of turning an idea into something functional, and I’m
+                These days, I spend a lot of time doing competitive programming,
+                web development, and machine learning. I&apos;m driven by the
+                challenge of turning an idea into something real, and I’m
                 especially motivated when it can help others or make everyday
                 life easier.
               </p>
@@ -94,9 +90,9 @@ export function AboutSection() {
                     the same hype train that everyone does. For example, instead
                     of just being a volunteer at a bunch of events, I instead
                     found that there was a problem in the system and built a
-                    solution to it in the form of Let's Assist, which is a
-                    volunteering platform specifically made for high school CSF
-                    volunteers.
+                    full scale solution to it in the form of Let's Assist, which
+                    is a volunteering platform specifically made for high school
+                    CSF volunteers.
                   </p>
                 </div>
               </div>
