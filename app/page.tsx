@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useTheme } from "next-themes";
 import {
   Code,
@@ -12,6 +12,7 @@ import {
   ExternalLink,
   FileText,
   Globe,
+  Sparkles,
 } from "lucide-react";
 import { SiGithub, SiYoutube } from "react-icons/si";
 import Link from "next/link";
