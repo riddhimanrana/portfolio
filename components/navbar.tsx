@@ -46,11 +46,11 @@ export default function NavBar() {
 
   return (
     <>
-      <header className=" bg-white/80 dark:bg-gray-950/80 backdrop-blur-sm ">
+      <header className="sticky top-0 z-50 bg-white/80 dark:bg-gray-950/80 backdrop-blur-xl border-b border-gray-200/50 dark:border-gray-800/50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative h-16 flex items-center">
           {/* Logo (left) */}
           
-          <Link href="/" className="relative z-10 flex items-center">
+          <Link href="/" className="relative z-10 flex items-center group">
             <Image
               src="/avatar.png"      // put your avatar file in /public/logo.png
               alt="riddhiman logo"
@@ -59,20 +59,20 @@ export default function NavBar() {
               loading="eager"
               decoding="async"
             />
-            <span className="ml-2 font-bold text-xl">riddhiman</span>
+            <span className="ml-2 font-semibold text-xl tracking-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">riddhiman</span>
           </Link>
 
           {/* Desktop Navigation (always centered, independent of logo width) */}
-          <nav className="hidden md:flex space-x-8 absolute inset-x-0 justify-center z-0">
+          <nav className="hidden md:flex space-x-1 absolute inset-x-0 justify-center z-0">
             {navItems.map((item) => (
               <Link
                 key={item.name}
                 href={item.path}
-                className={`transition-colors ${
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                   pathname === item.path ||
                   (item.path !== "/" && pathname.startsWith(item.path))
-                    ? "text-blue-600 dark:text-blue-400 font-medium"
-                    : "text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+                    ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20"
+                    : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800/50"
                 }`}
               >
                 {item.name}
@@ -81,20 +81,20 @@ export default function NavBar() {
           </nav>
 
           {/* Theme Toggle and Mobile Menu (right) */}
-          <div className="flex items-center space-x-4 ml-auto z-10">
+          <div className="flex items-center space-x-2 ml-auto z-10">
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              className="p-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800/50 transition-all duration-200 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
               aria-label="Toggle theme"
             >
-              {resolvedTheme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+              {resolvedTheme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
             </button>
             <button
               onClick={toggleMobileMenu}
-              className="md:hidden p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              className="md:hidden p-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800/50 transition-all duration-200 text-gray-600 dark:text-gray-400"
               aria-label="Toggle mobile menu"
             >
-              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+              {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
             </button>
           </div>
         </div>

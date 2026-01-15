@@ -1,9 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useTheme } from 'next-themes';
-import { List, ChevronDown, ChevronUp } from 'lucide-react';
+import { useState, useEffect, useMemo } from 'react';
 import { cn } from '@/lib/utils';
+import { List, ChevronDown } from 'lucide-react';
 
 interface TableOfContentsProps {
   content: string;
@@ -15,11 +14,15 @@ interface Heading {
   level: number;
 }
 
+interface GroupedHeading {
+  heading: Heading;
+  children: Heading[];
+}
+
 export function TableOfContents({ content }: TableOfContentsProps) {
   const [headings, setHeadings] = useState<Heading[]>([]);
   const [activeId, setActiveId] = useState<string>('');
-  const [collapsed, setCollapsed] = useState(false);
-  const { theme } = useTheme();
+  const [mobileOpen, setMobileOpen] = useState(false);
   
   // Extract headings from content
   useEffect(() => {
@@ -43,6 +46,36 @@ export function TableOfContents({ content }: TableOfContentsProps) {
     
     setHeadings(extractedHeadings);
   }, [content]);
+
+  // Group h3s under their parent h2s
+  const groupedHeadings = useMemo(() => {
+    const groups: GroupedHeading[] = [];
+    let currentGroup: GroupedHeading | null = null;
+
+    headings.forEach((heading) => {
+      if (heading.level === 2) {
+        currentGroup = { heading, children: [] };
+        groups.push(currentGroup);
+      } else if (heading.level === 3 && currentGroup) {
+        currentGroup.children.push(heading);
+      }
+    });
+
+    return groups;
+  }, [headings]);
+
+  // Find active parent h2 for a given heading
+  const activeParentId = useMemo(() => {
+    if (!activeId) return null;
+    
+    for (const group of groupedHeadings) {
+      if (group.heading.id === activeId) return group.heading.id;
+      if (group.children.some(child => child.id === activeId)) {
+        return group.heading.id;
+      }
+    }
+    return null;
+  }, [activeId, groupedHeadings]);
   
   // Track active heading on scroll
   useEffect(() => {
@@ -50,7 +83,7 @@ export function TableOfContents({ content }: TableOfContentsProps) {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setActiveId(entry.target.id);
+            setActiveId((prev) => (prev === entry.target.id ? prev : entry.target.id));
           }
         });
       },
@@ -73,65 +106,134 @@ export function TableOfContents({ content }: TableOfContentsProps) {
       });
     };
   }, [headings]);
+
+  const scrollToHeading = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      window.scrollTo({
+        top: element.getBoundingClientRect().top + window.pageYOffset - 100,
+        behavior: "smooth"
+      });
+      setMobileOpen(false);
+    }
+  };
   
-  if (headings.length < 2) return null;
+  if (groupedHeadings.length < 2) return null;
+
+  const TocContent = () => (
+    <nav>
+      <ul className="space-y-1">
+        {groupedHeadings.map((group) => {
+          const isActive = activeParentId === group.heading.id;
+          const isDirectlyActive = activeId === group.heading.id;
+          
+          return (
+            <li key={group.heading.id}>
+              <a
+                href={`#${group.heading.id}`}
+                className={cn(
+                  "block py-1.5 text-sm border-l-2 -ml-px pl-4 transition-all duration-200 truncate",
+                  isDirectlyActive
+                    ? "border-blue-500 text-blue-600 dark:text-blue-400 font-medium"
+                    : isActive
+                    ? "border-blue-300 dark:border-blue-600 text-gray-700 dark:text-gray-300"
+                    : "border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:border-gray-300 dark:hover:border-gray-600"
+                )}
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToHeading(group.heading.id);
+                }}
+              >
+                {group.heading.text}
+              </a>
+              
+              {/* Keep children mounted; animate expand/collapse for smoothness */}
+              {group.children.length > 0 && (
+                <ul
+                  className={cn(
+                    "overflow-hidden transition-[max-height,opacity] duration-200 ease-out",
+                    isActive ? "max-h-96 opacity-100" : "max-h-0 opacity-0 pointer-events-none"
+                  )}
+                >
+                  {group.children.map((child) => (
+                    <li key={child.id}>
+                      <a
+                        href={`#${child.id}`}
+                        className={cn(
+                          "block py-1 text-xs border-l-2 -ml-px pl-6 transition-all duration-200 truncate",
+                          activeId === child.id
+                            ? "border-blue-500 text-blue-600 dark:text-blue-400 font-medium"
+                            : "border-transparent text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+                        )}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          scrollToHeading(child.id);
+                        }}
+                      >
+                        {child.text}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
+  );
   
   return (
-    <div className={cn(
-      "sticky top-24 w-full lg:w-64 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden transition-all",
-      collapsed ? "h-14" : "max-h-[70vh]"
-    )}>
-      <div 
-        className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 cursor-pointer"
-        onClick={() => setCollapsed(!collapsed)}
-      >
-        <div className="flex items-center gap-2 font-medium">
-          <List className="h-5 w-5" />
-          <span>Table of Contents</span>
+    <>
+      {/* Desktop TOC */}
+      <div className="hidden lg:block w-full max-w-[200px]">
+        <div className="text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-3">
+          On this page
         </div>
-        {collapsed ? (
-          <ChevronDown className="h-5 w-5 text-gray-500" />
-        ) : (
-          <ChevronUp className="h-5 w-5 text-gray-500" />
+        <div className="border-l border-gray-200 dark:border-gray-800">
+          <TocContent />
+        </div>
+      </div>
+
+      {/* Mobile TOC */}
+      <div className="lg:hidden fixed bottom-4 right-4 z-50">
+        <button
+          onClick={() => setMobileOpen(!mobileOpen)}
+          className={cn(
+            "flex items-center gap-2 px-4 py-2.5 rounded-full shadow-lg transition-all duration-200",
+            mobileOpen 
+              ? "bg-blue-600 text-white" 
+              : "bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700"
+          )}
+        >
+          <List className="h-4 w-4" />
+          <span className="text-sm font-medium">Contents</span>
+          <ChevronDown className={cn(
+            "h-4 w-4 transition-transform duration-200",
+            mobileOpen && "rotate-180"
+          )} />
+        </button>
+
+        {mobileOpen && (
+          <>
+            {/* Backdrop */}
+            <div 
+              className="fixed inset-0 bg-black/20 dark:bg-black/40 -z-10"
+              onClick={() => setMobileOpen(false)}
+            />
+            
+            {/* Mobile menu */}
+            <div className="absolute bottom-full right-0 mb-2 w-72 max-h-[60vh] overflow-y-auto bg-white dark:bg-gray-900 rounded-xl shadow-xl border border-gray-200 dark:border-gray-800 p-4 animate-scale-in">
+              <div className="text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-3">
+                On this page
+              </div>
+              <div className="border-l border-gray-200 dark:border-gray-800">
+                <TocContent />
+              </div>
+            </div>
+          </>
         )}
       </div>
-      
-      {!collapsed && (
-        <div className="p-4 overflow-y-auto max-h-[calc(70vh-60px)]">
-          <nav>
-            <ul className="space-y-1">
-              {headings.map((heading) => (
-                <li 
-                  key={heading.id}
-                  style={{ paddingLeft: `${(heading.level - 1) * 16}px` }}
-                >
-                  <a
-                    href={`#${heading.id}`}
-                    className={cn(
-                      "block py-1 px-2 text-sm rounded transition-colors",
-                      activeId === heading.id
-                        ? "bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-medium"
-                        : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                    )}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      const element = document.getElementById(heading.id);
-                      if (element) {
-                        window.scrollTo({
-                          top: element.getBoundingClientRect().top + window.pageYOffset - 80,
-                          behavior: "smooth"
-                        });
-                      }
-                    }}
-                  >
-                    {heading.text}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </div>
-      )}
-    </div>
+    </>
   );
 }

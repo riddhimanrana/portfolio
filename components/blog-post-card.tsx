@@ -20,44 +20,53 @@ export function BlogPostCard({ post }: BlogPostCardProps) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border border-gray-100 dark:border-gray-800"
+      transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+      className="group relative bg-white dark:bg-gray-900/50 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/60 dark:border-gray-800/60"
     >
-      <Link href={`/blog/${post.slug}`} className="block h-full group">
-        <div className="p-5 flex flex-col h-full">
+      {/* Subtle gradient overlay on hover */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 to-purple-500/0 group-hover:from-blue-500/5 group-hover:to-purple-500/5 transition-all duration-500 pointer-events-none" />
+      
+      <Link href={`/blog/${post.slug}`} className="block h-full relative">
+        <div className="p-6 flex flex-col h-full">
           {/* Top meta info */}
-          <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-3">
-            <div className="flex items-center">
-              <Calendar className="h-4 w-4 mr-1" /> {formattedDate}
+          <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
+            <div className="flex items-center gap-1">
+              <Calendar className="h-3.5 w-3.5" /> 
+              <span>{formattedDate}</span>
+            </div>
+            <div className="flex items-center gap-1 text-gray-400 dark:text-gray-500">
+              <Clock className="h-3.5 w-3.5" />
+              <span>{readTime} min read</span>
             </div>
           </div>
           
           {/* Content */}
           <div className="flex-grow">
-            <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-gray-100 line-clamp-2">{post.title}</h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">{post.excerpt}</p>
+            <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">{post.title}</h3>
+            <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3 leading-relaxed">{post.excerpt}</p>
           </div>
           
           {/* Bottom elements */}
-          <div className="mt-auto">
-            <div className="flex flex-wrap gap-2 mb-3">
+          <div className="mt-auto pt-4 border-t border-gray-100 dark:border-gray-800/50">
+            <div className="flex flex-wrap gap-1.5 mb-4">
               {post.tags.slice(0, 3).map((tag, index) => (
                 <span
                   key={index}
-                  className="text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100 px-2 py-0.5 rounded-full inline-flex items-center"
+                  className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 px-2.5 py-1 rounded-md font-medium"
                 >
-                  <Tag className="h-2.5 w-2.5 mr-1" /> {tag}
+                  {tag}
                 </span>
               ))}
               {post.tags.length > 3 && (
-                <span className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 px-2 py-0.5 rounded-full">
+                <span className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-500 px-2.5 py-1 rounded-md">
                   +{post.tags.length - 3}
                 </span>
               )}
             </div>
             
             <div className="flex items-center text-blue-600 dark:text-blue-400 text-sm font-medium">
-              Read article <ArrowRight className="h-4 w-4 ml-1 transition-transform group-hover:translate-x-1" />
+              Read article 
+              <ArrowRight className="h-4 w-4 ml-1.5 transition-transform duration-200 group-hover:translate-x-1" />
             </div>
           </div>
         </div>

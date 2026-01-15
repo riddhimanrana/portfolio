@@ -1,6 +1,5 @@
 import type React from "react";
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import NavBar from "@/components/navbar";
@@ -8,8 +7,6 @@ import { Toaster } from "@/components/toaster";
 import FooterWrapper from "@/components/footer-wrapper";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { PostHogProvider } from "@/components/PostHogProvider";
-
-const geist = Geist({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Riddhiman Rana | Full Stack Developer & Competitive Programmer",
@@ -60,7 +57,7 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" />
         {/* <link rel="me" href="https://mastodon.online/@rrcoder0167" /> */}
       </head>
-      <body className={geist.className}>
+      <body className="font-sans antialiased" style={{ fontFamily: "'Overused Grotesk', system-ui, sans-serif" }}>
         <PostHogProvider>
           <ThemeProvider
             attribute="class"

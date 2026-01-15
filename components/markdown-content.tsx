@@ -9,12 +9,12 @@ import { useTheme } from 'next-themes'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
 import rehypeSlug from 'rehype-slug'
-import rehypeCodeTitles from 'rehype-code-titles'
 import rehypeKatex from 'rehype-katex'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Copy, CheckCheck, FileCode } from 'lucide-react'
-import { cn } from '@/lib/utils'
+ 
 
 interface MarkdownContentProps {
   content: string
@@ -38,8 +38,13 @@ const CodeSkeleton = () => (
 );
 
 export function MarkdownContent({ content }: MarkdownContentProps) {
-  const { theme } = useTheme()
+  const { resolvedTheme } = useTheme()
+  const [mounted, setMounted] = React.useState(false)
   const [copiedCode, setCopiedCode] = React.useState<string | null>(null)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   // Handle code copy
   const handleCopyCode = (code: string) => {
@@ -53,28 +58,30 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
 
   return (
     <div className="prose dark:prose-invert max-w-none 
-      prose-headings:font-bold
+      prose-headings:font-semibold prose-headings:tracking-tight
       prose-h1:text-3xl prose-h1:mb-6
-      prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4
-      prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3
-      prose-h4:text-lg prose-h4:mt-5 prose-h4:mb-2
-      prose-p:my-4 prose-p:leading-relaxed
-      prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline
-      prose-img:rounded-lg prose-img:shadow-sm prose-img:my-6 prose-img:mx-auto prose-img:clear-both
-      prose-blockquote:border-l-4 prose-blockquote:border-blue-500 prose-blockquote:bg-gray-50 dark:prose-blockquote:bg-gray-800/60 prose-blockquote:pl-4 prose-blockquote:pr-4 prose-blockquote:py-2 prose-blockquote:italic
+      prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-h2:pb-2 prose-h2:border-b prose-h2:border-gray-200 dark:prose-h2:border-gray-800
+      prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3
+      prose-h4:text-lg prose-h4:mt-6 prose-h4:mb-2
+      prose-p:my-5 prose-p:leading-7 prose-p:text-gray-700 dark:prose-p:text-gray-300
+      prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline prose-a:font-medium hover:prose-a:underline
+      prose-img:rounded-xl prose-img:shadow-md prose-img:my-8 prose-img:mx-auto prose-img:clear-both
+      prose-blockquote:border-l-4 prose-blockquote:border-blue-500 prose-blockquote:bg-blue-50/50 dark:prose-blockquote:bg-blue-900/10 prose-blockquote:pl-6 prose-blockquote:pr-4 prose-blockquote:py-3 prose-blockquote:italic prose-blockquote:rounded-r-lg
       prose-code:font-normal prose-code:before:content-none prose-code:after:content-none
-      prose-table:border prose-table:border-gray-300 dark:prose-table:border-gray-700
-      prose-th:bg-gray-100 dark:prose-th:bg-gray-800 prose-th:p-3
-      prose-td:p-3 prose-td:border prose-td:border-gray-300 dark:prose-td:border-gray-700
-      prose-hr:my-8
-      prose-pre:p-0 prose-pre:my-6 prose-pre:bg-transparent"
+      prose-table:border prose-table:border-gray-200 dark:prose-table:border-gray-800 prose-table:rounded-lg prose-table:overflow-hidden
+      prose-th:bg-gray-50 dark:prose-th:bg-gray-800/50 prose-th:p-3 prose-th:font-medium
+      prose-td:p-3 prose-td:border prose-td:border-gray-200 dark:prose-td:border-gray-800
+      prose-hr:my-10 prose-hr:border-gray-200 dark:prose-hr:border-gray-800
+      prose-pre:p-0 prose-pre:my-6 prose-pre:bg-transparent
+      prose-li:my-1 prose-li:leading-7
+      prose-strong:font-semibold prose-strong:text-gray-900 dark:prose-strong:text-white"
     >
       <ReactMarkdown
         remarkPlugins={[remarkGfm, remarkMath]}
         rehypePlugins={[
           rehypeSlug,
-          rehypeCodeTitles,
-          rehypeKatex
+          rehypeKatex,
+          [rehypeAutolinkHeadings, { behavior: 'append' }]
         ]}
         components={{
           a: ({ node, ...props }) => {
@@ -97,35 +104,115 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
           code({ node, className, children, ...props }: any) {
             const match = /language-(\w+)/.exec(className || '');
             const isInline = !match;
+            const isDark = resolvedTheme === 'dark'
+            const codeString = String(children).replace(/\n$/, '')
+            const lines = codeString.split('\n')
+
+            // Check if this is a diff-style code block (has lines starting with + or -)
+            const isDiff = match?.[1] === 'diff' || lines.some(line => /^[+-]/.test(line))
+
+            // Parse meta for optional title and line highlighting: ```ts {1,3-5} title=server.ts
+            const metaString: string | undefined = node?.data?.meta || (props as any)?.metastring
+            const titleMatch = metaString?.match(/title=("([^"]+)"|'([^']+)'|([^\s]+))/)
+            const codeTitle = titleMatch ? (titleMatch[2] || titleMatch[3] || titleMatch[4]) : undefined
+            const highlightRE = /{([\d,-]+)}/
+            const highlightMatch = metaString?.match(highlightRE)
+
+            const makeHighlights = (str?: string) => {
+              const result = new Set<number>()
+              if (!str) return result
+              str.split(',').forEach((part) => {
+                if (part.includes('-')) {
+                  const [start, end] = part.split('-').map((n) => parseInt(n.trim(), 10))
+                  if (!isNaN(start) && !isNaN(end)) {
+                    for (let i = start; i <= end; i++) result.add(i)
+                  }
+                } else {
+                  const n = parseInt(part.trim(), 10)
+                  if (!isNaN(n)) result.add(n)
+                }
+              })
+              return result
+            }
+            const highlights = makeHighlights(highlightMatch?.[1])
+
+            // Get line style based on diff prefix and highlights
+            const getLineStyle = (lineNumber: number) => {
+              const line = lines[lineNumber - 1] || ''
+              const isHighlighted = highlights.has(lineNumber)
+              
+              // Diff-style highlighting
+              if (isDiff) {
+                if (line.startsWith('+')) {
+                  return {
+                    display: 'block',
+                    background: isDark ? 'rgba(34, 197, 94, 0.15)' : 'rgba(34, 197, 94, 0.12)',
+                    borderLeft: '3px solid rgb(34, 197, 94)',
+                    paddingLeft: '12px',
+                    marginLeft: '-3px'
+                  }
+                }
+                if (line.startsWith('-')) {
+                  return {
+                    display: 'block',
+                    background: isDark ? 'rgba(239, 68, 68, 0.15)' : 'rgba(239, 68, 68, 0.12)',
+                    borderLeft: '3px solid rgb(239, 68, 68)',
+                    paddingLeft: '12px',
+                    marginLeft: '-3px'
+                  }
+                }
+              }
+              
+              // Regular highlighting
+              if (isHighlighted) {
+                return {
+                  display: 'block',
+                  background: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(59,130,246,0.08)',
+                  borderLeft: '3px solid rgb(59,130,246)',
+                  paddingLeft: '12px',
+                  marginLeft: '-3px'
+                }
+              }
+              
+              return { display: 'block' }
+            }
             
             return !isInline && match ? (
-              <div className="relative overflow-hidden rounded-md my-4">
-                <div className="absolute right-2 top-2 z-10">
+              <div className="relative overflow-hidden rounded-lg my-6 border border-gray-200/80 dark:border-gray-800/80 shadow-sm">
+                <div className="flex items-center justify-between bg-gray-50 dark:bg-gray-900/80 px-4 py-2.5 text-xs text-gray-600 dark:text-gray-400 border-b border-gray-200/50 dark:border-gray-800/50">
+                  <div className="flex items-center min-w-0 gap-2">
+                    <FileCode className="h-4 w-4 shrink-0 text-gray-400 dark:text-gray-500" />
+                    <span className="truncate font-medium">{codeTitle ? codeTitle : match[1]}</span>
+                  </div>
                   <button
-                    onClick={() => handleCopyCode(String(children).replace(/\n$/, ''))}
-                    className="p-1.5 rounded bg-gray-600/40 hover:bg-gray-600/60 text-gray-800 dark:text-gray-300 hover:text-white transition-colors mt-8"
+                    onClick={() => handleCopyCode(codeString)}
+                    className="p-1.5 rounded-md bg-gray-200/50 dark:bg-gray-800/50 hover:bg-gray-300/50 dark:hover:bg-gray-700/50 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-all duration-200"
                     aria-label="Copy code"
                   >
-                    {copiedCode === String(children).replace(/\n$/, '') ? (
-                      <CheckCheck className="h-3.5 w-3.5" />
+                    {copiedCode === codeString ? (
+                      <CheckCheck className="h-4 w-4 text-green-500" />
                     ) : (
-                      <Copy className="h-3.5 w-3.5" />
+                      <Copy className="h-4 w-4" />
                     )}
                   </button>
                 </div>
-                <div className="flex items-center bg-gray-200 dark:bg-gray-950 px-3 py-2 text-xs text-gray-800 dark:text-gray-300">
-                  <FileCode className="h-3.5 w-3.5 mr-1.5" />
-                  <span>{match[1]}</span>
-                </div>
-                <SyntaxHighlighter
-                  style={theme === 'dark' ? vscDarkPlus : oneLight}
-                  language={match[1]}
-                  PreTag="div"
-                  className="!mt-0 !mb-0 text-sm"
-                  {...props}
-                >
-                  {String(children).replace(/\n$/, '')}
-                </SyntaxHighlighter>
+                {!mounted ? (
+                  <CodeSkeleton />
+                ) : (
+                  <SyntaxHighlighter
+                    style={isDark ? vscDarkPlus : oneLight}
+                    language={match[1] === 'diff' ? 'plaintext' : match[1]}
+                    PreTag="div"
+                    className="!mt-0 !mb-0 text-sm !rounded-b-md"
+                    wrapLines
+                    lineProps={(lineNumber: number) => ({
+                      style: getLineStyle(lineNumber)
+                    })}
+                    {...props}
+                  >
+                    {codeString}
+                  </SyntaxHighlighter>
+                )}
               </div>
             ) : (
               <code className="bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-sm" {...props}>
