@@ -59,7 +59,7 @@ export default function NavBar() {
               loading="eager"
               decoding="async"
             />
-            <span className="ml-2 font-semibold text-xl tracking-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">riddhiman</span>
+            <span className="ml-2 font-bold text-xl tracking-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">riddhiman</span>
           </Link>
 
           {/* Desktop Navigation (always centered, independent of logo width) */}

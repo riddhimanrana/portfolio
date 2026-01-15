@@ -11,7 +11,7 @@ const config: Config = {
   theme: {
   	extend: {
   		fontFamily: {
-  			sans: ['"Overused Grotesk"', 'system-ui', 'sans-serif'],
+  			sans: ['var(--font-overused-grotesk)', 'system-ui', 'sans-serif'],
   		},
   		colors: {
   			background: 'hsl(var(--background))',
