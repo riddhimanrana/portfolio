@@ -165,7 +165,7 @@ export default function AwardsPage() {
   }
 
   return (
-    <div className="min-h-screen  text-gray-900 dark:text-gray-100 transition-all duration-300">
+    <div className="min-h-screen text-foreground transition-all duration-300">
       <div className="container mx-auto px-4 py-8 md:py-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -174,7 +174,7 @@ export default function AwardsPage() {
           className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8 md:mb-12"
         >
           <div className="flex items-center">
-            <div className="flex items-center justify-center w-12 h-12 bg-yellow-100 dark:bg-yellow-900/20 text-yellow-500 dark:text-yellow-400 rounded-lg mr-4 shrink-0">
+            <div className="flex items-center justify-center w-12 h-12 bg-muted text-muted-foreground rounded-sm mr-4 shrink-0">
               <Trophy className="h-6 w-6" />
             </div>
             <div>
@@ -182,7 +182,7 @@ export default function AwardsPage() {
                 <span className="md:hidden">Awards</span>
                 <span className="hidden md:inline">Awards & Achievements</span>
               </h1>
-              <p className="text-gray-600 dark:text-gray-400 text-sm">
+              <p className="text-muted-foreground text-sm">
                 Recognitions and accomplishments
               </p>
             </div>
@@ -190,16 +190,16 @@ export default function AwardsPage() {
           
           <div className="flex items-center justify-start md:justify-end space-x-4 md:space-x-6 text-sm mt-4 md:mt-0">
             <div className="flex items-center">
-              <Medal className="w-4 h-4 text-blue-500 mr-1.5" />
-              <span className="text-gray-600 dark:text-gray-400">{awards.filter(a => a.difficulty === 'major').length} Major</span>
+              <Medal className="w-4 h-4 text-muted-foreground mr-1.5" />
+              <span className="text-muted-foreground">{awards.filter(a => a.difficulty === 'major').length} Major</span>
             </div>
             <div className="flex items-center">
-              <AwardIcon className="w-4 h-4 text-amber-500 mr-1.5" />
-              <span className="text-gray-600 dark:text-gray-400">{awards.filter(a => a.difficulty === 'honorable').length} Honorable</span>
+              <AwardIcon className="w-4 h-4 text-muted-foreground mr-1.5" />
+              <span className="text-muted-foreground">{awards.filter(a => a.difficulty === 'honorable').length} Honorable</span>
             </div>
             <div className="flex items-center">
-              <Star className="w-4 h-4 text-purple-500 mr-1.5" />
-              <span className="text-gray-600 dark:text-gray-400">{awards.filter(a => a.difficulty === 'notable').length} Notable</span>
+              <Star className="w-4 h-4 text-muted-foreground mr-1.5" />
+              <span className="text-muted-foreground">{awards.filter(a => a.difficulty === 'notable').length} Notable</span>
             </div>
           </div>
         </motion.div>
@@ -212,13 +212,13 @@ export default function AwardsPage() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="lg:hidden order-2"
           >
-            <details className="group bg-white/70 dark:bg-gray-900/70 backdrop-blur-md rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-lg">
+            <details className="group bg-card border border-border rounded-sm">
               <summary className="p-4 cursor-pointer flex items-center justify-between">
                 <h2 className="text-lg font-semibold flex items-center">
-                  <Calendar className="mr-2 h-5 w-5 text-black dark:text-white" /> Timeline Navigation
+                  <Calendar className="mr-2 h-5 w-5 text-foreground" /> Timeline Navigation
                 </h2>
                 <span className="group-open:rotate-180 transition-transform">
-                  <ChevronDown className="w-4 h-4 text-black dark:text-white" />
+                  <ChevronDown className="w-4 h-4 text-foreground" />
                 </span>
               </summary>
               <div className="px-4 pb-4 max-h-0 overflow-hidden opacity-0 
@@ -238,10 +238,10 @@ export default function AwardsPage() {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="hidden lg:block lg:col-span-1 bg-white/70 dark:bg-gray-900/70 backdrop-blur-md rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-lg p-6 h-[calc(100vh-12rem)] sticky top-24 overflow-y-auto order-1"
+            className="hidden lg:block lg:col-span-1 bg-card border border-border rounded-sm p-6 h-[calc(100vh-12rem)] sticky top-24 overflow-y-auto order-1"
           >
             <h2 className="text-xl font-bold mb-6 flex items-center">
-              <Calendar className="mr-2 h-5 w-5 dark:text-white" /> Timeline
+              <Calendar className="mr-2 h-5 w-5" /> Timeline
             </h2>
             <AwardTimelineNav
               awards={awards}
@@ -263,11 +263,11 @@ export default function AwardsPage() {
                 {/* Search and View Toggle Row */}
                 <div className="flex flex-row gap-2">
                   <div className="relative flex-grow">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
                     <Input
                       type="text"
                       placeholder="Search awards, descriptions..."
-                      className="pl-10 py-3 md:py-4 bg-white/80 dark:bg-gray-800/80 border border-gray-300/50 dark:border-gray-600/50 rounded-xl text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 shadow-sm transition-all duration-300"
+                      className="pl-10 py-3 md:py-4 bg-card border border-border rounded-sm text-foreground placeholder:text-muted-foreground shadow-sm transition-all duration-300"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                     />
@@ -277,22 +277,22 @@ export default function AwardsPage() {
                     {/* Filter button with popover for mobile */}
                     <Popover>
                       <PopoverTrigger asChild className="md:hidden">
-                        <button className="flex items-center px-3 bg-white/80 dark:bg-gray-800/80 border border-gray-200/50 dark:border-gray-700/50 rounded-xl shadow-sm transition-all duration-200 hover:shadow-md">
+                        <button className="flex items-center px-3 bg-card border border-border rounded-sm shadow-sm transition-all duration-200 hover:bg-muted">
                           <Filter className="w-4 h-4" />
                           <span className="sr-only">Filters</span>
                         </button>
                       </PopoverTrigger>
-                      <PopoverContent className="w-80 p-4 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border border-gray-200/50 dark:border-gray-700/50 rounded-xl shadow-2xl">
+                      <PopoverContent className="w-80 p-4 bg-card border border-border rounded-sm shadow-2xl">
                         <div className="space-y-4">
                           <div className="flex items-center justify-between">
                             <h3 className="font-semibold flex items-center">
-                              <Filter className="w-4 h-4 mr-2 text-blue-600 dark:text-blue-400" />
+                              <Filter className="w-4 h-4 mr-2 text-primary" />
                               Filter Awards
                             </h3>
                             {(activeFilters.difficulty.length < 3 || activeFilters.year.length > 0) && (
                               <button
                                 onClick={resetFilters}
-                                className="text-xs bg-red-500 hover:underline flex items-center"
+                                className="text-xs text-destructive hover:underline flex items-center gap-1"
                               >
                                 <X className="w-3.5 h-3.5 mr-1" /> Clear All
                               </button>
@@ -300,34 +300,34 @@ export default function AwardsPage() {
                           </div>
                           
                           <div className="space-y-3">
-                            <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300">Difficulty</h4>
+                            <h4 className="text-sm font-medium text-foreground">Difficulty</h4>
                             <div className="flex flex-wrap gap-2">
                               <button
                                 onClick={() => toggleDifficultyFilter("major")}
-                                className={`px-3 py-2 rounded-full text-xs font-medium flex items-center gap-1.5 transition-all duration-200 shadow-sm hover:shadow-md
+                                className={`px-3 py-2 rounded-sm text-xs font-medium flex items-center gap-1.5 transition-all duration-200
                                   ${activeFilters.difficulty.includes("major")
-                                    ? "bg-blue-500 text-white border-0 shadow-blue-200 dark:shadow-blue-900/50"
-                                    : "bg-white/80 dark:bg-gray-800/80 text-gray-700 dark:text-gray-300 border border-gray-300/50 dark:border-gray-600/50 hover:bg-blue-50 dark:hover:bg-blue-900/20"}`}
+                                    ? "bg-primary text-primary-foreground"
+                                    : "bg-card text-muted-foreground border border-border hover:bg-muted"}`}
                               >
                                 <Medal className="w-3.5 h-3.5" /> Major
                               </button>
                               
                               <button
                                 onClick={() => toggleDifficultyFilter("honorable")}
-                                className={`px-3 py-2 rounded-full text-xs font-medium flex items-center gap-1.5 transition-all duration-200 shadow-sm hover:shadow-md
+                                className={`px-3 py-2 rounded-sm text-xs font-medium flex items-center gap-1.5 transition-all duration-200
                                   ${activeFilters.difficulty.includes("honorable")
-                                    ? "bg-amber-500 text-white border-0 shadow-amber-200 dark:shadow-amber-900/50"
-                                    : "bg-white/80 dark:bg-gray-800/80 text-gray-700 dark:text-gray-300 border border-gray-300/50 dark:border-gray-600/50 hover:bg-amber-50 dark:hover:bg-amber-900/20"}`}
+                                    ? "bg-primary text-primary-foreground"
+                                    : "bg-card text-muted-foreground border border-border hover:bg-muted"}`}
                               >
                                 <AwardIcon className="w-3.5 h-3.5" /> Honorable
                               </button>
                               
                               <button
                                 onClick={() => toggleDifficultyFilter("notable")}
-                                className={`px-3 py-2 rounded-full text-xs font-medium flex items-center gap-1.5 transition-all duration-200 shadow-sm hover:shadow-md
+                                className={`px-3 py-2 rounded-sm text-xs font-medium flex items-center gap-1.5 transition-all duration-200
                                   ${activeFilters.difficulty.includes("notable")
-                                    ? "bg-purple-500 text-white border-0 shadow-purple-200 dark:shadow-purple-900/50"
-                                    : "bg-white/80 dark:bg-gray-800/80 text-gray-700 dark:text-gray-300 border border-gray-300/50 dark:border-gray-600/50 hover:bg-purple-50 dark:hover:bg-purple-900/20"}`}
+                                    ? "bg-primary text-primary-foreground"
+                                    : "bg-card text-muted-foreground border border-border hover:bg-muted"}`}
                               >
                                 <Star className="w-3.5 h-3.5" /> Notable
                               </button>
@@ -335,16 +335,16 @@ export default function AwardsPage() {
                           </div>
                           
                           <div className="space-y-3">
-                            <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300">Year</h4>
+                            <h4 className="text-sm font-medium text-foreground">Year</h4>
                             <div className="flex flex-wrap gap-2">
                               {availableYears.map(year => (
                                 <button
                                   key={year}
                                   onClick={() => toggleYearFilter(year)}
-                                  className={`px-3 py-2 rounded-full text-xs font-medium flex items-center gap-1.5 transition-all duration-200 shadow-sm hover:shadow-md
+                                  className={`px-3 py-2 rounded-sm text-xs font-medium flex items-center gap-1.5 transition-all duration-200
                                     ${activeFilters.year.includes(year)
-                                      ? "bg-indigo-500 text-white border-0 shadow-indigo-200 dark:shadow-indigo-900/50"
-                                      : "bg-white/80 dark:bg-gray-800/80 text-gray-700 dark:text-gray-300 border border-gray-300/50 dark:border-gray-600/50 hover:bg-indigo-50 dark:hover:bg-indigo-900/20"}`}
+                                      ? "bg-primary text-primary-foreground"
+                                      : "bg-card text-muted-foreground border border-border hover:bg-muted"}`}
                                 >
                                   <Calendar className="w-3.5 h-3.5" /> {year}
                                 </button>
@@ -357,17 +357,17 @@ export default function AwardsPage() {
 
                     {/* View Toggle */}
                     <Tabs defaultValue="grid" onValueChange={(value) => setViewMode(value as "grid" | "timeline")} className="sm:w-48">
-                      <TabsList className="w-full bg-white/80 dark:bg-gray-800/80 border border-gray-200/50 dark:border-gray-700/50 backdrop-blur-sm shadow-sm rounded-xl">
+                      <TabsList className="w-full bg-card border border-border shadow-sm rounded-sm">
                         <TabsTrigger 
                           value="grid" 
-                          className="flex-1 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm rounded-lg transition-all duration-200"
+                          className="flex-1 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-sm rounded-sm transition-all duration-200"
                         >
                           <Grid className="w-4 h-4 sm:mr-1.5" />
                           <span className="hidden sm:inline">Grid</span>
                         </TabsTrigger>
                         <TabsTrigger 
                           value="timeline" 
-                          className="flex-1 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm rounded-lg transition-all duration-200"
+                          className="flex-1 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-sm rounded-sm transition-all duration-200"
                         >
                           <LayoutList className="w-4 h-4 sm:mr-1.5" />
                           <span className="hidden sm:inline">List</span>
@@ -379,37 +379,37 @@ export default function AwardsPage() {
 
                 {/* Filter section - visible on desktop only */}
                 <div className="hidden md:flex flex-wrap gap-2 items-center">
-                  <div className="flex items-center text-gray-500 dark:text-gray-400 mr-2 text-sm">
+                  <div className="flex items-center text-muted-foreground mr-2 text-sm">
                     <Filter className="w-4 h-4 mr-1.5" />Filters:
                   </div>
 
                   {/* Difficulty filters */}
                   <button
                     onClick={() => toggleDifficultyFilter("major")}
-                    className={`px-3 py-2 rounded-full text-xs font-medium flex items-center gap-1.5 transition-all duration-200 shadow-sm hover:shadow-md
+                    className={`px-3 py-2 rounded-sm text-xs font-medium flex items-center gap-1.5 transition-all duration-200
                       ${activeFilters.difficulty.includes("major")
-                        ? "bg-blue-500 text-white border-0 shadow-blue-200 dark:shadow-blue-900/50"
-                        : "bg-white/80 dark:bg-gray-800/80 text-gray-700 dark:text-gray-300 border border-gray-300/50 dark:border-gray-600/50 hover:bg-blue-50 dark:hover:bg-blue-900/20"}`}
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-card text-muted-foreground border border-border hover:bg-muted"}`}
                   >
                     <Medal className="w-3.5 h-3.5" /> Major
                   </button>
 
                   <button
                     onClick={() => toggleDifficultyFilter("honorable")}
-                    className={`px-3 py-2 rounded-full text-xs font-medium flex items-center gap-1.5 transition-all duration-200 shadow-sm hover:shadow-md
+                    className={`px-3 py-2 rounded-sm text-xs font-medium flex items-center gap-1.5 transition-all duration-200
                       ${activeFilters.difficulty.includes("honorable")
-                        ? "bg-amber-500 text-white border-0 shadow-amber-200 dark:shadow-amber-900/50"
-                        : "bg-white/80 dark:bg-gray-800/80 text-gray-700 dark:text-gray-300 border border-gray-300/50 dark:border-gray-600/50 hover:bg-amber-50 dark:hover:bg-amber-900/20"}`}
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-card text-muted-foreground border border-border hover:bg-muted"}`}
                   >
                     <AwardIcon className="w-3.5 h-3.5" /> Honorable
                   </button>
 
                   <button
                     onClick={() => toggleDifficultyFilter("notable")}
-                    className={`px-3 py-2 rounded-full text-xs font-medium flex items-center gap-1.5 transition-all duration-200 shadow-sm hover:shadow-md
+                    className={`px-3 py-2 rounded-sm text-xs font-medium flex items-center gap-1.5 transition-all duration-200
                       ${activeFilters.difficulty.includes("notable")
-                        ? "bg-purple-500 text-white border-0 shadow-purple-200 dark:shadow-purple-900/50"
-                        : "bg-white/80 dark:bg-gray-800/80 text-gray-700 dark:text-gray-300 border border-gray-300/50 dark:border-gray-600/50 hover:bg-purple-50 dark:hover:bg-purple-900/20"}`}
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-card text-muted-foreground border border-border hover:bg-muted"}`}
                   >
                     <Star className="w-3.5 h-3.5" /> Notable
                   </button>
@@ -419,10 +419,10 @@ export default function AwardsPage() {
                     <button
                       key={year}
                       onClick={() => toggleYearFilter(year)}
-                      className={`px-3 py-2 rounded-full text-xs font-medium flex items-center gap-1.5 transition-all duration-200 shadow-sm hover:shadow-md
+                      className={`px-3 py-2 rounded-sm text-xs font-medium flex items-center gap-1.5 transition-all duration-200
                           ${activeFilters.year.includes(year)
-                            ? "bg-indigo-500 text-white border-0 shadow-indigo-200 dark:shadow-indigo-900/50"
-                            : "bg-white/80 dark:bg-gray-800/80 text-gray-700 dark:text-gray-300 border border-gray-300/50 dark:border-gray-600/50 hover:bg-indigo-50 dark:hover:bg-indigo-900/20"}`}
+                            ? "bg-primary text-primary-foreground"
+                            : "bg-card text-muted-foreground border border-border hover:bg-muted"}`}
                     >
                       <Calendar className="w-3.5 h-3.5" /> {year}
                     </button>
@@ -432,7 +432,7 @@ export default function AwardsPage() {
                   {(activeFilters.difficulty.length < 3 || activeFilters.year.length > 0 || searchQuery) && (
                     <button
                       onClick={resetFilters}
-                      className="px-3 py-2 rounded-full text-xs font-medium bg-red-500 text-white border-0 flex items-center gap-1.5 shadow-sm hover:shadow-md shadow-red-200 dark:shadow-red-900/50 transition-all duration-200"
+                      className="px-3 py-2 rounded-sm text-xs font-medium bg-destructive text-destructive-foreground flex items-center gap-1.5 transition-all duration-200"
                     >
                       <X className="w-3.5 h-3.5" /> Clear All
                     </button>
@@ -483,21 +483,21 @@ export default function AwardsPage() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.3 }}
-                className="text-center py-16 md:py-20 bg-gradient-to-br from-gray-50/50 to-blue-50/30 dark:from-gray-900/50 dark:to-blue-950/30 rounded-2xl border border-gray-200/50 dark:border-gray-700/50 backdrop-blur-sm shadow-sm"
+                className="text-center py-16 md:py-20 bg-muted/40 rounded-sm border border-border"
               >
                 <div className="max-w-md mx-auto">
                   <div className="relative mb-6">
-                    <Trophy className="relative w-16 h-16 md:w-20 md:h-20 mx-auto text-gray-400 dark:text-gray-500" />
+                    <Trophy className="relative w-16 h-16 md:w-20 md:h-20 mx-auto text-muted-foreground" />
                   </div>
-                  <h3 className="text-xl md:text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-3">
+                  <h3 className="text-xl md:text-2xl font-semibold mb-3">
                     No awards found
                   </h3>
-                  <p className="text-gray-500 dark:text-gray-400 text-sm md:text-base mb-6 leading-relaxed">
+                  <p className="text-muted-foreground text-sm md:text-base mb-6 leading-relaxed">
                     Try adjusting your search terms or filters to discover more achievements.
                   </p>
                   <button
                     onClick={resetFilters}
-                    className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl"
+                    className="inline-flex items-center px-6 py-3 bg-primary text-primary-foreground font-medium rounded-sm hover:opacity-90 transition-opacity
                   >
                     <X className="w-4 h-4 mr-2" />
                     Reset Filters

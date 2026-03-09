@@ -22,16 +22,16 @@ interface MarkdownContentProps {
 
 // Code block skeleton
 const CodeSkeleton = () => (
-  <div className="relative overflow-hidden rounded-md my-4 animate-pulse">
-    <div className="flex items-center bg-gray-200 dark:bg-gray-950 px-3 py-2 text-xs">
-      <div className="h-3.5 w-3.5 bg-gray-300 dark:bg-gray-700 rounded mr-1.5"></div>
-      <div className="h-3 w-16 bg-gray-300 dark:bg-gray-700 rounded"></div>
+  <div className="relative overflow-hidden rounded-sm my-4 animate-pulse">
+    <div className="flex items-center bg-muted px-3 py-2 text-xs">
+      <div className="h-3.5 w-3.5 bg-muted-foreground/30 rounded-sm mr-1.5"></div>
+      <div className="h-3 w-16 bg-muted-foreground/30 rounded-sm"></div>
     </div>
-    <div className="bg-gray-100 dark:bg-gray-900 p-4">
+    <div className="bg-muted/50 p-4">
       <div className="space-y-2">
-        <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-3/4"></div>
-        <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-full"></div>
-        <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-1/2"></div>
+        <div className="h-4 bg-muted-foreground/20 rounded-sm w-3/4"></div>
+        <div className="h-4 bg-muted-foreground/20 rounded-sm w-full"></div>
+        <div className="h-4 bg-muted-foreground/20 rounded-sm w-1/2"></div>
       </div>
     </div>
   </div>
@@ -60,21 +60,21 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
     <div className="prose dark:prose-invert max-w-none 
       prose-headings:font-semibold prose-headings:tracking-tight
       prose-h1:text-3xl prose-h1:mb-6
-      prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-h2:pb-2 prose-h2:border-b prose-h2:border-gray-200 dark:prose-h2:border-gray-800
+      prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-h2:pb-2 prose-h2:border-b prose-h2:border-border
       prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3
       prose-h4:text-lg prose-h4:mt-6 prose-h4:mb-2
-      prose-p:my-5 prose-p:leading-7 prose-p:text-gray-700 dark:prose-p:text-gray-300
-      prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline prose-a:font-medium hover:prose-a:underline
-      prose-img:rounded-xl prose-img:shadow-md prose-img:my-8 prose-img:mx-auto prose-img:clear-both
-      prose-blockquote:border-l-4 prose-blockquote:border-blue-500 prose-blockquote:bg-blue-50/50 dark:prose-blockquote:bg-blue-900/10 prose-blockquote:pl-6 prose-blockquote:pr-4 prose-blockquote:py-3 prose-blockquote:italic prose-blockquote:rounded-r-lg
+      prose-p:my-5 prose-p:leading-7
+      prose-a:text-foreground prose-a:no-underline prose-a:font-medium hover:prose-a:underline
+      prose-img:rounded-sm prose-img:shadow-md prose-img:my-8 prose-img:mx-auto prose-img:clear-both
+      prose-blockquote:border-l-4 prose-blockquote:border-foreground/40 prose-blockquote:bg-muted/40 prose-blockquote:pl-6 prose-blockquote:pr-4 prose-blockquote:py-3 prose-blockquote:italic prose-blockquote:rounded-r-sm
       prose-code:font-normal prose-code:before:content-none prose-code:after:content-none
-      prose-table:border prose-table:border-gray-200 dark:prose-table:border-gray-800 prose-table:rounded-lg prose-table:overflow-hidden
-      prose-th:bg-gray-50 dark:prose-th:bg-gray-800/50 prose-th:p-3 prose-th:font-medium
-      prose-td:p-3 prose-td:border prose-td:border-gray-200 dark:prose-td:border-gray-800
-      prose-hr:my-10 prose-hr:border-gray-200 dark:prose-hr:border-gray-800
+      prose-table:border prose-table:border-border prose-table:rounded-sm prose-table:overflow-hidden
+      prose-th:bg-muted prose-th:p-3 prose-th:font-medium
+      prose-td:p-3 prose-td:border prose-td:border-border
+      prose-hr:my-10 prose-hr:border-border
       prose-pre:p-0 prose-pre:my-6 prose-pre:bg-transparent
       prose-li:my-1 prose-li:leading-7
-      prose-strong:font-semibold prose-strong:text-gray-900 dark:prose-strong:text-white"
+      prose-strong:font-semibold"
     >
       <ReactMarkdown
         remarkPlugins={[remarkGfm, remarkMath]}
@@ -93,7 +93,7 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-blue-600 dark:text-blue-400 hover:text-blue-500 hover:dark:text-blue-300 transition-colors transition-300 no-underline hover:no-underline"
+                  className="inline-flex items-center gap-1 text-foreground/80 hover:text-foreground transition-colors no-underline hover:no-underline"
                 >
                   {props.children}
                 </Link>
@@ -178,15 +178,15 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
             }
             
             return !isInline && match ? (
-              <div className="relative overflow-hidden rounded-lg my-6 border border-gray-200/80 dark:border-gray-800/80 shadow-sm">
-                <div className="flex items-center justify-between bg-gray-50 dark:bg-gray-900/80 px-4 py-2.5 text-xs text-gray-600 dark:text-gray-400 border-b border-gray-200/50 dark:border-gray-800/50">
+              <div className="relative overflow-hidden rounded-sm my-6 border border-border shadow-sm">
+                <div className="flex items-center justify-between bg-muted px-4 py-2.5 text-xs text-muted-foreground border-b border-border">
                   <div className="flex items-center min-w-0 gap-2">
-                    <FileCode className="h-4 w-4 shrink-0 text-gray-400 dark:text-gray-500" />
+                    <FileCode className="h-4 w-4 shrink-0 text-muted-foreground" />
                     <span className="truncate font-medium">{codeTitle ? codeTitle : match[1]}</span>
                   </div>
                   <button
                     onClick={() => handleCopyCode(codeString)}
-                    className="p-1.5 rounded-md bg-gray-200/50 dark:bg-gray-800/50 hover:bg-gray-300/50 dark:hover:bg-gray-700/50 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-all duration-200"
+                    className="p-1.5 rounded-sm bg-muted/80 hover:bg-muted text-muted-foreground hover:text-foreground transition-all duration-200"
                     aria-label="Copy code"
                   >
                     {copiedCode === codeString ? (
@@ -215,7 +215,7 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
                 )}
               </div>
             ) : (
-              <code className="bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-sm" {...props}>
+              <code className="bg-muted px-1.5 py-0.5 rounded text-sm" {...props}>
                 {children}
               </code>
             );
@@ -296,7 +296,7 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
             </div>
           ),
           blockquote: ({ node, ...props }) => (
-            <blockquote className="border-l-4 border-blue-500 bg-gray-50 dark:bg-gray-800/60 pl-6 pr-4 py-2 italic my-6" {...props} />
+            <blockquote className="border-l-4 border-border bg-muted/50 pl-6 pr-4 py-2 italic my-6" {...props} />
           ),
           hr: ({ node, ...props }) => (
             <hr className="my-10 border-gray-300 dark:border-gray-700" {...props} />

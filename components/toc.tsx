@@ -134,10 +134,10 @@ export function TableOfContents({ content }: TableOfContentsProps) {
                 className={cn(
                   "block py-1.5 text-sm border-l-2 -ml-px pl-4 transition-all duration-200 truncate",
                   isDirectlyActive
-                    ? "border-blue-500 text-blue-600 dark:text-blue-400 font-medium"
+                    ? "border-foreground text-foreground font-medium"
                     : isActive
-                    ? "border-blue-300 dark:border-blue-600 text-gray-700 dark:text-gray-300"
-                    : "border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:border-gray-300 dark:hover:border-gray-600"
+                    ? "border-border text-foreground/80"
+                    : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
                 )}
                 onClick={(e) => {
                   e.preventDefault();
@@ -162,8 +162,8 @@ export function TableOfContents({ content }: TableOfContentsProps) {
                         className={cn(
                           "block py-1 text-xs border-l-2 -ml-px pl-6 transition-all duration-200 truncate",
                           activeId === child.id
-                            ? "border-blue-500 text-blue-600 dark:text-blue-400 font-medium"
-                            : "border-transparent text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+                            ? "border-foreground text-foreground font-medium"
+                            : "border-transparent text-muted-foreground hover:text-foreground/80"
                         )}
                         onClick={(e) => {
                           e.preventDefault();
@@ -187,10 +187,10 @@ export function TableOfContents({ content }: TableOfContentsProps) {
     <>
       {/* Desktop TOC */}
       <div className="hidden lg:block w-full max-w-[200px]">
-        <div className="text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-3">
+        <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-3">
           On this page
         </div>
-        <div className="border-l border-gray-200 dark:border-gray-800">
+        <div className="border-l border-border">
           <TocContent />
         </div>
       </div>
@@ -200,10 +200,10 @@ export function TableOfContents({ content }: TableOfContentsProps) {
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
           className={cn(
-            "flex items-center gap-2 px-4 py-2.5 rounded-full shadow-lg transition-all duration-200",
+            "flex items-center gap-2 px-4 py-2.5 rounded-sm shadow-lg transition-all duration-200",
             mobileOpen 
-              ? "bg-blue-600 text-white" 
-              : "bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700"
+              ? "bg-foreground text-background" 
+              : "bg-card text-foreground border border-border"
           )}
         >
           <List className="h-4 w-4" />
@@ -223,11 +223,11 @@ export function TableOfContents({ content }: TableOfContentsProps) {
             />
             
             {/* Mobile menu */}
-            <div className="absolute bottom-full right-0 mb-2 w-72 max-h-[60vh] overflow-y-auto bg-white dark:bg-gray-900 rounded-xl shadow-xl border border-gray-200 dark:border-gray-800 p-4 animate-scale-in">
-              <div className="text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-3">
+            <div className="absolute bottom-full right-0 mb-2 w-72 max-h-[60vh] overflow-y-auto bg-card rounded-sm shadow-xl border border-border p-4">
+              <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-3">
                 On this page
               </div>
-              <div className="border-l border-gray-200 dark:border-gray-800">
+              <div className="border-l border-border">
                 <TocContent />
               </div>
             </div>

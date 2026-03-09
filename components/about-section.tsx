@@ -6,7 +6,7 @@ import { User, Code, Box, Rocket } from "lucide-react";
 
 export function AboutSection() {
   return (
-    <section className="py-12 sm:py-20 bg-gray-50 dark:bg-gray-900 rounded-3xl my-8">
+    <section className="py-12 sm:py-20 my-8">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <motion.div
@@ -15,8 +15,8 @@ export function AboutSection() {
             transition={{ duration: 0.5 }}
             className="flex items-center mb-12"
           >
-            <div className="p-2 bg-purple-50 dark:bg-purple-900/20 rounded-xl shadow-sm mr-3">
-              <User className="h-8 w-8 text-purple-500 dark:text-purple-400" />
+            <div className="p-2 bg-muted rounded mr-3">
+              <User className="h-8 w-8 text-foreground" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold">
               A little about me
@@ -30,9 +30,9 @@ export function AboutSection() {
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               <div className="relative aspect-square max-w-md mx-auto md:mx-0">
-                <div className="absolute inset-0 bg-blue-500/10 dark:bg-blue-500/20 rounded-3xl transform rotate-6"></div>
-                <div className="absolute inset-0 bg-purple-500/10 dark:bg-purple-500/20 rounded-3xl transform -rotate-3"></div>
-                <div className="relative h-full w-full overflow-hidden rounded-2xl border-2 border-gray-200 dark:border-gray-700">
+                <div className="absolute inset-0 bg-primary/8 rounded-2xl transform rotate-6"></div>
+                <div className="absolute inset-0 bg-secondary/30 rounded-2xl transform -rotate-3"></div>
+                <div className="relative h-full w-full overflow-hidden rounded border border-border">
                   <Image
                     src="/aboutme.jpg"
                     alt="Riddhiman Rana"
@@ -62,7 +62,7 @@ export function AboutSection() {
               transition={{ duration: 0.5, delay: 0.3 }}
               className="space-y-6"
             >
-              <p className="text-gray-600 dark:text-gray-400">
+              <p className="text-muted-foreground">
                 I'm Riddhiman, a sophomore at Dougherty Valley High School with
                 a curiosity for building things that combine technology and
                 real-world impact. What started as tinkering with Python over 8
@@ -70,7 +70,7 @@ export function AboutSection() {
                 solving, and creating things that people can actually use.
               </p>
 
-              <p className="text-gray-600 dark:text-gray-400">
+              <p className="text-muted-foreground">
                 These days, I spend a lot of time doing competitive programming,
                 web development, and machine learning. I&apos;m driven by the
                 challenge of turning an idea into something real, and I’m
@@ -79,12 +79,12 @@ export function AboutSection() {
               </p>
 
               <div className="flex items-start">
-                <div className="p-2 bg-green-50 dark:bg-green-900/20 rounded-lg mr-3">
-                  <Box className="h-5 w-5 text-green-500 dark:text-green-400" />
+                <div className="p-2 bg-muted rounded mr-3">
+                  <Box className="h-5 w-5 text-foreground" />
                 </div>
                 <div>
                   <h4 className="font-medium">Abstract Problem Solver</h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                  <p className="text-sm text-muted-foreground">
                     I also deeply enjoy complex abstract problems and doing
                     things that are different, instead of just following in on
                     the same hype train that everyone does. For example, instead

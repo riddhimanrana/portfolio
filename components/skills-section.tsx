@@ -129,8 +129,8 @@ export function SkillsSection() {
             transition={{ duration: 0.5 }}
             className="flex items-center mb-12"
           >
-            <div className="p-2 bg-green-50 dark:bg-green-900/20 rounded-xl shadow-sm mr-3">
-              <Cpu className="h-8 w-8 text-green-500 dark:text-green-400" />
+            <div className="p-2 bg-muted rounded mr-3">
+              <Cpu className="h-8 w-8 text-foreground" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold">
               Skills & Expertise
@@ -145,13 +145,13 @@ export function SkillsSection() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: categoryIndex * 0.1 }}
-                className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden"
+                className="bg-card rounded border border-border shadow-sm overflow-hidden"
               >
                 <div
-                  className={`px-6 py-4 border-b ${category.color.replace("bg-", "border-")}`}
+                  className="px-6 py-4 border-b border-border"
                 >
                   <div className="flex items-center">
-                    <div className={`p-2 rounded-lg ${category.color} mr-3`}>
+                    <div className="p-2 rounded bg-muted mr-3">
                       {category.icon}
                     </div>
                     <h3 className="font-semibold text-lg">{category.name}</h3>
@@ -174,7 +174,7 @@ export function SkillsSection() {
                           href={skill.link}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-block px-3 py-1.5 bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 rounded-md text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 hover:shadow-sm cursor-pointer hover:translate-y-[-2px] hover:scale-105 transform"
+                          className="inline-block px-3 py-1.5 bg-muted text-muted-foreground rounded text-sm font-medium hover:bg-accent transition-colors duration-150 cursor-pointer"
                         >
                           {skill.name}
                         </Link>

@@ -55,48 +55,50 @@ html {
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
-    --radius: 0.5rem;
+    /* Warm cream / charcoal ink palette — handmade feel */
+    --background: 42 25% 96%;
+    --foreground: 30 7% 13%;
+    --card: 42 20% 98%;
+    --card-foreground: 30 7% 13%;
+    --popover: 42 20% 98%;
+    --popover-foreground: 30 7% 13%;
+    --primary: 22 68% 50%;
+    --primary-foreground: 38 30% 97%;
+    --secondary: 38 14% 91%;
+    --secondary-foreground: 30 7% 18%;
+    --muted: 38 12% 92%;
+    --muted-foreground: 30 5% 46%;
+    --accent: 38 14% 91%;
+    --accent-foreground: 30 7% 18%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 38 30% 97%;
+    --border: 38 12% 87%;
+    --input: 38 12% 87%;
+    --ring: 22 68% 50%;
+    --radius: 0.25rem;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
+    /* Warm deep charcoal / soft off-white palette */
+    --background: 30 7% 8%;
+    --foreground: 38 14% 92%;
+    --card: 30 7% 11%;
+    --card-foreground: 38 14% 92%;
+    --popover: 30 7% 11%;
+    --popover-foreground: 38 14% 92%;
+    --primary: 22 62% 62%;
+    --primary-foreground: 30 7% 8%;
+    --secondary: 30 7% 16%;
+    --secondary-foreground: 38 14% 88%;
+    --muted: 30 7% 14%;
+    --muted-foreground: 35 5% 58%;
+    --accent: 30 7% 16%;
+    --accent-foreground: 38 14% 88%;
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 38 14% 92%;
+    --border: 30 7% 18%;
+    --input: 30 7% 18%;
+    --ring: 22 62% 62%;
   }
 }
 
@@ -109,57 +111,50 @@ html {
   }
 }
 
-@layer components {
-  .glow {
-    box-shadow: 0 0 15px 2px theme("colors.blue.500/30"), 0 0 5px -1px theme("colors.blue.400/50");
-    border-color: theme("colors.blue.800/70");
-  }
-}
-
-/* Premium UI enhancements */
 @layer utilities {
-  /* Subtle text gradient for headings */
-  .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-400;
+  /* Ink-line: a hand-drawn-feeling thin separator */
+  .ink-line {
+    @apply border-t border-border;
   }
-  
-  /* Glass morphism effect */
-  .glass {
-    @apply bg-white/70 dark:bg-gray-900/70 backdrop-blur-xl border border-white/20 dark:border-gray-800/50;
-  }
-  
-  /* Premium card hover */
+
+  /* Warm card hover — tactile lift with warm shadow */
   .card-hover {
-    @apply transition-all duration-300 ease-out hover:shadow-xl hover:shadow-gray-200/50 dark:hover:shadow-gray-900/50 hover:-translate-y-1;
+    @apply transition-all duration-200 ease-out hover:shadow-md hover:shadow-black/8 dark:hover:shadow-black/30 hover:-translate-y-0.5;
   }
-  
-  /* Smooth link underline animation */
+
+  /* Smooth link underline animation — editorial feel */
   .link-underline {
     @apply relative;
   }
   .link-underline::after {
     content: '';
-    @apply absolute bottom-0 left-0 w-0 h-[1px] bg-current transition-all duration-300 ease-out;
+    @apply absolute bottom-0 left-0 w-0 h-px bg-current transition-all duration-200 ease-out;
   }
   .link-underline:hover::after {
     @apply w-full;
   }
-  
-  /* Enhanced focus states */
+
+  /* Focus ring using warm primary ring token */
   .focus-ring {
-    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-gray-900;
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background;
   }
 }
 
-/* Custom selection color */
+/* Warm selection color */
 ::selection {
-  @apply bg-blue-500/20 text-blue-900 dark:text-blue-100;
+  background: hsl(22 68% 50% / 0.18);
+  color: hsl(30 7% 13%);
 }
 
-/* Improved scrollbar styling */
+.dark ::selection {
+  background: hsl(22 62% 62% / 0.25);
+  color: hsl(38 14% 92%);
+}
+
+/* Minimal scrollbar with warm tones */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -167,9 +162,18 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gray-300 dark:bg-gray-700 rounded-full;
+  background: hsl(38 12% 75%);
+  border-radius: 99px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-400 dark:bg-gray-600;
+  background: hsl(38 12% 60%);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: hsl(30 7% 28%);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: hsl(30 7% 38%);
 }

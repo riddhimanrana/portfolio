@@ -33,8 +33,8 @@ export function WorkExperience() {
           transition={{ duration: 0.5 }}
           className="flex items-center mb-8"
         >
-          <div className="p-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg shadow-sm mr-3">
-            <Briefcase className="h-8 w-8 text-blue-500 dark:text-blue-400" />
+          <div className="p-2 bg-muted rounded mr-3">
+            <Briefcase className="h-8 w-8 text-foreground" />
           </div>
           <h2 className="text-2xl sm:text-3xl font-bold">Work Experience</h2>
         </motion.div>
@@ -46,18 +46,18 @@ export function WorkExperience() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.05 }}
-              className="border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden bg-white dark:bg-gray-900 shadow-sm hover:shadow-md transition-all duration-300"
+              className="border border-border rounded overflow-hidden bg-card shadow-sm hover:shadow-md transition-all duration-300"
             >
               <div
                 onClick={() => toggleExpand(index)}
                 className={`flex items-center p-3 sm:p-4 cursor-pointer transition-all duration-300 ${
                   expandedIndex === index 
-                  ? 'bg-gradient-to-r from-blue-50/50 to-transparent dark:from-blue-900/10 dark:to-transparent'
-                  : 'hover:bg-gray-50 dark:hover:bg-gray-800/30'
+                  ? 'bg-muted/50'
+                  : 'hover:bg-muted/30'
                 }`}
               >
                 {/* Logo */}
-                <div className="h-10 w-10 sm:h-12 sm:w-12 relative flex-shrink-0 rounded-full border border-gray-200 dark:border-gray-700 overflow-hidden bg-white dark:bg-gray-800 shadow-sm">
+                <div className="h-10 w-10 sm:h-12 sm:w-12 relative flex-shrink-0 rounded-full border border-border overflow-hidden bg-background shadow-sm">
                   <Image
                     src={experience.logo}
                     alt={`${experience.title} logo`}
@@ -79,12 +79,12 @@ export function WorkExperience() {
                     <h3 className="text-base font-semibold truncate">
                       {experience.title}
                     </h3>
-                    <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 rounded-full px-2.5 py-0.5 w-fit">
+                    <div className="flex items-center text-xs text-muted-foreground bg-muted rounded-full px-2.5 py-0.5 w-fit">
                       <Calendar className="w-3 h-3 mr-1" />
                       <span className="whitespace-nowrap">{experience.date}</span>
                     </div>
                   </div>
-                  <p className="text-gray-600 dark:text-gray-400 text-xs mt-1 line-clamp-2">
+                  <p className="text-muted-foreground text-xs mt-1 line-clamp-2">
                     {experience.subtext}
                   </p>
                 </div>
@@ -93,8 +93,8 @@ export function WorkExperience() {
                 <button 
                   className={`ml-3 p-1.5 rounded-full focus:outline-none flex-shrink-0 transition-colors duration-300 ${
                     expandedIndex === index
-                      ? 'bg-blue-100 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
-                      : 'hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400'
+                      ? 'bg-primary/10 text-primary'
+                      : 'hover:bg-muted text-muted-foreground'
                   }`}
                   onClick={(e) => {
                     e.stopPropagation();
@@ -120,9 +120,9 @@ export function WorkExperience() {
                     transition={{ duration: 0.3 }}
                     className="overflow-hidden"
                   >
-                    <div className="p-3 sm:p-4 pt-4 border-t border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-800/10">
+                    <div className="p-3 sm:p-4 pt-4 border-t border-border bg-muted/20">
                       <div className="prose-sm max-w-none">
-                        <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm leading-relaxed">
+                        <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
                           {experience.details}
                         </p>
                       </div>
@@ -132,7 +132,7 @@ export function WorkExperience() {
                           href={experience.link}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="mt-3 inline-flex items-center text-xs font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors group"
+                          className="mt-3 inline-flex items-center text-xs font-medium text-primary hover:text-primary/80 transition-colors group"
                         >
                           Visit website
                           <ExternalLink className="ml-1 h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />

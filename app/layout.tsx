@@ -64,7 +64,7 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" />
         {/* <link rel="me" href="https://mastodon.online/@rrcoder0167" /> */}
       </head>
-      <body className={`font-sans antialiased ${overusedGrotesk.variable}`} style={{ fontFamily: "'Overused Grotesk', system-ui, sans-serif" }}>
+      <body className={`font-sans antialiased bg-background text-foreground ${overusedGrotesk.variable}`} style={{ fontFamily: "'Overused Grotesk', system-ui, sans-serif" }}>
         <PostHogProvider>
           <ThemeProvider
             attribute="class"

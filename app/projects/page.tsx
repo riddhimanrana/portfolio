@@ -95,7 +95,7 @@ export default function ProjectsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <div className="min-h-screen">
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -104,29 +104,29 @@ export default function ProjectsPage() {
           className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-5"
         >
           <div className="flex items-center">
-            <div className="flex items-center justify-center w-12 h-12 bg-gray-100 dark:bg-gray-600/20 rounded-lg mr-4 shrink-0">
-              <Briefcase className="h-6 w-6" />
+            <div className="flex items-center justify-center w-12 h-12 bg-muted rounded-sm mr-4 shrink-0">
+              <Briefcase className="h-6 w-6 text-muted-foreground" />
             </div>
             <div>
               <h1 className="text-3xl font-bold mb-1">My Projects</h1>
-              <p className="text-gray-600 dark:text-gray-400 text-sm">Things I've built and worked on</p>
+              <p className="text-muted-foreground text-sm">Things I've built and worked on</p>
             </div>
           </div>
           
           {/* Search input */}
           <div className="relative w-full md:w-60">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <input
               type="text"
               placeholder="Search projects..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-9 py-2 text-sm bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+              className="w-full px-9 py-2 text-sm bg-card text-card-foreground border border-border rounded-sm focus:ring-1 focus:ring-ring focus:border-transparent outline-none transition-all placeholder:text-muted-foreground"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery("")}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -143,10 +143,10 @@ export default function ProjectsPage() {
             <div className="flex gap-1.5 pb-2 min-w-max">
               <button
                 onClick={() => setSelectedTag(null)}
-                className={`px-3 py-1.5 rounded-full border text-xs font-medium transition-all ${
+                className={`px-3 py-1.5 rounded-sm border text-xs font-medium transition-all ${
                   selectedTag === null
-                    ? "bg-blue-100 dark:bg-blue-900/30 border-blue-200 dark:border-blue-800 text-blue-800 dark:text-blue-300"
-                    : "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/70"
+                    ? "bg-primary/10 border-primary/30 text-primary"
+                    : "bg-card border-border text-muted-foreground hover:bg-muted"
                 }`}
               >
                 All Projects
@@ -155,10 +155,10 @@ export default function ProjectsPage() {
                 <button
                   key={tag}
                   onClick={() => setSelectedTag(tag === selectedTag ? null : tag)}
-                  className={`px-3 py-1.5 rounded-full border text-xs font-medium transition-all inline-flex items-center gap-1 ${
+                  className={`px-3 py-1.5 rounded-sm border text-xs font-medium transition-all inline-flex items-center gap-1 ${
                     tag === selectedTag
-                      ? "bg-blue-100 dark:bg-blue-900/30 border-blue-200 dark:border-blue-800 text-blue-800 dark:text-blue-300"
-                      : "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/70"
+                      ? "bg-primary/10 border-primary/30 text-primary"
+                      : "bg-card border-border text-muted-foreground hover:bg-muted"
                   }`}
                 >
                   <TagIcon className="h-3 w-3" />{tag}
@@ -170,29 +170,29 @@ export default function ProjectsPage() {
           {showLeftArrow && (
             <button 
               onClick={scrollTagsLeft}
-              className="absolute left-0 top-1/4 -translate-y-1/3 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl border border-gray-200 dark:border-gray-700 rounded-full p-1.5 drop-shadow-xl hover:bg-white dark:hover:bg-gray-700 transition-colors z-10"
+              className="absolute left-0 top-1/4 -translate-y-1/3 bg-card/90 backdrop-blur-xl border border-border rounded-full p-1.5 drop-shadow-xl hover:bg-muted transition-colors z-10"
               aria-label="Scroll tags left"
             >
-              <ChevronRight className="h-4 w-4 text-gray-600 dark:text-gray-300 rotate-180" />
+              <ChevronRight className="h-4 w-4 text-muted-foreground rotate-180" />
             </button>
           )}
           
           {showRightArrow && (
             <button 
               onClick={scrollTagsRight}
-              className="absolute right-0 top-1/4 -translate-y-1/3 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl border border-gray-200 dark:border-gray-700 rounded-full p-1.5 drop-shadow-xl hover:bg-white dark:hover:bg-gray-700 transition-colors z-10"
+              className="absolute right-0 top-1/4 -translate-y-1/3 bg-card/90 backdrop-blur-xl border border-border rounded-full p-1.5 drop-shadow-xl hover:bg-muted transition-colors z-10"
               aria-label="Scroll tags right"
             >
-              <ChevronRight className="h-4 w-4 text-gray-600 dark:text-gray-300" />
+              <ChevronRight className="h-4 w-4 text-muted-foreground" />
             </button>
           )}
           
           {showLeftArrow && (
-            <div className="absolute left-0 top-0 w-10 h-full bg-gradient-to-r from-white dark:from-gray-950 to-transparent pointer-events-none z-[5]"></div>
+            <div className="absolute left-0 top-0 w-10 h-full bg-gradient-to-r from-background to-transparent pointer-events-none z-[5]"></div>
           )}
           
           {showRightArrow && (
-            <div className="absolute right-0 top-0 w-10 h-full bg-gradient-to-l from-white dark:from-gray-950 to-transparent pointer-events-none z-[5]"></div>
+            <div className="absolute right-0 top-0 w-10 h-full bg-gradient-to-l from-background to-transparent pointer-events-none z-[5]"></div>
           )}
         </div>
 
@@ -212,17 +212,17 @@ export default function ProjectsPage() {
               ))}
             </div>
             
-            <div className="text-center text-sm text-gray-500 dark:text-gray-400 mt-10">
+            <div className="text-center text-sm text-muted-foreground mt-10">
               Showing {filteredProjects.length} of {projects.length} projects
             </div>
           </>
         ) : (
-          <div className="text-center py-12 bg-gray-50 dark:bg-gray-900/50 rounded-lg">
-            <div className="inline-flex items-center justify-center w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-full mb-4">
-              <Search className="h-6 w-6 text-gray-500 dark:text-gray-400" />
+          <div className="text-center py-12 bg-muted/40 rounded-sm border border-border">
+            <div className="inline-flex items-center justify-center w-12 h-12 bg-muted rounded-full mb-4">
+              <Search className="h-6 w-6 text-muted-foreground" />
             </div>
             <h3 className="text-xl font-bold mb-2">No matching projects found</h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-5 max-w-md mx-auto text-sm">
+            <p className="text-muted-foreground mb-5 max-w-md mx-auto text-sm">
               {searchQuery ? `No projects match "${searchQuery}"` : "No projects found with the selected filters."}
             </p>
             <button
@@ -230,7 +230,7 @@ export default function ProjectsPage() {
                 setSearchQuery("");
                 setSelectedTag(null);
               }}
-              className="px-5 py-1.5 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition-colors"
+              className="px-5 py-1.5 bg-primary text-primary-foreground text-sm rounded-sm hover:opacity-90 transition-opacity"
             >
               Clear filters
             </button>

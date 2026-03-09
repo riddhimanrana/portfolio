@@ -13,6 +13,13 @@ const config: Config = {
   		fontFamily: {
   			sans: ['var(--font-overused-grotesk)', 'system-ui', 'sans-serif'],
   		},
+  		lineHeight: {
+  			relaxed: '1.75',
+  			loose: '2',
+  		},
+  		letterSpacing: {
+  			snug: '-0.015em',
+  		},
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',

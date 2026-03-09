@@ -37,7 +37,7 @@ export function EducationSection() {
   ];
 
   return (
-    <section className="py-12 sm:py-16 bg-white dark:bg-gray-950">
+    <section className="py-12 sm:py-16">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <motion.div
@@ -46,8 +46,8 @@ export function EducationSection() {
             transition={{ duration: 0.5 }}
             className="flex items-center mb-8 sm:mb-12"
           >
-            <div className="p-2 bg-blue-50 dark:bg-blue-900/20 rounded-xl shadow-sm mr-3">
-              <GraduationCap className="h-6 w-6 sm:h-8 sm:w-8 text-blue-500 dark:text-blue-400" />
+            <div className="p-2 bg-muted rounded mr-3">
+              <GraduationCap className="h-6 w-6 sm:h-8 sm:w-8 text-foreground" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold">Education</h2>
           </motion.div>
@@ -64,19 +64,19 @@ export function EducationSection() {
               >
                 {/* Content */}
                 <div
-                  className={`p-4 rounded-xl bg-gray-50 dark:bg-gray-900 border ${
+                  className={`p-4 rounded bg-card border ${
                     education.current
-                      ? "border-blue-100 dark:border-blue-900/50 shadow-md"
-                      : "border-gray-100 dark:border-gray-800"
+                      ? "border-primary/20 shadow-sm"
+                      : "border-border"
                   }`}
                 >
                   <div className="flex items-center flex-wrap gap-2 mb-2">
-                    <span className="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                    <span className="flex items-center text-sm text-muted-foreground">
                       <Calendar className="w-3.5 h-3.5 mr-1.5 flex-shrink-0" />
                       {education.period}
                     </span>
                     {education.current && (
-                      <span className="px-2 py-0.5 text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-full">
+                      <span className="px-2 py-0.5 text-xs bg-primary/10 text-primary rounded-full">
                         Current
                       </span>
                     )}
@@ -84,7 +84,7 @@ export function EducationSection() {
 
                   <div className="flex items-center gap-3 mb-1">
                     {/* Logo - inside the card next to title on mobile */}
-                    <div className="h-10 w-10 rounded-lg bg-white dark:bg-gray-800 shadow-sm border border-gray-100 dark:border-gray-700 p-1 flex items-center justify-center flex-shrink-0">
+                    <div className="h-10 w-10 rounded-lg bg-background border border-border p-1 flex items-center justify-center flex-shrink-0">
                       <Image
                         src={education.logo || "/placeholder.svg"}
                         alt={education.school}
@@ -105,7 +105,7 @@ export function EducationSection() {
                           href={education.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="ml-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 inline-flex"
+                          className="ml-2 text-muted-foreground/50 hover:text-muted-foreground inline-flex"
                           onClick={(e) => e.stopPropagation()}
                         >
                           <ExternalLink className="h-3.5 w-3.5" />
@@ -114,12 +114,12 @@ export function EducationSection() {
                     </h3>
                   </div>
 
-                  <p className="text-gray-600 dark:text-gray-400 text-sm">
+                  <p className="text-muted-foreground text-sm">
                     {education.degree}
                   </p>
 
                   {education.current && (
-                    <div className="mt-3 text-xs text-gray-600 dark:text-gray-400">
+                    <div className="mt-3 text-xs text-muted-foreground">
                       <span className="font-medium">
                         Sophomore at Dougherty Valley High School
                       </span>
@@ -129,7 +129,7 @@ export function EducationSection() {
                     </div>
                   )}
                   {education.description && !education.current && (
-                    <div className="mt-3 text-xs text-gray-600 dark:text-gray-400">
+                    <div className="mt-3 text-xs text-muted-foreground">
                       {education.description}
                     </div>
                   )}
@@ -150,7 +150,7 @@ export function EducationSection() {
               >
                 {/* Logo - outside the card on desktop */}
                 <div className="flex-none flex flex-col items-center">
-                  <div className="h-20 w-20 rounded-2xl bg-white dark:bg-gray-900 shadow-md border border-gray-100 dark:border-gray-700 p-2 flex items-center justify-center relative z-10">
+                  <div className="h-20 w-20 rounded bg-card border border-border p-2 flex items-center justify-center relative z-10">
                     <Image
                       src={education.logo || "/placeholder.svg"}
                       alt={education.school}
@@ -169,19 +169,19 @@ export function EducationSection() {
                 {/* Content */}
                 <div className="flex-1">
                   <div
-                    className={`p-6 rounded-2xl bg-gray-50 dark:bg-gray-900 border ${
+                    className={`p-6 rounded bg-card border ${
                       education.current
-                        ? "border-blue-100 dark:border-blue-900/50 shadow-md"
-                        : "border-gray-100 dark:border-gray-800"
+                        ? "border-primary/20 shadow-sm"
+                        : "border-border"
                     }`}
                   >
                     <div className="flex items-center mb-2">
-                      <Calendar className="w-4 h-4 mr-2 text-gray-500 dark:text-gray-400" />
-                      <span className="text-sm text-gray-500 dark:text-gray-400">
+                      <Calendar className="w-4 h-4 mr-2 text-muted-foreground" />
+                      <span className="text-sm text-muted-foreground">
                         {education.period}
                       </span>
                       {education.current && (
-                        <span className="ml-3 px-2 py-0.5 text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-full">
+                        <span className="ml-3 px-2 py-0.5 text-xs bg-primary/10 text-primary rounded-full">
                           Current
                         </span>
                       )}
@@ -194,7 +194,7 @@ export function EducationSection() {
                           href={education.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="ml-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 inline-flex"
+                          className="ml-2 text-muted-foreground/50 hover:text-muted-foreground inline-flex"
                           onClick={(e) => e.stopPropagation()}
                         >
                           <ExternalLink className="h-4 w-4" />
@@ -202,12 +202,12 @@ export function EducationSection() {
                       )}
                     </h3>
 
-                    <p className="text-gray-600 dark:text-gray-400 mb-2">
+                    <p className="text-muted-foreground mb-2">
                       {education.degree}
                     </p>
 
                     {education.current && (
-                      <div className="mt-4 text-sm text-gray-600 dark:text-gray-400">
+                      <div className="mt-4 text-sm text-muted-foreground">
                         <span className="font-medium">
                           Sophomore at Dougherty Valley High School
                         </span>
@@ -217,7 +217,7 @@ export function EducationSection() {
                       </div>
                     )}
                     {education.description && !education.current && (
-                      <div className="mt-4 text-sm text-gray-600 dark:text-gray-400">
+                      <div className="mt-4 text-sm text-muted-foreground">
                         {education.description}
                       </div>
                     )}

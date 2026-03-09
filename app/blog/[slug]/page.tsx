@@ -48,13 +48,13 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
   const formattedDate = formatDate(post.date)
   
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-300 overflow-x-clip">
+    <div className="min-h-screen bg-background text-foreground overflow-x-clip">
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-16">
         {/* Navigation - full width */}
         <div className="max-w-5xl mx-auto mb-8">
           <Link 
             href="/blog" 
-            className="inline-flex items-center text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 group"
+            className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 group"
           >
             <ArrowLeft className="h-4 w-4 mr-1.5 transition-transform duration-200 group-hover:-translate-x-1" /> 
             Back to all posts
@@ -71,7 +71,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
                 {post.tags.map((tag, index) => (
                   <span
                     key={index}
-                    className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 px-3 py-1 rounded-md font-medium"
+                    className="text-xs bg-muted text-muted-foreground px-3 py-1 rounded-sm font-medium"
                   >
                     {tag}
                   </span>
@@ -80,7 +80,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
               
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold mb-4 leading-tight tracking-tight">{post.title}</h1>
               
-              <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
+              <div className="flex items-center text-sm text-muted-foreground">
                 <Calendar className="h-4 w-4 mr-1.5" /> 
                 <span>{formattedDate}</span>
               </div>
@@ -88,22 +88,22 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
             
             {/* Main article content */}
             <article>
-              <div className="bg-gray-50/50 dark:bg-gray-900/30 rounded-2xl border border-gray-100 dark:border-gray-800/50 p-6 sm:p-10">
+              <div className="bg-muted/30 rounded-sm border border-border p-6 sm:p-10">
                 <MarkdownContent content={post.content} />
               </div>
               
               {/* Post footer with navigation */}
-              <div className="mt-10 pt-6 border-t border-gray-100 dark:border-gray-800/30">
+              <div className="mt-10 pt-6 border-t border-border">
                 <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
                   <Link 
                     href="/blog" 
-                    className="inline-flex items-center px-5 py-2.5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-lg hover:bg-gray-800 dark:hover:bg-gray-100 transition-all duration-200 font-medium text-sm group"
+                    className="inline-flex items-center px-5 py-2.5 bg-primary text-primary-foreground rounded-sm hover:opacity-90 transition-all duration-200 font-medium text-sm group"
                   >
                     <ArrowLeft className="h-4 w-4 mr-2 transition-transform duration-200 group-hover:-translate-x-1" /> 
                     Back to all posts
                   </Link>
                   
-                  <div className="text-sm text-gray-400 dark:text-gray-500">
+                  <div className="text-sm text-muted-foreground">
                     Published on {formattedDate}
                   </div>
                 </div>

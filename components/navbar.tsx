@@ -10,32 +10,22 @@ import Image from "next/image"
 
 export default function NavBar() {
   const [mounted, setMounted] = useState(false)
-  const { theme, setTheme, resolvedTheme } = useTheme()
+  const { resolvedTheme, setTheme } = useTheme()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
 
-  // Theme toggle handler
-  const toggleTheme = () => {
-    if (resolvedTheme === "dark") {
-      setTheme("light")
-    } else {
-      setTheme("dark")
-    }
-  }
-
-  // Mobile menu toggle
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen)
-  }
-
-  // Handle mounting for theme
   useEffect(() => {
     setMounted(true)
   }, [])
 
-  if (!mounted) {
-    return null
-  }
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 8)
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
+  if (!mounted) return null
 
   const navItems = [
     { name: "Home", path: "/" },
@@ -44,84 +34,95 @@ export default function NavBar() {
     { name: "Awards", path: "/awards" },
   ]
 
+  const isActive = (path: string) =>
+    path === "/" ? pathname === "/" : pathname.startsWith(path)
+
   return (
     <>
-      <header className="sticky top-0 z-50 bg-white/80 dark:bg-gray-950/80 backdrop-blur-xl border-b border-gray-200/50 dark:border-gray-800/50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative h-16 flex items-center">
-          {/* Logo (left) */}
-          
-          <Link href="/" className="relative z-10 flex items-center group">
+      <header
+        className={`sticky top-0 z-50 bg-background border-b border-border transition-shadow duration-200 ${
+          scrolled ? "shadow-sm shadow-black/[0.06] dark:shadow-black/20" : ""
+        }`}
+      >
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative h-14 flex items-center">
+
+          {/* Logo */}
+          <Link href="/" className="relative z-10 flex items-center gap-2 group">
             <Image
-              src="/avatar.png"      // put your avatar file in /public/logo.png
-              alt="riddhiman logo"
-              width={30}
-              height={30}
+              src="/avatar.png"
+              alt="Riddhiman Rana"
+              width={26}
+              height={26}
               loading="eager"
               decoding="async"
+              className="rounded-sm"
             />
-            <span className="ml-2 font-bold text-xl tracking-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">riddhiman</span>
+            <span className="font-semibold text-base tracking-snug text-foreground group-hover:text-primary transition-colors duration-150">
+              riddhiman
+            </span>
           </Link>
 
-          {/* Desktop Navigation (always centered, independent of logo width) */}
-          <nav className="hidden md:flex space-x-1 absolute inset-x-0 justify-center z-0">
+          {/* Desktop nav — centered */}
+          <nav className="hidden md:flex items-center gap-1 absolute inset-x-0 justify-center z-0">
             {navItems.map((item) => (
               <Link
                 key={item.name}
                 href={item.path}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                  pathname === item.path ||
-                  (item.path !== "/" && pathname.startsWith(item.path))
-                    ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20"
-                    : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800/50"
+                className={`relative px-3 py-1.5 text-sm transition-colors duration-150 ${
+                  isActive(item.path)
+                    ? "text-foreground font-medium"
+                    : "text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {item.name}
+                {isActive(item.path) && (
+                  <span className="absolute bottom-0 left-3 right-3 h-px bg-primary rounded-full" />
+                )}
               </Link>
             ))}
           </nav>
 
-          {/* Theme Toggle and Mobile Menu (right) */}
-          <div className="flex items-center space-x-2 ml-auto z-10">
+          {/* Right: theme toggle + mobile trigger */}
+          <div className="flex items-center gap-1 ml-auto z-10">
             <button
-              onClick={toggleTheme}
-              className="p-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800/50 transition-all duration-200 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+              onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+              className="p-2 rounded text-muted-foreground hover:text-foreground hover:bg-accent transition-colors duration-150"
               aria-label="Toggle theme"
             >
-              {resolvedTheme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+              {resolvedTheme === "dark" ? <Sun size={16} strokeWidth={1.75} /> : <Moon size={16} strokeWidth={1.75} />}
             </button>
             <button
-              onClick={toggleMobileMenu}
-              className="md:hidden p-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800/50 transition-all duration-200 text-gray-600 dark:text-gray-400"
-              aria-label="Toggle mobile menu"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden p-2 rounded text-muted-foreground hover:text-foreground hover:bg-accent transition-colors duration-150"
+              aria-label="Toggle menu"
             >
-              {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
+              {mobileMenuOpen ? <X size={16} strokeWidth={1.75} /> : <Menu size={16} strokeWidth={1.75} />}
             </button>
           </div>
         </div>
       </header>
 
-      {/* Mobile Menu */}
+      {/* Mobile menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.2 }}
-            className="md:hidden fixed inset-x-0 top-16 bg-white dark:bg-gray-950 border-b border-gray-100 dark:border-gray-800 z-40"
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.15 }}
+            className="md:hidden fixed inset-x-0 top-14 bg-background border-b border-border z-40"
           >
-            <nav className="flex flex-col space-y-4 p-4">
+            <nav className="flex flex-col px-4 py-3 gap-0.5">
               {navItems.map((item) => (
                 <Link
                   key={item.name}
                   href={item.path}
-                  className={`py-2 transition-colors ${
-                    pathname === item.path || 
-                    (item.path !== "/" && pathname.startsWith(item.path))
-                      ? "text-blue-600 dark:text-blue-400 font-medium"
-                      : "text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
-                  }`}
                   onClick={() => setMobileMenuOpen(false)}
+                  className={`py-2 px-2 text-sm rounded transition-colors ${
+                    isActive(item.path)
+                      ? "text-foreground font-medium"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
                 >
                   {item.name}
                 </Link>

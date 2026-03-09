@@ -17,26 +17,16 @@ export function AwardDetail({ award, onClose }: AwardDetailProps) {
   
   if (!award) return null
   
-  // Simplified difficulty configurations
   const difficultyConfig = {
     major: {
-      color: "text-blue-600 dark:text-blue-400",
-      bgColor: "bg-blue-200/30 dark:bg-blue-900/30",
-      borderColor: "border-blue-200 dark:border-blue-700/50",
       icon: <Medal className="w-4 h-4" />,
       label: "Major Achievement"
     },
     notable: {
-      color: "text-purple-600 dark:text-purple-400",
-      bgColor: "bg-purple-200/30 dark:bg-purple-900/30",
-      borderColor: "border-purple-200 dark:border-purple-700/50",
       icon: <Star className="w-4 h-4" />,
       label: "Notable Achievement"
     },
     honorable: {
-      color: "text-amber-600 dark:text-amber-400",
-      bgColor: "bg-amber-200/30 dark:bg-amber-900/30",
-      borderColor: "border-amber-200 dark:border-amber-700/50",
       icon: <AwardIcon className="w-4 h-4" />,
       label: "Honorable Mention"
     }
@@ -56,15 +46,15 @@ export function AwardDetail({ award, onClose }: AwardDetailProps) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
-      className={`relative rounded-xl border ${config.borderColor} ${config.bgColor} shadow-md overflow-hidden`}
+      className="relative rounded-sm border border-border bg-card shadow-md overflow-hidden"
     >
       {/* Close button */}
       <button
         onClick={onClose}
-        className="absolute top-3 right-3 z-10 p-1.5 rounded-full bg-white/90 dark:bg-gray-800/90 hover:bg-white dark:hover:bg-gray-800 border border-gray-200 dark:border-gray-700"
+        className="absolute top-3 right-3 z-10 p-1.5 rounded-sm bg-muted hover:bg-muted/80 border border-border"
         aria-label="Close"
       >
-        <X className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+        <X className="w-4 h-4 text-muted-foreground" />
       </button>
       
       <div className="p-4">
@@ -95,26 +85,26 @@ export function AwardDetail({ award, onClose }: AwardDetailProps) {
           {/* Award Content */}
           <div className="flex-grow">
             <div className="flex items-center gap-2 mb-1.5">
-              <span className={`inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium ${config.color} ${config.bgColor} border ${config.borderColor}`}>
+              <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-sm text-xs font-medium bg-muted text-muted-foreground border border-border">
                 {config.icon}
                 <span>{config.label}</span>
               </span>
-              <span className="text-xs text-gray-500 dark:text-gray-400">
+              <span className="text-xs text-muted-foreground">
                 {formattedDate}
               </span>
             </div>
             
             {/* Title and Description */}
-            <h2 className="text-base font-bold mb-1 text-gray-900 dark:text-white">
+            <h2 className="text-base font-bold mb-1 text-foreground">
               {award.name}
             </h2>
-            <p className="text-sm text-gray-700 dark:text-gray-300 mb-3">
+            <p className="text-sm text-foreground/80 mb-3">
               {award.description}
             </p>
             
             {/* Detailed Description - only if available */}
             {award.detailedDescription && (
-              <div className="text-xs text-gray-600 dark:text-gray-400 mb-3 max-h-24 overflow-y-auto">
+              <div className="text-xs text-muted-foreground mb-3 max-h-24 overflow-y-auto">
                 {award.detailedDescription}
               </div>
             )}
@@ -126,7 +116,7 @@ export function AwardDetail({ award, onClose }: AwardDetailProps) {
                   href={award.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium ${config.color} hover:underline`}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-xs font-medium bg-muted text-foreground/80 border border-border hover:bg-muted/80 transition-colors"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <ExternalLink className="w-3 h-3" />
@@ -138,7 +128,7 @@ export function AwardDetail({ award, onClose }: AwardDetailProps) {
                   href={award.submissionLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium ${config.color} hover:underline`}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-xs font-medium bg-muted text-foreground/80 border border-border hover:bg-muted/80 transition-colors"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <Eye className="w-3 h-3" />

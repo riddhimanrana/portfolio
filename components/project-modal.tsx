@@ -51,19 +51,19 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ duration: 0.2 }}
-            className="relative bg-white dark:bg-gray-900 rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col"
+            className="relative bg-card text-card-foreground rounded-sm shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col border border-border"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header with image */}
             {project.image && (
-            <div className="relative p-3 bg-gray-50 dark:bg-gray-950">
+            <div className="relative p-3 bg-muted">
  
-                <div className="relative h-64 sm:h-72 md:h-80 overflow-hidden rounded-lg group">
+                <div className="relative h-64 sm:h-72 md:h-80 overflow-hidden rounded-sm group">
                   <Image
                     src={project.image}
                     alt={project.title}
                     fill
-                    className="rounded-lg object-contain transition-transform duration-500 ease-in-out group-hover:scale-105 cursor-pointer"
+                    className="rounded-sm object-contain transition-transform duration-500 ease-in-out group-hover:scale-105 cursor-pointer"
                   />
                 </div>
               
@@ -77,19 +77,19 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
                 {project.tags.map((tag, index) => (
                   <span
                     key={index}
-                    className="text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100 px-3 py-1 rounded-full"
+                    className="text-xs bg-muted text-muted-foreground px-3 py-1 rounded-sm"
                   >
                     {tag}
                   </span>
                 ))}
                 <span
-                  className={`text-xs bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-100 px-3 py-1 rounded-full ml-auto hidden sm:inline ${project.image ? 'ml-auto' : 'mr-10'}`}
+                  className={`text-xs bg-muted text-muted-foreground px-3 py-1 rounded-sm ml-auto hidden sm:inline ${project.image ? 'ml-auto' : 'mr-10'}`}
                 >
                   {project.year}
                 </span>
                 <button
                 onClick={onClose}
-                className="absolute top-4 right-4 p-2 ml-10 rounded-full bg-black/20 hover:bg-black/40 text-white transition-colors"
+                className="absolute top-4 right-4 p-2 ml-10 rounded-sm bg-foreground/10 hover:bg-foreground/20 text-foreground transition-colors"
                 aria-label="Close modal"
               >
                 <X className="h-5 w-5" />
@@ -104,7 +104,7 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
                       alt={`${project.title} logo`}
                       fill
                       sizes="(max-width: 640px) 40px, 48px *(max-width: 1024px) 56px, 80px"
-                      className="object-contain rounded"
+                      className="object-contain rounded-sm"
                       onError={(e) => {
                         e.currentTarget.style.display = 'none'
                       }}
@@ -113,7 +113,7 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
                 )}
                 <h2 className="text-2xl font-bold">{project.title}</h2>
               </div>
-              <p className="text-gray-600 dark:text-gray-400 mb-6 text-sm sm:text-base font-medium">{project.tagline}</p>
+              <p className="text-muted-foreground mb-6 text-sm sm:text-base font-medium">{project.tagline}</p>
 
               <div className="prose dark:prose-invert max-w-none">
                 {project.description.split("\n\n").map((paragraph, index) => (
@@ -123,15 +123,15 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
             </div>
 
             {/* Footer with links */}
-            <div className="border-t border-gray-200 dark:border-gray-800 p-4 flex justify-end space-x-4">
+            <div className="border-t border-border p-4 flex justify-end space-x-3">
               {project.repoLink && (
                 <a
                   href={project.repoLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                  className="inline-flex items-center px-4 py-2 rounded-sm bg-secondary text-secondary-foreground hover:bg-muted transition-colors text-sm font-medium"
                 >
-                  <SiGithub className="h-5 w-5 mr-2" />
+                  <SiGithub className="h-4 w-4 mr-2" />
                   View Code
                 </a>
               )}
@@ -140,9 +140,9 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
                   href={project.projectLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+                  className="inline-flex items-center px-4 py-2 rounded-sm bg-primary text-primary-foreground hover:opacity-90 transition-colors text-sm font-medium"
                 >
-                  <ExternalLink className="h-5 w-5 mr-2" />
+                  <ExternalLink className="h-4 w-4 mr-2" />
                   Visit Project
                 </a>
               )}
