@@ -8,6 +8,7 @@ import { Toaster } from "@/components/toaster";
 import FooterWrapper from "@/components/footer-wrapper";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { PostHogProvider } from "@/components/PostHogProvider";
+import Script from "next/script";
 
 const overusedGrotesk = localFont({
   src: "../public/fonts/OverusedGrotesk-VF.woff2",
@@ -15,10 +16,16 @@ const overusedGrotesk = localFont({
   display: "swap",
 });
 
+const pixelta = localFont({
+  src: "../public/fonts/Pixelta.ttf",
+  variable: "--font-pixelta",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "Riddhiman Rana | Full Stack Developer & Competitive Programmer",
+  title: "Riddhiman Rana | Developer, Researcher & Founder",
   description:
-    "Hi, I'm Riddhiman Rana, a passionate full stack developer and competitive programmer. I'm a USACO Gold medalist and a freshman at Dougherty Valley High School, eager to explore the endless possibilities of technology.",
+    "Riddhiman Rana is a developer, researcher, and founder building thoughtful software at the intersection of product and real-world impact.",
   keywords: [
     "Riddhiman Rana",
     "Web Developer",
@@ -36,14 +43,14 @@ export const metadata: Metadata = {
     url: "https://riddhimanrana.com",
     title: "Riddhiman Rana | Full Stack Developer & Competitive Programmer",
     description:
-      "Hi, I'm Riddhiman Rana, a passionate full stack developer and competitive programmer.",
+      "Developer, researcher, and founder building thoughtful software with real-world impact.",
     siteName: "Riddhiman Rana Portfolio",
   },
   twitter: {
     card: "summary_large_image",
     title: "Riddhiman Rana | Full Stack Developer & Competitive Programmer",
     description:
-      "Hi, I'm Riddhiman Rana, a passionate full stack developer and competitive programmer.",
+      "Developer, researcher, and founder building thoughtful software with real-world impact.",
     creator: "@riddhimanrana",
   },
 };
@@ -64,20 +71,34 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" />
         {/* <link rel="me" href="https://mastodon.online/@rrcoder0167" /> */}
       </head>
-      <body className={`font-sans antialiased ${overusedGrotesk.variable}`} style={{ fontFamily: "'Overused Grotesk', system-ui, sans-serif" }}>
+      <body
+        className={`bg-background font-sans text-foreground antialiased ${overusedGrotesk.variable} ${pixelta.variable}`}
+      >
+        <Script
+          src="https://cdn.jsdelivr.net/npm/html2canvas-pro@2.1.1/dist/html2canvas-pro.min.js"
+          strategy="afterInteractive"
+        />
+        <Script
+          src="/scripts/liquidGL.js"
+          strategy="afterInteractive"
+        />
         <PostHogProvider>
           <ThemeProvider
             attribute="class"
-            defaultTheme="system"
-            enableSystem
+            defaultTheme="dark"
+            enableSystem={true}
             disableTransitionOnChange
           >
-            <NavBar />
-            {children}
+            <div className="flex flex-col min-h-screen">
+              <NavBar />
+              <div className="flex-1">
+                {children}
+              </div>
+              <FooterWrapper />
+            </div>
             <SpeedInsights />
+            <Toaster />
           </ThemeProvider>
-          <Toaster />
-          <FooterWrapper />
         </PostHogProvider>
       </body>
     </html>

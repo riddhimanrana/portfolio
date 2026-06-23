@@ -65,35 +65,22 @@ interface AwardGridItemProps {
 function AwardGridItem({ award, index, onClick }: AwardGridItemProps) {
   const [imageError, setImageError] = useState(false);
 
-  // Enhanced difficulty configurations
   const difficultyConfig = {
     major: {
-      bgGradient: "bg-gradient-to-br from-blue-50/80 to-blue-100/60 dark:from-blue-900/30 dark:to-blue-800/20",
-      borderColor: "border-blue-200/50 dark:border-blue-700/50",
-      accentColor: "bg-blue-500", // changed from "blue-500"
-      textColor: "text-blue-700 dark:text-blue-400",
+      accentBar: "bg-foreground",
       icon: <Medal className="w-4 h-4" />,
       label: "Major",
-      shadowColor: "shadow-blue-200/50 dark:shadow-blue-900/30"
     },
     notable: {
-      bgGradient: "bg-gradient-to-br from-purple-50/80 to-purple-100/60 dark:from-purple-900/30 dark:to-purple-800/20",
-      borderColor: "border-purple-200/50 dark:border-purple-700/50",
-      accentColor: "bg-purple-500", // changed from "purple-500"
-      textColor: "text-purple-700 dark:text-purple-400",
+      accentBar: "bg-muted-foreground",
       icon: <Star className="w-4 h-4" />,
       label: "Notable",
-      shadowColor: "shadow-purple-200/50 dark:shadow-purple-900/30"
     },
     honorable: {
-      bgGradient: "bg-gradient-to-br from-amber-50/80 to-amber-100/60 dark:from-amber-900/30 dark:to-amber-800/20",
-      borderColor: "border-amber-200/50 dark:border-amber-700/50",
-      accentColor: "bg-amber-500", // changed from "amber-500"
-      textColor: "text-amber-700 dark:text-amber-400",
+      accentBar: "bg-muted-foreground/60",
       icon: <AwardIcon className="w-4 h-4" />,
       label: "Honorable",
-      shadowColor: "shadow-amber-200/50 dark:shadow-amber-900/30"
-    }
+    },
   }[award.difficulty];
 
   return (
@@ -101,32 +88,28 @@ function AwardGridItem({ award, index, onClick }: AwardGridItemProps) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05, duration: 0.4 }}
-      whileHover={{ y: -6, transition: { duration: 0.2 } }}
+      whileHover={{ y: -4, transition: { duration: 0.2 } }}
       className="h-full"
     >
       <Card
-        className={`h-full cursor-pointer transition-all duration-300 backdrop-blur-sm border-2 overflow-hidden hover:shadow-xl group relative ${difficultyConfig.bgGradient} ${difficultyConfig.borderColor} hover:${difficultyConfig.shadowColor} hover:shadow-lg`}
+        className="h-full cursor-pointer transition-all duration-300 bg-card border border-border overflow-hidden hover:shadow-md group relative rounded-sm"
         onClick={onClick}
       >
         {/* Decorative top accent */}
-        <div className={`h-1.5 ${difficultyConfig.accentColor}`} />
-        
-        {/* Difficulty indicator - moved to bottom-right */}
-        <div className={`absolute bottom-3 right-3 p-1.5 rounded-full ${difficultyConfig.accentColor} text-white shadow-2xl backdrop-blur-md`}>
+        <div className={`h-1 ${difficultyConfig.accentBar}`} />
+
+        {/* Difficulty indicator */}
+        <div className="absolute bottom-3 right-3 p-1.5 rounded-sm bg-muted text-muted-foreground">
           {difficultyConfig.icon}
         </div>
 
-        {/* Sparkle effect for major awards */}
-        
-
         <CardHeader className="pb-3 pt-4">
           <div className="flex items-start">
-            <div 
-                className={`flex-shrink-0  mr-3 relative ${award.isIconRoundedFull ? 'rounded-full shadow-md' : 'rounded-md'} `}
-              >
-              {/* <div className={`absolute inset-0 ${difficultyConfig.accentColor} opacity-20 blur-sm rounded-full`} /> */}
-              <div 
-                className={`relative h-12 w-12 overflow-hidden ${award.isIconRoundedFull ? 'rounded-full shadow-md' : 'rounded-md'}`}
+            <div
+              className={`flex-shrink-0 mr-3 relative ${award.isIconRoundedFull ? 'rounded-full' : 'rounded-sm'}`}
+            >
+              <div
+                className={`relative h-12 w-12 overflow-hidden ${award.isIconRoundedFull ? 'rounded-full' : 'rounded-sm'}`}
               >
                 {!imageError ? (
                   <Image
@@ -135,51 +118,47 @@ function AwardGridItem({ award, index, onClick }: AwardGridItemProps) {
                     fill
                     sizes="(max-width: 640px) 40px, (max-width: 1024px) 56px, 80px"
                     quality={100}
-                    className={`object-cover ${award.isIconRoundedFull ? 'rounded-full' : 'rounded-md'}`}
+                    className={`object-cover ${award.isIconRoundedFull ? 'rounded-full' : 'rounded-sm'}`}
                     onError={() => setImageError(true)}
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-gray-800 rounded-full">
+                  <div className="w-full h-full flex items-center justify-center bg-muted rounded-sm">
                     {difficultyConfig.icon}
                   </div>
                 )}
-                
               </div>
               {award.difficulty === "major" && (
-          <motion.div
+                <motion.div
                   className="absolute -top-0.5 -right-0.5"
-                  animate={{ 
+                  animate={{
                     rotate: [0, 180, 360],
                     scale: [1, 1.2, 1]
                   }}
-                  transition={{ 
-                    duration: 3, 
+                  transition={{
+                    duration: 3,
                     repeat: Infinity,
                     ease: "easeInOut"
                   }}
                 >
                   <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-yellow-400 drop-shadow-sm" />
                 </motion.div>
-        )}
-              
+              )}
             </div>
-            
+
             <div className="flex-grow min-w-0">
-              <CardTitle className="text-lg font-bold line-clamp-2 text-gray-900 dark:text-white mb-1 leading-tight group-hover:text-gray-700 dark:group-hover:text-gray-100 transition-colors duration-300">
+              <CardTitle className="text-lg font-bold line-clamp-2 text-foreground mb-1 leading-tight transition-colors duration-300">
                 {award.name}
               </CardTitle>
-              <CardDescription className="flex items-center text-sm text-gray-600 dark:text-gray-400 mb-2">
+              <CardDescription className="flex items-center text-sm text-muted-foreground mb-2">
                 <Calendar className="w-3.5 h-3.5 mr-1.5 flex-shrink-0" />
                 <span className="truncate">{formatDate(award.date)}</span>
               </CardDescription>
             </div>
           </div>
-          
-          {/* Removed the difficulty badge from here */}
         </CardHeader>
 
         <CardContent className="pt-0 pb-3">
-          <p className="text-gray-700 dark:text-gray-300 line-clamp-3 text-sm leading-relaxed group-hover:text-gray-600 dark:group-hover:text-gray-200 transition-colors duration-300">
+          <p className="text-foreground/80 line-clamp-3 text-sm leading-relaxed transition-colors duration-300">
             {award.description}
           </p>
         </CardContent>
@@ -190,7 +169,7 @@ function AwardGridItem({ award, index, onClick }: AwardGridItemProps) {
               href={award.submissionLink}
               target="_blank"
               rel="noopener noreferrer"
-              className={`inline-flex items-center gap-1.5 text-sm font-medium ${difficultyConfig.textColor} hover:underline transition-all duration-200 group/link`}
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground/70 hover:text-foreground hover:underline transition-all duration-200 group/link"
               onClick={(e) => e.stopPropagation()}
             >
               View details
@@ -201,7 +180,7 @@ function AwardGridItem({ award, index, onClick }: AwardGridItemProps) {
               href={award.link}
               target="_blank"
               rel="noopener noreferrer"
-              className={`inline-flex items-center gap-1.5 text-sm font-medium ${difficultyConfig.textColor} hover:underline transition-all duration-200 group/link`}
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground/70 hover:text-foreground hover:underline transition-all duration-200 group/link"
               onClick={(e) => e.stopPropagation()}
             >
               View details 

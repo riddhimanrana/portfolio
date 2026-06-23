@@ -1,245 +1,182 @@
-"use client"
+"use client";
 
-import { useState, useRef, useEffect } from "react"
-import { motion } from "framer-motion"
-import { Briefcase, Search, X, TagIcon, ChevronRight } from "lucide-react"
-import { ProjectCard } from "@/components/project-card"
-import { ProjectModal } from "@/components/project-modal"
-import { getAllProjects } from "@/utils/projects"
-import type { Project } from "@/types/project"
+import { useMemo, useState } from "react";
+import { ExternalLink, ArrowUpRight } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+
+import projectsData from "@/data/projects.json";
+import { GitHubIcon } from "@/components/brand-icons";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import type { Project } from "@/types/project";
 
 export default function ProjectsPage() {
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null)
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [searchQuery, setSearchQuery] = useState("")
-  const [selectedTag, setSelectedTag] = useState<string | null>(null)
-  const [showLeftArrow, setShowLeftArrow] = useState(false);
-  const [showRightArrow, setShowRightArrow] = useState(false);
-  const tagsContainerRef = useRef<HTMLDivElement>(null)
-
-  const projects = getAllProjects()
-
-  // Get all unique tags from projects
-  const allTags = Array.from(new Set(projects.flatMap((project) => project.tags))).sort()
-
-  // Filter projects based on search query and selected tag
-  const filteredProjects = projects.filter((project) => {
-    const matchesSearch =
-      project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      project.tagline.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      project.tags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()))
-
-    const matchesTag = selectedTag ? project.tags.includes(selectedTag) : true
-
-    return matchesSearch && matchesTag
-  })
-
-  const openProjectModal = (project: Project) => {
-    setSelectedProject(project)
-    setIsModalOpen(true)
-  }
-
-  const closeProjectModal = () => {
-    setIsModalOpen(false)
-  }
-  
-  // Check if arrows should be shown
-  const checkArrowsVisibility = () => {
-    if (tagsContainerRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = tagsContainerRef.current;
-      setShowLeftArrow(scrollLeft > 0);
-      setShowRightArrow(scrollLeft < scrollWidth - clientWidth - 2); // -2 to account for rounding errors
-    }
-  };
-
-  // Add scroll event listener
-  useEffect(() => {
-    const tagsContainer = tagsContainerRef.current;
-    if (tagsContainer) {
-      checkArrowsVisibility();
-      tagsContainer.addEventListener('scroll', checkArrowsVisibility);
-      
-      // Check on resize too
-      window.addEventListener('resize', checkArrowsVisibility);
-      
-      // Initial check after content might have rendered
-      setTimeout(checkArrowsVisibility, 100);
-    }
-    
-    return () => {
-      if (tagsContainer) {
-        tagsContainer.removeEventListener('scroll', checkArrowsVisibility);
-      }
-      window.removeEventListener('resize', checkArrowsVisibility);
-    };
+  const projects = useMemo(() => {
+    return [...(projectsData as Project[])].sort(
+      (a, b) => Number(b.year) - Number(a.year)
+    );
   }, []);
-  
-  const scrollTagsRight = () => {
-    if (tagsContainerRef.current) {
-      tagsContainerRef.current.scrollBy({
-        left: 200,
-        behavior: 'smooth'
-      });
-    }
-    setTimeout(checkArrowsVisibility, 100);
-  }
-  
-  const scrollTagsLeft = () => {
-    if (tagsContainerRef.current) {
-      tagsContainerRef.current.scrollBy({
-        left: -200,
-        behavior: 'smooth'
-      });
-    }
-    setTimeout(checkArrowsVisibility, 100);
-  }
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-300">
-      <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-16">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-5"
-        >
-          <div className="flex items-center">
-            <div className="flex items-center justify-center w-12 h-12 bg-gray-100 dark:bg-gray-600/20 rounded-lg mr-4 shrink-0">
-              <Briefcase className="h-6 w-6" />
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold mb-1">My Projects</h1>
-              <p className="text-gray-600 dark:text-gray-400 text-sm">Things I've built and worked on</p>
-            </div>
+    <main className="site-shell py-12 sm:py-16">
+      <header className="mb-8">
+        <h1 className="page-title">Projects</h1>
+      </header>
+
+      <div className="border-t border-border">
+        {projects.map((project, index) => (
+          <div key={project.id}>
+            {index > 0 && <Separator />}
+            <article 
+              onClick={() => setSelectedProject(project)}
+              className="group grid gap-5 py-7 sm:grid-cols-[4rem_1fr_auto] sm:items-center cursor-pointer transition-all hover:bg-muted/30 -mx-4 px-4 rounded-xl"
+            >
+              <div className="flex size-16 w-16 h-16 shrink-0 flex-shrink-0 items-center justify-center overflow-hidden rounded-xl border border-border bg-secondary p-2.5 transition-transform duration-200 group-hover:scale-105">
+                <Image
+                  src={project.logo || "/avatar.png"}
+                  alt={`${project.title} logo`}
+                  width={48}
+                  height={48}
+                  className="max-h-full object-contain"
+                />
+              </div>
+
+              <div>
+                <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                  <h2 className="text-xl font-medium tracking-tight text-foreground transition-colors group-hover:text-primary">
+                    {project.title}
+                  </h2>
+                  <span className="text-xs text-muted-foreground">
+                    {project.year}
+                  </span>
+                </div>
+                <p className="mt-2 max-w-3xl leading-7 text-muted-foreground text-sm">
+                  {project.tagline}
+                </p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {project.tags.slice(0, 4).map((tag) => (
+                    <Badge key={tag} className="border border-border/80 bg-secondary/30 text-muted-foreground transition-colors hover:text-foreground hover:bg-secondary/60 text-[10px] px-2.5 py-0.5 rounded-full font-medium shadow-sm">
+                      {tag}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex items-center gap-1.5 sm:justify-end" onClick={(e) => e.stopPropagation()}>
+                {project.repoLink && (
+                  <Button variant="ghost" size="icon" asChild className="rounded-full text-muted-foreground hover:text-foreground">
+                    <Link
+                      href={project.repoLink}
+                      target="_blank"
+                      aria-label={`${project.title} source`}
+                    >
+                      <GitHubIcon className="size-4" />
+                    </Link>
+                  </Button>
+                )}
+                {project.projectLink && (
+                  <Button variant="ghost" size="icon" asChild className="rounded-full text-muted-foreground hover:text-foreground">
+                    <Link
+                      href={project.projectLink}
+                      target="_blank"
+                      aria-label={`Visit ${project.title}`}
+                    >
+                      <ArrowUpRight className="size-4" />
+                    </Link>
+                  </Button>
+                )}
+              </div>
+            </article>
           </div>
-          
-          {/* Search input */}
-          <div className="relative w-full md:w-60">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Search projects..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-9 py-2 text-sm bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-            />
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery("")}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-              >
-                <X className="h-4 w-4" />
-              </button>
+        ))}
+      </div>
+
+      <Dialog
+        open={Boolean(selectedProject)}
+        onOpenChange={(open) => {
+          if (!open) setSelectedProject(null);
+        }}
+      >
+        {selectedProject && (
+          <DialogContent className="max-h-[88svh] overflow-y-auto sm:max-w-3xl">
+            <DialogHeader>
+              <div className="mb-2 flex items-center gap-3 pr-10">
+                <div className="logo-tile size-12 w-12 h-12 aspect-square rounded-xl p-2 bg-card border border-border shrink-0 flex-shrink-0">
+                  <Image
+                    src={selectedProject.logo || "/avatar.png"}
+                    alt=""
+                    width={40}
+                    height={40}
+                    className="max-h-full object-contain"
+                  />
+                </div>
+                <div>
+                  <DialogTitle className="text-2xl tracking-[-0.035em]">
+                    {selectedProject.title}
+                  </DialogTitle>
+                  <DialogDescription>{selectedProject.tagline}</DialogDescription>
+                </div>
+              </div>
+            </DialogHeader>
+
+            {selectedProject.image && (
+              <div className="relative mt-2 aspect-video overflow-hidden rounded-2xl border border-border bg-secondary">
+                <Image
+                  src={selectedProject.image}
+                  alt={selectedProject.title}
+                  fill
+                  className="object-contain"
+                  sizes="(max-width: 768px) 90vw, 720px"
+                />
+              </div>
             )}
-          </div>
-        </motion.div>
 
-        {/* Tags filter */}
-        <div className="mb-6 relative">
-          <div 
-            ref={tagsContainerRef}
-            className="overflow-x-auto scrollbar-hide"
-          >
-            <div className="flex gap-1.5 pb-2 min-w-max">
-              <button
-                onClick={() => setSelectedTag(null)}
-                className={`px-3 py-1.5 rounded-full border text-xs font-medium transition-all ${
-                  selectedTag === null
-                    ? "bg-blue-100 dark:bg-blue-900/30 border-blue-200 dark:border-blue-800 text-blue-800 dark:text-blue-300"
-                    : "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/70"
-                }`}
-              >
-                All Projects
-              </button>
-              {allTags.map((tag) => (
-                <button
-                  key={tag}
-                  onClick={() => setSelectedTag(tag === selectedTag ? null : tag)}
-                  className={`px-3 py-1.5 rounded-full border text-xs font-medium transition-all inline-flex items-center gap-1 ${
-                    tag === selectedTag
-                      ? "bg-blue-100 dark:bg-blue-900/30 border-blue-200 dark:border-blue-800 text-blue-800 dark:text-blue-300"
-                      : "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/70"
-                  }`}
-                >
-                  <TagIcon className="h-3 w-3" />{tag}
-                </button>
+            <div className="mt-5 flex flex-wrap gap-2">
+              {selectedProject.tags.map((tag) => (
+                <Badge key={tag} className="border border-border/80 bg-secondary/30 text-muted-foreground hover:text-foreground hover:bg-secondary/60 transition-colors text-[10px] px-2.5 py-0.5 rounded-full font-medium shadow-sm">
+                  {tag}
+                </Badge>
               ))}
             </div>
-          </div>
-          
-          {showLeftArrow && (
-            <button 
-              onClick={scrollTagsLeft}
-              className="absolute left-0 top-1/4 -translate-y-1/3 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl border border-gray-200 dark:border-gray-700 rounded-full p-1.5 drop-shadow-xl hover:bg-white dark:hover:bg-gray-700 transition-colors z-10"
-              aria-label="Scroll tags left"
-            >
-              <ChevronRight className="h-4 w-4 text-gray-600 dark:text-gray-300 rotate-180" />
-            </button>
-          )}
-          
-          {showRightArrow && (
-            <button 
-              onClick={scrollTagsRight}
-              className="absolute right-0 top-1/4 -translate-y-1/3 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl border border-gray-200 dark:border-gray-700 rounded-full p-1.5 drop-shadow-xl hover:bg-white dark:hover:bg-gray-700 transition-colors z-10"
-              aria-label="Scroll tags right"
-            >
-              <ChevronRight className="h-4 w-4 text-gray-600 dark:text-gray-300" />
-            </button>
-          )}
-          
-          {showLeftArrow && (
-            <div className="absolute left-0 top-0 w-10 h-full bg-gradient-to-r from-white dark:from-gray-950 to-transparent pointer-events-none z-[5]"></div>
-          )}
-          
-          {showRightArrow && (
-            <div className="absolute right-0 top-0 w-10 h-full bg-gradient-to-l from-white dark:from-gray-950 to-transparent pointer-events-none z-[5]"></div>
-          )}
-        </div>
 
-        {/* Projects grid */}
-        {filteredProjects.length > 0 ? (
-          <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              {filteredProjects.map((project) => (
-                <motion.div
-                  key={project.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <ProjectCard project={project} onClick={() => openProjectModal(project)} />
-                </motion.div>
+            <div className="mt-5 flex flex-col gap-4 text-sm leading-7 text-muted-foreground sm:text-base">
+              {selectedProject.description.split("\n\n").map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
               ))}
             </div>
-            
-            <div className="text-center text-sm text-gray-500 dark:text-gray-400 mt-10">
-              Showing {filteredProjects.length} of {projects.length} projects
-            </div>
-          </>
-        ) : (
-          <div className="text-center py-12 bg-gray-50 dark:bg-gray-900/50 rounded-lg">
-            <div className="inline-flex items-center justify-center w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-full mb-4">
-              <Search className="h-6 w-6 text-gray-500 dark:text-gray-400" />
-            </div>
-            <h3 className="text-xl font-bold mb-2">No matching projects found</h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-5 max-w-md mx-auto text-sm">
-              {searchQuery ? `No projects match "${searchQuery}"` : "No projects found with the selected filters."}
-            </p>
-            <button
-              onClick={() => {
-                setSearchQuery("");
-                setSelectedTag(null);
-              }}
-              className="px-5 py-1.5 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition-colors"
-            >
-              Clear filters
-            </button>
-          </div>
+
+            <DialogFooter className="mt-6 gap-2 sm:justify-start">
+              {selectedProject.projectLink && (
+                <Button asChild>
+                  <Link href={selectedProject.projectLink} target="_blank">
+                    Visit project
+                    <ExternalLink data-icon="inline-end" />
+                  </Link>
+                </Button>
+              )}
+              {selectedProject.repoLink && (
+                <Button variant="outline" asChild>
+                  <Link href={selectedProject.repoLink} target="_blank">
+                    <GitHubIcon />
+                    View code
+                  </Link>
+                </Button>
+              )}
+            </DialogFooter>
+          </DialogContent>
         )}
-      </main>
-
-      {/* Project modal */}
-      <ProjectModal project={selectedProject} isOpen={isModalOpen} onClose={closeProjectModal} />
-    </div>
-  )
+      </Dialog>
+    </main>
+  );
 }

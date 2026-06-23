@@ -20,39 +20,24 @@ export function AwardCard({ award, isExpanded, onToggle }: AwardCardProps) {
     switch (difficulty) {
       case "major":
         return {
-          cardBg: "bg-blue-50/80 dark:bg-blue-900/20",
-          borderColor: "border-blue-200/60 dark:border-blue-500/30",
-          shadowColor: "shadow-blue-100/50 dark:shadow-blue-900/20",
-          accentBar: "bg-blue-500",
-          badgeBg: "bg-blue-500",
+          accentBar: "bg-foreground",
           badgeText: "Major",
-          icon: <Medal className="w-3 h-3 sm:w-4 sm:h-4 text-white" />,
+          icon: <Medal className="w-3 h-3 sm:w-4 sm:h-4" />,
           hasSparkle: true,
-          hoverShadow: "hover:shadow-blue-200/60 dark:hover:shadow-blue-800/40"
         }
       case "notable":
         return {
-          cardBg: "bg-purple-50/80 dark:bg-purple-900/20",
-          borderColor: "border-purple-200/60 dark:border-purple-500/30",
-          shadowColor: "shadow-purple-100/50 dark:shadow-purple-900/20",
-          accentBar: "bg-purple-500",
-          badgeBg: "bg-purple-500",
+          accentBar: "bg-muted-foreground",
           badgeText: "Notable",
-          icon: <Star className="w-3 h-3 sm:w-4 sm:h-4 text-white" />,
+          icon: <Star className="w-3 h-3 sm:w-4 sm:h-4" />,
           hasSparkle: false,
-          hoverShadow: "hover:shadow-purple-200/60 dark:hover:shadow-purple-800/40"
         }
       default:
         return {
-          cardBg: "bg-amber-50/80 dark:bg-amber-900/20",
-          borderColor: "border-amber-200/60 dark:border-amber-500/30",
-          shadowColor: "shadow-amber-100/50 dark:shadow-amber-900/20",
-          accentBar: "bg-amber-500",
-          badgeBg: "bg-amber-500",
+          accentBar: "bg-muted-foreground/60",
           badgeText: "Honorable",
-          icon: <AwardIcon className="w-3 h-3 sm:w-4 sm:h-4 text-white" />,
+          icon: <AwardIcon className="w-3 h-3 sm:w-4 sm:h-4" />,
           hasSparkle: false,
-          hoverShadow: "hover:shadow-amber-200/60 dark:hover:shadow-amber-800/40"
         }
     }
   }
@@ -72,7 +57,7 @@ export function AwardCard({ award, isExpanded, onToggle }: AwardCardProps) {
       className="mb-4 sm:mb-6"
     >
       <motion.div
-        className={`relative overflow-hidden rounded-xl ${config.cardBg} backdrop-blur-sm border ${config.borderColor} shadow-md ${config.shadowColor} ${config.hoverShadow} transition-all duration-300 cursor-pointer group`}
+        className="relative overflow-hidden rounded-sm bg-card border border-border hover:shadow-md transition-all duration-300 cursor-pointer group"
         layoutId={`card-container-${award.id}`}
         onClick={onToggle}
       >
@@ -82,10 +67,10 @@ export function AwardCard({ award, isExpanded, onToggle }: AwardCardProps) {
         {/* Main content */}
         <div className="p-3 sm:p-4 md:p-6">
           <div className="flex items-start gap-2 sm:gap-4">
-            {/* Smaller image container on mobile */}
+            {/* Image container */}
             <div className="flex-shrink-0 relative">
               <div
-                className={`h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14 transition-shadow duration-300 ${award.isIconRoundedFull ? 'rounded-full' : 'rounded-md'}`}
+                className={`h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14 relative ${award.isIconRoundedFull ? 'rounded-full' : 'rounded-sm'}`}
               >
                 {!imageError ? (
                   <Image
@@ -94,17 +79,16 @@ export function AwardCard({ award, isExpanded, onToggle }: AwardCardProps) {
                     fill
                     sizes="(max-width: 640px) 40px, (max-width: 1024px) 56px, 80px"
                     quality={100}
-                    className={`object-cover ${award.isIconRoundedFull ? 'rounded-full' : 'rounded-md'}`}
+                    className={`object-cover ${award.isIconRoundedFull ? 'rounded-full' : 'rounded-sm'}`}
                     onError={() => setImageError(true)}
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-sm sm:text-lg font-semibold">
+                  <div className="w-full h-full flex items-center justify-center bg-muted text-muted-foreground text-sm sm:text-lg font-semibold rounded-sm">
                     {award.name.charAt(0)}
                   </div>
                 )}
               </div>
               
-              {/* Smaller sparkle on mobile */}
               {config.hasSparkle && (
                 <motion.div
                   className="absolute -top-1 -right-1"
@@ -125,32 +109,27 @@ export function AwardCard({ award, isExpanded, onToggle }: AwardCardProps) {
             
             {/* Content section */}
             <div className="flex-1 min-w-0">
-              {/* Header with badge - adjusted for mobile */}
+              {/* Header with badge */}
               <div className="flex items-start justify-between gap-1 sm:gap-2 mb-1 sm:mb-2">
                 <div className="flex-1 min-w-0 pr-1">
-                  <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900 dark:text-white line-clamp-2 group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-300">
+                  <h3 className="text-base sm:text-lg md:text-xl font-bold text-foreground line-clamp-2 transition-colors duration-300">
                     {award.name}
                   </h3>
                 </div>
                 
-                {/* Smaller badge on mobile */}
-                <motion.div 
-                  className={`flex-shrink-0 flex items-center gap-1 px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full ${config.badgeBg} shadow-sm text-white text-xs font-medium whitespace-nowrap`}
-                  whileHover={{ scale: 1.05 }}
-                >
+                <div className="flex-shrink-0 flex items-center gap-1 px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-sm bg-muted text-muted-foreground text-xs font-medium whitespace-nowrap">
                   {config.icon}
                   <span className="hidden xs:inline">{config.badgeText}</span>
-                </motion.div>
+                </div>
               </div>
               
-              {/* Shorter description on mobile */}
-              <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm md:text-base line-clamp-2 mb-2 sm:mb-3 transition-colors duration-300">
+              <p className="text-muted-foreground text-xs sm:text-sm md:text-base line-clamp-2 mb-2 sm:mb-3 transition-colors duration-300">
                 {award.description}
               </p>
               
-              {/* Metadata row - simplified for mobile */}
+              {/* Metadata row */}
               <div className="flex items-center justify-between">
-                <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-xs text-gray-500 dark:text-gray-400">
+                <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-xs text-muted-foreground">
                   <div className="flex items-center gap-1">
                     <Calendar className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                     <span>{new Date(award.date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</span>
@@ -162,13 +141,12 @@ export function AwardCard({ award, isExpanded, onToggle }: AwardCardProps) {
                   </div>
                 </div>
                 
-                {/* Smaller expand button on mobile */}
                 <motion.div 
                   animate={{ rotate: isExpanded ? 180 : 0 }} 
                   transition={{ duration: 0.3, type: "spring", stiffness: 200 }}
-                  className="flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-white/80 dark:bg-gray-800/80 shadow-sm group-hover:shadow-md transition-shadow duration-300"
+                  className="flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 rounded-sm bg-muted transition-all duration-300"
                 >
-                  <ChevronDown className="w-3 h-3 sm:w-4 sm:h-4 text-gray-600 dark:text-gray-400" />
+                  <ChevronDown className="w-3 h-3 sm:w-4 sm:h-4 text-muted-foreground" />
                 </motion.div>
               </div>
             </div>
@@ -183,10 +161,10 @@ export function AwardCard({ award, isExpanded, onToggle }: AwardCardProps) {
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="overflow-hidden border-t border-gray-200/60 dark:border-gray-700/60"
+              className="overflow-hidden border-t border-border"
             >
-              <div className="p-3 sm:p-4 md:p-6 pt-3 bg-white/30 dark:bg-gray-800/30 backdrop-blur-sm">
-                <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-300 leading-relaxed mb-3 sm:mb-4">
+              <div className="p-3 sm:p-4 md:p-6 pt-3 bg-muted/40">
+                <p className="text-xs sm:text-sm text-foreground/80 leading-relaxed mb-3 sm:mb-4">
                   {award.detailedDescription || award.description}
                 </p>
                 <div className="flex flex-wrap gap-2 sm:gap-3">
@@ -195,7 +173,7 @@ export function AwardCard({ award, isExpanded, onToggle }: AwardCardProps) {
                       href={award.link} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-md text-xs font-medium bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 transition-colors duration-200"
+                      className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-sm text-xs font-medium bg-muted text-foreground/80 hover:bg-muted/80 border border-border transition-colors duration-200"
                       onClick={(e) => e.stopPropagation()}
                     >
                       <ExternalLink className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
@@ -207,7 +185,7 @@ export function AwardCard({ award, isExpanded, onToggle }: AwardCardProps) {
                       href={award.submissionLink} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-md text-xs font-medium bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 transition-colors duration-200"
+                      className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-sm text-xs font-medium bg-muted text-foreground/80 hover:bg-muted/80 border border-border transition-colors duration-200"
                       onClick={(e) => e.stopPropagation()}
                     >
                       <Eye className="w-3 h-3 sm:w-3.5 sm:h-3.5" />

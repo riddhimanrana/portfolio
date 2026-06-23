@@ -24,10 +24,21 @@
     "repoLink": "https://github.com/riddhimanrana/orion"
   },
   {
+    "id": "dicy",
+    "title": "Dicy",
+    "tagline": "A modern grade experience for Infinite Campus and Schoology across iOS, Android, and web",
+    "description": "I reverse engineered Infinite Campus and Schoology to create a substantially better way for students to view grades, test what-if scenarios, calculate final-grade targets, and use a growing set of academic tools. Dicy grew to more than 1,500 users across four-plus states while facing direct competition from other student products. I rejected acquisition interest, kept innovating, and used product design and direct marketing to regain market share.",
+    "logo": "/icon-192.png",
+    "tags": ["Expo", "React Native", "Next.js", "Cloudflare"],
+    "year": "2026",
+    "projectLink": "https://dicy.app",
+    "repoLink": "https://github.com/riddhimanrana/dicy"
+  },
+  {
     "id": "lets-assist",
     "title": "Let's Assist",
-    "tagline": "End-to-end volunteering platform built for high schoolers",
-    "description": "Let's Assist is a comprehensive online volunteering platform that helps organizations and high school CSF programs manage, automatically track, and coordinate volunteering activities for students and communities. It simplifies the process for organizations to create and manage volunteer events, track student contributions, and verify hours securely using QR codes. For students, it eliminates the hassle of actively searching for opportunities by providing personalized recommendations and an easy way to log and track their hours.\n\nI started this project in Oct 2023 after a real experience where during a long weekend, I visited Santa Cruz Beachand saw tons of trash littered everywhere. This motivated me to create a platform that would make it easy for someone to see something that needs to be done about, create a project, and get volunteers to help out. I also enrolled in CJSF for the first time that year and I saw the potential in high school students who need volunteering hours to more easily give back to their communities and make a positive real-world impact.\n\nI submitted an initial version of this project to a hackathon called HarvestHacks but even though I didn't win anything, I was motivated to completely revamp it and make it a full-fledged platform. After a year of keeping this project on hold, I finally got back to it in Dec 2024 and spent the next 6 months and every weekend working on it. Eventually, I finished it in May 2025 and hopefully I will be able to fully launch and market it successfully with a huge impact in the Tri-Valley area. ",
+    "tagline": "Volunteer infrastructure for students, schools, and community organizations",
+    "description": "Let's Assist replaces fragmented SignUpGenius forms, spreadsheets, emails, and paper hour logs with one platform for opportunity discovery, registration, coordination, and service verification. It serves more than 300 users and is actively used by Troop 941. I am working with SRVUSD IT and California IT in Education on legal and compliance approval while partnering with DVHS CSF and DVHS Speech & Debate for broader adoption.",
     "image": "/projects/lets-assist.png",
     "logo": "/projects/logos/lets-assist.png",
     "tags": ["Next.js", "Supabase", "Typescript", "Tailwind CSS", "Shadcn UI"],

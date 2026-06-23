@@ -3,8 +3,13 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
-import { SiGithub, SiDiscord, SiYoutube, SiLinkedin } from "react-icons/si";
 import { Button } from "@/components/ui/button";
+import {
+  DiscordIcon,
+  GitHubIcon,
+  LinkedInIcon,
+  YouTubeIcon,
+} from "@/components/brand-icons";
 
 import { Copy, Check, ExternalLink, Mail } from "lucide-react";
 
@@ -52,46 +57,41 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
     {
       name: "GitHub",
       value: "@riddhimanrana",
-      icon: <SiGithub className="h-5 w-5" />,
+      icon: <GitHubIcon className="size-5" />,
       link: "https://github.com/riddhimanrana",
-      color:
-        "bg-zinc-100 text-zinc-900 dark:bg-zinc-800/80 dark:text-zinc-100 hover:bg-zinc-200 dark:hover:bg-zinc-800",
-      buttonHoverClass: "hover:bg-zinc-300 dark:hover:bg-zinc-700",
+      color: "bg-muted text-muted-foreground hover:bg-muted/80",
+      buttonHoverClass: "hover:bg-muted",
     },
     {
       name: "Linkedin",
       value: "@riddhimanrana",
-      icon: <SiLinkedin className="h-5 w-5" />,
+      icon: <LinkedInIcon className="size-5" />,
       link: "https://www.linkedin.com/in/riddhimanrana/",
-      color:
-        "bg-blue-100 text-blue-900 dark:bg-blue-900/30 dark:text-blue-100 hover:bg-blue-200 dark:hover:bg-blue-900/40",
-      buttonHoverClass: "hover:bg-blue-300 dark:hover:bg-blue-800/40",
+      color: "bg-muted text-muted-foreground hover:bg-muted/80",
+      buttonHoverClass: "hover:bg-muted",
     },
     {
       name: "Discord",
       value: "@riddhimanrana",
-      icon: <SiDiscord className="h-5 w-5" />,
-      color:
-        "bg-indigo-100 text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-100 hover:bg-indigo-200 dark:hover:bg-indigo-900/40",
-      buttonHoverClass: "hover:bg-indigo-300 dark:hover:bg-indigo-800/40",
+      icon: <DiscordIcon className="size-5" />,
+      color: "bg-muted text-muted-foreground hover:bg-muted/80",
+      buttonHoverClass: "hover:bg-muted",
     },
     {
       name: "Email",
       value: "contact@riddhimanrana.com",
       icon: <Mail className="h-5 w-5" />,
       link: "mailto:contact@riddhimanrana.com",
-      color:
-        "bg-gray-100 text-gray-500 dark:bg-gray-800/80 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700/40",
-      buttonHoverClass: "hover:bg-gray-200 dark:hover:bg-gray-700",
+      color: "bg-muted text-muted-foreground hover:bg-muted/80",
+      buttonHoverClass: "hover:bg-muted",
     },
     {
       name: "YouTube",
       value: "@riddhimanrana",
-      icon: <SiYoutube className="h-5 w-5" />,
+      icon: <YouTubeIcon className="size-5" />,
       link: "https://youtube.com/@riddhimanrana",
-      color:
-        "bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-100 hover:bg-red-200 dark:hover:bg-red-900/40",
-      buttonHoverClass: "hover:bg-red-300 dark:hover:bg-red-800/40",
+      color: "bg-muted text-muted-foreground hover:bg-muted/80",
+      buttonHoverClass: "hover:bg-muted",
     },
   ];
 
@@ -128,21 +128,21 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
             }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4"
           >
-            <div className="w-full max-w-2xl bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800">
+            <div className="w-full max-w-2xl bg-card rounded-sm shadow-2xl border border-border">
               <div className="p-6 pb-0 flex items-start justify-between">
                 <div>
                   <h2 className="text-3xl font-bold tracking-tight">
                     Let's Connect
                   </h2>
-                  <p className="text-gray-500 dark:text-gray-400 mt-2">
+                  <p className="text-muted-foreground mt-2">
                     Reach out through any of these platforms
                   </p>
                 </div>
                 <button
                   onClick={onClose}
-                  className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                  className="p-2 rounded-sm hover:bg-muted transition-colors"
                 >
-                  <X className="h-5 w-5 text-gray-500" />
+                  <X className="h-5 w-5 text-muted-foreground" />
                 </button>
               </div>
 
@@ -150,13 +150,13 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                 {contactMethods.map((method) => (
                   <div
                     key={method.name}
-                    className={`rounded-xl p-4 flex items-center justify-between transition-colors ${method.color}`}
+                    className={`rounded-sm p-4 flex items-center justify-between transition-colors ${method.color}`}
                   >
                     <div className="flex items-center gap-4">
                       {method.icon}
                       <div>
                         <p className="font-medium">{method.name}</p>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                        <p className="text-sm text-muted-foreground">
                           {method.value}
                         </p>
                       </div>

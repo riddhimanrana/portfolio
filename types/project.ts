@@ -3,7 +3,7 @@ export interface Project {
   title: string
   tagline: string
   description: string
-  image: string
+  image?: string
   logo?: string
   tags: string[]
   year: string

@@ -1,390 +1,304 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { useTheme } from "next-themes";
-import {
-  Code,
-  Briefcase,
-  Cpu,
-  Trophy,
-  GraduationCap,
-  ExternalLink,
-  FileText,
-  Globe,
-} from "lucide-react";
-import { SiGithub, SiYoutube } from "react-icons/si";
-import Link from "next/link";
+import { ArrowUpRight, Download, ExternalLink } from "lucide-react";
 import Image from "next/image";
-import { ContactModal } from "@/components/contact-modal";
-import { AboutSection } from "@/components/about-section";
-import { EducationSection } from "@/components/education-section";
-import { SkillsSection } from "@/components/skills-section";
+import Link from "next/link";
+import { motion, type Variants } from "framer-motion";
+import { useState } from "react";
+
+import { ContactDialog } from "@/components/contact-dialog";
+import { HeroProductMap } from "@/components/hero-product-map";
 import { WorkExperience } from "@/components/work-experience";
+import { SkillsSection } from "@/components/skills-section";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import awardsData from "@/data/awards.json";
+
+const fadeInVariants: Variants = {
+  hidden: { opacity: 0, y: 15, filter: "blur(3px)" },
+  visible: (delay: number) => ({
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: {
+      duration: 0.7,
+      delay,
+      ease: [0.16, 1, 0.3, 1] as const
+    }
+  })
+};
+
+let homeHeroAnimated = false;
+
+const topAwardIds = [
+  "usaco-platinum",
+  "usaaio-round-1-2026",
+  "mathkangaroo-camp-25",
+  "amc-10a-25"
+];
+
+const topAwards = topAwardIds
+  .map((id) => {
+    const award = awardsData.find((a) => a.id === id);
+    return award
+      ? {
+          id: award.id,
+          name: award.name,
+          detail: award.description,
+          image: award.image,
+        }
+      : null;
+  })
+  .filter((a): a is NonNullable<typeof a> => a !== null);
+
+const products = [
+  {
+    name: "Dicy",
+    logo: "/icon-192.png",
+    href: "https://dicy.app",
+    metric: "1.5k+ users across 4+ states",
+    description:
+      "A grade app for Infinite Campus and Schoology with what-if grades, final-grade calculations, and a cleaner experience across iOS, Android, and web.",
+  },
+  {
+    name: "Let's Assist",
+    logo: "/logos/lets-assist.png",
+    href: "https://lets-assist.com",
+    metric: "300+ users",
+    description:
+      "A volunteer management platform for discovering opportunities, managing signups, and verifying service hours without spreadsheets or paper logs.",
+  },
+];
+
+function SectionHeader({
+  title,
+  href,
+}: {
+  title: string;
+  href?: string;
+}) {
+  return (
+    <div className="flex items-center justify-between gap-4 border-b border-border pb-4">
+      <h2 className="text-2xl font-medium tracking-[-0.035em]">{title}</h2>
+      {href && (
+        <Button variant="ghost" size="sm" className="-mr-3" asChild>
+          <Link href={href}>
+            View all
+            <ArrowUpRight data-icon="inline-end" />
+          </Link>
+        </Button>
+      )}
+    </div>
+  );
+}
 
 export default function Home() {
-  const [mounted, setMounted] = useState(false);
-  const { theme, setTheme } = useTheme();
-  const [contactModalOpen, setContactModalOpen] = useState(false);
+  const [shouldAnimateHero, setShouldAnimateHero] = useState(
+    () => !homeHeroAnimated
+  );
+  const heroMotionState = shouldAnimateHero
+    ? { initial: "hidden", animate: "visible" }
+    : { initial: "visible", animate: "visible" };
 
-  // Theme toggle handler
-  const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
+  const markHeroMotionComplete = () => {
+    if (typeof window === "undefined") return;
+    homeHeroAnimated = true;
+    setShouldAnimateHero(false);
+    (window as any).__portfolioHeroMotionDone = true;
+    window.dispatchEvent(new Event("portfolio:hero-motion-complete"));
   };
 
-  // Handle mounting for theme
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return null;
-  }
-
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-300">
-      {/* Contact Modal */}
-      <ContactModal
-        isOpen={contactModalOpen}
-        onClose={() => setContactModalOpen(false)}
-      />
-
-      {/* Main Content */}
-      <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Hero Section */}
-
-        <section id="about" className="py-8 sm:py-16">
-          <div className="max-w-6xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="mb-4"
+    <main>
+      <div className="site-shell">
+        <section className="grid gap-10 border-b border-border py-16 sm:py-24 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+          <div>
+            <motion.div 
+              variants={fadeInVariants} 
+              custom={0.0} 
+              {...heroMotionState}
+              className="mb-6 flex flex-wrap items-center gap-2 text-sm text-muted-foreground"
             >
-              <span className="flex flex-wrap items-center text-sm text-gray-600 dark:text-gray-400">
-                <span>Founder of</span>
-                <Link
-                  href="https://lets-assist.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-100 group ml-2"
-                >
-                  <Image
-                    src="/logos/lets-assist.png"
-                    alt="Let's Assist Logo"
-                    width={20}
-                    height={20}
-                    className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform"
-                    sizes="20px"
-                    quality={80}
-                  />
-                  <span className="inline-flex items-center">
-                    Let's Assist
-                    <span
-                      className="overflow-hidden ml-0 w-0 opacity-0 transition-all duration-200 group-hover:ml-1 group-hover:w-3 group-hover:opacity-100"
-                      aria-hidden="true"
-                    >
-                      <ExternalLink className="h-3 w-3" />
-                    </span>
-                  </span>
-                </Link>
-                <span className="ml-2">and</span>
-                <Link
-                  href="https://orionlive.ai"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-100 group ml-2"
-                >
-                  <Image
-                    src="/logos/orion-live.png"
-                    alt="Orion Live Logo"
-                    width={20}
-                    height={20}
-                    className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform"
-                    sizes="20px"
-                    quality={80}
-                  />
-                  <span className="inline-flex items-center">
-                    Orion Live
-                    <span
-                      className="overflow-hidden ml-0 w-0 opacity-0 transition-all duration-200 group-hover:ml-1 group-hover:w-3 group-hover:opacity-100"
-                      aria-hidden="true"
-                    >
-                      <ExternalLink className="h-3 w-3" />
-                    </span>
-                  </span>
-                </Link>
-              </span>
-            </motion.div>
-
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-[2rem] sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 flex flex-wrap items-center gap-2"
-            >
-              <span>Hi, I'm</span>
-              <div className="rounded-2xl transition-transform hover:scale-105 duration-300">
+              <span>Founder of</span>
+              <Link
+                href="https://dicy.app"
+                target="_blank"
+                className="group inline-flex items-center text-foreground transition-colors hover:text-blue-500 font-medium"
+              >
                 <Image
-                  src="/profile.jpeg"
-                  alt="Riddhiman Rana"
-                  width={96} // Changed from 160
-                  height={96} // Changed from 160
-                  className="w-[40px] h-[40px] sm:w-[60px] sm:h-[60px] -rotate-6 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.4)] border-2 border-white dark:border-gray-700"
-                  sizes="(max-width: 640px) 40px, 60px"
-                  quality={100}
+                  src="/icon-192.png"
+                  alt=""
+                  width={18}
+                  height={18}
+                  className="rounded-full object-contain mr-1"
+                  style={{ width: 18, height: 18 }}
                 />
-              </div>
-              <span className="relative inline-flex items-center">
-                <span className="block sm:hidden">Riddhiman</span>
-                <span className="hidden sm:block">Riddhiman Rana</span>
-                <span className="absolute bottom-0 left-0 w-full h-1 bg-blue-500 dark:bg-blue-400"></span>
-              </span>
+                Dicy
+                <ExternalLink className="text-blue-500 transition-all duration-300 ease-out opacity-0 scale-50 w-0 group-hover:w-3 group-hover:opacity-100 group-hover:scale-100 group-hover:ml-1 h-3" />
+              </Link>
+              <span>and</span>
+              <Link
+                href="https://lets-assist.com"
+                target="_blank"
+                className="group inline-flex items-center text-foreground transition-colors hover:text-blue-500 font-medium"
+              >
+                <Image
+                  src="/logos/lets-assist.png"
+                  alt=""
+                  width={18}
+                  height={18}
+                  className="rounded-full object-contain mr-1"
+                />
+                Let&apos;s Assist
+                <ExternalLink className="text-blue-500 transition-all duration-300 ease-out opacity-0 scale-50 w-0 group-hover:w-3 group-hover:opacity-100 group-hover:scale-100 group-hover:ml-1 h-3" />
+              </Link>
+            </motion.div>
+            
+            <motion.h1 
+              variants={fadeInVariants} 
+              custom={0.1} 
+              {...heroMotionState}
+              className="text-4xl font-medium tracking-[-0.055em] sm:text-6xl text-foreground"
+            >
+              hi, i&apos;m <span className="diffusion-name cursor-default">riddhiman</span>.
             </motion.h1>
 
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-xl sm:text-3xl md:text-4xl font-medium sm:font-semibold mb-6 flex flex-wrap items-center gap-2"
+            <motion.p 
+              variants={fadeInVariants} 
+              custom={0.25} 
+              {...heroMotionState}
+              className="mt-5 max-w-3xl text-2xl leading-9 tracking-[-0.035em] sm:text-4xl sm:leading-[1.15]"
             >
-              <span>And I'm a</span>
-              <span className="flex items-center">
-                <Code className="inline-block mr-2 h-6 w-6 sm:h-8 sm:w-8 p-1 bg-gray-200 dark:bg-gray-800 rounded-md" />
-                Full Stack Developer
-              </span>
-              <span>and</span>
-              <span className="flex items-center">
-                <Cpu className="inline-block mr-2 h-6 w-6 sm:h-8 sm:w-8 p-1 bg-gray-200 dark:bg-gray-800 rounded-md" />
-                Competitive Programmer
-              </span>
-            </motion.h2>
+              i build products i&apos;m truly{" "}
+              <span className="luxury-gold-text">proud</span> of and{" "}
+              <span className="luxury-silver-text">believe</span> in.
+            </motion.p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="hidden sm:flex flex-col sm:flex-row gap-3 mb-6"
+            <motion.div 
+              variants={fadeInVariants} 
+              custom={0.4} 
+              {...heroMotionState}
+              className="mt-8 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8"
             >
-              <Link
-                href="https://dvhs.srvusd.net/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center text-sm bg-gray-100 dark:bg-gray-800 px-4 py-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-              >
-                <GraduationCap className="mr-2 h-4 w-4" />
-                Sophomore at Dougherty Valley High School
-              </Link>
-              <div className="flex items-center text-sm bg-gray-100 dark:bg-gray-800 px-4 py-2 rounded-full">
-                <Trophy className="mr-2 h-4 w-4" />
-                USACO Gold Contestant
-              </div>
+              <p>
+                I&apos;m a rising junior at Dougherty Valley High School, founder of Dicy and Let&apos;s Assist (1.8k+ users combined)
+              , a USACO Platinum competitor, and an
+                applied AI researcher working on Orion.
+              </p>
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="flex flex-col sm:flex-row gap-3"
+            <motion.div 
+              variants={fadeInVariants} 
+              custom={0.55} 
+              {...heroMotionState}
+              onAnimationComplete={markHeroMotionComplete}
+              className="mt-8 flex flex-wrap gap-2"
             >
-              <Link
-                href="/projects"
-                className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-300 flex items-center justify-center"
-              >
-                View Projects <ExternalLink className="ml-2 h-4 w-4" />
-              </Link>
-              <Link
-                href="/resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-6 py-3 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-xl transition-colors duration-300 flex items-center justify-center border border-gray-300 dark:border-gray-700"
-              >
-                Download Resume
-                <FileText className="ml-2 h-4 w-4 opacity-80" />
-              </Link>
-              <button
-                onClick={() => setContactModalOpen(true)}
-                className="px-6 py-3 bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-xl transition-colors duration-300 text-center"
-              >
-                Contact Me
-              </button>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* About Section */}
-        <AboutSection />
-
-        {/* Work Experience Section */}
-        <WorkExperience />
-
-        {/* Education Section */}
-        <EducationSection />
-
-        {/* Skills Section */}
-        <SkillsSection />
-
-        {/* Projects Section */}
-        <section
-          id="projects"
-          className="py-8 sm:py-12 bg-gray-50 dark:bg-gray-900 rounded-3xl my-6"
-        >
-          <div className="px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
-            <div className="max-w-6xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="flex flex-col md:flex-row md:items-center justify-between mb-8"
-              >
-                <div className="flex items-center mb-3 pt-2 md:mb-0">
-                  <div className="p-2 bg-gray-100 dark:bg-gray-600/20 rounded-xl shadow-sm mr-3">
-                    <Briefcase className="h-8 w-8 " />
-                  </div>
-                  <h2 className="text-2xl sm:text-3xl font-bold">
-                    Featured Projects
-                  </h2>
-                </div>
-                {/* <p className="text-gray-600 dark:text-gray-400 text-sm max-w-md">
-                  A showcase of my recent work and personal projects
-                </p> */}
-              </motion.div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.1 }}
-                  className="bg-white dark:bg-gray-950 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:translate-y-[-5px] border border-gray-100 dark:border-gray-800 group p-6"
-                >
-                  <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
-                    Let&apos;s Assist
-                  </h3>
-
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    <span className="text-xs bg-purple-100 dark:bg-purple-900/50 text-purple-800 dark:text-purple-200 px-2.5 py-1 rounded-full font-medium">
-                      Next.js
-                    </span>
-                    <span className="text-xs bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200 px-2.5 py-1 rounded-full font-medium">
-                      Typescript
-                    </span>
-                    <span className="text-xs bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800 dark:text-emerald-200 px-2.5 py-1 rounded-full font-medium">
-                      Supabase
-                    </span>
-                    <span className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 px-2.5 py-1 rounded-full font-medium">
-                      2025
-                    </span>
-                  </div>
-
-                  <p className="text-gray-600 dark:text-gray-400 text-sm mb-5">
-                    A comprehensive online volunteering platform that helps
-                    organizations and high school CSF programs manage, track,
-                    and coordinate volunteering activities for students and
-                    communities.
-                  </p>
-
-                  <div className="flex items-center gap-5 mt-auto">
-                    <Link
-                      href="https://github.com/riddhimanrana/lets-assist"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all inline-flex items-center gap-1.5 text-sm font-medium group-hover:translate-x-0.5 "
-                    >
-                      <SiGithub className="h-6 w-6" />
-                      <span>Code</span>
-                    </Link>
-                    <Link
-                      href="https://lets-assist.com"
-                      className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400  inline-flex items-center gap-1.5 text-sm font-medium group-hover:translate-x-0.5 transition-all"
-                    >
-                      <Globe className="h-4.5 w-4.5" />
-                      <span>Website</span>
-                    </Link>
-                  </div>
-                </motion.div>
-
-                {/* Orion Live Project */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                  className="bg-white dark:bg-gray-950 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:translate-y-[-5px] border border-gray-100 dark:border-gray-800 group p-6"
-                >
-                  <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
-                    Orion Live
-                  </h3>
-
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    <span className="text-xs bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200 px-2.5 py-1 rounded-full font-medium">
-                      Swift
-                    </span>
-                    <span className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 px-2.5 py-1 rounded-full font-medium">
-                      Apple MLX
-                    </span>
-                    <span className="text-xs bg-yellow-100 dark:bg-yellow-900/50 text-yellow-800 dark:text-yellow-200 px-2.5 py-1 rounded-full font-medium">
-                      Tensorflow
-                    </span>
-                    <span className="text-xs bg-orange-100 dark:bg-orange-900/50 text-orange-800 dark:text-orange-200 px-2.5 py-1 rounded-full font-medium">
-                      FastAPI
-                    </span>
-                    <span className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 px-2.5 py-1 rounded-full font-medium">
-                      Websocket
-                    </span>
-                    <span className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 px-2.5 py-1 rounded-full font-medium">
-                      2025
-                    </span>
-                  </div>
-
-                  <p className="text-gray-600 dark:text-gray-400 text-sm mb-5">
-                    Orion Live is the world’s first real-time visual
-                    intelligence agent that truly remembers and understands the
-                    world as it unfolds with a focus on privacy, speed, and
-                    always-on context, in a hybrid edge-server architecture.
-                  </p>
-
-                  <div className="flex items-center gap-5 mt-auto">
-                    <Link
-                      href="https://github.com/riddhimanrana/orion"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all inline-flex items-center gap-1.5 text-sm font-medium group-hover:translate-x-0.5"
-                    >
-                      <SiGithub className="h-6 w-6" />
-                      <span>Code</span>
-                    </Link>
-                    <Link
-                      href="https://orionlive.ai"
-                      className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400  inline-flex items-center gap-1.5 text-sm font-medium group-hover:translate-x-0.5 transition-all"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Globe className="h-4.5 w-4.5" />
-                      <span>Website</span>
-                    </Link>
-                  </div>
-                </motion.div>
-              </div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                className="flex justify-center mt-10"
-              >
-                <Link
-                  href="/projects"
-                  className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-300 flex items-center justify-center group text-sm font-medium"
-                >
-                  View All Projects
-                  <ExternalLink className="ml-2 h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
+              <Button asChild>
+                <Link href="/projects">Projects</Link>
+              </Button>
+              <Button variant="outline" asChild>
+                <Link href="/resume.pdf" target="_blank">
+                  <Download data-icon="inline-start" />
+                  Resume
                 </Link>
-              </motion.div>
-            </div>
+              </Button>
+              <ContactDialog />
+            </motion.div>
+          </div>
+
+          <HeroProductMap />
+        </section>
+
+        <section className="py-14 sm:py-20">
+          <SectionHeader title="Top awards" href="/awards" />
+          <div className="grid sm:grid-cols-2">
+            {topAwards.map((award) => (
+              <Link
+                key={award.id}
+                href={`/awards?id=${award.id}`}
+                className="grid grid-cols-[3rem_1fr] gap-4 border-b border-border py-5 sm:odd:border-r sm:odd:pr-7 sm:even:pl-7"
+              >
+                <div className="logo-tile size-12 rounded-xl p-1.5">
+                  <Image
+                    src={award.image}
+                    alt=""
+                    width={40}
+                    height={40}
+                    className="max-h-full object-contain"
+                  />
+                </div>
+                <div>
+                  <h3 className="font-medium">{award.name}</h3>
+                  <p className="mt-1 text-sm leading-6 text-muted-foreground">
+                    {award.detail}
+                  </p>
+                </div>
+              </Link>
+            ))}
           </div>
         </section>
-      </main>
 
-      {/* Footer */}
-    </div>
+        <section className="pb-14 sm:pb-20">
+          <SectionHeader title="Work experience" />
+          <WorkExperience />
+        </section>
+
+        <section className="pb-16 sm:pb-24">
+          <SectionHeader title="Products" href="/projects" />
+          <div>
+            {products.map((product, index) => (
+              <div key={product.name}>
+                {index > 0 && <Separator />}
+                <Link
+                  href={product.href}
+                  target="_blank"
+                  className="group grid gap-4 py-7 sm:grid-cols-[4rem_1fr_auto] sm:items-center"
+                >
+                  <div className="logo-tile size-16 rounded-2xl p-2">
+                    <Image
+                      src={product.logo}
+                      alt={`${product.name} logo`}
+                      width={54}
+                      height={54}
+                      className="max-h-full object-contain"
+                    />
+                  </div>
+                  <div>
+                    <div className="flex flex-wrap items-center gap-3">
+                      <h3 className="text-xl font-medium">{product.name}</h3>
+                      <Badge variant="secondary">{product.metric}</Badge>
+                    </div>
+                    <p className="mt-2 max-w-3xl leading-7 text-muted-foreground">
+                      {product.description}
+                    </p>
+                  </div>
+                  <ArrowUpRight className="text-muted-foreground transition-colors group-hover:text-primary" />
+                </Link>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <SkillsSection />
+{/* 
+
+        <section className="border-t border-border py-16 sm:py-24 text-center">
+          <h2 className="text-3xl font-medium tracking-[-0.04em] sm:text-4xl">
+            Let&apos;s build something together
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-base text-muted-foreground sm:text-lg">
+            I&apos;m always interested in new opportunities, product design, engineering, or applied AI research.
+          </p>
+          <div className="mt-8 flex justify-center gap-3">
+            <ContactDialog />
+            <Button variant="outline" asChild>
+              <Link href="mailto:contact@riddhimanrana.com">Send an email</Link>
+            </Button>
+          </div>
+        </section> */}
+      </div>
+    </main>
   );
 }

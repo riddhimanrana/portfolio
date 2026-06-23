@@ -34,32 +34,24 @@ export function AwardModal({ award, isOpen, onClose }: AwardModalProps) {
     switch (difficulty) {
       case "major":
         return {
-          bgGradient: "bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/50 dark:to-blue-800/30",
-          borderColor: "border-blue-200 dark:border-blue-700",
-          accentColor: "bg-blue-500",
-          textColor: "text-blue-700 dark:text-blue-400",
-          icon: <Medal className="w-5 h-5 text-white" />,
+          accentBar: "bg-foreground",
+          icon: <Medal className="w-5 h-5" />,
           label: "Major Achievement",
           hasSparkle: true
         };
-      case "notable":
+      
+      case "honorable":
         return {
-          bgGradient: "bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/50 dark:to-purple-800/30",
-          borderColor: "border-purple-200 dark:border-purple-700",
-          accentColor: "bg-purple-500",
-          textColor: "text-purple-700 dark:text-purple-400",
-          icon: <Star className="w-5 h-5 text-white" />,
-          label: "Notable Achievement",
+          accentBar: "bg-muted-foreground/60",
+          icon: <AwardIcon className="w-5 h-5" />,
+          label: "Honorable Mention",
           hasSparkle: false
         };
       default:
         return {
-          bgGradient: "bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/50 dark:to-amber-800/30",
-          borderColor: "border-amber-200 dark:border-amber-700",
-          accentColor: "bg-amber-500",
-          textColor: "text-amber-700 dark:text-amber-400",
-          icon: <AwardIcon className="w-5 h-5 text-white" />,
-          label: "Honorable Mention",
+          accentBar: "bg-muted-foreground",
+          icon: <Star className="w-5 h-5" />,
+          label: "Notable Achievement",
           hasSparkle: false
         };
     }
@@ -95,30 +87,30 @@ export function AwardModal({ award, isOpen, onClose }: AwardModalProps) {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: "100%", scale: 0.98 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
-              className={`relative w-full sm:max-w-2xl lg:max-w-3xl sm:mx-auto bg-white dark:bg-gray-900 sm:rounded-2xl shadow-2xl max-h-[90vh] overflow-hidden ${config.borderColor} sm:border`}
+              className="relative w-full sm:max-w-2xl lg:max-w-3xl sm:mx-auto bg-card sm:rounded-sm border border-border shadow-2xl max-h-[90vh] overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header accent */}
-              <div className={`h-2 ${config.accentColor}`} />
+              <div className={`h-1.5 ${config.accentBar}`} />
               
               {/* Close button */}
               <button
                 onClick={onClose}
-                className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/90 dark:bg-gray-800/90 hover:bg-white dark:hover:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm"
+                className="absolute top-4 right-4 z-10 p-2 rounded-sm bg-muted hover:bg-muted/80 border border-border"
                 aria-label="Close modal"
               >
-                <X className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+                <X className="w-5 h-5 text-muted-foreground" />
               </button>
 
               {/* Scrollable content */}
-              <div className="overflow-y-auto max-h-[calc(90vh-8px)]">
+              <div className="overflow-y-auto max-h-[calc(90vh-6px)]">
                 <div className="p-6 pb-8 sm:p-8">
                   {/* Header section */}
                   <div className="flex items-start gap-4 sm:gap-6 mb-6">
                     {/* Award image */}
                     <div className="flex-shrink-0 relative">
                       <div 
-                        className={`h-16 w-16 sm:h-20 sm:w-20 overflow-hidden ${award.isIconRoundedFull ? 'rounded-full shadow-lg' : 'rounded-md'}`}
+                        className={`h-16 w-16 sm:h-20 sm:w-20 relative overflow-hidden ${award.isIconRoundedFull ? 'rounded-full' : 'rounded-sm'}`}
                       >
                         {!imageError ? (
                           <Image
@@ -128,17 +120,16 @@ export function AwardModal({ award, isOpen, onClose }: AwardModalProps) {
                             sizes="(max-width: 640px) 40px, (max-width: 1024px) 56px, 80px"
                             quality={100}
                             priority
-                            className={`object-cover ${award.isIconRoundedFull ? 'rounded-full' : 'rounded-md'}`}
+                            className={`object-cover ${award.isIconRoundedFull ? 'rounded-full' : 'rounded-sm'}`}
                             onError={() => setImageError(true)}
                           />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-gray-800">
+                          <div className="w-full h-full flex items-center justify-center bg-muted rounded-sm">
                             {config.icon}
                           </div>
                         )}
                       </div>
                       
-                      {/* Sparkle for major awards */}
                       {config.hasSparkle && (
                         <motion.div
                           className="absolute -top-1 -right-1"
@@ -159,19 +150,19 @@ export function AwardModal({ award, isOpen, onClose }: AwardModalProps) {
                     
                     {/* Title and badge */}
                     <div className="flex-1 min-w-0 pr-12">
-                      <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium ${config.accentColor} text-white shadow-sm mb-3`}>
+                      <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-sm text-sm font-medium bg-muted text-muted-foreground border border-border mb-3">
                         {config.icon}
                         <span>{config.label}</span>
                       </div>
                       
-                      <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white leading-tight mb-2">
+                      <h1 className="text-2xl sm:text-3xl font-bold text-foreground leading-tight mb-2">
                         {award.name}
                       </h1>
                     </div>
                   </div>
 
                   {/* Metadata */}
-                  <div className="flex flex-wrap items-center gap-4 mb-6 text-sm text-gray-600 dark:text-gray-400">
+                  <div className="flex flex-wrap items-center gap-4 mb-6 text-sm text-muted-foreground">
                     <div className="flex items-center gap-2">
                       <Calendar className="w-4 h-4" />
                       <span>{formatDate(award.date)}</span>
@@ -185,10 +176,10 @@ export function AwardModal({ award, isOpen, onClose }: AwardModalProps) {
 
                   {/* Description */}
                   <div className="mb-6">
-                    <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                    <h2 className="text-lg font-semibold text-foreground mb-3">
                       Description
                     </h2>
-                    <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <p className="text-foreground/80 leading-relaxed">
                       {award.description}
                     </p>
                   </div>
@@ -196,28 +187,28 @@ export function AwardModal({ award, isOpen, onClose }: AwardModalProps) {
                   {/* Detailed description */}
                   {award.detailedDescription && (
                     <div className="mb-6">
-                      <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                      <h2 className="text-lg font-semibold text-foreground mb-3">
                         Details
                       </h2>
-                      <div className={`p-4 rounded-xl ${config.bgGradient} border ${config.borderColor}`}>
-                        <p className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">
+                      <div className="p-4 rounded-sm bg-muted/50 border border-border">
+                        <p className="text-foreground/80 leading-relaxed whitespace-pre-line">
                           {award.detailedDescription}
                         </p>
                       </div>
                     </div>
                   )}
 
-                  {/* External link */}
+                  {/* External links */}
                   {(award.link || award.submissionLink) && (
-                    <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
-                      <h3 className="text-md font-semibold text-gray-900 dark:text-white mb-3">External Links</h3>
+                    <div className="pt-4 border-t border-border">
+                      <h3 className="text-md font-semibold text-foreground mb-3">External Links</h3>
                       <div className="flex flex-wrap gap-3">
                         {award.link && (
                           <a
                             href={award.link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium ${config.accentColor} text-white hover:opacity-90 transition-opacity`}
+                            className="inline-flex items-center gap-2 px-4 py-2 rounded-sm text-sm font-medium bg-primary text-primary-foreground hover:opacity-90 transition-opacity"
                           >
                             <ExternalLink className="w-4 h-4" />
                             Visit Website
@@ -228,7 +219,7 @@ export function AwardModal({ award, isOpen, onClose }: AwardModalProps) {
                             href={award.submissionLink}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium ${config.accentColor} text-white hover:opacity-90 transition-opacity`}
+                            className="inline-flex items-center gap-2 px-4 py-2 rounded-sm text-sm font-medium bg-muted text-foreground border border-border hover:bg-muted/80 transition-colors"
                           >
                             <Eye className="w-4 h-4" />
                             View Submission

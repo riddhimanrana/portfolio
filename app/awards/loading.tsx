@@ -1,83 +1,96 @@
 export default function Loading() {
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 pb-20 transition-colors duration-300">
-      <div className="container mx-auto px-4 py-16">
+    <div className="min-h-screen bg-background text-foreground">
+      <main className="site-shell py-12 sm:py-16">
         {/* Header skeleton */}
-        <div className="text-center mb-12 animate-pulse">
-          <div className="h-12 w-64 bg-gray-200 dark:bg-gray-800 rounded-lg mx-auto mb-4"></div>
-          <div className="h-4 w-full max-w-md mx-auto bg-gray-200 dark:bg-gray-800 rounded"></div>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Timeline sidebar skeleton */}
-          <div className="hidden lg:block lg:col-span-1 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-800 p-4 h-[calc(100vh-12rem)] animate-pulse transition-colors duration-300">
-            <div className="h-8 w-32 bg-gray-200 dark:bg-gray-800 rounded mb-6"></div>
-            
-            {/* Timeline items skeleton */}
-            <div className="space-y-8">
-              {[1, 2, 3].map((year) => (
-                <div key={`year-${year}`}>
-                  <div className="flex items-center mb-4">
-                    <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-800"></div>
-                    <div className="h-5 w-16 bg-gray-200 dark:bg-gray-800 rounded ml-3"></div>
-                  </div>
-                  
-                  <div className="ml-4 space-y-3">
-                    {[1, 2, 3].map((item) => (
-                      <div 
-                        key={`year-${year}-item-${item}`} 
-                        className="h-14 bg-gray-200/60 dark:bg-gray-800/60 rounded-lg w-full"
-                      ></div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
+        <header className="grid gap-8 border-b border-border/80 pb-9 sm:grid-cols-[1fr_auto] sm:items-end animate-pulse">
+          <div>
+            <div className="h-10 w-44 bg-muted rounded-md mb-2"></div>
+            <div className="h-4 w-64 bg-muted/60 rounded"></div>
           </div>
-
-          {/* Main content area */}
-          <div className="lg:col-span-3">
-            {/* Search and filter controls skeleton */}
-            <div className="mb-8 animate-pulse">
-              <div className="flex flex-col md:flex-row gap-4 mb-4">
-                <div className="h-12 bg-gray-200 dark:bg-gray-800 rounded-xl flex-grow"></div>
-                <div className="h-12 w-48 bg-gray-200 dark:bg-gray-800 rounded-xl flex-shrink-0"></div>
+          <div className="grid grid-cols-3 gap-8 w-48">
+            {[1, 2, 3].map((i) => (
+              <div key={i}>
+                <div className="h-7 w-8 bg-muted rounded"></div>
+                <div className="h-3 w-12 bg-muted/60 rounded mt-1"></div>
               </div>
-              
-              {/* Filter pills skeleton */}
-              <div className="flex flex-wrap gap-2 mt-4">
-                {[1, 2, 3, 4, 5].map((i) => (
-                  <div key={`filter-${i}`} className="h-8 w-20 bg-gray-200 dark:bg-gray-800 rounded-full"></div>
-                ))}
-              </div>
-            </div>
+            ))}
+          </div>
+        </header>
 
-            {/* Grid view skeleton */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {Array.from({ length: 9 }).map((_, i) => (
-                <div key={i} className="animate-pulse">
-                  <div className="h-48 bg-gray-200/60 dark:bg-gray-800/60 rounded-xl border border-gray-200/50 dark:border-gray-700/50 overflow-hidden">
-                    <div className="h-1 w-full bg-gray-300 dark:bg-gray-700"></div>
-                    <div className="p-4">
-                      <div className="flex items-center mb-4">
-                        <div className="w-12 h-12 bg-gray-700 rounded-full"></div>
-                        <div className="ml-4 space-y-2">
-                          <div className="h-5 w-32 bg-gray-300 dark:bg-gray-700 rounded"></div>
-                          <div className="h-4 w-24 bg-gray-300 dark:bg-gray-700 rounded"></div>
-                        </div>
-                      </div>
-                      <div className="space-y-2">
-                        <div className="h-4 w-full bg-gray-300 dark:bg-gray-700 rounded"></div>
-                        <div className="h-4 w-3/4 bg-gray-300 dark:bg-gray-700 rounded"></div>
-                      </div>
+        {/* Filter controls skeleton */}
+        <section className="py-7 animate-pulse">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center">
+            <div className="h-11 rounded-xl bg-card/70 border border-border/50 flex-1"></div>
+            <div className="h-9 w-64 bg-card/70 border border-border/50 rounded-full"></div>
+          </div>
+        </section>
+
+        {/* Content columns skeleton */}
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_22rem] mt-4 animate-pulse">
+          {/* Left Timeline column */}
+          <div className="relative">
+            {/* Center line */}
+            <div className="absolute bottom-4 left-[0.45rem] top-4 w-px bg-border sm:left-[6.45rem]" />
+
+            <div className="flex flex-col gap-12">
+              {[2026, 2025].map((year) => (
+                <section key={year}>
+                  {/* Year header */}
+                  <div className="mb-4 grid grid-cols-[1rem_1fr] items-center gap-4 sm:grid-cols-[6rem_1rem_1fr]">
+                    <div className="hidden sm:block">
+                      <div className="h-7 w-12 bg-muted rounded"></div>
+                      <div className="h-3 w-16 bg-muted/60 rounded mt-1.5"></div>
+                    </div>
+                    <span className="relative z-10 h-px w-4 rounded-full bg-border" />
+                    <div className="sm:hidden">
+                      <div className="h-7 w-12 bg-muted rounded"></div>
                     </div>
                   </div>
-                </div>
+
+                  {/* Year rows */}
+                  <div className="ml-8 border-y border-border sm:ml-[7.5rem] divide-y divide-border">
+                    {[1, 2].map((idx) => (
+                      <div key={idx} className="grid grid-cols-[1fr_auto] items-center gap-5 px-4 py-5">
+                        <div className="grid grid-cols-[3.25rem_1fr] items-center gap-4">
+                          <div className="size-[3.25rem] rounded-xl bg-muted/60"></div>
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <div className="h-5 w-40 bg-muted rounded"></div>
+                              <div className="h-5 w-16 bg-muted/60 rounded-full"></div>
+                            </div>
+                            <div className="h-4 w-60 bg-muted/40 rounded mt-2"></div>
+                          </div>
+                        </div>
+                        <div className="h-4 w-12 bg-muted/40 rounded"></div>
+                      </div>
+                    ))}
+                  </div>
+                </section>
               ))}
             </div>
           </div>
+
+          {/* Right Inspector Column */}
+          <aside className="hidden lg:block">
+            <div className="border border-border/80 bg-card/40 rounded-2xl p-6 h-[26rem]">
+              <div className="flex items-start justify-between gap-5">
+                <div className="size-16 rounded-2xl bg-muted/60"></div>
+                <div className="h-6 w-20 bg-muted/40 rounded-full"></div>
+              </div>
+              <div className="h-8 w-48 bg-muted rounded mt-6"></div>
+              <div className="h-4 w-28 bg-muted/60 rounded mt-2"></div>
+              <div className="h-4 w-full bg-muted/40 rounded mt-8"></div>
+              <div className="h-4 w-full bg-muted/40 rounded mt-2"></div>
+              <div className="h-4 w-3/4 bg-muted/40 rounded mt-2"></div>
+              <div className="border-t border-border mt-8 pt-6 flex flex-col gap-2">
+                <div className="h-9 w-full bg-muted/60 rounded"></div>
+                <div className="h-9 w-full bg-muted/40 rounded"></div>
+              </div>
+            </div>
+          </aside>
         </div>
-      </div>
+      </main>
     </div>
-  )
+  );
 }

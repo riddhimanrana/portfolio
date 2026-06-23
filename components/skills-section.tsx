@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Cpu, Globe, Server, Database, Terminal, Braces } from "lucide-react";
 import Link from "next/link";
 
@@ -29,7 +28,6 @@ export function SkillsSection() {
         { name: "React", link: "https://react.dev/" },
         { name: "Next.js", link: "https://nextjs.org/" },
         { name: "Astro", link: "https://astro.build/" },
-        { name: "Flask", link: "https://flask.palletsprojects.com/" },
         { name: "Tailwind CSS", link: "https://tailwindcss.com/" },
         { name: "Framer Motion", link: "https://www.framer.com/motion/" },
         { name: "Shadcn UI", link: "https://ui.shadcn.com/" },
@@ -46,7 +44,7 @@ export function SkillsSection() {
         { name: "Django", link: "https://www.djangoproject.com/" },
         { name: "Flask", link: "https://flask.palletsprojects.com/" },
         {
-          name: "WebSocket",
+          name: "WebSockets",
           link: "https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API",
         },
         { name: "Vercel", link: "https://vercel.com/" },
@@ -120,71 +118,50 @@ export function SkillsSection() {
   ];
 
   return (
-    <section className="py-12 sm:py-16">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="flex items-center mb-12"
-          >
-            <div className="p-2 bg-green-50 dark:bg-green-900/20 rounded-xl shadow-sm mr-3">
-              <Cpu className="h-8 w-8 text-green-500 dark:text-green-400" />
+    <section className="pb-16 sm:pb-24">
+      <div className="max-w-6xl mx-auto">
+        <div className="flex items-center justify-between gap-4 border-b border-border pb-4 mb-8">
+          <h2 className="text-2xl font-medium tracking-[-0.035em] text-foreground">
+            Skills & Expertise
+          </h2>
+        </div>
+
+        <div className="flex flex-col">
+          {skillCategories.map((category, categoryIndex) => (
+            <div
+              key={category.name}
+              className="group/row flex flex-col sm:grid sm:grid-cols-[16rem_1fr] sm:items-center border-b border-border/80 py-6 transition-all duration-300 hover:bg-muted/10"
+            >
+              <div className="flex items-center gap-4 select-none mb-4 sm:mb-0">
+                <span className="font-mono text-2xs text-muted-foreground/50 tracking-wider">
+                  0{categoryIndex + 1}
+                </span>
+                <div className="flex items-center gap-2.5 font-medium text-foreground">
+                  <span className="text-muted-foreground group-hover/row:text-primary transition-colors duration-300">
+                    {category.icon}
+                  </span>
+                  <span className="tracking-tight text-base">{category.name}</span>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap gap-x-2 gap-y-1.5">
+                {category.skills.map((skill) => (
+                  <Link
+                    key={skill.name}
+                    href={skill.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium text-muted-foreground rounded-full border border-border/40 bg-secondary/30 transition-all duration-200 hover:text-foreground hover:bg-secondary/70 hover:border-border hover:-translate-y-[0.5px]"
+                  >
+                    {skill.name}
+                    <span className="opacity-0 translate-y-0.5 translate-x-[-2px] text-[10px] transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0">
+                      ↗
+                    </span>
+                  </Link>
+                ))}
+              </div>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold">
-              Skills & Expertise
-            </h2>
-          </motion.div>
-
-          {/* Detailed Categories Section */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {skillCategories.map((category, categoryIndex) => (
-              <motion.div
-                key={category.name}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: categoryIndex * 0.1 }}
-                className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden"
-              >
-                <div
-                  className={`px-6 py-4 border-b ${category.color.replace("bg-", "border-")}`}
-                >
-                  <div className="flex items-center">
-                    <div className={`p-2 rounded-lg ${category.color} mr-3`}>
-                      {category.icon}
-                    </div>
-                    <h3 className="font-semibold text-lg">{category.name}</h3>
-                  </div>
-                </div>
-
-                <div className="p-5">
-                  <div className="flex flex-wrap gap-2">
-                    {category.skills.map((skill, skillIndex) => (
-                      <motion.div
-                        key={skill.name}
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{
-                          duration: 0.3,
-                          delay: categoryIndex * 0.1 + skillIndex * 0.05,
-                        }}
-                      >
-                        <Link
-                          href={skill.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-block px-3 py-1.5 bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 rounded-md text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 hover:shadow-sm cursor-pointer hover:translate-y-[-2px] hover:scale-105 transform"
-                        >
-                          {skill.name}
-                        </Link>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+          ))}
         </div>
       </div>
     </section>

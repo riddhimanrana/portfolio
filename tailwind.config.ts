@@ -1,7 +1,9 @@
 import type { Config } from "tailwindcss";
+import typography from "@tailwindcss/typography";
+import animatePlugin from "tailwindcss-animate";
 
 const config: Config = {
-    darkMode: ["class"],
+    darkMode: "class",
     content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -12,6 +14,13 @@ const config: Config = {
   	extend: {
   		fontFamily: {
   			sans: ['var(--font-overused-grotesk)', 'system-ui', 'sans-serif'],
+  		},
+  		lineHeight: {
+  			relaxed: '1.75',
+  			loose: '2',
+  		},
+  		letterSpacing: {
+  			snug: '-0.015em',
   		},
   		colors: {
   			background: 'hsl(var(--background))',
@@ -137,8 +146,8 @@ const config: Config = {
   	}
   },
   plugins: [
-    require("tailwindcss-animate"), 
-    require("@tailwindcss/typography")
+    animatePlugin,
+    typography,
   ],
 };
 export default config;

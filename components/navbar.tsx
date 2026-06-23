@@ -1,135 +1,650 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { useTheme } from "next-themes"
-import Link from "next/link"
-import { motion, AnimatePresence } from "framer-motion"
-import { Moon, Sun, Menu, X } from 'lucide-react'
-import { usePathname } from "next/navigation"
-import Image from "next/image"
+import { useEffect, useRef, useState } from "react";
+import { Menu, Sun, Moon, SparklesIcon } from "lucide-react";
+import { useTheme } from "next-themes";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+import { Button } from "@/components/ui/button";
+import {
+  GitHubIcon,
+  LinkedInIcon,
+  YouTubeIcon,
+} from "@/components/brand-icons";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
+
+const navItems = [
+  { name: "home", path: "/" },
+  { name: "projects", path: "/projects" },
+  { name: "blog", path: "/blog" },
+  { name: "awards", path: "/awards" },
+];
+
+const socials = [
+  {
+    label: "GitHub",
+    href: "https://github.com/riddhimanrana",
+    icon: GitHubIcon,
+    hoverClass: "hover:text-foreground hover:bg-zinc-500/10",
+  },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/riddhimanrana/",
+    icon: LinkedInIcon,
+    hoverClass: "hover:text-[#0a66c2] hover:bg-blue-500/10",
+  },
+  {
+    label: "YouTube",
+    href: "https://youtube.com/@riddhimanrana",
+    icon: YouTubeIcon,
+    hoverClass: "hover:text-[#ff0000] hover:bg-red-500/10",
+  },
+];
+
+const LIQUID_GL_OPTS = {
+  target: ".nav-glass-pane",
+  snapshot: "body",
+  refraction: 0.026,
+  bevelDepth: 0.119,
+  bevelWidth: 0.057,
+  frost: 1,
+  magnify: 1.018,
+  shadow: true,
+  specular: true,
+};
+
+const UNSUPPORTED_HTML2CANVAS_COLOR = /(oklch|oklab|lch|lab|color-mix)\(/i;
+const SNAPSHOT_COLOR_PROPS = [
+  ["color", "#e5e7eb"],
+  ["background-color", "transparent"],
+  ["border-color", "transparent"],
+  ["border-top-color", "transparent"],
+  ["border-right-color", "transparent"],
+  ["border-bottom-color", "transparent"],
+  ["border-left-color", "transparent"],
+  ["outline-color", "transparent"],
+  ["text-decoration-color", "transparent"],
+  ["caret-color", "transparent"],
+  ["column-rule-color", "transparent"],
+  ["text-emphasis-color", "transparent"],
+  ["fill", "currentColor"],
+  ["stroke", "currentColor"],
+  ["stop-color", "transparent"],
+  ["flood-color", "transparent"],
+  ["lighting-color", "transparent"],
+] as const;
+const SNAPSHOT_EFFECT_PROPS = [
+  "background",
+  "background-image",
+  "box-shadow",
+  "text-shadow",
+  "filter",
+] as const;
+
+function installHtml2CanvasSnapshotGuards() {
+  const win = window as any;
+  if (!win.html2canvas || win.__portfolioHtml2CanvasGuarded) return;
+
+  const originalHtml2Canvas = win.html2canvas;
+  win.html2canvas = (element: HTMLElement, options: any = {}) => {
+    const callerIgnore = options.ignoreElements;
+    const callerOnClone = options.onclone;
+
+    return originalHtml2Canvas(element, {
+      ...options,
+      ignoreElements: (node: Element) => {
+        if (node.tagName === "CANVAS") return true;
+        return callerIgnore?.(node) ?? false;
+      },
+      onclone: (clonedDoc: Document, clonedElement: HTMLElement) => {
+        callerOnClone?.(clonedDoc, clonedElement);
+
+        const clonedWin = clonedDoc.defaultView;
+        if (!clonedWin) return;
+
+        const clonePatch = clonedDoc.createElement("style");
+        clonePatch.textContent = `
+          *, *::before, *::after {
+            --tw-ring-color: transparent !important;
+            --tw-shadow-color: transparent !important;
+          }
+          body::before,
+          body::after,
+          [data-liquid-ignore] {
+            content: none !important;
+            display: none !important;
+          }
+          [data-liquid-snapshot-shell] .nav-capsule {
+            background: transparent !important;
+            border-color: transparent !important;
+            box-shadow: none !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+          }
+          [data-liquid-snapshot-shell] .nav-capsule::before,
+          [data-liquid-snapshot-shell] .nav-glass-pane {
+            content: none !important;
+            display: none !important;
+          }
+          [data-liquid-snapshot-shell] .nav-capsule > :not(.nav-glass-pane) {
+            opacity: 0 !important;
+          }
+          .diffusion-name,
+          .luxury-gold-text,
+          .luxury-silver-text,
+          .luxury-bronze-text,
+          .award-badge-major span,
+          .award-badge-notable span,
+          .award-badge-honorable span {
+            color: #dbeafe !important;
+            background: none !important;
+            -webkit-background-clip: border-box !important;
+            background-clip: border-box !important;
+            filter: none !important;
+          }
+          :root:not(.dark) .diffusion-name,
+          :root:not(.dark) .luxury-gold-text,
+          :root:not(.dark) .luxury-silver-text,
+          :root:not(.dark) .luxury-bronze-text,
+          :root:not(.dark) .award-badge-major span,
+          :root:not(.dark) .award-badge-notable span,
+          :root:not(.dark) .award-badge-honorable span {
+            color: #1d4ed8 !important;
+          }
+        `;
+        clonedDoc.head.appendChild(clonePatch);
+
+        clonedDoc.querySelectorAll<HTMLElement>("*").forEach((node) => {
+          const style = clonedWin.getComputedStyle(node);
+          SNAPSHOT_COLOR_PROPS.forEach(([prop, fallback]) => {
+            const value = style.getPropertyValue(prop);
+            if (value && UNSUPPORTED_HTML2CANVAS_COLOR.test(value)) {
+              node.style.setProperty(prop, fallback, "important");
+            }
+          });
+          SNAPSHOT_EFFECT_PROPS.forEach((prop) => {
+            const value = style.getPropertyValue(prop);
+            if (!value || !UNSUPPORTED_HTML2CANVAS_COLOR.test(value)) return;
+            if (prop === "background" || prop === "background-image") {
+              node.style.setProperty("background-image", "none", "important");
+              node.style.setProperty("background-color", "transparent", "important");
+              return;
+            }
+            node.style.setProperty(prop, "none", "important");
+          });
+        });
+      },
+    });
+  };
+
+  win.__portfolioHtml2CanvasGuarded = true;
+}
+
+function normalizeLiquidGLTargets() {
+  const win = window as any;
+  const renderer = win.__liquidGLRenderer__;
+  const pane = document.querySelector(".nav-glass-pane");
+  if (!renderer || !pane) return;
+
+  renderer.lenses?.forEach((ln: any) => {
+    if (ln.el !== pane) {
+      ln.el.style.opacity = "";
+      ln.el.style.pointerEvents = "";
+      ln.el.style.transition = "";
+      ln.el = pane;
+    }
+    ln.updateMetrics?.();
+  });
+}
+
+function destroyLiquidGL() {
+  const win = window as any;
+  const renderer = win.__liquidGLRenderer__;
+  if (!renderer) return;
+  // Cancel the render loop
+  if (renderer._rafId) {
+    cancelAnimationFrame(renderer._rafId);
+    renderer._rafId = null;
+  }
+  // Reset lens element opacity
+  renderer.lenses?.forEach((ln: any) => {
+    ln.el.style.opacity = "";
+  });
+  // Hide the WebGL canvas
+  if (renderer.canvas) {
+    renderer.canvas.style.opacity = "0";
+    renderer.canvas.style.pointerEvents = "none";
+  }
+}
+
+function reviveLiquidGL() {
+  const win = window as any;
+  const renderer = win.__liquidGLRenderer__;
+  if (!renderer) return;
+  // Restart the render loop
+  if (!renderer._rafId) {
+    const loop = () => {
+      renderer.render();
+      renderer._rafId = requestAnimationFrame(loop);
+    };
+    renderer._rafId = requestAnimationFrame(loop);
+  }
+  if (renderer.canvas) {
+    renderer.canvas.style.opacity = "1";
+    renderer.canvas.style.pointerEvents = "none";
+  }
+}
 
 export default function NavBar() {
-  const [mounted, setMounted] = useState(false)
-  const { theme, setTheme, resolvedTheme } = useTheme()
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const pathname = usePathname()
+  const pathname = usePathname();
+  const { resolvedTheme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  const [glReady, setGlReady] = useState(false);
+  const [glEnabled, setGlEnabled] = useState(true);
+  const glEnabledRef = useRef(true);
 
-  // Theme toggle handler
-  const toggleTheme = () => {
-    if (resolvedTheme === "dark") {
-      setTheme("light")
-    } else {
-      setTheme("dark")
-    }
-  }
-
-  // Mobile menu toggle
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen)
-  }
-
-  // Handle mounting for theme
+  // Sync ref so callbacks always see latest value
   useEffect(() => {
-    setMounted(true)
-  }, [])
+    glEnabledRef.current = glEnabled;
+  }, [glEnabled]);
 
-  if (!mounted) {
-    return null
-  }
+  // One-time init. Home page waits until hero motion finishes, then loads glass off the critical path.
+  useEffect(() => {
+    setMounted(true);
 
-  const navItems = [
-    { name: "Home", path: "/" },
-    { name: "Projects", path: "/projects" },
-    { name: "Blog", path: "/blog" },
-    { name: "Awards", path: "/awards" },
-  ]
+    // Read persisted preference
+    const saved = localStorage.getItem("liquidgl-enabled");
+    const enabled = saved === null ? true : saved === "true";
+    setGlEnabled(enabled);
+    glEnabledRef.current = enabled;
+
+    const win = window as any;
+
+    if (win.__liquidGLRenderer__) {
+      normalizeLiquidGLTargets();
+      setGlReady(true);
+      if (!enabled) destroyLiquidGL();
+      return;
+    }
+
+    if (!enabled) return;
+
+    let timer: NodeJS.Timeout | undefined;
+    let fallbackTimer: NodeJS.Timeout | undefined;
+    let idleId: number | undefined;
+    let started = false;
+    let cancelled = false;
+
+    const tryInit = () => {
+      if (cancelled) return;
+      if (!win.html2canvas || !win.liquidGL) return;
+      installHtml2CanvasSnapshotGuards();
+      if (timer) { clearInterval(timer); timer = undefined; }
+      if (win.__liquidGLRenderer__) { setGlReady(true); return; }
+
+      try {
+        win.liquidGL(LIQUID_GL_OPTS);
+        setTimeout(() => {
+          if (!cancelled) setGlReady(true);
+        }, 1100);
+      } catch (e) {
+        console.error("liquidGL initialization failed:", e);
+      }
+    };
+
+    const startInit = () => {
+      if (started || cancelled) return;
+      started = true;
+      const run = () => {
+        tryInit();
+        if (!win.__liquidGLRenderer__) {
+          timer = setInterval(tryInit, 100);
+        }
+      };
+      if ("requestIdleCallback" in win) {
+        idleId = win.requestIdleCallback(run, { timeout: 1200 });
+      } else {
+        timer = setTimeout(run, 0);
+      }
+    };
+
+    const onHeroDone = () => startInit();
+
+    if (pathname === "/" && !win.__portfolioHeroMotionDone) {
+      window.addEventListener("portfolio:hero-motion-complete", onHeroDone, { once: true });
+      fallbackTimer = setTimeout(startInit, 1800);
+    } else {
+      startInit();
+    }
+
+    return () => {
+      cancelled = true;
+      if (timer) clearInterval(timer);
+      if (fallbackTimer) clearTimeout(fallbackTimer);
+      if (idleId && "cancelIdleCallback" in win) win.cancelIdleCallback(idleId);
+      window.removeEventListener("portfolio:hero-motion-complete", onHeroDone);
+    };
+  }, [pathname]);
+
+  // On pathname change: refresh the snapshot after new page paints.
+  useEffect(() => {
+    const win = window as any;
+    const renderer = win.__liquidGLRenderer__;
+    if (!renderer || !glEnabledRef.current) return;
+
+    setGlReady(false);
+    if (renderer.canvas) {
+      renderer.canvas.style.opacity = "0";
+    }
+
+    const id = setTimeout(async () => {
+      await renderer.captureSnapshot?.();
+      renderer.render?.();
+      if (!glEnabledRef.current) return;
+      if (renderer.canvas) {
+        renderer.canvas.style.opacity = "1";
+      }
+      setGlReady(true);
+    }, pathname === "/" ? 220 : 90);
+    return () => clearTimeout(id);
+  }, [pathname]);
+
+  // Theme swaps change the captured backdrop. Recapture after next-themes updates the html class.
+  useEffect(() => {
+    const win = window as any;
+    if (!mounted || !win.__liquidGLRenderer__ || !glEnabledRef.current) return;
+    const id = setTimeout(() => {
+      win.__liquidGLRenderer__?.captureSnapshot?.();
+      win.__liquidGLRenderer__?.render?.();
+    }, 180);
+    return () => clearTimeout(id);
+  }, [mounted, resolvedTheme]);
+
+  // Toggle liquid glass on/off
+  const toggleGL = () => {
+    const next = !glEnabled;
+    setGlEnabled(next);
+    glEnabledRef.current = next;
+    localStorage.setItem("liquidgl-enabled", String(next));
+
+    const win = window as any;
+
+    if (!next) {
+      // Turn off: pause the renderer, show CSS glass
+      destroyLiquidGL();
+      setGlReady(false);
+    } else {
+      // Turn on: revive or init
+      if (win.__liquidGLRenderer__) {
+        reviveLiquidGL();
+        setGlReady(true);
+        // Refresh snapshot for current page
+        setTimeout(() => win.__liquidGLRenderer__?.captureSnapshot?.(), 400);
+      } else if (win.html2canvas && win.liquidGL) {
+        try {
+          installHtml2CanvasSnapshotGuards();
+          win.liquidGL(LIQUID_GL_OPTS);
+          setTimeout(() => setGlReady(true), 1200);
+        } catch (e) {
+          console.error("liquidGL re-init failed:", e);
+        }
+      }
+    }
+  };
+
+  const isActive = (path: string) =>
+    path === "/" ? pathname === "/" : pathname.startsWith(path);
+
+  const prepareForNavigation = () => {
+    const renderer = (window as any).__liquidGLRenderer__;
+    if (!renderer || !glEnabledRef.current) return;
+    setGlReady(false);
+    if (renderer.canvas) {
+      renderer.canvas.style.opacity = "0";
+    }
+  };
 
   return (
-    <>
-      <header className="sticky top-0 z-50 bg-white/80 dark:bg-gray-950/80 backdrop-blur-xl border-b border-gray-200/50 dark:border-gray-800/50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative h-16 flex items-center">
-          {/* Logo (left) */}
-          
-          <Link href="/" className="relative z-10 flex items-center group">
-            <Image
-              src="/avatar.png"      // put your avatar file in /public/logo.png
-              alt="riddhiman logo"
-              width={30}
-              height={30}
-              loading="eager"
-              decoding="async"
-            />
-            <span className="ml-2 font-bold text-xl tracking-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">riddhiman</span>
-          </Link>
+    <header
+      className="sticky top-0 z-50 w-full py-4 transition-all duration-300"
+      data-liquid-snapshot-shell
+    >
+      <div className="site-shell">
+        <div
+          className={cn(
+            "nav-capsule transition-all duration-700",
+            !glReady && "nav-capsule-css-fallback",
+            glReady && glEnabled && "nav-capsule-liquid-active"
+          )}
+          data-liquid-fixed
+        >
+          <div className="nav-glass-pane" aria-hidden="true" />
+          <Button variant="ghost" asChild className="nav-control px-2.5">
+            <Link href="/" aria-label="Riddhiman Rana home" onClick={prepareForNavigation}>
+              <Image
+                src="/profile1.jpeg"
+                alt="Riddhiman Rana"
+                width={32}
+                height={32}
+                className="size-8 rounded-full object-cover"
+                priority
+              />
+              <span className="hidden font-medium tracking-[-0.02em] sm:inline">
+                riddhiman rana
+              </span>
+            </Link>
+          </Button>
 
-          {/* Desktop Navigation (always centered, independent of logo width) */}
-          <nav className="hidden md:flex space-x-1 absolute inset-x-0 justify-center z-0">
+          <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-1 md:flex">
             {navItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.path}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                  pathname === item.path ||
-                  (item.path !== "/" && pathname.startsWith(item.path))
-                    ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20"
-                    : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800/50"
-                }`}
+              <Button
+                key={item.path}
+                variant="ghost"
+                size="sm"
+                asChild
+                className={cn(
+                  "nav-control px-3",
+                  isActive(item.path) && "nav-control-active"
+                )}
               >
-                {item.name}
-              </Link>
+                <Link href={item.path} onClick={prepareForNavigation}>{item.name}</Link>
+              </Button>
             ))}
           </nav>
 
-          {/* Theme Toggle and Mobile Menu (right) */}
-          <div className="flex items-center space-x-2 ml-auto z-10">
-            <button
-              onClick={toggleTheme}
-              className="p-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800/50 transition-all duration-200 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
-              aria-label="Toggle theme"
-            >
-              {resolvedTheme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-            </button>
-            <button
-              onClick={toggleMobileMenu}
-              className="md:hidden p-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800/50 transition-all duration-200 text-gray-600 dark:text-gray-400"
-              aria-label="Toggle mobile menu"
-            >
-              {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
-            </button>
-          </div>
-        </div>
-      </header>
-
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.2 }}
-            className="md:hidden fixed inset-x-0 top-16 bg-white dark:bg-gray-950 border-b border-gray-100 dark:border-gray-800 z-40"
-          >
-            <nav className="flex flex-col space-y-4 p-4">
-              {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.path}
-                  className={`py-2 transition-colors ${
-                    pathname === item.path || 
-                    (item.path !== "/" && pathname.startsWith(item.path))
-                      ? "text-blue-600 dark:text-blue-400 font-medium"
-                      : "text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
-                  }`}
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {item.name}
+          <div className="ml-auto hidden items-center gap-1 md:flex">
+            {socials.map(({ label, href, icon: Icon, hoverClass }) => (
+              <Button
+                key={label}
+                variant="ghost"
+                size="icon"
+                asChild
+                className={cn("nav-control", hoverClass)}
+              >
+                <Link href={href} target="_blank" aria-label={label}>
+                  <Icon />
                 </Link>
-              ))}
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
-  )
+              </Button>
+            ))}
+
+            {/* Settings popover — theme + liquid glass toggle */}
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="nav-control ml-1"
+                  aria-label="Settings"
+                >
+                  {mounted ? (
+                    resolvedTheme === "dark" ? (
+                      <Sun className="size-4" />
+                    ) : (
+                      <Moon className="size-4" />
+                    )
+                  ) : (
+                    <span className="size-4 block" />
+                  )}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent
+                className="appearance-menu w-56 rounded-2xl border border-border/50 p-2"
+                align="end"
+                sideOffset={12}
+              >
+                <div className="flex flex-col gap-0.5">
+                  <p className="px-2 py-1.5 text-[11px] font-medium uppercase tracking-widest text-muted-foreground/60">
+                    Appearance
+                  </p>
+
+                  {/* Theme toggle */}
+                  <button
+                    onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+                    className="flex items-center justify-between rounded-xl px-3 py-2.5 text-sm text-foreground transition-colors hover:bg-foreground/10"
+                  >
+                    <span className="flex items-center gap-2.5">
+                      {mounted && resolvedTheme === "dark" ? (
+                        <Sun className="size-3.5 text-muted-foreground" />
+                      ) : (
+                        <Moon className="size-3.5 text-muted-foreground" />
+                      )}
+                      {mounted
+                        ? resolvedTheme === "dark"
+                          ? "Switch to light"
+                          : "Switch to dark"
+                        : "Toggle theme"}
+                    </span>
+                  </button>
+
+                  <div className="my-1 h-px bg-border/40" />
+
+                  {/* Liquid glass toggle */}
+                  <button
+                    onClick={toggleGL}
+                    className="flex items-center justify-between rounded-xl px-3 py-2.5 text-sm transition-colors hover:bg-foreground/10"
+                  >
+                    <span className="flex items-center gap-2.5 text-foreground">
+                      <SparklesIcon className="size-3.5 text-muted-foreground" />
+                      Liquid glass
+                    </span>
+                    {/* Pill toggle */}
+                    <span
+                      className={cn(
+                        "relative inline-flex h-5 w-9 items-center rounded-full transition-colors duration-200",
+                        glEnabled ? "bg-primary" : "bg-muted"
+                      )}
+                    >
+                      <span
+                        className={cn(
+                          "inline-block size-3.5 rounded-full bg-white shadow-sm transition-transform duration-200",
+                          glEnabled ? "translate-x-4" : "translate-x-0.5"
+                        )}
+                      />
+                    </span>
+                  </button>
+                </div>
+              </PopoverContent>
+            </Popover>
+          </div>
+
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="ml-auto rounded-full md:hidden">
+                <Menu />
+                <span className="sr-only">Open navigation</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent
+              side="right"
+              className="w-full h-full border-none bg-background/95 backdrop-blur-md flex flex-col justify-between p-8"
+            >
+              <div className="flex flex-col h-full pt-16">
+                <div className="flex items-center justify-between mb-10">
+                  <SheetHeader className="text-left">
+                    <SheetTitle className="text-3xl font-bold tracking-tight text-foreground">
+                      Riddhiman Rana
+                    </SheetTitle>
+                    <SheetDescription className="text-muted-foreground mt-1">
+                      did you know that only 23% of visitors to my website use mobile?
+                    </SheetDescription>
+                  </SheetHeader>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+                    className="rounded-full shrink-0 mr-4"
+                    aria-label="Toggle theme"
+                  >
+                    {mounted ? (
+                      resolvedTheme === "dark" ? (
+                        <Sun className="size-5" />
+                      ) : (
+                        <Moon className="size-5" />
+                      )
+                    ) : (
+                      <span className="size-5 block" />
+                    )}
+                  </Button>
+                </div>
+                <nav className="flex flex-col gap-4">
+                  {navItems.map((item) => (
+                    <SheetClose asChild key={item.path}>
+                      <Button
+                        variant={isActive(item.path) ? "secondary" : "ghost"}
+                        asChild
+                        className={cn(
+                          "h-16 justify-start text-xl rounded-2xl px-6 transition-all",
+                          isActive(item.path)
+                            ? "bg-secondary text-foreground font-semibold shadow-[0_4px_12px_rgba(0,0,0,0.1)]"
+                            : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                        )}
+                      >
+                        <Link href={item.path} onClick={prepareForNavigation}>{item.name}</Link>
+                      </Button>
+                    </SheetClose>
+                  ))}
+                </nav>
+              </div>
+
+              <div className="flex items-center justify-between border-t border-border/50 pt-6">
+                <p className="text-xs text-muted-foreground">© 2026 Riddhiman Rana</p>
+                <div className="flex items-center gap-3">
+                  {socials.map(({ label, href, icon: Icon, hoverClass }) => {
+                    const hoverColor = hoverClass.split(" ").find(c => c.startsWith("hover:text-"));
+                    return (
+                      <Link
+                        key={label}
+                        href={href}
+                        target="_blank"
+                        className={cn("text-muted-foreground transition-colors p-2 rounded-full hover:bg-muted/50", hoverColor)}
+                        aria-label={label}
+                      >
+                        <Icon className="size-5" />
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
+      </div>
+    </header>
+  );
 }
