@@ -39,18 +39,19 @@ export function AwardModal({ award, isOpen, onClose }: AwardModalProps) {
           label: "Major Achievement",
           hasSparkle: true
         };
-      case "notable":
-        return {
-          accentBar: "bg-muted-foreground",
-          icon: <Star className="w-5 h-5" />,
-          label: "Notable Achievement",
-          hasSparkle: false
-        };
-      default:
+      
+      case "honorable":
         return {
           accentBar: "bg-muted-foreground/60",
           icon: <AwardIcon className="w-5 h-5" />,
           label: "Honorable Mention",
+          hasSparkle: false
+        };
+      default:
+        return {
+          accentBar: "bg-muted-foreground",
+          icon: <Star className="w-5 h-5" />,
+          label: "Notable Achievement",
           hasSparkle: false
         };
     }

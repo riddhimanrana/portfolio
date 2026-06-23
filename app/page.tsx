@@ -1,62 +1,60 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
-import { ArrowUpRight, Download } from "lucide-react";
+import { ArrowUpRight, Download, ExternalLink } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 import { ContactDialog } from "@/components/contact-dialog";
+import { HeroProductMap } from "@/components/hero-product-map";
+import { WorkExperience } from "@/components/work-experience";
+import { SkillsSection } from "@/components/skills-section";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import experienceData from "@/data/experience.json";
+import awardsData from "@/data/awards.json";
 
-const experienceDescriptions: Record<string, string> = {
-  "AlphaStar Academy":
-    "Taught advanced Python through the AlphaStar–Carina scholarship program, providing weekly one-on-one instruction and tracking student progress across the academic year.",
-  Algoverse:
-    "Researched real-time visual perception, persistent memory, and temporal reasoning for privacy-sensitive systems running under tight device constraints.",
-  "Mustang Math":
-    "Contributed to COMPOSE, the problem-writing platform used by Mustang Math and the Stanford Math Tournament, as part of the competition technology team.",
-  "Tulip Coaching":
-    "Created and taught project-based Python courses for middle school students, from first-time programmers through a longer advanced curriculum.",
-  "Let's Assist":
-    "Founded and built a volunteer management platform used by 300+ people. I handle product development, organization onboarding, support, compliance, and expansion.",
-  "Windemere Ranch Middle School Coding Club":
-    "Helped organize meetings, communicate with members, and create hands-on programming material for students learning the fundamentals.",
-  "Boy Scouts of America":
-    "Serve with Troop 941 through leadership, outdoor activities, and community service. The troop later became one of the first organizations to use Let's Assist.",
+const fadeInVariants = {
+  hidden: { opacity: 0, y: 15, filter: "blur(3px)" },
+  visible: (delay: number) => ({
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: {
+      duration: 0.7,
+      delay,
+      ease: [0.16, 1, 0.3, 1]
+    }
+  })
 };
 
-const awards = [
-  {
-    name: "USACO Platinum",
-    detail: "USA Computing Olympiad",
-    image: "/awards/usaco.png",
-  },
-  {
-    name: "Math Kangaroo International Camp",
-    detail: "Represented the United States in Poland",
-    image: "/awards/mathkangaroo.jpeg",
-  },
-  {
-    name: "AMC 10 Honor Roll",
-    detail: "132 / 150 on the 2025 AMC 10A",
-    image: "/awards/maa.jpeg",
-  },
-  {
-    name: "USAAIO Round 1",
-    detail: "Artificial intelligence olympiad",
-    image: null,
-  },
+const topAwardIds = [
+  "usaco-platinum",
+  "usaaio-round-1-2026",
+  "mathkangaroo-camp-25",
+  "amc-10a-25"
 ];
+
+const topAwards = topAwardIds
+  .map((id) => {
+    const award = awardsData.find((a) => a.id === id);
+    return award
+      ? {
+          id: award.id,
+          name: award.name,
+          detail: award.description,
+          image: award.image,
+        }
+      : null;
+  })
+  .filter((a): a is NonNullable<typeof a> => a !== null);
 
 const products = [
   {
     name: "Dicy",
     logo: "/icon-192.png",
     href: "https://dicy.app",
-    metric: "1,500+ users across 4+ states",
+    metric: "1.5k+ users across 4+ states",
     description:
       "A grade app for Infinite Campus and Schoology with what-if grades, final-grade calculations, and a cleaner experience across iOS, Android, and web.",
   },
@@ -69,17 +67,6 @@ const products = [
       "A volunteer management platform for discovering opportunities, managing signups, and verifying service hours without spreadsheets or paper logs.",
   },
 ];
-
-const ease = [0.22, 1, 0.36, 1] as const;
-
-function reveal(reduced: boolean | null, delay = 0) {
-  return {
-    initial: reduced ? false : { opacity: 0, y: 10 },
-    whileInView: reduced ? undefined : { opacity: 1, y: 0 },
-    viewport: { once: true, amount: 0.12 },
-    transition: { duration: 0.45, delay, ease },
-  };
-}
 
 function SectionHeader({
   title,
@@ -104,125 +91,128 @@ function SectionHeader({
 }
 
 export default function Home() {
-  const reduced = useReducedMotion();
-
   return (
     <main>
       <div className="site-shell">
-        <motion.section
-          initial={reduced ? false : { opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55, ease }}
-          className="max-w-4xl border-b border-border py-16 sm:py-24"
-        >
-          <h1 className="text-4xl font-medium tracking-[-0.055em] sm:text-6xl">
-            Hi, I&apos;m Riddhiman.
-          </h1>
-          <p className="mt-5 max-w-3xl text-2xl leading-9 tracking-[-0.035em] sm:text-4xl sm:leading-[1.15]">
-            I build products I&apos;m truly proud of and believe in.
-          </p>
-          <div className="mt-8 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
-            <p>
-              I&apos;m a sophomore at Dougherty Valley High School, founder of
-              Dicy and Let&apos;s Assist, a USACO Platinum competitor, and an
-              applied AI researcher working on Orion.
-            </p>
-            <p className="mt-4">
-              I enjoy taking an idea through the entire process: understanding
-              the problem, building the product, finding users, responding to
-              competition, and improving it until it becomes genuinely useful.
-            </p>
-          </div>
-          <div className="mt-8 flex flex-wrap gap-2">
-            <Button asChild>
-              <Link href="/projects">Projects</Link>
-            </Button>
-            <Button variant="outline" asChild>
-              <Link href="/resume.pdf" target="_blank">
-                <Download data-icon="inline-start" />
-                Resume
-              </Link>
-            </Button>
-            <ContactDialog />
-          </div>
-        </motion.section>
-
-        <section className="py-14 sm:py-20">
-          <SectionHeader title="Work experience" />
+        <section className="grid gap-10 border-b border-border py-16 sm:py-24 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div>
-            {experienceData.map((item, index) => {
-              const content = (
-                <div className="grid grid-cols-[3rem_1fr_auto] items-start gap-x-4 gap-y-3 py-6 sm:grid-cols-[9rem_3.25rem_1fr_auto]">
-                  <p className="col-span-3 text-sm leading-6 text-muted-foreground sm:col-span-1">
-                    {item.date}
-                  </p>
-                  <div className="flex size-12 items-center justify-center overflow-hidden rounded-xl border border-border bg-foreground p-1.5">
-                    <Image
-                      src={item.logo}
-                      alt=""
-                      width={42}
-                      height={42}
-                      className="max-h-full object-contain"
-                    />
-                  </div>
-                  <div className="max-w-3xl">
-                    <h3 className="text-lg font-medium">{item.title}</h3>
-                    <p className="mt-0.5 text-sm text-muted-foreground">
-                      {item.subtext}
-                    </p>
-                    <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                      {experienceDescriptions[item.title]}
-                    </p>
-                  </div>
-                  {item.link && (
-                    <ArrowUpRight className="mt-1 text-muted-foreground" />
-                  )}
-                </div>
-              );
+            <motion.div 
+              variants={fadeInVariants} 
+              custom={0.0} 
+              initial="hidden" 
+              animate="visible"
+              className="mb-6 flex flex-wrap items-center gap-2 text-sm text-muted-foreground"
+            >
+              <span>Founder of</span>
+              <Link
+                href="https://dicy.app"
+                target="_blank"
+                className="group inline-flex items-center text-foreground transition-colors hover:text-blue-500 font-medium"
+              >
+                <Image
+                  src="/icon-192.png"
+                  alt=""
+                  width={18}
+                  height={18}
+                  className="rounded-full object-contain mr-1"
+                />
+                Dicy
+                <ExternalLink className="text-blue-500 transition-all duration-300 ease-out opacity-0 scale-50 w-0 group-hover:w-3 group-hover:opacity-100 group-hover:scale-100 group-hover:ml-1 h-3" />
+              </Link>
+              <span>and</span>
+              <Link
+                href="https://lets-assist.com"
+                target="_blank"
+                className="group inline-flex items-center text-foreground transition-colors hover:text-blue-500 font-medium"
+              >
+                <Image
+                  src="/logos/lets-assist.png"
+                  alt=""
+                  width={18}
+                  height={18}
+                  className="rounded-full object-contain mr-1"
+                />
+                Let&apos;s Assist
+                <ExternalLink className="text-blue-500 transition-all duration-300 ease-out opacity-0 scale-50 w-0 group-hover:w-3 group-hover:opacity-100 group-hover:scale-100 group-hover:ml-1 h-3" />
+              </Link>
+            </motion.div>
+            
+            <motion.h1 
+              variants={fadeInVariants} 
+              custom={0.1} 
+              initial="hidden" 
+              animate="visible"
+              className="text-4xl font-medium tracking-[-0.055em] sm:text-6xl text-foreground"
+            >
+              hi, i&apos;m <span className="diffusion-name cursor-default">riddhiman</span>.
+            </motion.h1>
 
-              return (
-                <motion.div key={item.title} {...reveal(reduced, index * 0.025)}>
-                  {index > 0 && <Separator />}
-                  {item.link ? (
-                    <Link
-                      href={item.link}
-                      target="_blank"
-                      className="group block transition-colors hover:text-primary"
-                    >
-                      {content}
-                    </Link>
-                  ) : (
-                    content
-                  )}
-                </motion.div>
-              );
-            })}
+            <motion.p 
+              variants={fadeInVariants} 
+              custom={0.25} 
+              initial="hidden" 
+              animate="visible"
+              className="mt-5 max-w-3xl text-2xl leading-9 tracking-[-0.035em] sm:text-4xl sm:leading-[1.15]"
+            >
+              i build products i&apos;m truly{" "}
+              <span className="luxury-gold-text">proud</span> of and{" "}
+              <span className="luxury-silver-text">believe</span> in.
+            </motion.p>
+
+            <motion.div 
+              variants={fadeInVariants} 
+              custom={0.4} 
+              initial="hidden" 
+              animate="visible"
+              className="mt-8 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8"
+            >
+              <p>
+                I&apos;m a rising junior at Dougherty Valley High School, founder of Dicy and Let&apos;s Assist (1.8k+ users combined)
+              , a USACO Platinum competitor, and an
+                applied AI researcher working on Orion.
+              </p>
+            </motion.div>
+
+            <motion.div 
+              variants={fadeInVariants} 
+              custom={0.55} 
+              initial="hidden" 
+              animate="visible"
+              className="mt-8 flex flex-wrap gap-2"
+            >
+              <Button asChild>
+                <Link href="/projects">Projects</Link>
+              </Button>
+              <Button variant="outline" asChild>
+                <Link href="/resume.pdf" target="_blank">
+                  <Download data-icon="inline-start" />
+                  Resume
+                </Link>
+              </Button>
+              <ContactDialog />
+            </motion.div>
           </div>
+
+          <HeroProductMap />
         </section>
 
-        <section className="pb-14 sm:pb-20">
+        <section className="py-14 sm:py-20">
           <SectionHeader title="Top awards" href="/awards" />
           <div className="grid sm:grid-cols-2">
-            {awards.map((award, index) => (
-              <motion.div
-                key={award.name}
-                {...reveal(reduced, index * 0.025)}
+            {topAwards.map((award) => (
+              <Link
+                key={award.id}
+                href={`/awards?id=${award.id}`}
                 className="grid grid-cols-[3rem_1fr] gap-4 border-b border-border py-5 sm:odd:border-r sm:odd:pr-7 sm:even:pl-7"
               >
-                <div className="flex size-12 items-center justify-center overflow-hidden rounded-xl border border-border bg-foreground p-1.5">
-                  {award.image ? (
-                    <Image
-                      src={award.image}
-                      alt=""
-                      width={40}
-                      height={40}
-                      className="max-h-full object-contain"
-                    />
-                  ) : (
-                    <span className="text-xs font-semibold text-background">
-                      AI
-                    </span>
-                  )}
+                <div className="logo-tile size-12 rounded-xl p-1.5">
+                  <Image
+                    src={award.image}
+                    alt=""
+                    width={40}
+                    height={40}
+                    className="max-h-full object-contain"
+                  />
                 </div>
                 <div>
                   <h3 className="font-medium">{award.name}</h3>
@@ -230,23 +220,28 @@ export default function Home() {
                     {award.detail}
                   </p>
                 </div>
-              </motion.div>
+              </Link>
             ))}
           </div>
+        </section>
+
+        <section className="pb-14 sm:pb-20">
+          <SectionHeader title="Work experience" />
+          <WorkExperience />
         </section>
 
         <section className="pb-16 sm:pb-24">
           <SectionHeader title="Products" href="/projects" />
           <div>
             {products.map((product, index) => (
-              <motion.div key={product.name} {...reveal(reduced, index * 0.04)}>
+              <div key={product.name}>
                 {index > 0 && <Separator />}
                 <Link
                   href={product.href}
                   target="_blank"
                   className="group grid gap-4 py-7 sm:grid-cols-[4rem_1fr_auto] sm:items-center"
                 >
-                  <div className="flex size-16 items-center justify-center overflow-hidden rounded-2xl border border-border bg-foreground p-2">
+                  <div className="logo-tile size-16 rounded-2xl p-2">
                     <Image
                       src={product.logo}
                       alt={`${product.name} logo`}
@@ -266,13 +261,29 @@ export default function Home() {
                   </div>
                   <ArrowUpRight className="text-muted-foreground transition-colors group-hover:text-primary" />
                 </Link>
-              </motion.div>
+              </div>
             ))}
           </div>
         </section>
-      </div>
 
-      <div className="home-diffusion-field min-h-[32rem] sm:min-h-[42rem]" aria-hidden="true" />
+        <SkillsSection />
+{/* 
+
+        <section className="border-t border-border py-16 sm:py-24 text-center">
+          <h2 className="text-3xl font-medium tracking-[-0.04em] sm:text-4xl">
+            Let&apos;s build something together
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-base text-muted-foreground sm:text-lg">
+            I&apos;m always interested in new opportunities, product design, engineering, or applied AI research.
+          </p>
+          <div className="mt-8 flex justify-center gap-3">
+            <ContactDialog />
+            <Button variant="outline" asChild>
+              <Link href="mailto:contact@riddhimanrana.com">Send an email</Link>
+            </Button>
+          </div>
+        </section> */}
+      </div>
     </main>
   );
 }

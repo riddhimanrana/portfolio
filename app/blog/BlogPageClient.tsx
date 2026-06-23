@@ -14,11 +14,11 @@ interface BlogPageClientProps {
 export default function BlogPageClient({ posts }: BlogPageClientProps) {
   return (
     <main className="site-shell py-12 sm:py-16">
-      <header className="mb-10 border-b border-border/80 pb-9">
+      <header className="mb-8">
         <h1 className="page-title">Blog</h1>
       </header>
 
-      <div className="border-y border-border">
+      <div className="border-t border-border">
         {posts.map((post, index) => {
           const readTime = Math.max(
             1,

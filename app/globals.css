@@ -1,6 +1,5 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@config "../tailwind.config.ts";
 
 @font-face {
   font-family: "Overused Grotesk";
@@ -12,10 +11,42 @@
 html {
   scroll-behavior: smooth;
   scrollbar-gutter: stable;
+  background-color: hsl(var(--background));
+}
+
+html:has(body[data-scroll-locked]) {
+  scrollbar-gutter: auto;
 }
 
 @layer base {
-  :root,
+  :root {
+    --background: 210 20% 98%;
+    --foreground: 222 47% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+    --signal: 0 84.2% 60.2%;
+    --radius: 1rem;
+    --glow-opacity-base: 0.04;
+    --glow-opacity-from: 0.08;
+    --glow-opacity-to: 0.22;
+    --glow-opacity-fallback: 0.14;
+  }
+
   .dark {
     --background: 222 42% 3%;
     --foreground: 210 33% 96%;
@@ -38,6 +69,25 @@ html {
     --ring: 210 88% 82%;
     --signal: 45 89% 67%;
     --radius: 1rem;
+    --glow-opacity-base: 0.1;
+    --glow-opacity-from: 0.22;
+    --glow-opacity-to: 0.58;
+    --glow-opacity-fallback: 0.38;
+  }
+
+  @media (min-width: 768px) {
+    :root {
+      --glow-opacity-base: 0.06;
+      --glow-opacity-from: 0.12;
+      --glow-opacity-to: 0.28;
+      --glow-opacity-fallback: 0.18;
+    }
+    .dark {
+      --glow-opacity-base: 0.16;
+      --glow-opacity-from: 0.36;
+      --glow-opacity-to: 0.74;
+      --glow-opacity-fallback: 0.48;
+    }
   }
 
   * {
@@ -52,11 +102,22 @@ html {
 
   body::before {
     position: fixed;
-    inset: 0;
+    right: -15vw;
+    bottom: -28vh;
+    left: -15vw;
     z-index: -2;
+    height: 82vh;
     content: "";
     pointer-events: none;
-    background: hsl(var(--background));
+    opacity: var(--glow-opacity-base);
+    background:
+      radial-gradient(100% 60% at 50% 100%, hsl(205 100% 96% / 0.42), transparent 80%),
+      radial-gradient(85rem 45rem at 15% 95%, hsl(216 96% 42% / 0.38), transparent 75%),
+      radial-gradient(75rem 38rem at 85% 95%, hsl(198 92% 70% / 0.38), transparent 75%);
+    filter: blur(24px);
+    transform: translateY(20vh);
+    animation: page-diffusion-rise linear both;
+    animation-timeline: scroll(root);
   }
 
   body::after {
@@ -71,22 +132,46 @@ html {
   }
 }
 
+@keyframes page-diffusion-rise {
+  from {
+    opacity: var(--glow-opacity-from);
+    transform: translateY(5vh) scale(0.99);
+  }
+
+  to {
+    opacity: var(--glow-opacity-to);
+    transform: translateY(0) scale(1.02);
+  }
+}
+
+@supports not (animation-timeline: scroll(root)) {
+  body::before {
+    opacity: var(--glow-opacity-fallback);
+    transform: translateY(2vh);
+  }
+}
+
 @layer components {
+  .font-pixelta {
+    font-family: var(--font-pixelta), var(--font-overused-grotesk), sans-serif;
+  }
+
   .site-shell {
     @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
   }
 
   .nav-capsule {
     @apply relative flex h-16 items-center rounded-[1.65rem] border px-2;
-    border-color: hsl(var(--border) / 0.86);
+    border-color: hsl(var(--border) / 0.4);
     background:
-      linear-gradient(110deg, hsl(210 33% 96% / 0.045), transparent 28%),
-      hsl(var(--card) / 0.72);
+      linear-gradient(110deg, hsl(210 33% 96% / 0.08), transparent 28%),
+      hsl(var(--card) / 0.45);
     box-shadow:
-      inset 0 1px 0 hsl(210 33% 96% / 0.06),
+      inset 0 1px 0 hsl(210 33% 96% / 0.08),
       0 24px 70px -46px hsl(211 92% 62% / 0.42);
-    backdrop-filter: blur(24px) saturate(130%);
-    -webkit-backdrop-filter: blur(24px) saturate(130%);
+    backdrop-filter: url(#liquid-glass) blur(20px) saturate(130%);
+    -webkit-backdrop-filter: url(#liquid-glass) blur(20px) saturate(130%);
+    transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
   }
 
   .page-kicker {
@@ -164,13 +249,26 @@ html {
   .home-diffusion-field {
     position: relative;
     isolation: isolate;
-    min-height: 52rem;
+    min-height: 58rem;
+    margin-top: -22rem;
     overflow: hidden;
+    pointer-events: none;
     background:
-      radial-gradient(90% 72% at 40% 108%, hsl(0 0% 100%) 0%, hsl(205 100% 96%) 29%, transparent 66%),
-      radial-gradient(68% 68% at 73% 82%, hsl(201 92% 78% / 0.78), transparent 67%),
-      radial-gradient(76% 64% at 7% 71%, hsl(213 82% 38% / 0.56), transparent 72%),
-      radial-gradient(56% 40% at 88% 12%, hsl(216 72% 28% / 0.26), transparent 78%),
+      radial-gradient(78rem 38rem at 15% 58%, hsl(216 96% 65% / 0.16), transparent 64%),
+      radial-gradient(80rem 40rem at 80% 66%, hsl(198 92% 78% / 0.22), transparent 64%),
+      radial-gradient(88rem 44rem at 50% 103%, hsl(204 100% 98% / 0.98), transparent 62%),
+      linear-gradient(180deg, transparent 0%, hsl(220 48% 95% / 0.18) 20%, hsl(214 58% 90% / 0.32) 56%, hsl(204 68% 94%) 100%),
+      hsl(var(--background));
+    mask-image: linear-gradient(to bottom, transparent 0%, rgb(0 0 0 / 0.24) 10%, black 25%, black 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgb(0 0 0 / 0.24) 10%, black 25%, black 100%);
+  }
+
+  .dark .home-diffusion-field {
+    background:
+      radial-gradient(78rem 38rem at 15% 58%, hsl(216 96% 40% / 0.58), transparent 64%),
+      radial-gradient(80rem 40rem at 80% 66%, hsl(198 92% 72% / 0.6), transparent 64%),
+      radial-gradient(88rem 44rem at 50% 103%, hsl(204 100% 97% / 0.98), transparent 62%),
+      linear-gradient(180deg, transparent 0%, hsl(220 48% 5% / 0.18) 20%, hsl(214 58% 13% / 0.62) 56%, hsl(204 68% 86%) 100%),
       hsl(var(--background));
   }
 
@@ -185,6 +283,196 @@ html {
       linear-gradient(104deg, transparent 0 42%, hsl(202 100% 95% / 0.18) 58%, transparent 76%),
       url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.78' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E");
     mix-blend-mode: soft-light;
+  }
+
+  .footer-diffusion {
+    min-height: 0;
+    margin-top: 0;
+    animation: footer-diffusion-intensity linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 35%;
+  }
+
+  .diffusion-footer-shell {
+    isolation: isolate;
+  }
+
+  .footer-diffusion-wrap {
+    pointer-events: none;
+  }
+
+  @keyframes footer-diffusion-intensity {
+    from {
+      opacity: 0.02;
+      transform: translateY(4rem) scale(0.98);
+    }
+
+    to {
+      opacity: 0.85;
+      transform: translateY(0) scale(1.01);
+    }
+  }
+
+  @supports not (animation-timeline: view()) {
+    .footer-diffusion {
+      opacity: 0.85;
+      transform: translateY(0.5rem);
+    }
+  }
+
+  .diffusion-orb {
+    position: absolute;
+    border-radius: 999px;
+    filter: blur(92px);
+    will-change: transform;
+  }
+
+  .diffusion-orb-left {
+    bottom: -5rem;
+    left: -18%;
+    width: 76%;
+    height: 42rem;
+    background: hsl(216 96% 85% / 0.22);
+  }
+  .dark .diffusion-orb-left {
+    background: hsl(216 96% 42% / 0.74);
+  }
+
+  .diffusion-orb-center {
+    bottom: -12rem;
+    left: 14%;
+    width: 72%;
+    height: 48rem;
+    background: hsl(205 100% 98% / 0.35);
+  }
+  .dark .diffusion-orb-center {
+    background: hsl(205 100% 96% / 0.98);
+  }
+
+  .diffusion-orb-right {
+    right: -16%;
+    bottom: -8rem;
+    width: 62%;
+    height: 42rem;
+    background: hsl(198 92% 88% / 0.22);
+  }
+  .dark .diffusion-orb-right {
+    background: hsl(198 92% 70% / 0.76);
+  }
+
+  .diffusion-horizon {
+    position: absolute;
+    right: -14%;
+    bottom: 7rem;
+    left: -14%;
+    height: 20rem;
+    border-radius: 50%;
+    background: hsl(207 100% 98% / 0.1);
+    filter: blur(48px);
+    transform: perspective(28rem) rotateX(68deg);
+  }
+  .dark .diffusion-horizon {
+    background: hsl(207 100% 97% / 0.38);
+  }
+
+  .diffusion-name {
+    color: transparent;
+    background:
+      radial-gradient(circle at 18% 15%, hsl(210 100% 40%) 0 18%, transparent 28%),
+      linear-gradient(125deg, hsl(219 90% 50%), hsl(202 100% 65%) 42%, hsl(214 88% 30%) 78%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    filter: drop-shadow(0 0 28px hsl(207 88% 40% / 0.1));
+  }
+  .dark .diffusion-name {
+    color: transparent;
+    background:
+      radial-gradient(circle at 18% 15%, hsl(210 100% 96%) 0 18%, transparent 28%),
+      linear-gradient(125deg, hsl(219 95% 73%), hsl(202 100% 94%) 42%, hsl(214 88% 43%) 78%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    filter: drop-shadow(0 0 28px hsl(207 88% 72% / 0.22));
+  }
+
+  .luxury-gold-text {
+    color: transparent;
+    background: linear-gradient(110deg, #f7e8a8 0%, #b88f32 46%, #fff5c7 72%, #8a671d 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+  }
+
+  .luxury-silver-text {
+    color: transparent;
+    background: linear-gradient(110deg, #ffffff 0%, #9aa7b8 42%, #e9f1fb 70%, #6f7b8d 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+  }
+
+  .luxury-bronze-text {
+    color: transparent;
+    background: linear-gradient(110deg, #f5d6c6 0%, #c47b56 46%, #fdf0ea 72%, #945330 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+  }
+
+  .logo-tile {
+    @apply flex items-center justify-center overflow-hidden border border-border bg-white;
+  }
+
+  .award-badge-major {
+    border-color: rgb(237 196 93 / 0.46);
+    background: linear-gradient(135deg, rgb(136 96 27 / 0.22), rgb(255 218 119 / 0.08));
+  }
+  .award-badge-major svg {
+    color: #e5b33c !important;
+    fill: rgb(237 196 93 / 0.12);
+  }
+  .award-badge-major span {
+    color: transparent;
+    background: linear-gradient(110deg, #ffe89e 0%, #c69428 46%, #fff7d6 72%, #946f19 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    font-weight: 600;
+  }
+
+  .award-badge-notable {
+    border-color: rgb(202 138 90 / 0.5);
+    background: linear-gradient(135deg, rgb(121 70 37 / 0.26), rgb(229 148 92 / 0.08));
+  }
+  .award-badge-notable svg {
+    color: #c47b56 !important;
+    fill: rgb(202 138 90 / 0.12);
+  }
+  .award-badge-notable span {
+    color: transparent;
+    background: linear-gradient(110deg, #f5d6c6 0%, #c47b56 46%, #fdf0ea 72%, #945330 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    font-weight: 600;
+  }
+
+  .award-badge-honorable {
+    border-color: rgb(184 197 213 / 0.46);
+    background: linear-gradient(135deg, rgb(113 129 151 / 0.22), rgb(238 244 251 / 0.07));
+  }
+  .award-badge-honorable svg {
+    color: #9aa7b8 !important;
+    fill: rgb(184 197 213 / 0.12);
+  }
+  .award-badge-honorable span {
+    color: transparent;
+    background: linear-gradient(110deg, #ffffff 0%, #9aa7b8 42%, #e9f1fb 70%, #6f7b8d 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    font-weight: 600;
+  }
+
+  .product-map-line {
+    fill: none;
+    stroke: hsl(var(--primary));
+    stroke-width: 1;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
   }
 
   .story-panel {

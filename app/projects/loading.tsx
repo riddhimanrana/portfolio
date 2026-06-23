@@ -1,52 +1,45 @@
+import { Separator } from "@/components/ui/separator";
+
 export default function Loading() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-          <div className="flex items-center">
-            <div className="w-12 h-12 bg-muted rounded-sm mr-4 animate-pulse"></div>
-            <div>
-              <div className="h-7 w-36 bg-muted rounded animate-pulse mb-1"></div>
-              <div className="h-4 w-48 bg-muted rounded animate-pulse"></div>
-            </div>
-          </div>
-          
-          {/* Search input */}
-          <div className="w-full md:w-60">
-            <div className="h-9 w-full bg-muted rounded animate-pulse"></div>
-          </div>
-        </div>
-        
-        {/* Tags filter */}
-        <div className="mb-6 flex gap-1.5 pb-2">
-          <div className="h-7 w-24 bg-muted rounded-sm animate-pulse"></div>
-          <div className="h-7 w-16 bg-muted rounded-sm animate-pulse"></div>
-          <div className="h-7 w-20 bg-muted rounded-sm animate-pulse"></div>
-          <div className="h-7 w-18 bg-muted rounded-sm animate-pulse"></div>
-        </div>
+    <div className="min-h-screen bg-background text-foreground animate-pulse">
+      <main className="site-shell py-12 sm:py-16">
+        <header className="mb-8">
+          <div className="h-10 w-44 bg-muted rounded-md"></div>
+        </header>
 
-        {/* Project grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {Array(6).fill(0).map((_, index) => (
-            <div key={index} className="bg-card rounded-sm border border-border overflow-hidden">
-              <div className="p-3 flex flex-wrap gap-1.5">
-                <div className="h-5 w-16 bg-muted rounded-sm animate-pulse"></div>
-                <div className="h-5 w-14 bg-muted rounded-sm animate-pulse"></div>
-                <div className="h-5 w-12 bg-muted rounded-sm ml-auto animate-pulse"></div>
-              </div>
-              
-              <div className="px-4 pb-4">
-                <div className="h-5 w-2/3 bg-muted rounded mb-1.5 animate-pulse"></div>
-                <div className="h-4 w-full bg-muted rounded mb-1 animate-pulse"></div>
-                <div className="h-4 w-4/5 bg-muted rounded mb-3 animate-pulse"></div>
+        <div className="border-t border-border">
+          {[1, 2, 3, 4].map((i, index) => (
+            <div key={i}>
+              {index > 0 && <Separator />}
+              <div className="grid gap-5 py-7 sm:grid-cols-[4rem_1fr_auto] sm:items-center -mx-4 px-4">
+                {/* Logo Tile */}
+                <div className="size-16 rounded-xl bg-muted/60 border border-border"></div>
                 
-                <div className="h-4 w-20 bg-muted rounded animate-pulse"></div>
+                {/* Middle details */}
+                <div>
+                  <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                    <div className="h-6 w-48 bg-muted rounded"></div>
+                    <div className="h-4 w-10 bg-muted/60 rounded"></div>
+                  </div>
+                  <div className="h-4 w-full max-w-xl bg-muted/40 rounded mt-3"></div>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {[1, 2, 3].map((tagIdx) => (
+                      <div key={tagIdx} className="h-5.5 w-14 bg-muted/40 rounded"></div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Right side links */}
+                <div className="flex items-center gap-1.5 sm:justify-end">
+                  <div className="size-9 rounded-full bg-muted/60"></div>
+                  <div className="size-9 rounded-full bg-muted/60"></div>
+                </div>
               </div>
             </div>
           ))}
         </div>
       </main>
     </div>
-  )
+  );
 }

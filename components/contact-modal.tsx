@@ -3,8 +3,13 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
-import { SiGithub, SiDiscord, SiYoutube, SiLinkedin } from "react-icons/si";
 import { Button } from "@/components/ui/button";
+import {
+  DiscordIcon,
+  GitHubIcon,
+  LinkedInIcon,
+  YouTubeIcon,
+} from "@/components/brand-icons";
 
 import { Copy, Check, ExternalLink, Mail } from "lucide-react";
 
@@ -52,7 +57,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
     {
       name: "GitHub",
       value: "@riddhimanrana",
-      icon: <SiGithub className="h-5 w-5" />,
+      icon: <GitHubIcon className="size-5" />,
       link: "https://github.com/riddhimanrana",
       color: "bg-muted text-muted-foreground hover:bg-muted/80",
       buttonHoverClass: "hover:bg-muted",
@@ -60,7 +65,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
     {
       name: "Linkedin",
       value: "@riddhimanrana",
-      icon: <SiLinkedin className="h-5 w-5" />,
+      icon: <LinkedInIcon className="size-5" />,
       link: "https://www.linkedin.com/in/riddhimanrana/",
       color: "bg-muted text-muted-foreground hover:bg-muted/80",
       buttonHoverClass: "hover:bg-muted",
@@ -68,7 +73,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
     {
       name: "Discord",
       value: "@riddhimanrana",
-      icon: <SiDiscord className="h-5 w-5" />,
+      icon: <DiscordIcon className="size-5" />,
       color: "bg-muted text-muted-foreground hover:bg-muted/80",
       buttonHoverClass: "hover:bg-muted",
     },
@@ -83,7 +88,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
     {
       name: "YouTube",
       value: "@riddhimanrana",
-      icon: <SiYoutube className="h-5 w-5" />,
+      icon: <YouTubeIcon className="size-5" />,
       link: "https://youtube.com/@riddhimanrana",
       color: "bg-muted text-muted-foreground hover:bg-muted/80",
       buttonHoverClass: "hover:bg-muted",

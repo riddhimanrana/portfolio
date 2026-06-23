@@ -15,6 +15,12 @@ const overusedGrotesk = localFont({
   display: "swap",
 });
 
+const pixelta = localFont({
+  src: "../public/fonts/Pixelta.ttf",
+  variable: "--font-pixelta",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Riddhiman Rana | Developer, Researcher & Founder",
   description:
@@ -64,21 +70,26 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" />
         {/* <link rel="me" href="https://mastodon.online/@rrcoder0167" /> */}
       </head>
-      <body className={`bg-background font-sans text-foreground antialiased ${overusedGrotesk.variable}`}>
+      <body
+        className={`bg-background font-sans text-foreground antialiased ${overusedGrotesk.variable} ${pixelta.variable}`}
+      >
         <PostHogProvider>
           <ThemeProvider
             attribute="class"
             defaultTheme="dark"
-            forcedTheme="dark"
-            enableSystem={false}
+            enableSystem={true}
             disableTransitionOnChange
           >
-            <NavBar />
-            {children}
+            <div className="flex flex-col min-h-screen">
+              <NavBar />
+              <div className="flex-1">
+                {children}
+              </div>
+              <FooterWrapper />
+            </div>
             <SpeedInsights />
+            <Toaster />
           </ThemeProvider>
-          <Toaster />
-          <FooterWrapper />
         </PostHogProvider>
       </body>
     </html>

@@ -3,9 +3,9 @@
 import type { Project } from "@/types/project"
 import { motion, AnimatePresence } from "framer-motion"
 import { X, ExternalLink } from "lucide-react"
-import { SiGithub } from "react-icons/si"
 import Image from "next/image"
 import { useEffect } from "react"
+import { GitHubIcon } from "@/components/brand-icons"
 
 interface ProjectModalProps {
   project: Project | null
@@ -131,7 +131,7 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
                   rel="noopener noreferrer"
                   className="inline-flex items-center px-4 py-2 rounded-sm bg-secondary text-secondary-foreground hover:bg-muted transition-colors text-sm font-medium"
                 >
-                  <SiGithub className="h-4 w-4 mr-2" />
+                  <GitHubIcon className="mr-2 size-4" />
                   View Code
                 </a>
               )}

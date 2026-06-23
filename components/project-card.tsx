@@ -3,7 +3,7 @@
 import type { Project } from "@/types/project"
 import Image from "next/image"
 import { ExternalLink } from "lucide-react"
-import { SiGithub } from "react-icons/si"
+import { GitHubIcon } from "@/components/brand-icons"
 
 interface ProjectCardProps {
   project: Project
@@ -64,7 +64,7 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
               className="p-2 rounded-sm text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-200"
               onClick={(e) => e.stopPropagation()}
             >
-              <SiGithub className="h-5 w-5" />
+              <GitHubIcon className="size-5" />
             </a>
           )}
           {project.projectLink && (

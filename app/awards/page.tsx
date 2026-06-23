@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   ArrowUpRight,
   Award as AwardIcon,
@@ -28,7 +28,6 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -69,6 +68,29 @@ export default function AwardsPage() {
   const [difficulty, setDifficulty] = useState<DifficultyFilter>("all");
   const [selectedId, setSelectedId] = useState(awards[0]?.id ?? "");
   const [mobileDetailOpen, setMobileDetailOpen] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get("id");
+      if (id) {
+        const exists = awards.some((a) => a.id === id);
+        if (exists) {
+          setSelectedId(id);
+          if (window.innerWidth < 1024) {
+            setMobileDetailOpen(true);
+          } else {
+            setTimeout(() => {
+              const el = document.getElementById(`award-${id}`);
+              if (el) {
+                el.scrollIntoView({ behavior: "smooth", block: "center" });
+              }
+            }, 150);
+          }
+        }
+      }
+    }
+  }, []);
 
   const filteredAwards = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
@@ -111,10 +133,17 @@ export default function AwardsPage() {
       <header className="grid gap-8 border-b border-border/80 pb-9 sm:grid-cols-[1fr_auto] sm:items-end">
         <h1 className="page-title">Awards</h1>
         <div className="grid grid-cols-3 gap-8">
-          {(["major", "notable", "honorable"] as AwardDifficulty[]).map(
+          {(["major", "honorable", "notable"] as AwardDifficulty[]).map(
             (level) => (
               <div key={level}>
-                <p className="text-xl font-medium">
+                <p
+                  className={cn(
+                    "text-xl font-medium",
+                    level === "major" && "luxury-gold-text",
+                    level === "honorable" && "luxury-silver-text",
+                    level === "notable" && "luxury-bronze-text"
+                  )}
+                >
                   {awards.filter((award) => award.difficulty === level).length}
                 </p>
                 <p className="mt-1 text-xs text-muted-foreground">
@@ -129,7 +158,7 @@ export default function AwardsPage() {
       <section className="py-7">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+            <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground z-10" />
             <Input
               value={query}
               onChange={(event) => setQuery(event.target.value)}
@@ -156,11 +185,11 @@ export default function AwardsPage() {
               <ToggleGroupItem value="major" className="rounded-full px-4">
                 Major
               </ToggleGroupItem>
-              <ToggleGroupItem value="notable" className="rounded-full px-4">
-                Notable
-              </ToggleGroupItem>
               <ToggleGroupItem value="honorable" className="rounded-full px-4">
                 Honorable
+              </ToggleGroupItem>
+              <ToggleGroupItem value="notable" className="rounded-full px-4">
+                Notable
               </ToggleGroupItem>
             </ToggleGroup>
           </ScrollArea>
@@ -207,7 +236,7 @@ export default function AwardsPage() {
                         {groupedAwards[year].length} entries
                       </p>
                     </div>
-                    <span className="relative z-10 size-4 rounded-full border-4 border-background bg-primary" />
+                    <span className="relative z-10 h-px w-4 rounded-full bg-border" />
                     <div className="sm:hidden">
                       <h2 className="text-xl font-medium text-primary">{year}</h2>
                     </div>
@@ -215,7 +244,7 @@ export default function AwardsPage() {
 
                   <div className="ml-8 border-y border-border sm:ml-[7.5rem]">
                     {groupedAwards[year].map((award, index) => (
-                      <div key={award.id}>
+                      <div key={award.id} id={`award-${award.id}`} className="scroll-mt-24">
                         {index > 0 && <Separator />}
 
                         <button
@@ -295,7 +324,7 @@ function TimelineRow({ award }: { award: Award }) {
       <div className="grid grid-cols-[3.25rem_1fr] items-center gap-4">
         <div
           className={cn(
-            "flex size-[3.25rem] items-center justify-center overflow-hidden border border-border bg-foreground/95 p-1.5",
+            "logo-tile size-[3.25rem] p-1.5",
             award.isIconRoundedFull ? "rounded-full" : "rounded-xl"
           )}
         >
@@ -311,9 +340,12 @@ function TimelineRow({ award }: { award: Award }) {
         <div>
           <div className="flex flex-wrap items-center gap-2">
             <h3 className="font-medium">{award.name}</h3>
-            <Badge variant="secondary">
-              <Icon />
-              {meta.label}
+            <Badge
+              variant="outline"
+              className={cn("gap-1", `award-badge-${award.difficulty}`)}
+            >
+              <Icon className="size-3" />
+              <span>{meta.label}</span>
             </Badge>
             {award.submissionLink && (
               <span className="inline-flex items-center gap-1 text-xs text-primary">
@@ -356,7 +388,7 @@ function AwardInspector({
         <div className="flex items-start justify-between gap-5">
           <div
             className={cn(
-              "flex size-16 shrink-0 items-center justify-center overflow-hidden border border-border bg-foreground/95 p-2.5",
+              "logo-tile size-16 shrink-0 p-2.5",
               award.isIconRoundedFull ? "rounded-full" : "rounded-2xl"
             )}
           >
@@ -369,9 +401,12 @@ function AwardInspector({
               className="max-h-full object-contain"
             />
           </div>
-          <Badge variant="outline">
-            <Icon />
-            {meta.label}
+          <Badge
+            variant="outline"
+            className={cn("gap-1", `award-badge-${award.difficulty}`)}
+          >
+            <Icon className="size-3" />
+            <span>{meta.label}</span>
           </Badge>
         </div>
 

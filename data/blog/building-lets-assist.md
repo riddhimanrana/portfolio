@@ -5,6 +5,8 @@ excerpt: "How a beach cleanup idea turned into a full-stack platform for student
 tags: ["Next.js", "Supabase", "Volunteering", "Personal Project", "Hackathon"]
 ---
 
+**note: i WILL come back and rewrite this blog properly myself because over the last 3 years i've learned a lot and i want to document my thoughts but i'm a bit too busy rn...this is the temporary gist of what happened, written by AI :(**
+
 ## Introduction
 
 Back in October 2023, I took a trip to Santa Cruz Beach during a long weekend. What should have been a relaxing day turned into something else entirely — the beach was covered in trash. It was frustrating to see such a beautiful place neglected, and I remember thinking: *Why isn’t there an easier way for people to organize cleanups or get involved when they see a problem like this?*
