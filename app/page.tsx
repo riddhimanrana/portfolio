@@ -1,390 +1,278 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { useTheme } from "next-themes";
-import {
-  Code,
-  Briefcase,
-  Cpu,
-  Trophy,
-  GraduationCap,
-  ExternalLink,
-  FileText,
-  Globe,
-} from "lucide-react";
-import { SiGithub, SiYoutube } from "react-icons/si";
-import Link from "next/link";
+import { motion, useReducedMotion } from "framer-motion";
+import { ArrowUpRight, Download } from "lucide-react";
 import Image from "next/image";
-import { ContactModal } from "@/components/contact-modal";
-import { AboutSection } from "@/components/about-section";
-import { EducationSection } from "@/components/education-section";
-import { SkillsSection } from "@/components/skills-section";
-import { WorkExperience } from "@/components/work-experience";
+import Link from "next/link";
+
+import { ContactDialog } from "@/components/contact-dialog";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import experienceData from "@/data/experience.json";
+
+const experienceDescriptions: Record<string, string> = {
+  "AlphaStar Academy":
+    "Taught advanced Python through the AlphaStar–Carina scholarship program, providing weekly one-on-one instruction and tracking student progress across the academic year.",
+  Algoverse:
+    "Researched real-time visual perception, persistent memory, and temporal reasoning for privacy-sensitive systems running under tight device constraints.",
+  "Mustang Math":
+    "Contributed to COMPOSE, the problem-writing platform used by Mustang Math and the Stanford Math Tournament, as part of the competition technology team.",
+  "Tulip Coaching":
+    "Created and taught project-based Python courses for middle school students, from first-time programmers through a longer advanced curriculum.",
+  "Let's Assist":
+    "Founded and built a volunteer management platform used by 300+ people. I handle product development, organization onboarding, support, compliance, and expansion.",
+  "Windemere Ranch Middle School Coding Club":
+    "Helped organize meetings, communicate with members, and create hands-on programming material for students learning the fundamentals.",
+  "Boy Scouts of America":
+    "Serve with Troop 941 through leadership, outdoor activities, and community service. The troop later became one of the first organizations to use Let's Assist.",
+};
+
+const awards = [
+  {
+    name: "USACO Platinum",
+    detail: "USA Computing Olympiad",
+    image: "/awards/usaco.png",
+  },
+  {
+    name: "Math Kangaroo International Camp",
+    detail: "Represented the United States in Poland",
+    image: "/awards/mathkangaroo.jpeg",
+  },
+  {
+    name: "AMC 10 Honor Roll",
+    detail: "132 / 150 on the 2025 AMC 10A",
+    image: "/awards/maa.jpeg",
+  },
+  {
+    name: "USAAIO Round 1",
+    detail: "Artificial intelligence olympiad",
+    image: null,
+  },
+];
+
+const products = [
+  {
+    name: "Dicy",
+    logo: "/icon-192.png",
+    href: "https://dicy.app",
+    metric: "1,500+ users across 4+ states",
+    description:
+      "A grade app for Infinite Campus and Schoology with what-if grades, final-grade calculations, and a cleaner experience across iOS, Android, and web.",
+  },
+  {
+    name: "Let's Assist",
+    logo: "/logos/lets-assist.png",
+    href: "https://lets-assist.com",
+    metric: "300+ users",
+    description:
+      "A volunteer management platform for discovering opportunities, managing signups, and verifying service hours without spreadsheets or paper logs.",
+  },
+];
+
+const ease = [0.22, 1, 0.36, 1] as const;
+
+function reveal(reduced: boolean | null, delay = 0) {
+  return {
+    initial: reduced ? false : { opacity: 0, y: 10 },
+    whileInView: reduced ? undefined : { opacity: 1, y: 0 },
+    viewport: { once: true, amount: 0.12 },
+    transition: { duration: 0.45, delay, ease },
+  };
+}
+
+function SectionHeader({
+  title,
+  href,
+}: {
+  title: string;
+  href?: string;
+}) {
+  return (
+    <div className="flex items-center justify-between gap-4 border-b border-border pb-4">
+      <h2 className="text-2xl font-medium tracking-[-0.035em]">{title}</h2>
+      {href && (
+        <Button variant="ghost" size="sm" className="-mr-3" asChild>
+          <Link href={href}>
+            View all
+            <ArrowUpRight data-icon="inline-end" />
+          </Link>
+        </Button>
+      )}
+    </div>
+  );
+}
 
 export default function Home() {
-  const [mounted, setMounted] = useState(false);
-  const { theme, setTheme } = useTheme();
-  const [contactModalOpen, setContactModalOpen] = useState(false);
-
-  // Theme toggle handler
-  const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  };
-
-  // Handle mounting for theme
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return null;
-  }
+  const reduced = useReducedMotion();
 
   return (
-    <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
-      {/* Contact Modal */}
-      <ContactModal
-        isOpen={contactModalOpen}
-        onClose={() => setContactModalOpen(false)}
-      />
-
-      {/* Main Content */}
-      <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Hero Section */}
-
-        <section id="about" className="py-8 sm:py-16">
-          <div className="max-w-6xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="mb-4"
-            >
-              <span className="flex flex-wrap items-center text-sm text-muted-foreground">
-                <span>Founder of</span>
-                <Link
-                  href="https://lets-assist.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center hover:text-primary transition-colors duration-100 group ml-2"
-                >
-                  <Image
-                    src="/logos/lets-assist.png"
-                    alt="Let's Assist Logo"
-                    width={20}
-                    height={20}
-                    className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform"
-                    sizes="20px"
-                    quality={80}
-                  />
-                  <span className="inline-flex items-center">
-                    Let's Assist
-                    <span
-                      className="overflow-hidden ml-0 w-0 opacity-0 transition-all duration-200 group-hover:ml-1 group-hover:w-3 group-hover:opacity-100"
-                      aria-hidden="true"
-                    >
-                      <ExternalLink className="h-3 w-3" />
-                    </span>
-                  </span>
-                </Link>
-                <span className="ml-2">and</span>
-                <Link
-                  href="https://orionlive.ai"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center hover:text-primary transition-colors duration-100 group ml-2"
-                >
-                  <Image
-                    src="/logos/orion-live.png"
-                    alt="Orion Live Logo"
-                    width={20}
-                    height={20}
-                    className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform"
-                    sizes="20px"
-                    quality={80}
-                  />
-                  <span className="inline-flex items-center">
-                    Orion Live
-                    <span
-                      className="overflow-hidden ml-0 w-0 opacity-0 transition-all duration-200 group-hover:ml-1 group-hover:w-3 group-hover:opacity-100"
-                      aria-hidden="true"
-                    >
-                      <ExternalLink className="h-3 w-3" />
-                    </span>
-                  </span>
-                </Link>
-              </span>
-            </motion.div>
-
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-[2rem] sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 flex flex-wrap items-center gap-2"
-            >
-              <span>Hi, I'm</span>
-              <div className="rounded-2xl transition-transform hover:scale-105 duration-300">
-                <Image
-                  src="/profile.jpeg"
-                  alt="Riddhiman Rana"
-                  width={96} // Changed from 160
-                  height={96} // Changed from 160
-                  className="w-[40px] h-[40px] sm:w-[60px] sm:h-[60px] -rotate-6 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.4)] border-2 border-white dark:border-gray-700"
-                  sizes="(max-width: 640px) 40px, 60px"
-                  quality={100}
-                />
-              </div>
-              <span className="relative inline-flex items-center">
-                <span className="block sm:hidden">Riddhiman</span>
-                <span className="hidden sm:block">Riddhiman Rana</span>
-                <span className="absolute bottom-0 left-0 w-full h-[3px] bg-primary"></span>
-              </span>
-            </motion.h1>
-
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-xl sm:text-3xl md:text-4xl font-medium sm:font-semibold mb-6 flex flex-wrap items-center gap-2"
-            >
-              <span>And I'm a</span>
-              <span className="flex items-center">
-                <Code className="inline-block mr-2 h-6 w-6 sm:h-8 sm:w-8 p-1 bg-muted rounded" />
-                Full Stack Developer
-              </span>
-              <span>and</span>
-              <span className="flex items-center">
-                <Cpu className="inline-block mr-2 h-6 w-6 sm:h-8 sm:w-8 p-1 bg-muted rounded" />
-                Competitive Programmer
-              </span>
-            </motion.h2>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="hidden sm:flex flex-col sm:flex-row gap-3 mb-6"
-            >
-              <Link
-                href="https://dvhs.srvusd.net/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center text-sm bg-muted px-4 py-2 rounded-full hover:bg-accent transition-colors"
-              >
-                <GraduationCap className="mr-2 h-4 w-4" />
-                Sophomore at Dougherty Valley High School
-              </Link>
-                className="flex items-center text-sm bg-muted px-4 py-2 rounded-full"
-                <Trophy className="mr-2 h-4 w-4" />
-                USACO Gold Contestant
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="flex flex-col sm:flex-row gap-3"
-            >
-              <Link
-                href="/projects"
-                className="px-6 py-3 bg-primary hover:bg-primary/90 text-primary-foreground rounded transition-colors duration-200 flex items-center justify-center"
-              >
-                View Projects <ExternalLink className="ml-2 h-4 w-4" />
-              </Link>
-              <Link
-                href="/resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-6 py-3 bg-secondary hover:bg-accent text-foreground rounded transition-colors duration-200 flex items-center justify-center border border-border"
-              >
-                Download Resume
-                <FileText className="ml-2 h-4 w-4 opacity-80" />
-              </Link>
-              <button
-                onClick={() => setContactModalOpen(true)}
-                className="px-6 py-3 bg-secondary hover:bg-accent text-foreground rounded transition-colors duration-200 text-center"
-              >
-                Contact Me
-              </button>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* About Section */}
-        <AboutSection />
-
-        {/* Work Experience Section */}
-        <WorkExperience />
-
-        {/* Education Section */}
-        <EducationSection />
-
-        {/* Skills Section */}
-        <SkillsSection />
-
-        {/* Projects Section */}
-        <section
-          id="projects"
-          className="py-8 sm:py-12 my-6"
+    <main>
+      <div className="site-shell">
+        <motion.section
+          initial={reduced ? false : { opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, ease }}
+          className="max-w-4xl border-b border-border py-16 sm:py-24"
         >
-          <div className="px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
-            <div className="max-w-6xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="flex flex-col md:flex-row md:items-center justify-between mb-8"
-              >
-                <div className="flex items-center mb-3 pt-2 md:mb-0">
-                  <div className="p-2 bg-muted rounded mr-3">
-                    <Briefcase className="h-8 w-8 " />
+          <h1 className="text-4xl font-medium tracking-[-0.055em] sm:text-6xl">
+            Hi, I&apos;m Riddhiman.
+          </h1>
+          <p className="mt-5 max-w-3xl text-2xl leading-9 tracking-[-0.035em] sm:text-4xl sm:leading-[1.15]">
+            I build products I&apos;m truly proud of and believe in.
+          </p>
+          <div className="mt-8 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
+            <p>
+              I&apos;m a sophomore at Dougherty Valley High School, founder of
+              Dicy and Let&apos;s Assist, a USACO Platinum competitor, and an
+              applied AI researcher working on Orion.
+            </p>
+            <p className="mt-4">
+              I enjoy taking an idea through the entire process: understanding
+              the problem, building the product, finding users, responding to
+              competition, and improving it until it becomes genuinely useful.
+            </p>
+          </div>
+          <div className="mt-8 flex flex-wrap gap-2">
+            <Button asChild>
+              <Link href="/projects">Projects</Link>
+            </Button>
+            <Button variant="outline" asChild>
+              <Link href="/resume.pdf" target="_blank">
+                <Download data-icon="inline-start" />
+                Resume
+              </Link>
+            </Button>
+            <ContactDialog />
+          </div>
+        </motion.section>
+
+        <section className="py-14 sm:py-20">
+          <SectionHeader title="Work experience" />
+          <div>
+            {experienceData.map((item, index) => {
+              const content = (
+                <div className="grid grid-cols-[3rem_1fr_auto] items-start gap-x-4 gap-y-3 py-6 sm:grid-cols-[9rem_3.25rem_1fr_auto]">
+                  <p className="col-span-3 text-sm leading-6 text-muted-foreground sm:col-span-1">
+                    {item.date}
+                  </p>
+                  <div className="flex size-12 items-center justify-center overflow-hidden rounded-xl border border-border bg-foreground p-1.5">
+                    <Image
+                      src={item.logo}
+                      alt=""
+                      width={42}
+                      height={42}
+                      className="max-h-full object-contain"
+                    />
                   </div>
-                  <h2 className="text-2xl sm:text-3xl font-bold">
-                    Featured Projects
-                  </h2>
+                  <div className="max-w-3xl">
+                    <h3 className="text-lg font-medium">{item.title}</h3>
+                    <p className="mt-0.5 text-sm text-muted-foreground">
+                      {item.subtext}
+                    </p>
+                    <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                      {experienceDescriptions[item.title]}
+                    </p>
+                  </div>
+                  {item.link && (
+                    <ArrowUpRight className="mt-1 text-muted-foreground" />
+                  )}
                 </div>
-                {/* <p className="text-gray-600 dark:text-gray-400 text-sm max-w-md">
-                  A showcase of my recent work and personal projects
-                </p> */}
-              </motion.div>
+              );
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.1 }}
-                  className="bg-card rounded border border-border card-hover overflow-hidden group p-6"
-                >
-                  <h3 className="text-2xl font-bold mb-4 text-foreground">
-                    Let&apos;s Assist
-                  </h3>
-
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    <span className="text-xs bg-muted text-muted-foreground px-2.5 py-1 rounded font-medium">
-                      Next.js
-                    </span>
-                    <span className="text-xs bg-muted text-muted-foreground px-2.5 py-1 rounded font-medium">
-                      Typescript
-                    </span>
-                    <span className="text-xs bg-muted text-muted-foreground px-2.5 py-1 rounded font-medium">
-                      Supabase
-                    </span>
-                    <span className="text-xs bg-muted text-muted-foreground px-2.5 py-1 rounded font-medium">
-                      2025
-                    </span>
-                  </div>
-
-                  <p className="text-muted-foreground text-sm mb-5">
-                    A comprehensive online volunteering platform that helps
-                    organizations and high school CSF programs manage, track,
-                    and coordinate volunteering activities for students and
-                    communities.
-                  </p>
-
-                  <div className="flex items-center gap-5 mt-auto">
+              return (
+                <motion.div key={item.title} {...reveal(reduced, index * 0.025)}>
+                  {index > 0 && <Separator />}
+                  {item.link ? (
                     <Link
-                      href="https://github.com/riddhimanrana/lets-assist"
+                      href={item.link}
                       target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-1.5 text-sm font-medium"
+                      className="group block transition-colors hover:text-primary"
                     >
-                      <SiGithub className="h-6 w-6" />
-                      <span>Code</span>
+                      {content}
                     </Link>
-                    <Link
-                      href="https://lets-assist.com"
-                      className="text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-1.5 text-sm font-medium"
-                    >
-                      <Globe className="h-4.5 w-4.5" />
-                      <span>Website</span>
-                    </Link>
-                  </div>
+                  ) : (
+                    content
+                  )}
                 </motion.div>
-
-                {/* Orion Live Project */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                  className="bg-card rounded border border-border card-hover overflow-hidden group p-6"
-                >
-                  <h3 className="text-2xl font-bold mb-4 text-foreground">
-                    Orion Live
-                  </h3>
-
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    <span className="text-xs bg-muted text-muted-foreground px-2.5 py-1 rounded font-medium">
-                      Swift
-                    </span>
-                    <span className="text-xs bg-muted text-muted-foreground px-2.5 py-1 rounded font-medium">
-                      Apple MLX
-                    </span>
-                    <span className="text-xs bg-muted text-muted-foreground px-2.5 py-1 rounded font-medium">
-                      Tensorflow
-                    </span>
-                    <span className="text-xs bg-muted text-muted-foreground px-2.5 py-1 rounded font-medium">
-                      FastAPI
-                    </span>
-                    <span className="text-xs bg-muted text-muted-foreground px-2.5 py-1 rounded font-medium">
-                      Websocket
-                    </span>
-                    <span className="text-xs bg-muted text-muted-foreground px-2.5 py-1 rounded font-medium">
-                      2025
-                    </span>
-                  </div>
-
-                  <p className="text-muted-foreground text-sm mb-5">
-                    Orion Live is the world’s first real-time visual
-                    intelligence agent that truly remembers and understands the
-                    world as it unfolds with a focus on privacy, speed, and
-                    always-on context, in a hybrid edge-server architecture.
-                  </p>
-
-                  <div className="flex items-center gap-5 mt-auto">
-                    <Link
-                      href="https://github.com/riddhimanrana/orion"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-1.5 text-sm font-medium"
-                    >
-                      <SiGithub className="h-6 w-6" />
-                      <span>Code</span>
-                    </Link>
-                    <Link
-                      href="https://orionlive.ai"
-                      className="text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-1.5 text-sm font-medium"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Globe className="h-4.5 w-4.5" />
-                      <span>Website</span>
-                    </Link>
-                  </div>
-                </motion.div>
-              </div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                className="flex justify-center mt-10"
-              >
-                <Link
-                  href="/projects"
-                  className="px-6 py-3 bg-primary hover:bg-primary/90 text-primary-foreground rounded transition-colors duration-200 flex items-center justify-center group text-sm font-medium"
-                >
-                  View All Projects
-                  <ExternalLink className="ml-2 h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
-                </Link>
-              </motion.div>
-            </div>
+              );
+            })}
           </div>
         </section>
-      </main>
 
-      {/* Footer */}
-    </div>
+        <section className="pb-14 sm:pb-20">
+          <SectionHeader title="Top awards" href="/awards" />
+          <div className="grid sm:grid-cols-2">
+            {awards.map((award, index) => (
+              <motion.div
+                key={award.name}
+                {...reveal(reduced, index * 0.025)}
+                className="grid grid-cols-[3rem_1fr] gap-4 border-b border-border py-5 sm:odd:border-r sm:odd:pr-7 sm:even:pl-7"
+              >
+                <div className="flex size-12 items-center justify-center overflow-hidden rounded-xl border border-border bg-foreground p-1.5">
+                  {award.image ? (
+                    <Image
+                      src={award.image}
+                      alt=""
+                      width={40}
+                      height={40}
+                      className="max-h-full object-contain"
+                    />
+                  ) : (
+                    <span className="text-xs font-semibold text-background">
+                      AI
+                    </span>
+                  )}
+                </div>
+                <div>
+                  <h3 className="font-medium">{award.name}</h3>
+                  <p className="mt-1 text-sm leading-6 text-muted-foreground">
+                    {award.detail}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+
+        <section className="pb-16 sm:pb-24">
+          <SectionHeader title="Products" href="/projects" />
+          <div>
+            {products.map((product, index) => (
+              <motion.div key={product.name} {...reveal(reduced, index * 0.04)}>
+                {index > 0 && <Separator />}
+                <Link
+                  href={product.href}
+                  target="_blank"
+                  className="group grid gap-4 py-7 sm:grid-cols-[4rem_1fr_auto] sm:items-center"
+                >
+                  <div className="flex size-16 items-center justify-center overflow-hidden rounded-2xl border border-border bg-foreground p-2">
+                    <Image
+                      src={product.logo}
+                      alt={`${product.name} logo`}
+                      width={54}
+                      height={54}
+                      className="max-h-full object-contain"
+                    />
+                  </div>
+                  <div>
+                    <div className="flex flex-wrap items-center gap-3">
+                      <h3 className="text-xl font-medium">{product.name}</h3>
+                      <Badge variant="secondary">{product.metric}</Badge>
+                    </div>
+                    <p className="mt-2 max-w-3xl leading-7 text-muted-foreground">
+                      {product.description}
+                    </p>
+                  </div>
+                  <ArrowUpRight className="text-muted-foreground transition-colors group-hover:text-primary" />
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+      </div>
+
+      <div className="home-diffusion-field min-h-[32rem] sm:min-h-[42rem]" aria-hidden="true" />
+    </main>
   );
 }

@@ -1,136 +1,129 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { useTheme } from "next-themes"
-import Link from "next/link"
-import { motion, AnimatePresence } from "framer-motion"
-import { Moon, Sun, Menu, X } from 'lucide-react'
-import { usePathname } from "next/navigation"
-import Image from "next/image"
+import { Github, Linkedin, Menu, Youtube } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { cn } from "@/lib/utils";
+
+const navItems = [
+  { name: "home", path: "/" },
+  { name: "projects", path: "/projects" },
+  { name: "ideology", path: "/ideology" },
+  { name: "blog", path: "/blog" },
+  { name: "awards", path: "/awards" },
+];
+
+const socials = [
+  { label: "GitHub", href: "https://github.com/riddhimanrana", icon: Github },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/riddhimanrana/",
+    icon: Linkedin,
+  },
+  {
+    label: "YouTube",
+    href: "https://youtube.com/@riddhimanrana",
+    icon: Youtube,
+  },
+];
 
 export default function NavBar() {
-  const [mounted, setMounted] = useState(false)
-  const { resolvedTheme, setTheme } = useTheme()
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
-  const pathname = usePathname()
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 8)
-    window.addEventListener("scroll", handleScroll, { passive: true })
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
-
-  if (!mounted) return null
-
-  const navItems = [
-    { name: "Home", path: "/" },
-    { name: "Projects", path: "/projects" },
-    { name: "Blog", path: "/blog" },
-    { name: "Awards", path: "/awards" },
-  ]
-
+  const pathname = usePathname();
   const isActive = (path: string) =>
-    path === "/" ? pathname === "/" : pathname.startsWith(path)
+    path === "/" ? pathname === "/" : pathname.startsWith(path);
 
   return (
-    <>
-      <header
-        className={`sticky top-0 z-50 bg-background border-b border-border transition-shadow duration-200 ${
-          scrolled ? "shadow-sm shadow-black/[0.06] dark:shadow-black/20" : ""
-        }`}
-      >
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative h-14 flex items-center">
-
-          {/* Logo */}
-          <Link href="/" className="relative z-10 flex items-center gap-2 group">
+    <header className="site-shell pt-5 sm:pt-7">
+      <div className="nav-capsule">
+        <Button variant="ghost" asChild className="rounded-full px-2.5">
+          <Link href="/" aria-label="Riddhiman Rana home">
             <Image
-              src="/avatar.png"
+              src="/profile.jpeg"
               alt="Riddhiman Rana"
-              width={26}
-              height={26}
-              loading="eager"
-              decoding="async"
-              className="rounded-sm"
+              width={32}
+              height={32}
+              className="size-8 rounded-full object-cover"
+              priority
             />
-            <span className="font-semibold text-base tracking-snug text-foreground group-hover:text-primary transition-colors duration-150">
-              riddhiman
+            <span className="hidden font-medium tracking-[-0.02em] sm:inline">
+              riddhiman rana
             </span>
           </Link>
+        </Button>
 
-          {/* Desktop nav — centered */}
-          <nav className="hidden md:flex items-center gap-1 absolute inset-x-0 justify-center z-0">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.path}
-                className={`relative px-3 py-1.5 text-sm transition-colors duration-150 ${
-                  isActive(item.path)
-                    ? "text-foreground font-medium"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                {item.name}
-                {isActive(item.path) && (
-                  <span className="absolute bottom-0 left-3 right-3 h-px bg-primary rounded-full" />
-                )}
+        <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-1 md:flex">
+          {navItems.map((item) => (
+            <Button
+              key={item.path}
+              variant="ghost"
+              size="sm"
+              asChild
+              className={cn(
+                "rounded-full px-3 text-muted-foreground hover:text-foreground",
+                isActive(item.path) && "bg-secondary/70 text-foreground"
+              )}
+            >
+              <Link href={item.path}>{item.name}</Link>
+            </Button>
+          ))}
+        </nav>
+
+        <div className="ml-auto hidden items-center gap-1 md:flex">
+          {socials.map(({ label, href, icon: Icon }) => (
+            <Button
+              key={label}
+              variant="ghost"
+              size="icon"
+              asChild
+              className="rounded-full text-muted-foreground hover:text-primary"
+            >
+              <Link href={href} target="_blank" aria-label={label}>
+                <Icon />
               </Link>
-            ))}
-          </nav>
-
-          {/* Right: theme toggle + mobile trigger */}
-          <div className="flex items-center gap-1 ml-auto z-10">
-            <button
-              onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-              className="p-2 rounded text-muted-foreground hover:text-foreground hover:bg-accent transition-colors duration-150"
-              aria-label="Toggle theme"
-            >
-              {resolvedTheme === "dark" ? <Sun size={16} strokeWidth={1.75} /> : <Moon size={16} strokeWidth={1.75} />}
-            </button>
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded text-muted-foreground hover:text-foreground hover:bg-accent transition-colors duration-150"
-              aria-label="Toggle menu"
-            >
-              {mobileMenuOpen ? <X size={16} strokeWidth={1.75} /> : <Menu size={16} strokeWidth={1.75} />}
-            </button>
-          </div>
+            </Button>
+          ))}
         </div>
-      </header>
 
-      {/* Mobile menu */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.15 }}
-            className="md:hidden fixed inset-x-0 top-14 bg-background border-b border-border z-40"
-          >
-            <nav className="flex flex-col px-4 py-3 gap-0.5">
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="ghost" size="icon" className="ml-auto rounded-full md:hidden">
+              <Menu />
+              <span className="sr-only">Open navigation</span>
+            </Button>
+          </SheetTrigger>
+          <SheetContent className="border-border bg-background">
+            <SheetHeader>
+              <SheetTitle>Riddhiman Rana</SheetTitle>
+              <SheetDescription>Portfolio navigation</SheetDescription>
+            </SheetHeader>
+            <nav className="mt-8 flex flex-col gap-1">
               {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.path}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`py-2 px-2 text-sm rounded transition-colors ${
-                    isActive(item.path)
-                      ? "text-foreground font-medium"
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
-                >
-                  {item.name}
-                </Link>
+                <SheetClose asChild key={item.path}>
+                  <Button
+                    variant={isActive(item.path) ? "secondary" : "ghost"}
+                    asChild
+                    className="h-12 justify-start"
+                  >
+                    <Link href={item.path}>{item.name}</Link>
+                  </Button>
+                </SheetClose>
               ))}
             </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
-  )
+          </SheetContent>
+        </Sheet>
+      </div>
+    </header>
+  );
 }

@@ -16,9 +16,9 @@ const overusedGrotesk = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Riddhiman Rana | Full Stack Developer & Competitive Programmer",
+  title: "Riddhiman Rana | Developer, Researcher & Founder",
   description:
-    "Hi, I'm Riddhiman Rana, a passionate full stack developer and competitive programmer. I'm a USACO Gold medalist and a freshman at Dougherty Valley High School, eager to explore the endless possibilities of technology.",
+    "Riddhiman Rana is a developer, researcher, and founder building thoughtful software at the intersection of product and real-world impact.",
   keywords: [
     "Riddhiman Rana",
     "Web Developer",
@@ -36,14 +36,14 @@ export const metadata: Metadata = {
     url: "https://riddhimanrana.com",
     title: "Riddhiman Rana | Full Stack Developer & Competitive Programmer",
     description:
-      "Hi, I'm Riddhiman Rana, a passionate full stack developer and competitive programmer.",
+      "Developer, researcher, and founder building thoughtful software with real-world impact.",
     siteName: "Riddhiman Rana Portfolio",
   },
   twitter: {
     card: "summary_large_image",
     title: "Riddhiman Rana | Full Stack Developer & Competitive Programmer",
     description:
-      "Hi, I'm Riddhiman Rana, a passionate full stack developer and competitive programmer.",
+      "Developer, researcher, and founder building thoughtful software with real-world impact.",
     creator: "@riddhimanrana",
   },
 };
@@ -64,12 +64,13 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" />
         {/* <link rel="me" href="https://mastodon.online/@rrcoder0167" /> */}
       </head>
-      <body className={`font-sans antialiased bg-background text-foreground ${overusedGrotesk.variable}`} style={{ fontFamily: "'Overused Grotesk', system-ui, sans-serif" }}>
+      <body className={`bg-background font-sans text-foreground antialiased ${overusedGrotesk.variable}`}>
         <PostHogProvider>
           <ThemeProvider
             attribute="class"
-            defaultTheme="system"
-            enableSystem
+            defaultTheme="dark"
+            forcedTheme="dark"
+            enableSystem={false}
             disableTransitionOnChange
           >
             <NavBar />

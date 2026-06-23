@@ -1,11 +1,14 @@
 import { getPostBySlug, getAllSlugs } from '@/utils/blog'
 import { MarkdownContent } from '@/components/markdown-content'
-import { Calendar, ArrowLeft } from 'lucide-react'
+import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
 import { formatDate } from '@/lib/utils'
 import { TableOfContents } from '@/components/toc'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const param = await params; // Ensure params is awaited
@@ -48,70 +51,57 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
   const formattedDate = formatDate(post.date)
   
   return (
-    <div className="min-h-screen bg-background text-foreground overflow-x-clip">
-      <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-16">
-        {/* Navigation - full width */}
-        <div className="max-w-5xl mx-auto mb-8">
-          <Link 
-            href="/blog" 
-            className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 group"
-          >
-            <ArrowLeft className="h-4 w-4 mr-1.5 transition-transform duration-200 group-hover:-translate-x-1" /> 
-            Back to all posts
-          </Link>
+    <div className="min-h-screen overflow-x-clip">
+      <main className="site-shell py-12 sm:py-16">
+        <div className="mx-auto mb-10 max-w-5xl">
+          <Button variant="ghost" asChild className="-ml-4">
+            <Link href="/blog">
+              <ArrowLeft data-icon="inline-start" />
+              All writing
+            </Link>
+          </Button>
         </div>
         
-        {/* Main layout with TOC sidebar */}
-        <div className="max-w-5xl mx-auto lg:grid lg:grid-cols-[1fr_180px] lg:gap-8 xl:gap-12">
-          {/* Article content */}
+        <div className="mx-auto max-w-5xl lg:grid lg:grid-cols-[1fr_180px] lg:gap-10">
           <div className="min-w-0">
-            {/* Post header */}
-            <header className="mb-10">
-              <div className="flex flex-wrap gap-2 mb-4">
+            <header className="mb-12">
+              <div className="mb-5 flex flex-wrap gap-2">
                 {post.tags.map((tag, index) => (
-                  <span
+                  <Badge
                     key={index}
-                    className="text-xs bg-muted text-muted-foreground px-3 py-1 rounded-sm font-medium"
+                    variant="secondary"
                   >
                     {tag}
-                  </span>
+                  </Badge>
                 ))}
               </div>
               
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold mb-4 leading-tight tracking-tight">{post.title}</h1>
+              <h1 className="max-w-4xl text-4xl font-medium leading-tight tracking-[-0.045em] sm:text-5xl">
+                {post.title}
+              </h1>
               
-              <div className="flex items-center text-sm text-muted-foreground">
-                <Calendar className="h-4 w-4 mr-1.5" /> 
-                <span>{formattedDate}</span>
-              </div>
+              <p className="mt-5 text-sm text-muted-foreground">
+                {formattedDate}
+              </p>
             </header>
             
-            {/* Main article content */}
             <article>
-              <div className="bg-muted/30 rounded-sm border border-border p-6 sm:p-10">
+              <Separator className="mb-10" />
+              <div className="max-w-3xl">
                 <MarkdownContent content={post.content} />
               </div>
               
-              {/* Post footer with navigation */}
-              <div className="mt-10 pt-6 border-t border-border">
-                <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-                  <Link 
-                    href="/blog" 
-                    className="inline-flex items-center px-5 py-2.5 bg-primary text-primary-foreground rounded-sm hover:opacity-90 transition-all duration-200 font-medium text-sm group"
-                  >
-                    <ArrowLeft className="h-4 w-4 mr-2 transition-transform duration-200 group-hover:-translate-x-1" /> 
-                    Back to all posts
+              <div className="mt-12 border-t border-border pt-6">
+                <Button variant="outline" asChild>
+                  <Link href="/blog">
+                    <ArrowLeft data-icon="inline-start" />
+                    Back to blog
                   </Link>
-                  
-                  <div className="text-sm text-muted-foreground">
-                    Published on {formattedDate}
-                  </div>
-                </div>
+                </Button>
               </div>
             </article>
           </div>
           
-          {/* Table of Contents sidebar - desktop only */}
           <aside className="hidden lg:block min-w-0 lg:self-stretch">
             <div className="sticky top-24">
               <TableOfContents content={post.content} />
@@ -120,7 +110,6 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
         </div>
       </main>
       
-      {/* Mobile TOC - rendered outside main content flow */}
       <div className="lg:hidden">
         <TableOfContents content={post.content} />
       </div>
