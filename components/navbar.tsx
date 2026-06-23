@@ -60,6 +60,13 @@ const socials = [
 const LIQUID_GL_OPTS = {
   target: ".nav-glass-pane",
   snapshot: "body",
+  refraction: 0.026,
+  bevelDepth: 0.119,
+  bevelWidth: 0.057,
+  frost: 1,
+  magnify: 1.018,
+  shadow: true,
+  specular: true,
 };
 
 const UNSUPPORTED_HTML2CANVAS_COLOR = /(oklch|oklab|lch|lab|color-mix)\(/i;
@@ -119,9 +126,46 @@ function installHtml2CanvasSnapshotGuards() {
           }
           body::before,
           body::after,
-          .nav-capsule::before {
+          [data-liquid-ignore] {
             content: none !important;
             display: none !important;
+          }
+          [data-liquid-snapshot-shell] .nav-capsule {
+            background: transparent !important;
+            border-color: transparent !important;
+            box-shadow: none !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+          }
+          [data-liquid-snapshot-shell] .nav-capsule::before,
+          [data-liquid-snapshot-shell] .nav-glass-pane {
+            content: none !important;
+            display: none !important;
+          }
+          [data-liquid-snapshot-shell] .nav-capsule > :not(.nav-glass-pane) {
+            opacity: 0 !important;
+          }
+          .diffusion-name,
+          .luxury-gold-text,
+          .luxury-silver-text,
+          .luxury-bronze-text,
+          .award-badge-major span,
+          .award-badge-notable span,
+          .award-badge-honorable span {
+            color: #dbeafe !important;
+            background: none !important;
+            -webkit-background-clip: border-box !important;
+            background-clip: border-box !important;
+            filter: none !important;
+          }
+          :root:not(.dark) .diffusion-name,
+          :root:not(.dark) .luxury-gold-text,
+          :root:not(.dark) .luxury-silver-text,
+          :root:not(.dark) .luxury-bronze-text,
+          :root:not(.dark) .award-badge-major span,
+          :root:not(.dark) .award-badge-notable span,
+          :root:not(.dark) .award-badge-honorable span {
+            color: #1d4ed8 !important;
           }
         `;
         clonedDoc.head.appendChild(clonePatch);
@@ -301,10 +345,23 @@ export default function NavBar() {
   // On pathname change: refresh the snapshot after new page paints.
   useEffect(() => {
     const win = window as any;
-    if (!win.__liquidGLRenderer__ || !glEnabledRef.current) return;
-    const id = setTimeout(() => {
-      win.__liquidGLRenderer__?.captureSnapshot?.();
-    }, pathname === "/" ? 1300 : 700);
+    const renderer = win.__liquidGLRenderer__;
+    if (!renderer || !glEnabledRef.current) return;
+
+    setGlReady(false);
+    if (renderer.canvas) {
+      renderer.canvas.style.opacity = "0";
+    }
+
+    const id = setTimeout(async () => {
+      await renderer.captureSnapshot?.();
+      renderer.render?.();
+      if (!glEnabledRef.current) return;
+      if (renderer.canvas) {
+        renderer.canvas.style.opacity = "1";
+      }
+      setGlReady(true);
+    }, pathname === "/" ? 220 : 90);
     return () => clearTimeout(id);
   }, [pathname]);
 
@@ -354,19 +411,32 @@ export default function NavBar() {
   const isActive = (path: string) =>
     path === "/" ? pathname === "/" : pathname.startsWith(path);
 
+  const prepareForNavigation = () => {
+    const renderer = (window as any).__liquidGLRenderer__;
+    if (!renderer || !glEnabledRef.current) return;
+    setGlReady(false);
+    if (renderer.canvas) {
+      renderer.canvas.style.opacity = "0";
+    }
+  };
+
   return (
-    <header className="sticky top-0 z-50 w-full py-4 transition-all duration-300">
+    <header
+      className="sticky top-0 z-50 w-full py-4 transition-all duration-300"
+      data-liquid-snapshot-shell
+    >
       <div className="site-shell">
         <div
           className={cn(
             "nav-capsule transition-all duration-700",
-            !glReady && "nav-capsule-css-fallback"
+            !glReady && "nav-capsule-css-fallback",
+            glReady && glEnabled && "nav-capsule-liquid-active"
           )}
           data-liquid-fixed
         >
           <div className="nav-glass-pane" aria-hidden="true" />
           <Button variant="ghost" asChild className="nav-control px-2.5">
-            <Link href="/" aria-label="Riddhiman Rana home">
+            <Link href="/" aria-label="Riddhiman Rana home" onClick={prepareForNavigation}>
               <Image
                 src="/profile1.jpeg"
                 alt="Riddhiman Rana"
@@ -393,7 +463,7 @@ export default function NavBar() {
                   isActive(item.path) && "nav-control-active"
                 )}
               >
-                <Link href={item.path}>{item.name}</Link>
+                <Link href={item.path} onClick={prepareForNavigation}>{item.name}</Link>
               </Button>
             ))}
           </nav>
@@ -545,7 +615,7 @@ export default function NavBar() {
                             : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
                         )}
                       >
-                        <Link href={item.path}>{item.name}</Link>
+                        <Link href={item.path} onClick={prepareForNavigation}>{item.name}</Link>
                       </Button>
                     </SheetClose>
                   ))}

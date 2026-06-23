@@ -3,7 +3,7 @@
 import { ArrowUpRight, Download, ExternalLink } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { useState } from "react";
 
 import { ContactDialog } from "@/components/contact-dialog";
@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import awardsData from "@/data/awards.json";
 
-const fadeInVariants = {
+const fadeInVariants: Variants = {
   hidden: { opacity: 0, y: 15, filter: "blur(3px)" },
   visible: (delay: number) => ({
     opacity: 1,
@@ -24,7 +24,7 @@ const fadeInVariants = {
     transition: {
       duration: 0.7,
       delay,
-      ease: [0.16, 1, 0.3, 1]
+      ease: [0.16, 1, 0.3, 1] as const
     }
   })
 };

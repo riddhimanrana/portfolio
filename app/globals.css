@@ -163,14 +163,14 @@ html:has(body[data-scroll-locked]) {
   .nav-capsule {
     @apply relative flex h-16 items-center overflow-hidden rounded-[1.65rem] border px-2;
     isolation: isolate;
-    border-color: hsl(var(--border) / 0.58);
+    border-color: hsl(var(--border) / 0.46);
     background:
-      linear-gradient(110deg, hsl(210 33% 96% / 0.1), transparent 34%),
-      linear-gradient(180deg, hsl(var(--card) / 0.38), hsl(var(--card) / 0.22));
+      linear-gradient(110deg, hsl(210 33% 96% / 0.08), transparent 34%),
+      linear-gradient(180deg, hsl(var(--card) / 0.3), hsl(var(--card) / 0.16));
     box-shadow:
-      inset 0 1px 0 hsl(210 33% 96% / 0.16),
-      inset 0 -1px 0 hsl(220 45% 2% / 0.24),
-      0 18px 52px -36px hsl(211 92% 62% / 0.46);
+      inset 0 1px 0 hsl(210 33% 96% / 0.14),
+      inset 0 -1px 0 hsl(220 45% 2% / 0.18),
+      0 18px 52px -38px hsl(211 92% 62% / 0.4);
     z-index: 1;
     transition: background 0.35s, border-color 0.35s, box-shadow 0.35s, backdrop-filter 0.8s;
   }
@@ -182,8 +182,8 @@ html:has(body[data-scroll-locked]) {
     content: "";
     border-radius: inherit;
     background:
-      linear-gradient(90deg, hsl(0 0% 100% / 0.12), transparent 18%, transparent 72%, hsl(0 0% 100% / 0.08)),
-      hsl(var(--background) / 0.28);
+      linear-gradient(90deg, hsl(0 0% 100% / 0.1), transparent 18%, transparent 72%, hsl(0 0% 100% / 0.08)),
+      hsl(var(--background) / 0.2);
     pointer-events: none;
   }
 
@@ -202,28 +202,50 @@ html:has(body[data-scroll-locked]) {
 
   .nav-capsule-css-fallback {
     background:
-      linear-gradient(115deg, hsl(0 0% 100% / 0.14), transparent 30%),
-      hsl(var(--card) / 0.44);
-    backdrop-filter: blur(24px) saturate(1.75);
-    -webkit-backdrop-filter: blur(24px) saturate(1.75);
+      linear-gradient(115deg, hsl(0 0% 100% / 0.12), transparent 30%),
+      hsl(var(--card) / 0.36);
+    backdrop-filter: blur(34px) saturate(1.85);
+    -webkit-backdrop-filter: blur(34px) saturate(1.85);
+  }
+
+  .nav-capsule-liquid-active {
+    border-color: hsl(var(--border) / 0.34);
+    background:
+      linear-gradient(180deg, hsl(0 0% 100% / 0.08), hsl(0 0% 100% / 0.025)),
+      hsl(var(--card) / 0.18);
+    box-shadow:
+      inset 0 1px 0 hsl(0 0% 100% / 0.14),
+      inset 0 -1px 0 hsl(0 0% 0% / 0.22),
+      0 18px 52px -40px hsl(211 92% 62% / 0.34);
+  }
+
+  .nav-capsule-liquid-active::before {
+    opacity: 0.16;
   }
 
   .nav-control {
-    @apply rounded-full text-muted-foreground transition-colors duration-200;
+    @apply rounded-full text-muted-foreground transition-all duration-200;
+    border: 1px solid transparent;
   }
 
   .nav-control:hover {
     color: hsl(var(--foreground));
-    background: hsl(var(--foreground) / 0.075);
+    border-color: hsl(var(--foreground) / 0.08);
+    background:
+      linear-gradient(180deg, hsl(0 0% 100% / 0.08), hsl(var(--foreground) / 0.055));
+    box-shadow:
+      inset 0 1px 0 hsl(0 0% 100% / 0.08),
+      0 10px 26px -20px hsl(var(--foreground) / 0.7);
   }
 
   .nav-control-active {
     color: hsl(var(--foreground));
+    border-color: hsl(var(--foreground) / 0.1);
     background:
-      linear-gradient(180deg, hsl(var(--foreground) / 0.16), hsl(var(--foreground) / 0.075));
+      linear-gradient(180deg, hsl(0 0% 100% / 0.12), hsl(var(--foreground) / 0.1));
     box-shadow:
       inset 0 1px 0 hsl(0 0% 100% / 0.14),
-      0 8px 20px -14px hsl(var(--foreground) / 0.7);
+      0 10px 28px -18px hsl(var(--foreground) / 0.7);
   }
 
   .appearance-menu {
