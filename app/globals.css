@@ -161,17 +161,80 @@ html:has(body[data-scroll-locked]) {
   }
 
   .nav-capsule {
-    @apply relative flex h-16 items-center rounded-[1.65rem] border px-2;
-    border-color: hsl(var(--border) / 0.4);
+    @apply relative flex h-16 items-center overflow-hidden rounded-[1.65rem] border px-2;
+    isolation: isolate;
+    border-color: hsl(var(--border) / 0.58);
     background:
-      linear-gradient(110deg, hsl(210 33% 96% / 0.08), transparent 28%),
-      hsl(var(--card) / 0.45);
+      linear-gradient(110deg, hsl(210 33% 96% / 0.1), transparent 34%),
+      linear-gradient(180deg, hsl(var(--card) / 0.38), hsl(var(--card) / 0.22));
     box-shadow:
-      inset 0 1px 0 hsl(210 33% 96% / 0.08),
-      0 24px 70px -46px hsl(211 92% 62% / 0.42);
-    backdrop-filter: url(#liquid-glass) blur(20px) saturate(130%);
-    -webkit-backdrop-filter: url(#liquid-glass) blur(20px) saturate(130%);
-    transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+      inset 0 1px 0 hsl(210 33% 96% / 0.16),
+      inset 0 -1px 0 hsl(220 45% 2% / 0.24),
+      0 18px 52px -36px hsl(211 92% 62% / 0.46);
+    z-index: 1;
+    transition: background 0.35s, border-color 0.35s, box-shadow 0.35s, backdrop-filter 0.8s;
+  }
+
+  .nav-capsule::before {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    content: "";
+    border-radius: inherit;
+    background:
+      linear-gradient(90deg, hsl(0 0% 100% / 0.12), transparent 18%, transparent 72%, hsl(0 0% 100% / 0.08)),
+      hsl(var(--background) / 0.28);
+    pointer-events: none;
+  }
+
+  .nav-glass-pane {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: inherit;
+    pointer-events: none;
+  }
+
+  .nav-capsule > :not(.nav-glass-pane) {
+    position: relative;
+    z-index: 2;
+  }
+
+  .nav-capsule-css-fallback {
+    background:
+      linear-gradient(115deg, hsl(0 0% 100% / 0.14), transparent 30%),
+      hsl(var(--card) / 0.44);
+    backdrop-filter: blur(24px) saturate(1.75);
+    -webkit-backdrop-filter: blur(24px) saturate(1.75);
+  }
+
+  .nav-control {
+    @apply rounded-full text-muted-foreground transition-colors duration-200;
+  }
+
+  .nav-control:hover {
+    color: hsl(var(--foreground));
+    background: hsl(var(--foreground) / 0.075);
+  }
+
+  .nav-control-active {
+    color: hsl(var(--foreground));
+    background:
+      linear-gradient(180deg, hsl(var(--foreground) / 0.16), hsl(var(--foreground) / 0.075));
+    box-shadow:
+      inset 0 1px 0 hsl(0 0% 100% / 0.14),
+      0 8px 20px -14px hsl(var(--foreground) / 0.7);
+  }
+
+  .appearance-menu {
+    background:
+      linear-gradient(135deg, hsl(0 0% 100% / 0.12), transparent 36%),
+      hsl(var(--card) / 0.74);
+    backdrop-filter: blur(24px) saturate(1.45);
+    -webkit-backdrop-filter: blur(24px) saturate(1.45);
+    box-shadow:
+      inset 0 1px 0 hsl(0 0% 100% / 0.12),
+      0 24px 70px -42px hsl(215 80% 40% / 0.55);
   }
 
   .page-kicker {

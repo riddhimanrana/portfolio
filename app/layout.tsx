@@ -8,6 +8,7 @@ import { Toaster } from "@/components/toaster";
 import FooterWrapper from "@/components/footer-wrapper";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { PostHogProvider } from "@/components/PostHogProvider";
+import Script from "next/script";
 
 const overusedGrotesk = localFont({
   src: "../public/fonts/OverusedGrotesk-VF.woff2",
@@ -73,6 +74,14 @@ export default function RootLayout({
       <body
         className={`bg-background font-sans text-foreground antialiased ${overusedGrotesk.variable} ${pixelta.variable}`}
       >
+        <Script
+          src="https://cdn.jsdelivr.net/npm/html2canvas-pro@2.1.1/dist/html2canvas-pro.min.js"
+          strategy="afterInteractive"
+        />
+        <Script
+          src="/scripts/liquidGL.js"
+          strategy="afterInteractive"
+        />
         <PostHogProvider>
           <ThemeProvider
             attribute="class"

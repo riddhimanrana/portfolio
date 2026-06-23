@@ -227,7 +227,7 @@ export default function AwardsPage() {
                 <section
                   key={year}
                   id={`awards-${year}`}
-                  className="scroll-mt-8"
+                  className="scroll-mt-28"
                 >
                   <div className="mb-4 grid grid-cols-[1rem_1fr] items-center gap-4 sm:grid-cols-[6rem_1rem_1fr]">
                     <div className="hidden sm:block">
@@ -244,7 +244,7 @@ export default function AwardsPage() {
 
                   <div className="ml-8 border-y border-border sm:ml-[7.5rem]">
                     {groupedAwards[year].map((award, index) => (
-                      <div key={award.id} id={`award-${award.id}`} className="scroll-mt-24">
+                      <div key={award.id} id={`award-${award.id}`} className="scroll-mt-28">
                         {index > 0 && <Separator />}
 
                         <button
@@ -274,7 +274,7 @@ export default function AwardsPage() {
           </div>
 
           <aside className="hidden lg:block">
-            <div className="sticky top-8">
+            <div className="sticky top-28">
               {selectedAward && <AwardInspector award={selectedAward} />}
             </div>
           </aside>

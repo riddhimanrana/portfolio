@@ -4,6 +4,7 @@ import { ArrowUpRight, Download, ExternalLink } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 import { ContactDialog } from "@/components/contact-dialog";
 import { HeroProductMap } from "@/components/hero-product-map";
@@ -27,6 +28,8 @@ const fadeInVariants = {
     }
   })
 };
+
+let homeHeroAnimated = false;
 
 const topAwardIds = [
   "usaco-platinum",
@@ -91,6 +94,21 @@ function SectionHeader({
 }
 
 export default function Home() {
+  const [shouldAnimateHero, setShouldAnimateHero] = useState(
+    () => !homeHeroAnimated
+  );
+  const heroMotionState = shouldAnimateHero
+    ? { initial: "hidden", animate: "visible" }
+    : { initial: "visible", animate: "visible" };
+
+  const markHeroMotionComplete = () => {
+    if (typeof window === "undefined") return;
+    homeHeroAnimated = true;
+    setShouldAnimateHero(false);
+    (window as any).__portfolioHeroMotionDone = true;
+    window.dispatchEvent(new Event("portfolio:hero-motion-complete"));
+  };
+
   return (
     <main>
       <div className="site-shell">
@@ -99,8 +117,7 @@ export default function Home() {
             <motion.div 
               variants={fadeInVariants} 
               custom={0.0} 
-              initial="hidden" 
-              animate="visible"
+              {...heroMotionState}
               className="mb-6 flex flex-wrap items-center gap-2 text-sm text-muted-foreground"
             >
               <span>Founder of</span>
@@ -115,6 +132,7 @@ export default function Home() {
                   width={18}
                   height={18}
                   className="rounded-full object-contain mr-1"
+                  style={{ width: 18, height: 18 }}
                 />
                 Dicy
                 <ExternalLink className="text-blue-500 transition-all duration-300 ease-out opacity-0 scale-50 w-0 group-hover:w-3 group-hover:opacity-100 group-hover:scale-100 group-hover:ml-1 h-3" />
@@ -140,8 +158,7 @@ export default function Home() {
             <motion.h1 
               variants={fadeInVariants} 
               custom={0.1} 
-              initial="hidden" 
-              animate="visible"
+              {...heroMotionState}
               className="text-4xl font-medium tracking-[-0.055em] sm:text-6xl text-foreground"
             >
               hi, i&apos;m <span className="diffusion-name cursor-default">riddhiman</span>.
@@ -150,8 +167,7 @@ export default function Home() {
             <motion.p 
               variants={fadeInVariants} 
               custom={0.25} 
-              initial="hidden" 
-              animate="visible"
+              {...heroMotionState}
               className="mt-5 max-w-3xl text-2xl leading-9 tracking-[-0.035em] sm:text-4xl sm:leading-[1.15]"
             >
               i build products i&apos;m truly{" "}
@@ -162,8 +178,7 @@ export default function Home() {
             <motion.div 
               variants={fadeInVariants} 
               custom={0.4} 
-              initial="hidden" 
-              animate="visible"
+              {...heroMotionState}
               className="mt-8 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8"
             >
               <p>
@@ -176,8 +191,8 @@ export default function Home() {
             <motion.div 
               variants={fadeInVariants} 
               custom={0.55} 
-              initial="hidden" 
-              animate="visible"
+              {...heroMotionState}
+              onAnimationComplete={markHeroMotionComplete}
               className="mt-8 flex flex-wrap gap-2"
             >
               <Button asChild>
