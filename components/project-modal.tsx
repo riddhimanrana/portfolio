@@ -2,7 +2,7 @@
 
 import type { Project } from "@/types/project"
 import { motion, AnimatePresence } from "framer-motion"
-import { X, ExternalLink } from "lucide-react"
+import { ExternalLink } from "lucide-react"
 import Image from "next/image"
 import { useEffect } from "react"
 import { GitHubIcon } from "@/components/brand-icons"
@@ -51,101 +51,92 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ duration: 0.2 }}
-            className="relative bg-card text-card-foreground rounded-sm shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col border border-border"
+            className="relative flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-sm border border-border bg-card text-card-foreground shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Header with image */}
-            {project.image && (
-            <div className="relative p-3 bg-muted">
- 
-                <div className="relative h-64 sm:h-72 md:h-80 overflow-hidden rounded-sm group">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    fill
-                    className="rounded-sm object-contain transition-transform duration-500 ease-in-out group-hover:scale-105 cursor-pointer"
-                  />
-                </div>
-              
-              
-            </div>
-            )}
-
-            {/* Content */}
-            <div className="flex-1 overflow-y-auto p-6">
-              <div className="flex flex-wrap gap-2 mb-4">
-                {project.tags.map((tag, index) => (
-                  <span
-                    key={index}
-                    className="text-xs bg-muted text-muted-foreground px-3 py-1 rounded-sm"
-                  >
-                    {tag}
-                  </span>
-                ))}
-                <span
-                  className={`text-xs bg-muted text-muted-foreground px-3 py-1 rounded-sm ml-auto hidden sm:inline ${project.image ? 'ml-auto' : 'mr-10'}`}
-                >
-                  {project.year}
-                </span>
-                <button
-                onClick={onClose}
-                className="absolute top-4 right-4 p-2 ml-10 rounded-sm bg-foreground/10 hover:bg-foreground/20 text-foreground transition-colors"
-                aria-label="Close modal"
-              >
-                <X className="h-5 w-5" />
-              </button>
-              </div>
-
-              <div className="flex items-center gap-3 mb-2">
-                {project.logo && (
-                  <div className="relative w-10 h-10 flex-shrink-0">
-                    <Image
-                      src={project.logo}
-                      alt={`${project.title} logo`}
-                      fill
-                      sizes="(max-width: 640px) 40px, 48px *(max-width: 1024px) 56px, 80px"
-                      className="object-contain rounded-sm"
-                      onError={(e) => {
-                        e.currentTarget.style.display = 'none'
-                      }}
-                    />
+            <div className="flex min-h-0 flex-1 flex-col">
+              <div className="flex-1 min-h-0 overflow-y-auto">
+                {project.image && (
+                  <div className="relative bg-muted p-3">
+                    <div className="group relative h-64 overflow-hidden rounded-sm sm:h-72 md:h-80">
+                      <Image
+                        src={project.image}
+                        alt={project.title}
+                        fill
+                        className="cursor-pointer rounded-sm object-contain transition-transform duration-500 ease-in-out group-hover:scale-105"
+                      />
+                    </div>
                   </div>
                 )}
-                <h2 className="text-2xl font-bold">{project.title}</h2>
-              </div>
-              <p className="text-muted-foreground mb-6 text-sm sm:text-base font-medium">{project.tagline}</p>
 
-              <div className="prose dark:prose-invert max-w-none">
-                {project.description.split("\n\n").map((paragraph, index) => (
-                  <p key={index}>{paragraph}</p>
-                ))}
-              </div>
-            </div>
+                <div className="p-6">
+                  <div className="mb-4 flex flex-wrap gap-2">
+                    {project.tags.map((tag, index) => (
+                      <span
+                        key={index}
+                        className="rounded-sm bg-muted px-3 py-1 text-xs text-muted-foreground"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                    <span className="ml-auto hidden rounded-sm bg-muted px-3 py-1 text-xs text-muted-foreground sm:inline">
+                      {project.year}
+                    </span>
+                  </div>
 
-            {/* Footer with links */}
-            <div className="border-t border-border p-4 flex justify-end space-x-3">
-              {project.repoLink && (
-                <a
-                  href={project.repoLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center px-4 py-2 rounded-sm bg-secondary text-secondary-foreground hover:bg-muted transition-colors text-sm font-medium"
-                >
-                  <GitHubIcon className="mr-2 size-4" />
-                  View Code
-                </a>
-              )}
-              {project.projectLink && (
-                <a
-                  href={project.projectLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center px-4 py-2 rounded-sm bg-primary text-primary-foreground hover:opacity-90 transition-colors text-sm font-medium"
-                >
-                  <ExternalLink className="h-4 w-4 mr-2" />
-                  Visit Project
-                </a>
-              )}
+                  <div className="mb-2 flex items-center gap-3">
+                    {project.logo && (
+                      <div className="relative h-10 w-10 flex-shrink-0">
+                        <Image
+                          src={project.logo}
+                          alt={`${project.title} logo`}
+                          fill
+                          sizes="(max-width: 640px) 40px, 48px *(max-width: 1024px) 56px, 80px"
+                          className="rounded-sm object-contain"
+                          onError={(e) => {
+                            e.currentTarget.style.display = "none"
+                          }}
+                        />
+                      </div>
+                    )}
+                    <h2 className="text-2xl font-bold">{project.title}</h2>
+                  </div>
+                  <p className="mb-6 text-sm font-medium text-muted-foreground sm:text-base">
+                    {project.tagline}
+                  </p>
+
+                  <div className="prose dark:prose-invert max-w-none">
+                    {project.description.split("\n\n").map((paragraph, index) => (
+                      <p key={index}>{paragraph}</p>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex justify-end gap-3 border-t border-border p-4">
+                {project.repoLink && (
+                  <a
+                    href={project.repoLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center rounded-sm bg-secondary px-4 py-2 text-sm font-medium text-secondary-foreground transition-colors hover:bg-muted"
+                  >
+                    <GitHubIcon className="mr-2 size-4" />
+                    View Code
+                  </a>
+                )}
+                {project.projectLink && (
+                  <a
+                    href={project.projectLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center rounded-sm bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:opacity-90"
+                  >
+                    <ExternalLink className="mr-2 h-4 w-4" />
+                    Visit Project
+                  </a>
+                )}
+              </div>
             </div>
           </motion.div>
         </div>
