@@ -1,0 +1,93 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import { ArrowLeft } from "lucide-react";
+
+import Layout from "@/layouts/Layout.astro";
+import { MarkdownContent } from "@/components/markdown-content";
+import { TableOfContents } from "@/components/toc";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { formatDate } from "@/lib/utils";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+interface Props {
+  post: CollectionEntry<"blog">;
+}
+
+const { post } = Astro.props;
+const content = post.body ?? "";
+const formattedDate = formatDate(post.data.date);
+---
+
+<Layout
+  title={`${post.data.title} | Riddhiman Rana`}
+  description={post.data.excerpt}
+  keywords={post.data.tags}
+>
+  <div class="min-h-screen overflow-x-clip">
+    <main class="site-shell py-12 sm:py-16">
+      <div class="mx-auto mb-10 max-w-5xl">
+        <Button variant="ghost" className="-ml-4" asChild>
+          <a href="/blog">
+            <ArrowLeft data-icon="inline-start" />
+            All writing
+          </a>
+        </Button>
+      </div>
+
+      <div class="mx-auto max-w-5xl lg:grid lg:grid-cols-[1fr_180px] lg:gap-10">
+        <div class="min-w-0">
+          <header class="mb-12">
+            <div class="mb-5 flex flex-wrap gap-2">
+              {post.data.tags.map((tag) => <Badge variant="secondary">{tag}</Badge>)}
+            </div>
+
+            <h1
+              class="max-w-4xl text-4xl font-medium leading-tight tracking-[-0.045em] sm:text-5xl"
+            >
+              {post.data.title}
+            </h1>
+
+            <p class="mt-5 text-sm text-muted-foreground">
+              {formattedDate}
+            </p>
+          </header>
+
+          <article>
+            <Separator className="mb-10" />
+            <div class="max-w-3xl">
+              <MarkdownContent content={content} client:load />
+            </div>
+
+            <div class="mt-12 border-t border-border pt-6">
+              <Button variant="outline" asChild>
+                <a href="/blog">
+                  <ArrowLeft data-icon="inline-start" />
+                  Back to blog
+                </a>
+              </Button>
+            </div>
+          </article>
+        </div>
+
+        <aside class="hidden lg:block min-w-0 lg:self-stretch">
+          <div class="sticky top-24">
+            <TableOfContents content={content} client:load />
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <div class="lg:hidden">
+      <TableOfContents content={content} client:load />
+    </div>
+  </div>
+</Layout>

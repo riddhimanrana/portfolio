@@ -1,0 +1,1 @@
+import{o as e,t}from"./react.0T9Avz-T.js";import{t as n}from"./jsx-runtime.BQ_2vH6s.js";var r=e(t(),1),i=n(),a=r.forwardRef(({href:e,target:t,rel:n,children:r,...a},o)=>{let s=/^https?:\/\//.test(e);return(0,i.jsx)(`a`,{ref:o,href:e,target:t,rel:n??(t===`_blank`||s?`noopener noreferrer`:void 0),...a,children:r})});a.displayName=`Link`;export{a as t};

@@ -1,0 +1,143 @@
+---
+import "@/styles/globals.css";
+import NavBar from "@/components/navbar";
+import Footer from "@/components/footer";
+
+interface Props {
+  title?: string;
+  description?: string;
+  keywords?: string[];
+}
+
+const {
+  title = "Riddhiman Rana | Developer, Researcher & Founder",
+  description = "Riddhiman Rana is a developer, researcher, and founder building thoughtful software at the intersection of product and real-world impact.",
+  keywords = [
+    "Riddhiman Rana",
+    "Web Developer",
+    "Competitive Programmer",
+    "USACO",
+    "Portfolio",
+    "Astro",
+    "React",
+  ],
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const pathname = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords.join(", ")} />
+    <meta name="author" content="Riddhiman Rana" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta
+      name="google-site-verification"
+      content="r_ZlioncOUkRZdQRZ9V7xI0Y9eO6wxnqD5l5-JMeqoY"
+    />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Riddhiman Rana Portfolio" />
+    <meta
+      property="og:title"
+      content="Riddhiman Rana | Full Stack Developer & Competitive Programmer"
+    />
+    <meta
+      property="og:description"
+      content="Developer, researcher, and founder building thoughtful software with real-world impact."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Riddhiman Rana | Full Stack Developer & Competitive Programmer"
+    />
+    <meta
+      name="twitter:description"
+      content="Developer, researcher, and founder building thoughtful software with real-world impact."
+    />
+    <meta name="twitter:creator" content="@riddhimanrana" />
+
+    <link
+      rel="preload"
+      href="/fonts/OverusedGrotesk-VF.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <!-- Pre-paint theme: mirrors src/lib/shims/theme.ts (key "theme", default "dark", system supported) -->
+    <script is:inline>
+      (function () {
+        try {
+          var stored = localStorage.getItem("theme");
+          var theme =
+            stored === "light" || stored === "dark" || stored === "system"
+              ? stored
+              : "dark";
+          var resolved =
+            theme === "system"
+              ? window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light"
+              : theme;
+          document.documentElement.classList.toggle("dark", resolved === "dark");
+          document.documentElement.style.colorScheme = resolved;
+        } catch (e) {}
+      })();
+    </script>
+
+    <!-- Liquid glass navbar dependencies (loaded off the critical path) -->
+    <script
+      is:inline
+      defer
+      src="https://cdn.jsdelivr.net/npm/html2canvas-pro@2.1.1/dist/html2canvas-pro.min.js"
+    ></script>
+    <script is:inline defer src="/scripts/liquidGL.js"></script>
+  </head>
+  <body class="bg-background font-sans text-foreground antialiased">
+    <div class="flex flex-col min-h-screen">
+      <NavBar client:load pathname={pathname} />
+      <div class="flex-1">
+        <slot />
+      </div>
+      <Footer client:load />
+    </div>
+
+    <script>
+      import posthog from "posthog-js";
+      import { injectSpeedInsights } from "@vercel/speed-insights";
+
+      if (import.meta.env.PROD) {
+        injectSpeedInsights({});
+
+        const posthogKey = import.meta.env.PUBLIC_POSTHOG_KEY;
+        if (posthogKey) {
+          posthog.init(posthogKey, {
+            api_host: "/ingest",
+            ui_host: "https://us.posthog.com",
+            capture_pageview: false,
+            capture_pageleave: true,
+            capture_exceptions: true,
+            disable_surveys: true,
+            advanced_disable_feature_flags: true,
+            debug: false,
+          });
+          posthog.capture("$pageview", {
+            $current_url: window.location.href,
+          });
+        }
+      }
+    </script>
+  </body>
+</html>
