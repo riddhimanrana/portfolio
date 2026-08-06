@@ -6,9 +6,18 @@ Mostly performance and SEO optimized and scores between 90-100 on [Lighthouse](h
 
 ## Tech Stack
 
-* **Framework**: Next.js
-* **Styling**: Tailwind CSS
+* **Framework**: Astro (React islands for interactive parts)
+* **Styling**: Tailwind CSS v4 + shadcn/ui
+* **Content**: Astro content collections (markdown blog)
 * **Deployment**: Vercel
+
+## Development
+
+```bash
+bun install
+bun run dev      # dev server on :4321
+bun run verify   # astro check + build + vitest
+```
 
 ## License
 
