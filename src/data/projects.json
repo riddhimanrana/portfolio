@@ -106,7 +106,6 @@
     "title": "PyEcoHome Energy Tracker",
     "tagline": "Home energy tracking application built in Python",
     "description": "PyEcoHome is a Python-based tool for tracking and analyzing home energy consumption. It helps users monitor usage patterns, identify savings opportunities, and make eco-friendly choices.\nI built this for the 2022 Congressional App Challenge and got selected as a finalist. Both of my demo and submission videos are available on my YouTube channel.",
-    "image": "/projects/pyecohome-energy-tracker.png",
     "logo": "/projects/logos/pyecohome-energy-tracker.png",
     "tags": ["Python", "Tkinter", "Pandas"],
     "year": "2022",

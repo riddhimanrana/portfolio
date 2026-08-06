@@ -1,0 +1,130 @@
+import { beforeAll, describe, expect, it } from "vitest";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { join } from "node:path";
+
+import { KNOWN_MISSING_BLOG_IMAGES } from "./known-missing";
+
+// These tests validate the built output. Run `astro build` first (npm run verify does).
+const root = join(import.meta.dirname, "..");
+const dist = join(root, "dist");
+const publicDir = join(root, "public");
+
+const blogSlugs = readdirSync(join(root, "src/content/blog"))
+  .filter((f) => f.endsWith(".md"))
+  .map((f) => f.replace(/\.md$/, ""));
+
+const expectedRoutes = [
+  "index.html",
+  "404.html",
+  "projects/index.html",
+  "awards/index.html",
+  "ideology/index.html",
+  "blog/index.html",
+  ...blogSlugs.map((slug) => `blog/${slug}/index.html`),
+];
+
+function collectHtmlFiles(dir: string): string[] {
+  const out: string[] = [];
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const full = join(dir, entry.name);
+    if (entry.isDirectory()) out.push(...collectHtmlFiles(full));
+    else if (entry.name.endsWith(".html")) out.push(full);
+  }
+  return out;
+}
+
+function routeExists(path: string): boolean {
+  const clean = path.replace(/[?#].*$/, "");
+  if (clean === "/") return existsSync(join(dist, "index.html"));
+  const rel = clean.replace(/^\//, "");
+  return (
+    existsSync(join(dist, rel)) ||
+    existsSync(join(dist, rel, "index.html")) ||
+    existsSync(join(dist, `${rel}.html`)) ||
+    existsSync(join(publicDir, rel))
+  );
+}
+
+describe("built output", () => {
+  beforeAll(() => {
+    if (!existsSync(dist)) {
+      throw new Error("dist/ not found — run `bun run build` before the dist tests");
+    }
+  });
+
+  it("emits every expected route", () => {
+    for (const route of expectedRoutes) {
+      expect(existsSync(join(dist, route)), route).toBe(true);
+    }
+  });
+
+  it("emits sitemap and robots artifacts", () => {
+    expect(existsSync(join(dist, "sitemap-index.xml"))).toBe(true);
+    expect(existsSync(join(dist, "robots.txt"))).toBe(true);
+  });
+
+  it("sitemap covers all page routes", () => {
+    const sitemapFiles = readdirSync(dist).filter(
+      (f) => f.startsWith("sitemap-") && f.endsWith(".xml") && f !== "sitemap-index.xml"
+    );
+    const sitemap = sitemapFiles
+      .map((f) => readFileSync(join(dist, f), "utf8"))
+      .join("\n");
+    const pages = [
+      "/",
+      "/projects/",
+      "/awards/",
+      "/ideology/",
+      "/blog/",
+      ...blogSlugs.map((slug) => `/blog/${slug}/`),
+    ];
+    for (const page of pages) {
+      expect(sitemap, `sitemap missing ${page}`).toContain(
+        `https://riddhimanrana.com${page}`
+      );
+    }
+  });
+
+  it("every internal link and asset in built HTML resolves", () => {
+    const htmlFiles = collectHtmlFiles(dist);
+    expect(htmlFiles.length).toBeGreaterThanOrEqual(expectedRoutes.length);
+
+    const broken: string[] = [];
+    for (const file of htmlFiles) {
+      const html = readFileSync(file, "utf8");
+      const refs = [
+        ...html.matchAll(/(?:href|src)="(\/[^"]*)"/g),
+      ].map((m) => m[1]);
+      for (const ref of refs) {
+        if (ref.startsWith("//")) continue; // protocol-relative external
+        if (KNOWN_MISSING_BLOG_IMAGES.has(ref)) continue;
+        if (!routeExists(ref)) {
+          broken.push(`${file.replace(dist + "/", "")} -> ${ref}`);
+        }
+      }
+    }
+    expect(broken, `broken internal references:\n${broken.join("\n")}`).toEqual(
+      []
+    );
+  });
+
+  it("pages render the shared shell (nav + footer + theme script)", () => {
+    for (const route of ["index.html", "projects/index.html", "blog/index.html"]) {
+      const html = readFileSync(join(dist, route), "utf8");
+      expect(html, `${route} missing nav`).toContain("nav-capsule");
+      expect(html, `${route} missing theme script`).toContain("prefers-color-scheme");
+      expect(html, `${route} missing font preload`).toContain(
+        "OverusedGrotesk-VF.woff2"
+      );
+    }
+  });
+
+  it("blog post pages contain article content and TOC island", () => {
+    const post = readFileSync(
+      join(dist, "blog/building-lets-assist/index.html"),
+      "utf8"
+    );
+    expect(post).toContain("astro-island");
+    expect(post).toContain("All writing");
+  });
+});
