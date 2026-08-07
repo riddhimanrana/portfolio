@@ -351,6 +351,43 @@ export default function NavBar({ pathname }: { pathname: string }) {
     return () => clearTimeout(id);
   }, [mounted, resolvedTheme]);
 
+  // liquidGL's own scroll throttle can render a stale/garbled frame while
+  // scrolling fast (the lens briefly samples last frame's texture region).
+  // Drop to the CSS fallback glass during active scroll and fade the real
+  // WebGL glass back in once scrolling settles, so the glitch is never shown.
+  useEffect(() => {
+    if (!mounted) return;
+
+    let hideTimeout: ReturnType<typeof setTimeout> | undefined;
+    let hidden = false;
+
+    const onScroll = () => {
+      const renderer = (window as any).__liquidGLRenderer__;
+      if (!renderer || !glEnabledRef.current) return;
+
+      if (!hidden) {
+        hidden = true;
+        setGlReady(false);
+        if (renderer.canvas) renderer.canvas.style.opacity = "0";
+      }
+
+      if (hideTimeout) clearTimeout(hideTimeout);
+      hideTimeout = setTimeout(() => {
+        hidden = false;
+        if (!glEnabledRef.current) return;
+        renderer.render?.();
+        if (renderer.canvas) renderer.canvas.style.opacity = "1";
+        setGlReady(true);
+      }, 260);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (hideTimeout) clearTimeout(hideTimeout);
+    };
+  }, [mounted]);
+
   // Toggle liquid glass on/off
   const toggleGL = () => {
     const next = !glEnabled;
