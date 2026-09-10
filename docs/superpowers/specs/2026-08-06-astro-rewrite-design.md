@@ -74,4 +74,4 @@ Result: home 290 kB and a blog post 268 kB of referenced JavaScript, most of it 
 - A build hook (`src/integrations/prune-unreferenced-assets.mjs`) removes the originals Vite emits next to the derivatives (9.1 MB per build). A dist test asserts no orphaned images ship.
 - Unused files deleted: `public/source-assets` (5.5 MB), the orphaned neovim post images, `aboutme.jpg`, `profile.jpg`, the depth `.glb`, a placeholder logo. The Pixelta font notice moved to `docs/licenses/`.
 - Components grouped by area (`shell`, `home`, `projects`, `awards`, `blog`, `ui`). Ideology and 404 are plain Astro pages now; no React needed.
-- `vercel.json` pins `framework: astro`, install/build commands and `outputDirectory`, so the dashboard preset cannot break a deploy. The build accepts `NEXT_PUBLIC_POSTHOG_KEY` as a fallback until the dashboard variable is renamed.
+- `vercel.json` pins `framework: astro`, install/build commands and `outputDirectory`, so the dashboard preset cannot break a deploy. The dashboard variables were renamed to `PUBLIC_POSTHOG_KEY` / `PUBLIC_POSTHOG_HOST` on 2026-09-10.

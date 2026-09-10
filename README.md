@@ -22,7 +22,7 @@ bun run test:e2e   # builds, then Playwright against the built site (desktop + m
 bun run verify     # check + build + vitest + Playwright
 ```
 
-Environment: `PUBLIC_POSTHOG_KEY` (analytics load only in production builds; the old `NEXT_PUBLIC_POSTHOG_KEY` is accepted as a fallback at build time).
+Environment: `PUBLIC_POSTHOG_KEY` (analytics load only in production builds).
 
 ## Layout
 
