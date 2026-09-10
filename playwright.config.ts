@@ -21,5 +21,11 @@ export default defineConfig({
   projects: [
     { name: "desktop", use: { ...devices["Desktop Chrome"] } },
     { name: "mobile", use: { ...devices["Pixel 7"] } },
+    { name: "webkit", use: { ...devices["Desktop Safari"] } },
+    { name: "ios", use: { ...devices["iPhone 14"] } },
+    // Playwright's Firefox build cannot create its profile on current macOS
+    // ("Could not find profile folder"); run it where it launches (Linux CI)
+    // with PW_FIREFOX=1.
+    ...(process.env.PW_FIREFOX ? [{ name: "firefox", use: { ...devices["Desktop Firefox"] } }] : []),
   ],
 });

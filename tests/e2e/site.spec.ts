@@ -107,12 +107,23 @@ test.describe("liquid glass", () => {
     await page.goto("/blog/escaping-icloud-photos");
     await glassReady(page);
 
-    // The renderer's texture must match the page it refracts.
-    const consistent = await page.evaluate(() => {
-      const r = (window as any).__liquidGLRenderer__;
-      return Boolean(r && Number.isFinite(r.scaleFactor) && Math.abs(Math.round(document.body.scrollHeight * r.scaleFactor) - r.textureHeight) <= 2);
-    });
-    expect(consistent).toBe(true);
+    // The renderer's texture must match the page it refracts (eventually: the
+    // page height can still settle right after the first capture, after which
+    // liquidGL recaptures on its own).
+    await expect
+      .poll(
+        () =>
+          page.evaluate(() => {
+            const r = (window as any).__liquidGLRenderer__;
+            return Boolean(
+              r &&
+                Number.isFinite(r.scaleFactor) &&
+                Math.abs(Math.round(document.body.scrollHeight * r.scaleFactor) - r.textureHeight) <= 2
+            );
+          }),
+        { timeout: 10_000 }
+      )
+      .toBe(true);
 
     // Theme switch recaptures and comes back ready.
     await page.locator("header").getByRole("button", { name: "Settings" }).click();
@@ -188,8 +199,12 @@ test.describe("blog", () => {
   test("post renders build-time code blocks, working copy button and TOC anchors", async ({
     page,
     context,
+    browserName,
   }) => {
-    await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+    // Clipboard permissions are a Chromium concept; other engines expose the
+    // clipboard to page scripts without a grant (and reject these names).
+    const canReadClipboard = browserName === "chromium";
+    if (canReadClipboard) await context.grantPermissions(["clipboard-read", "clipboard-write"]);
     await page.goto("/blog/escaping-icloud-photos");
     await expect(page.getByRole("link", { name: /Back to blog/ })).toHaveClass(/border/);
 
@@ -210,7 +225,9 @@ test.describe("blog", () => {
     await block.scrollIntoViewIfNeeded();
     await block.locator(".code-block-copy").click();
     await expect(block.locator(".code-block-copy")).toHaveClass(/copied/);
-    expect(await page.evaluate(() => navigator.clipboard.readText())).toContain("sudo apt update");
+    if (canReadClipboard) {
+      expect(await page.evaluate(() => navigator.clipboard.readText())).toContain("sudo apt update");
+    }
 
     // TOC links resolve to real heading ids in the article.
     if (!isMobile(page)) {
