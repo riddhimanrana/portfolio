@@ -10,3 +10,11 @@ export interface Project {
   projectLink?: string
   repoLink?: string
 }
+
+import type { OptimizedImage } from "./image";
+
+/** Project with logo/screenshot resolved by the page (see src/lib/images.ts). */
+export type ProjectView = Omit<Project, "image" | "logo"> & {
+  logo: OptimizedImage;
+  image?: OptimizedImage;
+};

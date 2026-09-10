@@ -3,8 +3,8 @@ import Link from "@/lib/shims/link";
 import { Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { GitHubIcon } from "@/components/brand-icons";
-import { AnimatedDiffusion } from "@/components/animated-diffusion";
+import { GitHubIcon } from "@/components/shell/brand-icons";
+import { AnimatedDiffusion } from "@/components/shell/animated-diffusion";
 
 const Footer: React.FC = () => {
   const [mounted, setMounted] = useState(false);

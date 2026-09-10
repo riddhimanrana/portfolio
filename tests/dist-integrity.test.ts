@@ -142,6 +142,22 @@ describe("built output", () => {
     expect(home).toContain("(min-width: 1024px)");
   });
 
+  it("dist/_astro contains no unreferenced image originals", () => {
+    const assetsDir = join(dist, "_astro");
+    const referenced = new Set<string>();
+    for (const file of collectHtmlFiles(dist)) {
+      for (const [, name] of readFileSync(file, "utf8").matchAll(/_astro\/([A-Za-z0-9._-]+)/g)) {
+        referenced.add(name);
+      }
+    }
+    const images = readdirSync(assetsDir).filter((f) => /\.(png|jpe?g|webp|avif|gif|svg)$/i.test(f));
+    expect(images.length).toBeGreaterThan(0);
+    const orphans = images.filter((f) => !referenced.has(f));
+    expect(orphans, `unreferenced images in dist:\n${orphans.join("\n")}`).toEqual([]);
+    // The 4.5 MB portrait source must never ship.
+    expect(images.some((f) => /point-cloud-source.*\.jpe?g$/.test(f))).toBe(false);
+  });
+
   it("no page references a chunk larger than 300 kB eagerly", () => {
     const limit = 300 * 1024;
     const offenders: string[] = [];

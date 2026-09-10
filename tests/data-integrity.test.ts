@@ -10,7 +10,7 @@ import experienceData from "../src/data/experience.json";
 import { KNOWN_MISSING_BLOG_IMAGES } from "./known-missing";
 
 const root = join(import.meta.dirname, "..");
-const publicDir = join(root, "public");
+const assetsDir = join(root, "src/assets");
 
 const awardSchema = z.object({
   id: z.string().min(1),
@@ -69,7 +69,7 @@ describe("awards.json", () => {
 
   it("every award image exists in public/", () => {
     for (const award of awardsData) {
-      expect(existsSync(join(publicDir, award.image)), award.image).toBe(true);
+      expect(existsSync(join(assetsDir, award.image)), award.image).toBe(true);
     }
   });
 });
@@ -89,7 +89,7 @@ describe("projects.json", () => {
       for (const asset of [project.logo, project.image].filter(
         (value): value is string => Boolean(value)
       )) {
-        expect(existsSync(join(publicDir, asset)), asset).toBe(true);
+        expect(existsSync(join(assetsDir, asset)), asset).toBe(true);
       }
     }
   });
@@ -102,7 +102,7 @@ describe("experience.json", () => {
 
   it("every experience logo exists in public/", () => {
     for (const experience of experienceData) {
-      expect(existsSync(join(publicDir, experience.logo)), experience.logo).toBe(
+      expect(existsSync(join(assetsDir, experience.logo)), experience.logo).toBe(
         true
       );
     }
@@ -147,17 +147,16 @@ describe("blog content", () => {
     }
   });
 
-  it("local images referenced from posts exist in public/", () => {
+  it("images referenced from posts are relative and exist next to the post", () => {
     for (const file of files) {
       const raw = readFileSync(join(blogDir, file), "utf8");
-      const images = [...raw.matchAll(/!\[[^\]]*\]\((\/[^)\s]+)\)/g)].map(
-        (m) => m[1]
-      );
+      const images = [...raw.matchAll(/!\[[^\]]*\]\(([^)\s]+)\)/g)].map((m) => m[1]);
       for (const image of images) {
         if (KNOWN_MISSING_BLOG_IMAGES.has(image)) continue;
-        expect(existsSync(join(publicDir, image)), `${file} -> ${image}`).toBe(
-          true
+        expect(image, `${file} -> ${image} must be relative (./...) so Astro optimizes it`).toMatch(
+          /^\.\//
         );
+        expect(existsSync(join(blogDir, image)), `${file} -> ${image}`).toBe(true);
       }
     }
   });

@@ -4,8 +4,7 @@ import { ExternalLink, ArrowUpRight } from "lucide-react";
 import Image from "@/lib/shims/image";
 import Link from "@/lib/shims/link";
 
-import projectsData from "@/data/projects.json";
-import { GitHubIcon } from "@/components/brand-icons";
+import { GitHubIcon } from "@/components/shell/brand-icons";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -17,14 +16,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import type { Project } from "@/types/project";
+import type { ProjectView as Project } from "@/types/project";
 
-export default function ProjectsPage() {
-  const projects = useMemo(() => {
-    return [...(projectsData as Project[])].sort(
-      (a, b) => Number(b.year) - Number(a.year)
-    );
-  }, []);
+export default function ProjectsPage({ projects: projectsProp }: { projects: Project[] }) {
+  const projects = useMemo(
+    () => [...projectsProp].sort((a, b) => Number(b.year) - Number(a.year)),
+    [projectsProp]
+  );
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   return (
@@ -43,7 +41,8 @@ export default function ProjectsPage() {
             >
               <div className="flex size-16 w-16 h-16 shrink-0 flex-shrink-0 items-center justify-center overflow-hidden rounded-xl border border-border bg-secondary p-2.5 transition-transform duration-200 group-hover:scale-105">
                 <Image
-                  src={project.logo || "/avatar.png"}
+                  src={project.logo.src}
+                  srcSet={project.logo.srcSet}
                   alt={`${project.title} logo`}
                   width={48}
                   height={48}
@@ -114,7 +113,8 @@ export default function ProjectsPage() {
                 <div className="mb-2 flex items-center gap-3">
                   <div className="logo-tile size-12 w-12 h-12 aspect-square rounded-xl p-2 bg-card border border-border shrink-0 flex-shrink-0">
                     <Image
-                      src={selectedProject.logo || "/avatar.png"}
+                      src={selectedProject.logo.src}
+                      srcSet={selectedProject.logo.srcSet}
                       alt=""
                       width={40}
                       height={40}
@@ -134,7 +134,8 @@ export default function ProjectsPage() {
                 {selectedProject.image && (
                   <div className="relative mt-2 aspect-video overflow-hidden rounded-2xl border border-border bg-secondary">
                     <Image
-                      src={selectedProject.image}
+                      src={selectedProject.image.src}
+                      srcSet={selectedProject.image.srcSet}
                       alt={selectedProject.title}
                       fill
                       className="object-contain"

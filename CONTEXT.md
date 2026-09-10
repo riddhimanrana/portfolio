@@ -3,7 +3,7 @@
 Terms used in code, data and docs for this site. Use these names; do not invent synonyms.
 
 - **Page** — a route under `src/pages/`. Pages are static HTML built once. Interactive pieces are placed as **islands**.
-- **Island** — a React component hydrated in the browser via a `client:*` directive from a `.astro` page. Everything else renders to plain HTML. Current islands: NavBar, Footer, ContactDialog, HeroProductMap, WorkExperience, ProjectsPage, AwardsPage, TableOfContents.
+- **Island** — a React component hydrated in the browser via a `client:*` directive from a `.astro` page. Everything else renders to plain HTML. Islands live under `src/components/<area>/` (`shell`, `home`, `projects`, `awards`, `blog`); `src/components/ui/` is shadcn. Current islands: NavBar, Footer, ContactDialog, HeroProductMap, WorkExperience, ProjectsPage, AwardsPage, TableOfContents.
 - **Shell** — the layout shared by every page (`src/layouts/Layout.astro`): head metadata, theme pre-paint script, navbar, footer, analytics loader.
 - **Liquid glass** — the WebGL refraction effect on the navbar capsule (`public/scripts/liquidGL.js`, vendored). It snapshots the page with html2canvas and refracts it behind the nav. Users can turn it off; the fallback is the CSS blur capsule.
 - **Theme** — `light`, `dark` or `system`, stored in `localStorage.theme` (default `dark`). Resolved to a `dark` class on `<html>` before first paint. `src/lib/shims/theme.ts` is the only reader/writer.
@@ -12,4 +12,5 @@ Terms used in code, data and docs for this site. Use these names; do not invent 
 - **Product** — the two shipped apps (Dicy, Let's Assist) featured on the home page. A product is also a project; the home list is curated by hand in `src/pages/index.astro`.
 - **Award** — an entry in `src/data/awards.json`. Has a **difficulty** of `major`, `notable` or `honorable` (rendered gold, bronze, silver). `/awards?id=<award id>` deep-links to one.
 - **Experience** — an entry in `src/data/experience.json`, shown as the work-experience accordion on the home page.
+- **Asset** — an image under `src/assets/`, referenced from data files by a root-relative path such as `/awards/usaco.png`. Pages resolve assets with `src/lib/images.ts` (`optimized()` for islands, `asset()` for `<Image>` in Astro markup); islands receive an **OptimizedImage** (`src`, `srcSet`, `width`, `height`) and never load files themselves. Blog images live next to their post and are referenced with `./<slug>/file`. Only `public/` holds files fetched at runtime by scripts (`pointcloud.bin`, `liquidGL.js`, fonts, resume, favicon).
 - **Shim** — a drop-in replacement for a Next.js API kept so components ported from the old site did not need edits: `Link`, `Image`, `useTheme` under `src/lib/shims/`.

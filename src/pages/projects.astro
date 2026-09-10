@@ -1,11 +1,25 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import ProjectsPage from "@/components/projects-page";
+import ProjectsPage from "@/components/projects/projects-page";
+import projectsData from "@/data/projects.json";
+import { optimized } from "@/lib/images";
+import type { Project, ProjectView } from "@/types/project";
+
+const FALLBACK_LOGO = "/avatar.png";
+
+const projects: ProjectView[] = await Promise.all(
+  (projectsData as Project[]).map(async (project) => ({
+    ...project,
+    logo: await optimized(project.logo ?? FALLBACK_LOGO, { width: 48 }),
+    // Screenshot fills a 48rem dialog; 720px with a 2x candidate.
+    image: project.image ? await optimized(project.image, { width: 720 }) : undefined,
+  }))
+);
 ---
 
 <Layout
   title="Projects | Riddhiman Rana"
   description="Explore my projects in web development and competitive programming."
 >
-  <ProjectsPage client:load />
+  <ProjectsPage client:load projects={projects} />
 </Layout>

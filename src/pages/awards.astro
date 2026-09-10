@@ -1,11 +1,22 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import AwardsPage from "@/components/awards-page";
+import AwardsPage from "@/components/awards/awards-page";
+import awardsData from "@/data/awards.json";
+import { optimized } from "@/lib/images";
+import type { Award, AwardView } from "@/types/award";
+
+// Logos render at 44-56px; a 56px source with 1x/2x candidates covers both.
+const awards: AwardView[] = await Promise.all(
+  (awardsData as Award[]).map(async (award) => ({
+    ...award,
+    image: await optimized(award.image, { width: 56 }),
+  }))
+);
 ---
 
 <Layout
   title="Awards | Riddhiman Rana"
   description="A showcase of awards, honors, and achievements throughout my academic journey."
 >
-  <AwardsPage client:load />
+  <AwardsPage client:load awards={awards} />
 </Layout>

@@ -10,7 +10,7 @@ import {
   GitHubIcon,
   LinkedInIcon,
   YouTubeIcon,
-} from "@/components/brand-icons";
+} from "@/components/shell/brand-icons";
 import {
   Sheet,
   SheetClose,
@@ -26,6 +26,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
+import type { OptimizedImage } from "@/types/image";
 
 const navItems = [
   { name: "home", path: "/" },
@@ -259,7 +260,13 @@ function reviveLiquidGL() {
   }
 }
 
-export default function NavBar({ pathname }: { pathname: string }) {
+export default function NavBar({
+  pathname,
+  avatar,
+}: {
+  pathname: string;
+  avatar: OptimizedImage;
+}) {
   const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [glReady, setGlReady] = useState(false);
@@ -460,7 +467,8 @@ export default function NavBar({ pathname }: { pathname: string }) {
           <Button variant="ghost" asChild className="nav-control px-2.5">
             <Link href="/" aria-label="Riddhiman Rana home" onClick={prepareForNavigation}>
               <Image
-                src="/profile1.jpeg"
+                src={avatar.src}
+                srcSet={avatar.srcSet}
                 alt="Riddhiman Rana"
                 width={32}
                 height={32}

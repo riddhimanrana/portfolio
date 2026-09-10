@@ -5,9 +5,8 @@ import { useEffect, useRef, useState, type PointerEvent } from "react";
 import type { Object3D, Points, PointsMaterial } from "three";
 
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import type { OptimizedImage } from "@/types/image";
 
-const PORTRAIT_SRC = "/portraits/point-cloud-source.jpeg";
-const DEPTH_IMAGE_SRC = "/portraits/depth-anything-3-image.webp";
 
 type SpatialMode = "original" | "three" | "depth";
 
@@ -15,7 +14,13 @@ function easePointer(value: number) {
   return Math.max(-1, Math.min(1, value));
 }
 
-export function HeroProductMap() {
+export function HeroProductMap({
+  portrait,
+  depth,
+}: {
+  portrait: OptimizedImage;
+  depth: OptimizedImage;
+}) {
   const root = useRef<HTMLDivElement>(null);
   const mount = useRef<HTMLDivElement>(null);
   const scope = useRef<Scope | null>(null);
@@ -412,7 +417,8 @@ export function HeroProductMap() {
         }}
       >
         <Image
-          src={PORTRAIT_SRC}
+          src={portrait.src}
+          srcSet={portrait.srcSet}
           alt="Riddhiman Rana portrait"
           fill
           className="object-cover"
@@ -428,7 +434,8 @@ export function HeroProductMap() {
         }}
       >
         <Image
-          src={DEPTH_IMAGE_SRC}
+          src={depth.src}
+          srcSet={depth.srcSet}
           alt="Depth map"
           fill
           className="object-cover"

@@ -13,7 +13,6 @@ import {
 import Image from "@/lib/shims/image";
 import Link from "@/lib/shims/link";
 
-import awardsData from "@/data/awards.json";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -35,13 +34,9 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { cn } from "@/lib/utils";
-import type { Award, AwardDifficulty } from "@/types/award";
+import type { AwardDifficulty, AwardView as Award } from "@/types/award";
 
 type DifficultyFilter = "all" | AwardDifficulty;
-
-const awards = [...(awardsData as Award[])].sort(
-  (a, b) => parseAwardDate(b.date).getTime() - parseAwardDate(a.date).getTime()
-);
 
 const difficultyMeta = {
   major: { label: "Major", icon: Medal },
@@ -62,7 +57,14 @@ function formatAwardDate(date: string, includeYear = true) {
   });
 }
 
-export default function AwardsPage() {
+export default function AwardsPage({ awards: awardsProp }: { awards: Award[] }) {
+  const awards = useMemo(
+    () =>
+      [...awardsProp].sort(
+        (a, b) => parseAwardDate(b.date).getTime() - parseAwardDate(a.date).getTime()
+      ),
+    [awardsProp]
+  );
   const [query, setQuery] = useState("");
   const [difficulty, setDifficulty] = useState<DifficultyFilter>("all");
   const [selectedId, setSelectedId] = useState(awards[0]?.id ?? "");
@@ -328,11 +330,11 @@ function TimelineRow({ award }: { award: Award }) {
           )}
         >
           <Image
-            src={award.image}
+            src={award.image.src}
+            srcSet={award.image.srcSet}
             alt=""
             width={44}
             height={44}
-            quality={75}
             className="max-h-full object-contain"
           />
         </div>
@@ -392,11 +394,11 @@ function AwardInspector({
             )}
           >
             <Image
-              src={award.image}
+              src={award.image.src}
+              srcSet={award.image.srcSet}
               alt=""
               width={56}
               height={56}
-              quality={75}
               className="max-h-full object-contain"
             />
           </div>

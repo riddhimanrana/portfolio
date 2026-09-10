@@ -67,3 +67,11 @@ Measured after the first port: a blog post referenced 1,350 kB of JavaScript, th
 - Framework decision recorded in `docs/adr/0001-astro-with-react-islands.md`; vocabulary in `CONTEXT.md`.
 
 Result: home 290 kB and a blog post 268 kB of referenced JavaScript, most of it the shared React runtime and navbar.
+
+## Addendum (2026-09-09, second pass): images and structure
+
+- Images moved from `public/` to `src/assets/` (site images) and `src/content/blog/<slug>/` (post images). Pages resolve them through `src/lib/images.ts` and pass `OptimizedImage` props to islands; Astro markup uses `<Image>`. The 4.5 MB portrait JPEG is now a 72 kB webp (285 kB at 2x); blog screenshots are webp with intrinsic dimensions.
+- A build hook (`src/integrations/prune-unreferenced-assets.mjs`) removes the originals Vite emits next to the derivatives (9.1 MB per build). A dist test asserts no orphaned images ship.
+- Unused files deleted: `public/source-assets` (5.5 MB), the orphaned neovim post images, `aboutme.jpg`, `profile.jpg`, the depth `.glb`, a placeholder logo. The Pixelta font notice moved to `docs/licenses/`.
+- Components grouped by area (`shell`, `home`, `projects`, `awards`, `blog`, `ui`). Ideology and 404 are plain Astro pages now; no React needed.
+- `vercel.json` pins `framework: astro`, install/build commands and `outputDirectory`, so the dashboard preset cannot break a deploy. The build accepts `NEXT_PUBLIC_POSTHOG_KEY` as a fallback until the dashboard variable is renamed.

@@ -1,15 +1,19 @@
 ---
+import { Image } from "astro:assets";
 import { ArrowUpRight, Download, ExternalLink } from "lucide-react";
 
 import Layout from "@/layouts/Layout.astro";
-import { ContactDialog } from "@/components/contact-dialog";
-import { HeroProductMap } from "@/components/hero-product-map";
-import { WorkExperience } from "@/components/work-experience";
-import { SkillsSection } from "@/components/skills-section";
+import { ContactDialog } from "@/components/shell/contact-dialog";
+import { HeroProductMap } from "@/components/home/hero-product-map";
+import { WorkExperience } from "@/components/home/work-experience";
+import { SkillsSection } from "@/components/home/skills-section";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import awardsData from "@/data/awards.json";
+import experienceData from "@/data/experience.json";
+import { asset, optimized } from "@/lib/images";
+import type { Experience, ExperienceView } from "@/types/experience";
 
 const topAwardIds = [
   "usaco-platinum",
@@ -18,15 +22,31 @@ const topAwardIds = [
   "amc-10a-25",
 ];
 
-const topAwards = topAwardIds.flatMap((id) => {
-  const award = awardsData.find((a) => a.id === id);
-  return award ? [award] : [];
-});
+const topAwards = await Promise.all(
+  topAwardIds.flatMap((id) => {
+    const award = awardsData.find((a) => a.id === id);
+    return award ? [award] : [];
+  }).map(async (award) => ({ ...award, image: await asset(award.image) }))
+);
+
+const experiences: ExperienceView[] = await Promise.all(
+  (experienceData as Experience[]).map(async (experience) => ({
+    ...experience,
+    logo: await optimized(experience.logo, { width: 48 }),
+  }))
+);
+
+// The portrait panel is 472px wide on desktop; 1x/2x candidates in webp.
+const portrait = await optimized("/portraits/point-cloud-source.jpeg", { width: 472 });
+const depth = await optimized("/portraits/depth-anything-3-image.webp", { width: 472 });
+
+const dicyIcon = await asset("/icon-192.png");
+const letsAssistIcon = await asset("/logos/lets-assist.png");
 
 const products = [
   {
     name: "Dicy",
-    logo: "/icon-192.png",
+    logo: dicyIcon,
     href: "https://dicy.app",
     metric: "1.5k+ users across 4+ states",
     description:
@@ -34,7 +54,7 @@ const products = [
   },
   {
     name: "Let's Assist",
-    logo: "/logos/lets-assist.png",
+    logo: letsAssistIcon,
     href: "https://lets-assist.com",
     metric: "300+ users",
     description:
@@ -60,11 +80,12 @@ const founderIconClass =
           >
             <span>Founder of</span>
             <a href="https://dicy.app" target="_blank" rel="noopener noreferrer" class={founderLinkClass}>
-              <img
-                src="/icon-192.png"
+              <Image
+                src={dicyIcon}
                 alt=""
-                width="18"
-                height="18"
+                width={18}
+                densities={[1, 2]}
+                format="webp"
                 class="mr-1 rounded-full object-contain"
                 style="width:18px;height:18px"
               />
@@ -73,11 +94,12 @@ const founderIconClass =
             </a>
             <span>and</span>
             <a href="https://lets-assist.com" target="_blank" rel="noopener noreferrer" class={founderLinkClass}>
-              <img
-                src="/logos/lets-assist.png"
+              <Image
+                src={letsAssistIcon}
                 alt=""
-                width="18"
-                height="18"
+                width={18}
+                densities={[1, 2]}
+                format="webp"
                 class="mr-1 rounded-full object-contain"
               />
               Let's Assist
@@ -130,7 +152,7 @@ const founderIconClass =
           </div>
         </div>
 
-        <HeroProductMap client:media="(min-width: 1024px)" />
+        <HeroProductMap client:media="(min-width: 1024px)" portrait={portrait} depth={depth} />
       </section>
 
       <section class="py-14 sm:py-20">
@@ -149,13 +171,12 @@ const founderIconClass =
                 class="grid grid-cols-[3rem_1fr] gap-4 border-b border-border py-5 sm:odd:border-r sm:odd:pr-7 sm:even:pl-7"
               >
                 <div class="logo-tile size-12 rounded-xl p-1.5">
-                  <img
+                  <Image
                     src={award.image}
                     alt=""
-                    width="40"
-                    height="40"
-                    loading="lazy"
-                    decoding="async"
+                    width={40}
+                    densities={[1, 2]}
+                    format="webp"
                     class="max-h-full object-contain"
                   />
                 </div>
@@ -173,7 +194,7 @@ const founderIconClass =
         <div class="flex items-center justify-between gap-4 border-b border-border pb-4">
           <h2 class="text-2xl font-medium tracking-[-0.035em]">Work experience</h2>
         </div>
-        <WorkExperience client:visible />
+        <WorkExperience client:visible experiences={experiences} />
       </section>
 
       <section class="pb-16 sm:pb-24">
@@ -196,13 +217,12 @@ const founderIconClass =
                   class="group grid gap-4 py-7 sm:grid-cols-[4rem_1fr_auto] sm:items-center"
                 >
                   <div class="logo-tile size-16 rounded-2xl p-2">
-                    <img
+                    <Image
                       src={product.logo}
                       alt={`${product.name} logo`}
-                      width="54"
-                      height="54"
-                      loading="lazy"
-                      decoding="async"
+                      width={54}
+                      densities={[1, 2]}
+                      format="webp"
                       class="max-h-full object-contain"
                     />
                   </div>

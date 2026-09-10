@@ -1,11 +1,58 @@
 ---
+import { Home, Search } from "lucide-react";
+
 import Layout from "@/layouts/Layout.astro";
-import NotFoundPage from "@/components/not-found-page";
 ---
 
 <Layout
   title="Page Not Found | Riddhiman Rana"
   description="The page you are looking for does not exist."
 >
-  <NotFoundPage />
+  <div class="min-h-screen bg-background text-foreground">
+    <main class="container mx-auto px-4 py-16 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-4xl text-center lg:max-w-5xl xl:max-w-6xl">
+        <div class="rounded-sm border border-border bg-card p-10 shadow-sm sm:p-16">
+          <div class="mb-8">
+            <h1 class="mb-4 text-8xl font-bold text-foreground sm:text-9xl">404</h1>
+          </div>
+
+          <div class="mb-8 inline-flex h-20 w-20 items-center justify-center rounded-sm bg-muted">
+            <Search className="h-10 w-10 text-muted-foreground" />
+          </div>
+
+          <h2 class="mb-6 text-3xl font-bold sm:text-4xl">Page Not Found</h2>
+
+          <p class="mx-auto mb-10 max-w-2xl text-lg text-muted-foreground">
+            Oops! The page you're looking for doesn't exist. It might have been moved, deleted, or
+            you entered the wrong URL.
+          </p>
+
+          <div class="flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <a
+              href="/"
+              class="inline-flex items-center rounded-sm bg-foreground px-8 py-4 font-medium text-background transition-opacity hover:opacity-90"
+            >
+              <Home className="mr-2 h-5 w-5" />
+              Go Home
+            </a>
+            <a
+              href="/projects"
+              class="inline-flex items-center rounded-sm bg-muted px-8 py-4 font-medium text-foreground transition-colors hover:bg-muted/70"
+            >
+              View Projects
+            </a>
+          </div>
+
+          <div class="mt-12 border-t border-border pt-8">
+            <p class="mb-4 text-sm text-muted-foreground">You might be interested in:</p>
+            <div class="flex flex-wrap justify-center gap-4 text-sm">
+              <a href="/blog" class="text-foreground hover:underline">Blog Posts</a>
+              <a href="/awards" class="text-foreground hover:underline">Awards</a>
+              <a href="/#about" class="text-foreground hover:underline">About Me</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
 </Layout>

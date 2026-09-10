@@ -22,7 +22,20 @@ bun run test:e2e   # builds, then Playwright against the built site (desktop + m
 bun run verify     # check + build + vitest + Playwright
 ```
 
-Environment: `PUBLIC_POSTHOG_KEY` (analytics load only in production builds).
+Environment: `PUBLIC_POSTHOG_KEY` (analytics load only in production builds; the old `NEXT_PUBLIC_POSTHOG_KEY` is accepted as a fallback at build time).
+
+## Layout
+
+```
+src/
+  assets/       images resized and converted at build time (see CONTEXT.md, "Asset")
+  components/   ui/ (shadcn), shell/, home/, projects/, awards/, blog/
+  content/blog/ posts, each with its images in a folder of the same name
+  data/         awards, projects, experience (JSON, validated by tests)
+  integrations/ build hooks (prunes unreferenced image originals from dist)
+  layouts/ lib/ pages/ styles/ types/
+tests/          vitest (data, utils, built output) and Playwright (tests/e2e)
+```
 
 Vocabulary used across code and data lives in [CONTEXT.md](CONTEXT.md).
 

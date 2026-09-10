@@ -10,21 +10,12 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import experienceData from "@/data/experience.json";
+import type { ExperienceView as Experience } from "@/types/experience";
 
-interface Experience {
-  title: string;
-  subtext: string;
-  logo: string;
-  date: string;
-  details: string;
-  link?: string;
-}
-
-export function WorkExperience() {
+export function WorkExperience({ experiences }: { experiences: Experience[] }) {
   return (
     <Accordion type="single" collapsible className="border-t border-border">
-      {(experienceData as Experience[]).map((experience) => (
+      {experiences.map((experience) => (
         <AccordionItem
           key={experience.title}
           value={experience.title}
@@ -34,7 +25,8 @@ export function WorkExperience() {
             <div className="grid flex-1 grid-cols-[3.25rem_1fr] items-center gap-4 pr-4 sm:grid-cols-[3.25rem_1fr_auto]">
               <div className="logo-tile size-12 rounded-xl p-1.5">
                 <Image
-                  src={experience.logo}
+                  src={experience.logo.src}
+                  srcSet={experience.logo.srcSet}
                   alt={`${experience.title} logo`}
                   width={42}
                   height={42}

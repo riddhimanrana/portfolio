@@ -16,7 +16,7 @@ import {
   GitHubIcon,
   LinkedInIcon,
   YouTubeIcon,
-} from "@/components/brand-icons";
+} from "@/components/shell/brand-icons";
 import { cn } from "@/lib/utils";
 
 const contactOptions = [

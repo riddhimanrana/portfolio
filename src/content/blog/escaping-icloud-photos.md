@@ -172,7 +172,7 @@ Success! You should now be able to access Immich at `http://<machine-ip-address>
 
 Now, as the first admin user just fill out all the info, go through each of the steps(which should be pretty self explanatory) and set up your account.
 
-![Immich Start](/blogs/escaping-icloud-photos/immich-start.png)
+![Immich Start](./escaping-icloud-photos/immich-start.png)
 
 **Troubleshooting:** Skip to the Troubleshooting section at the end of this post if you have any issues accessing the web UI. If you need to turn it off later, you can just run `docker compose down` in the same directory where your `docker-compose.yml` file is located.
 
@@ -208,17 +208,17 @@ immich-server:
 - Click the **Create Library** button
 - Fill out the details, and under the Folders tab, add the exact same path you used in the `docker-compose.yml` file. For me, it was `/media/riddhiman-rana/Seagate 8TB1/All Rana Photos`.
 
-![Immich External Library](/blogs/escaping-icloud-photos/external-libraries.png)
+![Immich External Library](./escaping-icloud-photos/external-libraries.png)
 
 And now, just let it sit. Immich will start scanning through all your photos and videos, and adding them to the database. Depending on how many photos and videos you have, this could take anywhere from a few hours to a few days. Go to the **Job Queues** tab in the Administration panel and see it spin through all the jobs.
 
-![small|Immich Job Queue](/blogs/escaping-icloud-photos/job-queue.png)
+![small|Immich Job Queue](./escaping-icloud-photos/job-queue.png)
 
 ### Connecting and backing up from the phone app
 
 Now that you have Immich set up, it's time to connect your phone so that you can back up photos directly from your phone to your Immich server. During this process, I'd also say start adding users if you have family members who want to back up their photos too. It's pretty simple and you just have to go to the Administration panel, click Users, and then Add User with their emails and passwords.
 
-![small|Immich Add User](/blogs/escaping-icloud-photos/new-user.png)
+![small|Immich Add User](./escaping-icloud-photos/new-user.png)
 
 1. Download the Immich app from the App Store/Play Store
 
@@ -230,7 +230,7 @@ Now that you have Immich set up, it's time to connect your phone so that you can
 
 And tada! After you press **Enable Backup**, you should now  be able to back up photos directly from your phone to your Immich server. For me, I had to just leave it sitting on that screen for like 2-3 hours as it had to process almost 3,000 photos and videos, but eventually it finished.
 
-![small|Immich Phone Backup](/blogs/escaping-icloud-photos/mobile-backup.png)
+![small|Immich Phone Backup](./escaping-icloud-photos/mobile-backup.png)
 
 ### Setting up Video Transcoding
 
@@ -244,7 +244,7 @@ Now, we need to continue setting up the Hardware Accelerated video transcoding t
 
 4. Under Hardware Acceleration, select the method you set up in the `docker-compose.yml` file. For me, it was VAAPI. I'd say don't enable Hardware Decoding as well until you confirm everything is working properly. For example on my system, because my Intel CPU generation was a bit old, it didn't support hardware decoding properly and those formats, so it defaulted to software decoding anyway.
 
-![small|Immich Video Transcoding](/blogs/escaping-icloud-photos/video-transcoding.png)
+![small|Immich Video Transcoding](./escaping-icloud-photos/video-transcoding.png)
 
 ### Setting up Remote ML (Optional)
 
@@ -286,7 +286,7 @@ volumes:
 
 I'll get into more details on the Remote ML Server IP's in the next section, but just so you know you the url `http://immich-machine-learning:3003` refers to the internal docker network, so it won't work outside of the docker containers. You need to use the actual IP address of the remote ML server.
 
-![small|Immich Remote ML](/blogs/escaping-icloud-photos/ml-settings.png)
+![small|Immich Remote ML](./escaping-icloud-photos/ml-settings.png)
 
 ## Accessing Immich from outside your local network
 

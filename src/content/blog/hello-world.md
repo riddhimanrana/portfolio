@@ -38,4 +38,4 @@ hello_world()
 | Images        | Inline images with markdown syntax   |
 
 **Images:**
-![Sample Image](/placeholder.svg)
+![Sample Image](./hello-world/placeholder.svg)
