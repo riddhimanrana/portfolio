@@ -1,9 +1,8 @@
 ---
-import { getCollection, type CollectionEntry } from "astro:content";
+import { getCollection, render, type CollectionEntry } from "astro:content";
 import { ArrowLeft } from "lucide-react";
 
 import Layout from "@/layouts/Layout.astro";
-import { MarkdownContent } from "@/components/markdown-content";
 import { TableOfContents } from "@/components/toc";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -23,8 +22,31 @@ interface Props {
 }
 
 const { post } = Astro.props;
-const content = post.body ?? "";
+const { Content, headings } = await render(post);
 const formattedDate = formatDate(post.data.date);
+
+// Markdown is rendered at build time (Shiki dual themes, no client library).
+// Class list mirrors the typography the previous client renderer applied.
+const proseClass = [
+  "post-body prose dark:prose-invert max-w-none",
+  "prose-headings:font-semibold prose-headings:tracking-tight",
+  "prose-h1:text-3xl prose-h1:mb-6",
+  "prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-h2:pb-2 prose-h2:border-b prose-h2:border-border",
+  "prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3",
+  "prose-h4:text-lg prose-h4:mt-6 prose-h4:mb-2",
+  "prose-p:my-5 prose-p:leading-7",
+  "prose-a:text-foreground prose-a:no-underline prose-a:font-medium hover:prose-a:underline",
+  "prose-img:rounded-lg prose-img:shadow-sm prose-img:my-6 prose-img:mx-auto prose-img:clear-both",
+  "prose-blockquote:border-l-4 prose-blockquote:border-border prose-blockquote:bg-muted/50 prose-blockquote:pl-6 prose-blockquote:pr-4 prose-blockquote:py-2 prose-blockquote:italic prose-blockquote:rounded-r-sm",
+  "prose-code:font-normal prose-code:before:content-none prose-code:after:content-none",
+  "prose-table:border prose-table:border-border prose-table:rounded-sm prose-table:overflow-hidden prose-table:my-0",
+  "prose-th:bg-muted prose-th:p-3 prose-th:font-medium",
+  "prose-td:p-3 prose-td:border prose-td:border-border",
+  "prose-hr:my-10 prose-hr:border-border",
+  "prose-pre:p-0 prose-pre:my-0 prose-pre:bg-transparent prose-pre:rounded-none",
+  "prose-li:my-1 prose-li:leading-7",
+  "prose-strong:font-semibold",
+].join(" ");
 ---
 
 <Layout
@@ -64,7 +86,9 @@ const formattedDate = formatDate(post.data.date);
           <article>
             <Separator className="mb-10" />
             <div class="max-w-3xl">
-              <MarkdownContent content={content} client:load />
+              <div class={proseClass}>
+                <Content />
+              </div>
             </div>
 
             <div class="mt-12 border-t border-border pt-6">
@@ -80,14 +104,30 @@ const formattedDate = formatDate(post.data.date);
 
         <aside class="hidden lg:block min-w-0 lg:self-stretch">
           <div class="sticky top-24">
-            <TableOfContents content={content} client:load />
+            <TableOfContents headings={headings} client:idle />
           </div>
         </aside>
       </div>
     </main>
 
     <div class="lg:hidden">
-      <TableOfContents content={content} client:load />
+      <TableOfContents headings={headings} client:idle />
     </div>
   </div>
 </Layout>
+
+<script>
+  // Copy buttons for code blocks (markup is produced at build time).
+  document.querySelectorAll<HTMLButtonElement>(".code-block-copy").forEach((button) => {
+    button.addEventListener("click", async () => {
+      const code = button.closest(".code-block")?.querySelector("pre")?.textContent ?? "";
+      try {
+        await navigator.clipboard.writeText(code);
+        button.classList.add("copied");
+        window.setTimeout(() => button.classList.remove("copied"), 2000);
+      } catch {
+        // Clipboard unavailable (insecure context or permission denied); nothing to recover.
+      }
+    });
+  });
+</script>

@@ -53,3 +53,17 @@ Work happens on `astro-rewrite`; `main` untouched. Old Next files (`app/`, `next
 - Missing award/blog assets caught by data-integrity tests.
 - 404 page emitted as `404.html` (Vercel serves it natively).
 - Liquid glass keeps its CSS-fallback path when WebGL/html2canvas fail, as today.
+
+## Addendum (2026-09-09): audit and hardening pass
+
+Measured after the first port: a blog post referenced 1,350 kB of JavaScript, the home page 1,120 kB, and every page 236 kB of analytics in the layout chunk. Changes made:
+
+- Blog markdown moved from a client React renderer to Astro's build-time pipeline (`@astrojs/markdown-remark`, Shiki dual themes, two small plugins in `src/lib/markdown/`). No post used math, so KaTeX and its remark/rehype plugins were dropped along with react-markdown and react-syntax-highlighter. The table of contents now takes headings from `render(entry)` instead of re-parsing markdown with a regex (whose slugs could differ from the renderer's).
+- Home hero entrance is CSS keyframes; framer-motion removed. Static sections render in `index.astro`; only ContactDialog (`client:idle`), HeroProductMap (`client:media` for desktop widths) and WorkExperience (`client:visible`) hydrate. three.js is a dynamic import.
+- PostHog and Speed Insights load after idle in production as separate chunks.
+- Brand icons inlined; simple-icons removed. lucide-react is the single icon set.
+- The first liquidGL snapshot always failed (NaN scale) and retried after 500 ms; the html2canvas wrapper in the navbar now supplies the device scale.
+- Playwright end-to-end suite (desktop and mobile) runs against the built output via a small Bun static server, because `astro preview` daemonizes in agent environments.
+- Framework decision recorded in `docs/adr/0001-astro-with-react-islands.md`; vocabulary in `CONTEXT.md`.
+
+Result: home 290 kB and a blog post 268 kB of referenced JavaScript, most of it the shared React runtime and navbar.

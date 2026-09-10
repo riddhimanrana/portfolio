@@ -4,20 +4,27 @@ This repo contains the source code for my personal portfolio website: [riddhiman
 
 Mostly performance and SEO optimized and scores between 90-100 on [Lighthouse](https://developer.chrome.com/docs/lighthouse) for most pages, and scores between 80-100 for blog pages.
 
-## Tech Stack
+## Tech stack
 
-* **Framework**: Astro (React islands for interactive parts)
-* **Styling**: Tailwind CSS v4 + shadcn/ui
-* **Content**: Astro content collections (markdown blog)
-* **Deployment**: Vercel
+* **Framework**: Astro 7, static output, React islands for the interactive parts (see [docs/adr/0001](docs/adr/0001-astro-with-react-islands.md))
+* **Styling**: Tailwind CSS v4 (CSS-first tokens) and shadcn/ui
+* **Content**: Astro content collections; blog posts render at build time with Shiki dual themes
+* **Deployment**: Vercel (`vercel.json` proxies PostHog under `/ingest`)
 
 ## Development
 
 ```bash
 bun install
-bun run dev      # dev server on :4321
-bun run verify   # astro check + build + vitest
+bun run dev        # dev server on :4321
+bun run check      # astro check (types for .astro and .tsx)
+bun run test       # vitest: data integrity, utils, built-output checks (run build first)
+bun run test:e2e   # builds, then Playwright against the built site (desktop + mobile)
+bun run verify     # check + build + vitest + Playwright
 ```
+
+Environment: `PUBLIC_POSTHOG_KEY` (analytics load only in production builds).
+
+Vocabulary used across code and data lives in [CONTEXT.md](CONTEXT.md).
 
 ## License
 

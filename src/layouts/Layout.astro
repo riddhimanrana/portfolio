@@ -115,14 +115,19 @@ const pathname = Astro.url.pathname;
     </div>
 
     <script>
-      import posthog from "posthog-js";
-      import { injectSpeedInsights } from "@vercel/speed-insights";
-
+      // Analytics load in production only, after the page is idle, as their
+      // own chunks. Nothing here sits on the critical path.
       if (import.meta.env.PROD) {
-        injectSpeedInsights({});
+        const loadAnalytics = async () => {
+          const [{ injectSpeedInsights }, { default: posthog }] = await Promise.all([
+            import("@vercel/speed-insights"),
+            import("posthog-js"),
+          ]);
 
-        const posthogKey = import.meta.env.PUBLIC_POSTHOG_KEY;
-        if (posthogKey) {
+          injectSpeedInsights({});
+
+          const posthogKey = import.meta.env.PUBLIC_POSTHOG_KEY;
+          if (!posthogKey) return;
           posthog.init(posthogKey, {
             api_host: "/ingest",
             ui_host: "https://us.posthog.com",
@@ -133,10 +138,11 @@ const pathname = Astro.url.pathname;
             advanced_disable_feature_flags: true,
             debug: false,
           });
-          posthog.capture("$pageview", {
-            $current_url: window.location.href,
-          });
-        }
+          posthog.capture("$pageview", { $current_url: window.location.href });
+        };
+
+        const schedule = window.requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 1));
+        schedule(() => void loadAnalytics(), { timeout: 3000 });
       }
     </script>
   </body>

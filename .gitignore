@@ -48,3 +48,7 @@ __pycache__/
 # astro
 dist/
 .astro/
+
+# playwright
+test-results/
+playwright-report/

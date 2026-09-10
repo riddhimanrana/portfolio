@@ -628,6 +628,87 @@ html:has(body[data-scroll-locked]) {
   }
 }
 
+/* Home hero entrance (replaces the framer-motion variants). */
+.hero-fade {
+  opacity: 0;
+  animation: hero-fade-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--hero-delay, 0s);
+}
+
+@keyframes hero-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+    filter: blur(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* Blog post body: build-time markdown + Shiki dual themes. */
+.post-body :not(pre) > code {
+  @apply rounded bg-muted px-1.5 py-0.5 text-sm font-normal;
+}
+
+.post-body .post-image-small {
+  width: 400px;
+  max-width: 100%;
+  height: auto;
+  margin: 1rem auto;
+}
+
+.post-body .post-table {
+  @apply my-8 overflow-x-auto;
+}
+
+.code-block {
+  @apply my-6 overflow-hidden rounded-sm border border-border shadow-sm;
+}
+
+.code-block-header {
+  @apply flex items-center justify-between gap-3 border-b border-border bg-muted px-4 py-2.5 text-xs text-muted-foreground;
+}
+
+.code-block-title {
+  @apply flex min-w-0 items-center gap-2 truncate font-medium;
+}
+
+.code-block-copy {
+  @apply rounded-sm bg-muted/80 p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground;
+}
+
+.code-block-copy .code-block-check-icon {
+  display: none;
+  color: rgb(34 197 94);
+}
+
+.code-block-copy.copied .code-block-check-icon {
+  display: block;
+}
+
+.code-block-copy.copied .code-block-copy-icon {
+  display: none;
+}
+
+.code-block pre.astro-code {
+  @apply m-0 overflow-x-auto rounded-none p-4 text-sm leading-6;
+}
+
+.astro-code,
+.astro-code span {
+  color: var(--shiki-light);
+  background-color: var(--shiki-light-bg);
+}
+
+.dark .astro-code,
+.dark .astro-code span {
+  color: var(--shiki-dark);
+  background-color: var(--shiki-dark-bg);
+}
+
 @layer utilities {
   .scrollbar-hide {
     -ms-overflow-style: none;

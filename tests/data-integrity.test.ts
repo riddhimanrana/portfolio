@@ -112,7 +112,7 @@ describe("experience.json", () => {
 describe("home page award references", () => {
   it("top award ids on the home page all exist in awards.json", () => {
     const source = readFileSync(
-      join(root, "src/components/home-page.tsx"),
+      join(root, "src/pages/index.astro"),
       "utf8"
     );
     const match = source.match(/const topAwardIds = \[([^\]]+)\]/);

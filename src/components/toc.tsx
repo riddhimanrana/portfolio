@@ -3,8 +3,15 @@ import { useState, useEffect, useMemo } from 'react';
 import { cn } from '@/lib/utils';
 import { List, ChevronDown } from 'lucide-react';
 
+export interface TocHeading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
 interface TableOfContentsProps {
-  content: string;
+  /** Headings from Astro's render(entry), so ids always match the article. */
+  headings: TocHeading[];
 }
 
 interface Heading {
@@ -18,33 +25,17 @@ interface GroupedHeading {
   children: Heading[];
 }
 
-export function TableOfContents({ content }: TableOfContentsProps) {
-  const [headings, setHeadings] = useState<Heading[]>([]);
+export function TableOfContents({ headings: sourceHeadings }: TableOfContentsProps) {
   const [activeId, setActiveId] = useState<string>('');
   const [mobileOpen, setMobileOpen] = useState(false);
-  
-  // Extract headings from content
-  useEffect(() => {
-    const extractedHeadings: Heading[] = [];
-    const regex = /^(#{1,3})\s+(.+?)(?:\s*\{#([a-zA-Z0-9-_]+)\})?$/gm;
-    let match;
-    
-    while ((match = regex.exec(content)) !== null) {
-      const level = match[1].length;
-      const text = match[2];
-      const explicitId = match[3];
-      
-      // Generate an ID if not explicitly provided
-      const id = explicitId || text
-        .toLowerCase()
-        .replace(/[^a-z0-9\s-]/g, '')
-        .replace(/\s+/g, '-');
-        
-      extractedHeadings.push({ id, text, level });
-    }
-    
-    setHeadings(extractedHeadings);
-  }, [content]);
+
+  const headings = useMemo<Heading[]>(
+    () =>
+      sourceHeadings
+        .filter((h) => h.depth === 2 || h.depth === 3)
+        .map((h) => ({ id: h.slug, text: h.text, level: h.depth })),
+    [sourceHeadings]
+  );
 
   // Group h3s under their parent h2s
   const groupedHeadings = useMemo(() => {

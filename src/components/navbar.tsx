@@ -104,8 +104,18 @@ function installHtml2CanvasSnapshotGuards() {
     const callerIgnore = options.ignoreElements;
     const callerOnClone = options.onclone;
 
+    // liquidGL takes its first snapshot from its constructor, before it has
+    // assigned the resolution it derives `scale` from, so the first attempt
+    // sends NaN and html2canvas rejects it ("Scale must be a number"). The
+    // library retries 500ms later; supplying the device scale instead makes
+    // the first attempt succeed and drops the error from every page load.
+    const scale = Number.isFinite(options.scale)
+      ? options.scale
+      : Math.min(2, window.devicePixelRatio || 1);
+
     return originalHtml2Canvas(element, {
       ...options,
+      scale,
       ignoreElements: (node: Element) => {
         if (node.tagName === "CANVAS") return true;
         return callerIgnore?.(node) ?? false;

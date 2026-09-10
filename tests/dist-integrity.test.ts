@@ -1,5 +1,5 @@
 import { beforeAll, describe, expect, it } from "vitest";
-import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 
 import { KNOWN_MISSING_BLOG_IMAGES } from "./known-missing";
@@ -119,12 +119,39 @@ describe("built output", () => {
     }
   });
 
-  it("blog post pages contain article content and TOC island", () => {
+  it("blog posts are rendered at build time with no client markdown bundle", () => {
     const post = readFileSync(
-      join(dist, "blog/building-lets-assist/index.html"),
+      join(dist, "blog/escaping-icloud-photos/index.html"),
       "utf8"
     );
-    expect(post).toContain("astro-island");
     expect(post).toContain("All writing");
+    expect(post).toContain('class="code-block"');
+    expect(post).toContain('data-title="docker-compose.yml"');
+    expect(post).toContain("--shiki-light:");
+    expect(post).toContain("--shiki-dark:");
+    const scripts = [...post.matchAll(/(?:src|component-url)="(\/_astro\/[^"]+\.js)"/g)].map((m) => m[1]);
+    expect(scripts.some((s) => /markdown|katex|highlight/i.test(s))).toBe(false);
+    expect(scripts.some((s) => /toc\./.test(s)), "TOC island present").toBe(true);
+  });
+
+  it("home page ships three.js only as a lazy chunk", () => {
+    const home = readFileSync(join(dist, "index.html"), "utf8");
+    const scripts = [...home.matchAll(/(?:src|component-url)="(\/_astro\/[^"]+\.js)"/g)].map((m) => m[1]);
+    expect(scripts.some((s) => /three/i.test(s))).toBe(false);
+    expect(home).toContain("hero-fade");
+    expect(home).toContain("(min-width: 1024px)");
+  });
+
+  it("no page references a chunk larger than 300 kB eagerly", () => {
+    const limit = 300 * 1024;
+    const offenders: string[] = [];
+    for (const file of collectHtmlFiles(dist)) {
+      const html = readFileSync(file, "utf8");
+      for (const [, src] of html.matchAll(/(?:src|component-url)="(\/_astro\/[^"]+\.js)"/g)) {
+        const size = statSync(join(dist, src)).size;
+        if (size > limit) offenders.push(`${file.replace(dist + "/", "")} -> ${src} (${size})`);
+      }
+    }
+    expect(offenders, offenders.join("\n")).toEqual([]);
   });
 });

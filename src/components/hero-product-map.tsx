@@ -2,7 +2,7 @@
 import { animate, createScope, type Scope } from "animejs";
 import Image from "@/lib/shims/image";
 import { useEffect, useRef, useState, type PointerEvent } from "react";
-import * as THREE from "three";
+import type { Object3D, Points, PointsMaterial } from "three";
 
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
@@ -28,8 +28,8 @@ export function HeroProductMap() {
   const [isLocked, setIsLocked] = useState(false);
   const scrollPercent = useRef(0);
   const layers = useRef<{
-    scene?: THREE.Object3D;
-    color?: THREE.Points;
+    scene?: Object3D;
+    color?: Points;
   }>({});
   const resetCameraRef = useRef<() => void>(undefined);
 
@@ -40,7 +40,7 @@ export function HeroProductMap() {
     }
     if (layers.current.color) {
       layers.current.color.visible = nextMode === "three";
-      const material = layers.current.color.material as THREE.PointsMaterial;
+      const material = layers.current.color.material as PointsMaterial;
       material.opacity = 0.96;
     }
   };
@@ -55,9 +55,15 @@ export function HeroProductMap() {
 
     let disposed = false;
     let frameId = 0;
+    let cleanup: (() => void) | undefined;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const width = container.clientWidth;
     const height = container.clientHeight;
+
+    // three.js is loaded on demand as its own chunk so it never sits on the
+    // critical path; the portrait photo is visible while it arrives.
+    import("three").then((THREE) => {
+    if (disposed) return;
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 1000);
@@ -276,9 +282,7 @@ export function HeroProductMap() {
     };
     container.addEventListener("dblclick", handleCanvasDblClick);
 
-    return () => {
-      resetCameraRef.current = undefined;
-      disposed = true;
+    cleanup = () => {
       window.cancelAnimationFrame(frameId);
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", resize);
@@ -289,6 +293,13 @@ export function HeroProductMap() {
       renderer.dispose();
       layers.current = {};
       container.replaceChildren();
+    };
+    });
+
+    return () => {
+      disposed = true;
+      resetCameraRef.current = undefined;
+      cleanup?.();
     };
   }, []);
 
