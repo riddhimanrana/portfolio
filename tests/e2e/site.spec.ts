@@ -31,6 +31,10 @@ test.describe("shell", () => {
     await expect(page.getByRole("heading", { name: "Work experience" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Products" })).toBeVisible();
 
+    // Static links styled through buttonVariants() (asChild does not work from .astro).
+    await expect(page.getByRole("link", { name: "Projects", exact: true }).first()).toHaveClass(/bg-primary/);
+    await expect(page.getByRole("link", { name: /Resume/ })).toHaveClass(/border/);
+
     // Hero entrance signals the navbar (liquid glass waits on it).
     await expect
       .poll(() => page.evaluate(() => (window as any).__portfolioHeroMotionDone === true))
@@ -148,6 +152,7 @@ test.describe("blog", () => {
   }) => {
     await context.grantPermissions(["clipboard-read", "clipboard-write"]);
     await page.goto("/blog/escaping-icloud-photos");
+    await expect(page.getByRole("link", { name: /Back to blog/ })).toHaveClass(/border/);
 
     // Shiki output with dual-theme variables, no client markdown bundle.
     const firstBlock = page.locator(".code-block").first();

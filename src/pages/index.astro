@@ -7,7 +7,7 @@ import { HeroProductMap } from "@/components/hero-product-map";
 import { WorkExperience } from "@/components/work-experience";
 import { SkillsSection } from "@/components/skills-section";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import awardsData from "@/data/awards.json";
 
@@ -116,15 +116,16 @@ const founderIconClass =
             style="--hero-delay:0.55s"
             data-hero-last
           >
-            <Button asChild>
-              <a href="/projects">Projects</a>
-            </Button>
-            <Button variant="outline" asChild>
-              <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">
-                <Download data-icon="inline-start" />
-                Resume
-              </a>
-            </Button>
+            <a href="/projects" class={buttonVariants()}>Projects</a>
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              class={buttonVariants({ variant: "outline" })}
+            >
+              <Download data-icon="inline-start" />
+              Resume
+            </a>
             <ContactDialog client:idle />
           </div>
         </div>
@@ -135,12 +136,10 @@ const founderIconClass =
       <section class="py-14 sm:py-20">
         <div class="flex items-center justify-between gap-4 border-b border-border pb-4">
           <h2 class="text-2xl font-medium tracking-[-0.035em]">Top awards</h2>
-          <Button variant="ghost" size="sm" className="-mr-3" asChild>
-            <a href="/awards">
-              View all
-              <ArrowUpRight data-icon="inline-end" />
-            </a>
-          </Button>
+          <a href="/awards" class={buttonVariants({ variant: "ghost", size: "sm", className: "-mr-3" })}>
+            View all
+            <ArrowUpRight data-icon="inline-end" />
+          </a>
         </div>
         <div class="grid sm:grid-cols-2">
           {
@@ -180,12 +179,10 @@ const founderIconClass =
       <section class="pb-16 sm:pb-24">
         <div class="flex items-center justify-between gap-4 border-b border-border pb-4">
           <h2 class="text-2xl font-medium tracking-[-0.035em]">Products</h2>
-          <Button variant="ghost" size="sm" className="-mr-3" asChild>
-            <a href="/projects">
-              View all
-              <ArrowUpRight data-icon="inline-end" />
-            </a>
-          </Button>
+          <a href="/projects" class={buttonVariants({ variant: "ghost", size: "sm", className: "-mr-3" })}>
+            View all
+            <ArrowUpRight data-icon="inline-end" />
+          </a>
         </div>
         <div>
           {

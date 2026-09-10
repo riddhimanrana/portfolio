@@ -5,7 +5,7 @@ import { ArrowLeft } from "lucide-react";
 import Layout from "@/layouts/Layout.astro";
 import { TableOfContents } from "@/components/toc";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { formatDate } from "@/lib/utils";
 
@@ -57,12 +57,10 @@ const proseClass = [
   <div class="min-h-screen overflow-x-clip">
     <main class="site-shell py-12 sm:py-16">
       <div class="mx-auto mb-10 max-w-5xl">
-        <Button variant="ghost" className="-ml-4" asChild>
-          <a href="/blog">
-            <ArrowLeft data-icon="inline-start" />
-            All writing
-          </a>
-        </Button>
+        <a href="/blog" class={buttonVariants({ variant: "ghost", className: "-ml-4" })}>
+          <ArrowLeft data-icon="inline-start" />
+          All writing
+        </a>
       </div>
 
       <div class="mx-auto max-w-5xl lg:grid lg:grid-cols-[1fr_180px] lg:gap-10">
@@ -92,12 +90,10 @@ const proseClass = [
             </div>
 
             <div class="mt-12 border-t border-border pt-6">
-              <Button variant="outline" asChild>
-                <a href="/blog">
-                  <ArrowLeft data-icon="inline-start" />
-                  Back to blog
-                </a>
-              </Button>
+              <a href="/blog" class={buttonVariants({ variant: "outline" })}>
+                <ArrowLeft data-icon="inline-start" />
+                Back to blog
+              </a>
             </div>
           </article>
         </div>
