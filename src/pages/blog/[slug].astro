@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { formatDate } from "@/lib/utils";
+import { blogPostingJsonLd } from "@/lib/seo";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -53,6 +54,18 @@ const proseClass = [
   title={`${post.data.title} | Riddhiman Rana`}
   description={post.data.excerpt}
   keywords={post.data.tags}
+  ogImage={`/og/blog/${post.id}.png`}
+  ogType="article"
+  article={{ publishedTime: post.data.date, tags: post.data.tags }}
+  jsonLd={[
+    blogPostingJsonLd({
+      slug: post.id,
+      title: post.data.title,
+      excerpt: post.data.excerpt,
+      date: post.data.date,
+      tags: post.data.tags,
+    }),
+  ]}
 >
   <div class="min-h-screen overflow-x-clip">
     <main class="site-shell py-12 sm:py-16">

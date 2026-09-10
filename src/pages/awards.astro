@@ -17,6 +17,7 @@ const awards: AwardView[] = await Promise.all(
 <Layout
   title="Awards | Riddhiman Rana"
   description="A showcase of awards, honors, and achievements throughout my academic journey."
+  ogImage="/og/awards.png"
 >
   <AwardsPage client:load awards={awards} />
 </Layout>

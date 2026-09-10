@@ -23,7 +23,7 @@ I thought: *What if there was a platform that connected students with local orga
 
 ## The First Attempt: HarvestHacks 2023
 
-I built an early version of Let's Assist for a hackathon called [HarvestHacks](https://ycwhacks.devpost.com/) in collaboration with my friend [Keshav Verma](https://github.com/vkeshav300) in November 2023. It was a rough prototype — just a basic login system and a way to create events. I didn’t win anything, but the experience was valuable. It gave me a starting point and a lot of ideas for what the platform could become. You can see the original submission [here](https://devpost.com/software/let-s-assist)
+I built an early version of Let's Assist for a hackathon called [HarvestHacks](https://ycwhacks.devpost.com/) in collaboration with my friend [Keshav Verma](https://github.com/vkeshav300) in November 2023. It was a rough prototype — just a basic login system and a way to create events. I didn’t win anything, but the experience was valuable. It gave me a starting point and a lot of ideas for what the platform could become. You can see the original submission [on Devpost](https://devpost.com/software/let-s-assist)
 
 ![HarvestHacks 2023 Submission](./building-lets-assist/lets-assist-old.png)
 

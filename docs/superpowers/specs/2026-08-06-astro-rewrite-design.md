@@ -75,3 +75,13 @@ Result: home 290 kB and a blog post 268 kB of referenced JavaScript, most of it 
 - Unused files deleted: `public/source-assets` (5.5 MB), the orphaned neovim post images, `aboutme.jpg`, `profile.jpg`, the depth `.glb`, a placeholder logo. The Pixelta font notice moved to `docs/licenses/`.
 - Components grouped by area (`shell`, `home`, `projects`, `awards`, `blog`, `ui`). Ideology and 404 are plain Astro pages now; no React needed.
 - `vercel.json` pins `framework: astro`, install/build commands and `outputDirectory`, so the dashboard preset cannot break a deploy. The dashboard variables were renamed to `PUBLIC_POSTHOG_KEY` / `PUBLIC_POSTHOG_HOST` on 2026-09-10.
+
+## Addendum (2026-09-10): SEO and social cards
+
+- Open Graph images generated at build time with satori and resvg (`src/lib/og.ts`, `src/pages/og/[...slug].png.ts`): one per static page from `OG_PAGES` in `src/lib/seo.ts`, one per post from frontmatter. Fonts are static instances of Overused Grotesk (weights 500 and 700) produced with fontTools; layout tables are stripped because satori's opentype parser rejects them. The site previously had no image at all behind its `summary_large_image` card.
+- Per-page `og:title`, `og:description`, `og:image` (absolute, 1200x630, with alt), `twitter:image`; `og:type` article with `article:published_time` and `article:tag` on posts.
+- JSON-LD: WebSite on every page, Person on the home page, BlogPosting on posts. `theme-color` for both schemes, `rel=alternate` RSS link, `preconnect` to the html2canvas CDN.
+- RSS feed at `/rss.xml` (`@astrojs/rss`).
+- Seven blog links reading "here" or "docs" rewritten with descriptive text (Lighthouse "links do not have descriptive text").
+- Dist tests assert each page's OG image exists and is a real render, article metadata on posts, and the feed listing every post.
+- Verified in the user's real Chrome: liquid glass refracts page content behind the capsule on home and awards once scrolling settles; CSS fallback shows while scrolling, by design.

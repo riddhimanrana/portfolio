@@ -158,6 +158,37 @@ describe("built output", () => {
     expect(images.some((f) => /point-cloud-source.*\.jpe?g$/.test(f))).toBe(false);
   });
 
+  it("every page has an absolute Open Graph image that exists, plus JSON-LD", () => {
+    for (const route of expectedRoutes.filter((r) => r !== "404.html")) {
+      const html = readFileSync(join(dist, route), "utf8");
+      const og = html.match(/<meta property="og:image" content="([^"]+)"/)?.[1];
+      expect(og, `${route} og:image`).toMatch(/^https:\/\/riddhimanrana\.com\/og\/.+\.png$/);
+      const file = join(dist, new URL(og!).pathname);
+      expect(existsSync(file), `${route} -> ${og} missing`).toBe(true);
+      expect(statSync(file).size, `${route} og image too small`).toBeGreaterThan(50_000);
+      expect(html).toContain('<meta name="twitter:image"');
+      expect(html).toContain('<meta property="og:title"');
+      expect(html).toContain('<script type="application/ld+json">');
+      expect(html).toContain('<link rel="canonical"');
+    }
+  });
+
+  it("blog posts carry article metadata and BlogPosting structured data", () => {
+    const post = readFileSync(join(dist, "blog/escaping-icloud-photos/index.html"), "utf8");
+    expect(post).toContain('<meta property="og:type" content="article"');
+    expect(post).toContain('<meta property="article:published_time" content="2025-12-23"');
+    expect(post).toContain('"@type":"BlogPosting"');
+    expect(post).toContain('"datePublished":"2025-12-23"');
+  });
+
+  it("emits an RSS feed listing every post", () => {
+    const feed = readFileSync(join(dist, "rss.xml"), "utf8");
+    for (const slug of blogSlugs) expect(feed).toContain(`/blog/${slug}/`);
+    for (const route of ["index.html", "blog/index.html"]) {
+      expect(readFileSync(join(dist, route), "utf8")).toContain('type="application/rss+xml"');
+    }
+  });
+
   it("no page references a chunk larger than 300 kB eagerly", () => {
     const limit = 300 * 1024;
     const offenders: string[] = [];

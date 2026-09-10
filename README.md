@@ -33,6 +33,8 @@ src/
   content/blog/ posts, each with its images in a folder of the same name
   data/         awards, projects, experience (JSON, validated by tests)
   integrations/ build hooks (prunes unreferenced image originals from dist)
+  pages/og/     Open Graph images rendered at build time (satori); one per page and post
+  pages/rss.xml.ts  blog feed
   layouts/ lib/ pages/ styles/ types/
 tests/          vitest (data, utils, built output) and Playwright (tests/e2e)
 ```

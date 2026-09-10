@@ -73,13 +73,13 @@ One thing I do remember noting is that your wifi drivers don't really work the f
 
 ## Setting up Immich
 
-Congrats! Your system should definitely feel much snappier and faster already. Now, let's get Immich set up. This portion of setting up is just based on the official Immich documentation, which you can find [here](https://docs.immich.app/overview/quick-start). I'll just be going through the steps I took to set it up on my own system.
+Congrats! Your system should definitely feel much snappier and faster already. Now, let's get Immich set up. This portion of setting up is just based on the official Immich documentation, which you can find in [the Immich quick-start guide](https://docs.immich.app/overview/quick-start). I'll just be going through the steps I took to set it up on my own system.
 
 ### Set up Docker and Docker Compose
 
 *Note: This step is actually different from the regular docker installs, so make sure you follow these commands exactly*
 
-The issue is that, for the hardware accelerated video transcoding to work properly, we need to install Docker a little differently. If you go through the Immich Hardware Transcoding [docs](https://docs.immich.app/features/hardware-transcoding), you'll notice for the VAAPI API, the one which can work with our Intel integrated graphics, it requires access to the `/dev/dri` device. Now Docker Desktop for Linux doesn't run natively. It runs a small VM using KVM. So your countainers aren't actually running on the host kernal, they're inside hte VM. `/dev/dri` exists on the host, but the VM doesn't have direct access to `/dev/dri` by default. Thus, it's going to trigger an issue like this:
+The issue is that, for the hardware accelerated video transcoding to work properly, we need to install Docker a little differently. If you go through the Immich Hardware Transcoding [hardware transcoding docs](https://docs.immich.app/features/hardware-transcoding), you'll notice for the VAAPI API, the one which can work with our Intel integrated graphics, it requires access to the `/dev/dri` device. Now Docker Desktop for Linux doesn't run natively. It runs a small VM using KVM. So your countainers aren't actually running on the host kernal, they're inside hte VM. `/dev/dri` exists on the host, but the VM doesn't have direct access to `/dev/dri` by default. Thus, it's going to trigger an issue like this:
 
 ```code
 error gathering device information while adding custom device "/dev/dri": no such file or directory
@@ -111,7 +111,7 @@ This should return nothing or `Rootless: false`. Do note that with this docker i
 
 ### Installing Immich
 
-This part is mostly just based off the docs [here](https://docs.immich.app/overview/quick-start), but with a few of my own tid bits.
+This part is mostly just based off [the Immich quick-start guide](https://docs.immich.app/overview/quick-start), but with a few of my own tid bits.
 
 1. Download the required files
 
@@ -158,7 +158,7 @@ DB_DATABASE_NAME=immich
 
 4. Enable Hardware Transcoding/Hardware Acelerated ML
 
-To figure out what works for you in terms of Hardware Transcoding, I'd probably either read through this Immich documentation [here](https://docs.immich.app/features/hardware-transcoding) or just copy paste the docs into ChatGPT, give it your laptop specs and figure out what works. For me, I used VAAPI for Hardware Transcoding on my computer and changed my `docker-compose.yml` as such. Make sure you also download the associated `hwaccel.transcoding.yml` or `hwaccel.ml.yml`. However, for this section it's unique for each usecase and I'd recommend going back and forth with ChatGPT, seeing which video codecs work or don't work with your system, and finding the best fit.
+To figure out what works for you in terms of Hardware Transcoding, I'd probably either read through this Immich documentation [the hardware transcoding docs](https://docs.immich.app/features/hardware-transcoding) or just copy paste the docs into ChatGPT, give it your laptop specs and figure out what works. For me, I used VAAPI for Hardware Transcoding on my computer and changed my `docker-compose.yml` as such. Make sure you also download the associated `hwaccel.transcoding.yml` or `hwaccel.ml.yml`. However, for this section it's unique for each usecase and I'd recommend going back and forth with ChatGPT, seeing which video codecs work or don't work with your system, and finding the best fit.
 
 As for Hardware Accelerated ML, my system didn't qualify for anything other than just CPU, but Immich has this incredible feature called [Remote ML](https://docs.immich.app/guides/remote-machine-learning) where you can set up another computer to do all the ML processing for you. For me, I unfortunately don't have any such hardware accelerated ML devices, but the CPU on my personal Apple M1 is much faster, so to alleviate some of the workload I set up Remote ML on my M1 MacBook Air, which drastically sped up the ML processing time. I'll talk more about that later.
 
@@ -184,7 +184,7 @@ Now, as the first admin user just fill out all the info, go through each of the 
 
 Now that you have Immich set up, it's time to set up your external libraries. External Libraries are basically folders on your external drive which Immich will monitor and automatically upload photos and videos from. So for example in my case, I had one big folder on my external drive called `Family Photos` where I dumped all my photos and videos from iCloud, Google Photos, and other sources. If you have all of your photos and videos in one cloud service like say iCloud Photos, there is an amazing tool called [immich-go](https://github.com/simulot/immich-go) which can directly download all your photos and videos from Google Photos/iCloud Photos/others, follow the instructions on the repo there to do so.
 
-Much of the instructions here are based off the official Immich docs [here](https://docs.immich.app/guides/external-library/) so if you get stuck at any point just double check there.
+Much of the instructions here are based off the official Immich docs [the external library guide](https://docs.immich.app/guides/external-library/) so if you get stuck at any point just double check there.
 
 1. Mount the directory into the containers
 
@@ -248,7 +248,7 @@ Now, we need to continue setting up the Hardware Accelerated video transcoding t
 
 ### Setting up Remote ML (Optional)
 
-If you have another computer lying around with better hardware specs, you can set up Remote ML to offload all the machine learning processing to that device. For me, I set it up on my M1 MacBook Air, which drastically sped up the ML processing time. The following steps are based off the official Immich docs [here](https://docs.immich.app/guides/remote-machine-learning).
+If you have another computer lying around with better hardware specs, you can set up Remote ML to offload all the machine learning processing to that device. For me, I set it up on my M1 MacBook Air, which drastically sped up the ML processing time. The following steps are based off the official Immich docs [the remote machine learning guide](https://docs.immich.app/guides/remote-machine-learning).
 
 1. Ensure the remote server has Docker installed
 
