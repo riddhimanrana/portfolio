@@ -58,7 +58,6 @@ const avatar = await optimized("/profile1.jpeg", { width: 32 });
     <link rel="alternate" type="application/rss+xml" title="Riddhiman Rana | Blog" href="/rss.xml" />
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#05080f" />
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f8fafc" />
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
     <meta
       name="google-site-verification"
       content="r_ZlioncOUkRZdQRZ9V7xI0Y9eO6wxnqD5l5-JMeqoY"
@@ -120,13 +119,6 @@ const avatar = await optimized("/profile1.jpeg", { width: 32 });
       })();
     </script>
 
-    <!-- Liquid glass navbar dependencies (loaded off the critical path) -->
-    <script
-      is:inline
-      defer
-      src="https://cdn.jsdelivr.net/npm/html2canvas-pro@2.1.1/dist/html2canvas-pro.min.js"
-    ></script>
-    <script is:inline defer src="/scripts/liquidGL.js"></script>
   </head>
   <body class="bg-background font-sans text-foreground antialiased">
     <div class="flex flex-col min-h-screen">

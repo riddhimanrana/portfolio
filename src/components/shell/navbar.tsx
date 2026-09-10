@@ -1,5 +1,5 @@
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, Sun, Moon, SparklesIcon } from "lucide-react";
 import { useTheme } from "@/lib/shims/theme";
 import Image from "@/lib/shims/image";
@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import type { OptimizedImage } from "@/types/image";
+import { useLiquidGlass } from "@/components/shell/use-liquid-glass";
 
 const navItems = [
   { name: "home", path: "/" },
@@ -56,243 +57,6 @@ const socials = [
   },
 ];
 
-const LIQUID_GL_OPTS = {
-  target: ".nav-glass-pane",
-  snapshot: "body",
-  resolution: 2,
-  refraction: 0.026,
-  bevelDepth: 0.119,
-  bevelWidth: 0.057,
-  frost: 1,
-  magnify: 1.018,
-  shadow: true,
-  specular: true,
-};
-
-const UNSUPPORTED_HTML2CANVAS_COLOR = /(oklch|oklab|lch|lab|color-mix)\(/i;
-const SNAPSHOT_COLOR_PROPS = [
-  ["color", "#e5e7eb"],
-  ["background-color", "transparent"],
-  ["border-color", "transparent"],
-  ["border-top-color", "transparent"],
-  ["border-right-color", "transparent"],
-  ["border-bottom-color", "transparent"],
-  ["border-left-color", "transparent"],
-  ["outline-color", "transparent"],
-  ["text-decoration-color", "transparent"],
-  ["caret-color", "transparent"],
-  ["column-rule-color", "transparent"],
-  ["text-emphasis-color", "transparent"],
-  ["fill", "currentColor"],
-  ["stroke", "currentColor"],
-  ["stop-color", "transparent"],
-  ["flood-color", "transparent"],
-  ["lighting-color", "transparent"],
-] as const;
-const SNAPSHOT_EFFECT_PROPS = [
-  "background",
-  "background-image",
-  "box-shadow",
-  "text-shadow",
-  "filter",
-] as const;
-
-let maxTextureSizeCache = 0;
-function maxTextureSize(): number {
-  if (maxTextureSizeCache) return maxTextureSizeCache;
-  try {
-    const gl =
-      document.createElement("canvas").getContext("webgl2") ??
-      document.createElement("canvas").getContext("webgl");
-    maxTextureSizeCache = Number(gl?.getParameter(gl.MAX_TEXTURE_SIZE)) || 8192;
-  } catch {
-    maxTextureSizeCache = 8192;
-  }
-  return maxTextureSizeCache;
-}
-
-// liquidGL's constructor takes its first snapshot before it assigns
-// `_snapshotResolution`, so that capture asks html2canvas for scale = NaN
-// (rejected as "Scale must be a number") and, worse, stores NaN as the
-// renderer's scaleFactor. Reproduce the library's own formula for that first
-// capture and write the result back so the texture and the UV math agree.
-function snapshotScale(width: number, height: number) {
-  const maxTex = maxTextureSize();
-  let scale = Math.min(LIQUID_GL_OPTS.resolution, maxTex / width, maxTex / height);
-  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
-    const over = (Math.max(width, height) * scale) / 4096;
-    if (over > 1) scale /= over;
-  }
-  return Math.max(0.1, scale);
-}
-
-function installHtml2CanvasSnapshotGuards() {
-  const win = window as any;
-  if (!win.html2canvas || win.__portfolioHtml2CanvasGuarded) return;
-
-  const originalHtml2Canvas = win.html2canvas;
-  win.html2canvas = (element: HTMLElement, options: any = {}) => {
-    const callerIgnore = options.ignoreElements;
-    const callerOnClone = options.onclone;
-
-    const scaleWasInvalid = !Number.isFinite(options.scale);
-    const scale = scaleWasInvalid
-      ? snapshotScale(options.width || element.scrollWidth, options.height || element.scrollHeight)
-      : options.scale;
-
-    const capture = originalHtml2Canvas(element, {
-      ...options,
-      scale,
-      ignoreElements: (node: Element) => {
-        if (node.tagName === "CANVAS") return true;
-        return callerIgnore?.(node) ?? false;
-      },
-      onclone: (clonedDoc: Document, clonedElement: HTMLElement) => {
-        callerOnClone?.(clonedDoc, clonedElement);
-
-        const clonedWin = clonedDoc.defaultView;
-        if (!clonedWin) return;
-
-        const clonePatch = clonedDoc.createElement("style");
-        clonePatch.textContent = `
-          *, *::before, *::after {
-            --tw-ring-color: transparent !important;
-            --tw-shadow-color: transparent !important;
-          }
-          body::before,
-          body::after,
-          [data-liquid-ignore] {
-            content: none !important;
-            display: none !important;
-          }
-          [data-liquid-snapshot-shell] .nav-capsule {
-            background: transparent !important;
-            border-color: transparent !important;
-            box-shadow: none !important;
-            backdrop-filter: none !important;
-            -webkit-backdrop-filter: none !important;
-          }
-          [data-liquid-snapshot-shell] .nav-capsule::before,
-          [data-liquid-snapshot-shell] .nav-glass-pane {
-            content: none !important;
-            display: none !important;
-          }
-          [data-liquid-snapshot-shell] .nav-capsule > :not(.nav-glass-pane) {
-            opacity: 0 !important;
-          }
-          .diffusion-name,
-          .luxury-gold-text,
-          .luxury-silver-text,
-          .luxury-bronze-text,
-          .award-badge-major span,
-          .award-badge-notable span,
-          .award-badge-honorable span {
-            color: #dbeafe !important;
-            background: none !important;
-            -webkit-background-clip: border-box !important;
-            background-clip: border-box !important;
-            filter: none !important;
-          }
-          :root:not(.dark) .diffusion-name,
-          :root:not(.dark) .luxury-gold-text,
-          :root:not(.dark) .luxury-silver-text,
-          :root:not(.dark) .luxury-bronze-text,
-          :root:not(.dark) .award-badge-major span,
-          :root:not(.dark) .award-badge-notable span,
-          :root:not(.dark) .award-badge-honorable span {
-            color: #1d4ed8 !important;
-          }
-        `;
-        clonedDoc.head.appendChild(clonePatch);
-
-        clonedDoc.querySelectorAll<HTMLElement>("*").forEach((node) => {
-          const style = clonedWin.getComputedStyle(node);
-          SNAPSHOT_COLOR_PROPS.forEach(([prop, fallback]) => {
-            const value = style.getPropertyValue(prop);
-            if (value && UNSUPPORTED_HTML2CANVAS_COLOR.test(value)) {
-              node.style.setProperty(prop, fallback, "important");
-            }
-          });
-          SNAPSHOT_EFFECT_PROPS.forEach((prop) => {
-            const value = style.getPropertyValue(prop);
-            if (!value || !UNSUPPORTED_HTML2CANVAS_COLOR.test(value)) return;
-            if (prop === "background" || prop === "background-image") {
-              node.style.setProperty("background-image", "none", "important");
-              node.style.setProperty("background-color", "transparent", "important");
-              return;
-            }
-            node.style.setProperty(prop, "none", "important");
-          });
-        });
-      },
-    });
-
-    if (!scaleWasInvalid) return capture;
-    return capture.then((canvas: HTMLCanvasElement) => {
-      const renderer = win.__liquidGLRenderer__;
-      if (renderer && !Number.isFinite(renderer.scaleFactor)) renderer.scaleFactor = scale;
-      return canvas;
-    });
-  };
-
-  win.__portfolioHtml2CanvasGuarded = true;
-}
-
-function normalizeLiquidGLTargets() {
-  const win = window as any;
-  const renderer = win.__liquidGLRenderer__;
-  const pane = document.querySelector(".nav-glass-pane");
-  if (!renderer || !pane) return;
-
-  renderer.lenses?.forEach((ln: any) => {
-    if (ln.el !== pane) {
-      ln.el.style.opacity = "";
-      ln.el.style.pointerEvents = "";
-      ln.el.style.transition = "";
-      ln.el = pane;
-    }
-    ln.updateMetrics?.();
-  });
-}
-
-function destroyLiquidGL() {
-  const win = window as any;
-  const renderer = win.__liquidGLRenderer__;
-  if (!renderer) return;
-  // Cancel the render loop
-  if (renderer._rafId) {
-    cancelAnimationFrame(renderer._rafId);
-    renderer._rafId = null;
-  }
-  // Reset lens element opacity
-  renderer.lenses?.forEach((ln: any) => {
-    ln.el.style.opacity = "";
-  });
-  // Hide the WebGL canvas
-  if (renderer.canvas) {
-    renderer.canvas.style.opacity = "0";
-    renderer.canvas.style.pointerEvents = "none";
-  }
-}
-
-function reviveLiquidGL() {
-  const win = window as any;
-  const renderer = win.__liquidGLRenderer__;
-  if (!renderer) return;
-  // Restart the render loop
-  if (!renderer._rafId) {
-    const loop = () => {
-      renderer.render();
-      renderer._rafId = requestAnimationFrame(loop);
-    };
-    renderer._rafId = requestAnimationFrame(loop);
-  }
-  if (renderer.canvas) {
-    renderer.canvas.style.opacity = "1";
-    renderer.canvas.style.pointerEvents = "none";
-  }
-}
-
 export default function NavBar({
   pathname,
   avatar,
@@ -302,174 +66,25 @@ export default function NavBar({
 }) {
   const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  const [glReady, setGlReady] = useState(false);
-  const [glEnabled, setGlEnabled] = useState(true);
-  const glEnabledRef = useRef(true);
+  const glass = useLiquidGlass({ waitForHero: pathname === "/" });
+  const glEnabled = glass.enabled;
+  const glReady = glass.status === "ready";
 
-  // Sync ref so callbacks always see latest value
-  useEffect(() => {
-    glEnabledRef.current = glEnabled;
-  }, [glEnabled]);
-
-  // One-time init. Home page waits until hero motion finishes, then loads glass off the critical path.
   useEffect(() => {
     setMounted(true);
-
-    // Read persisted preference
-    const saved = localStorage.getItem("liquidgl-enabled");
-    const enabled = saved === null ? true : saved === "true";
-    setGlEnabled(enabled);
-    glEnabledRef.current = enabled;
-
-    const win = window as any;
-
-    if (win.__liquidGLRenderer__) {
-      normalizeLiquidGLTargets();
-      setGlReady(true);
-      if (!enabled) destroyLiquidGL();
-      return;
-    }
-
-    if (!enabled) return;
-
-    let timer: NodeJS.Timeout | undefined;
-    let fallbackTimer: NodeJS.Timeout | undefined;
-    let idleId: number | undefined;
-    let started = false;
-    let cancelled = false;
-
-    const tryInit = () => {
-      if (cancelled) return;
-      if (!win.html2canvas || !win.liquidGL) return;
-      installHtml2CanvasSnapshotGuards();
-      if (timer) { clearInterval(timer); timer = undefined; }
-      if (win.__liquidGLRenderer__) { setGlReady(true); return; }
-
-      try {
-        win.liquidGL(LIQUID_GL_OPTS);
-        setTimeout(() => {
-          if (!cancelled) setGlReady(true);
-        }, 1100);
-      } catch (e) {
-        console.error("liquidGL initialization failed:", e);
-      }
-    };
-
-    const startInit = () => {
-      if (started || cancelled) return;
-      started = true;
-      const run = () => {
-        tryInit();
-        if (!win.__liquidGLRenderer__) {
-          timer = setInterval(tryInit, 100);
-        }
-      };
-      if ("requestIdleCallback" in win) {
-        idleId = win.requestIdleCallback(run, { timeout: 1200 });
-      } else {
-        timer = setTimeout(run, 0);
-      }
-    };
-
-    const onHeroDone = () => startInit();
-
-    if (pathname === "/" && !win.__portfolioHeroMotionDone) {
-      window.addEventListener("portfolio:hero-motion-complete", onHeroDone, { once: true });
-      fallbackTimer = setTimeout(startInit, 1800);
-    } else {
-      startInit();
-    }
-
-    return () => {
-      cancelled = true;
-      if (timer) clearInterval(timer);
-      if (fallbackTimer) clearTimeout(fallbackTimer);
-      if (idleId && "cancelIdleCallback" in win) win.cancelIdleCallback(idleId);
-      window.removeEventListener("portfolio:hero-motion-complete", onHeroDone);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Theme swaps change the captured backdrop. Recapture after next-themes updates the html class.
+  // Theme swaps change the captured backdrop; re-snapshot after the class flips.
   useEffect(() => {
-    const win = window as any;
-    if (!mounted || !win.__liquidGLRenderer__ || !glEnabledRef.current) return;
-    const id = setTimeout(() => {
-      win.__liquidGLRenderer__?.captureSnapshot?.();
-      win.__liquidGLRenderer__?.render?.();
-    }, 180);
-    return () => clearTimeout(id);
+    if (mounted) glass.refresh();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mounted, resolvedTheme]);
 
-  // liquidGL re-captures the page when the body's height changes, but it
-  // drops that request outright while the page is scrolling and never
-  // re-arms it. A layout change mid-scroll (an accordion opening, images
-  // arriving) would leave the texture misaligned with the page. Check once
-  // scrolling settles and recapture only if the two disagree.
-  useEffect(() => {
-    if (!mounted) return;
-    let timer: ReturnType<typeof setTimeout> | undefined;
-    const onScroll = () => {
-      if (timer) clearTimeout(timer);
-      timer = setTimeout(() => {
-        const renderer = (window as any).__liquidGLRenderer__;
-        if (!renderer || !glEnabledRef.current || renderer._capturing) return;
-        const expected = Math.round(document.body.scrollHeight * renderer.scaleFactor);
-        if (Math.abs(expected - renderer.textureHeight) > 2) {
-          renderer.captureSnapshot?.();
-        }
-      }, 300);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      if (timer) clearTimeout(timer);
-    };
-  }, [mounted]);
-
-  // Toggle liquid glass on/off
-  const toggleGL = () => {
-    const next = !glEnabled;
-    setGlEnabled(next);
-    glEnabledRef.current = next;
-    localStorage.setItem("liquidgl-enabled", String(next));
-
-    const win = window as any;
-
-    if (!next) {
-      // Turn off: pause the renderer, show CSS glass
-      destroyLiquidGL();
-      setGlReady(false);
-    } else {
-      // Turn on: revive or init
-      if (win.__liquidGLRenderer__) {
-        reviveLiquidGL();
-        setGlReady(true);
-        // Refresh snapshot for current page
-        setTimeout(() => win.__liquidGLRenderer__?.captureSnapshot?.(), 400);
-      } else if (win.html2canvas && win.liquidGL) {
-        try {
-          installHtml2CanvasSnapshotGuards();
-          win.liquidGL(LIQUID_GL_OPTS);
-          setTimeout(() => setGlReady(true), 1200);
-        } catch (e) {
-          console.error("liquidGL re-init failed:", e);
-        }
-      }
-    }
-  };
+  const toggleGL = () => glass.setEnabled(!glass.enabled);
+  const prepareForNavigation = () => glass.hide();
 
   const isActive = (path: string) =>
     path === "/" ? pathname === "/" : pathname.startsWith(path);
-
-  const prepareForNavigation = () => {
-    const renderer = (window as any).__liquidGLRenderer__;
-    if (!renderer || !glEnabledRef.current) return;
-    setGlReady(false);
-    if (renderer.canvas) {
-      renderer.canvas.style.opacity = "0";
-    }
-  };
 
   return (
     <header

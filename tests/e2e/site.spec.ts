@@ -98,6 +98,45 @@ test.describe("shell", () => {
   });
 });
 
+test.describe("liquid glass", () => {
+  const glassReady = (page: Page) =>
+    expect(page.locator("header .nav-capsule")).toHaveClass(/nav-capsule-liquid-active/, { timeout: 20_000 });
+
+  test("reaches the ready state on a post, survives a theme switch, and toggles off and on", async ({ page }) => {
+    test.skip(isMobile(page), "desktop only: the settings popover is hidden on mobile");
+    await page.goto("/blog/escaping-icloud-photos");
+    await glassReady(page);
+
+    // The renderer's texture must match the page it refracts.
+    const consistent = await page.evaluate(() => {
+      const r = (window as any).__liquidGLRenderer__;
+      return Boolean(r && Number.isFinite(r.scaleFactor) && Math.abs(Math.round(document.body.scrollHeight * r.scaleFactor) - r.textureHeight) <= 2);
+    });
+    expect(consistent).toBe(true);
+
+    // Theme switch recaptures and comes back ready.
+    await page.locator("header").getByRole("button", { name: "Settings" }).click();
+    await page.getByRole("button", { name: /Switch to light/ }).click();
+    await glassReady(page);
+
+    // Off: CSS glass. On: live again.
+    await page.getByRole("button", { name: "Liquid glass" }).click();
+    await expect(page.locator("header .nav-capsule")).toHaveClass(/nav-capsule-css-fallback/);
+    await page.getByRole("button", { name: "Liquid glass" }).click();
+    await glassReady(page);
+    expect(await page.evaluate(() => localStorage.getItem("liquidgl-enabled"))).toBe("true");
+  });
+
+  test("home waits for the hero entrance and then reaches ready", async ({ page }) => {
+    test.skip(isMobile(page), "desktop only");
+    await page.goto("/");
+    await expect
+      .poll(() => page.evaluate(() => (window as any).__portfolioHeroMotionDone === true))
+      .toBe(true);
+    await glassReady(page);
+  });
+});
+
 test.describe("projects", () => {
   test("clicking a project opens its dialog with links", async ({ page }) => {
     await page.goto("/projects");

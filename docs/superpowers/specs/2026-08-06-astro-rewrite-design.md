@@ -85,3 +85,9 @@ Result: home 290 kB and a blog post 268 kB of referenced JavaScript, most of it 
 - Seven blog links reading "here" or "docs" rewritten with descriptive text (Lighthouse "links do not have descriptive text").
 - Dist tests assert each page's OG image exists and is a real render, article metadata on posts, and the feed listing every post.
 - Verified in the user's real Chrome: liquid glass refracts page content behind the capsule on home and awards once scrolling settles; CSS fallback shows while scrolling, by design.
+
+## Addendum (2026-09-10): liquid glass integration redesigned
+
+Audit found: both glass scripts loaded on every page from a CDN regardless of the setting; readiness was a 1.1 s timer rather than the renderer's texture; every recapture (theme switch, height change) left the capsule transparent for ~300 ms; nothing paused the render loop in hidden tabs; the WebGL-unavailable path left the library's inline tint on the pane; and the lifecycle was spread across the navbar component.
+
+Now `src/lib/liquid-glass/` is a deep module with an injectable environment (`LiquidGlassEnv`) and 13 unit tests. `controller.ts` runs the state machine idle → loading → ready ⇄ capturing (plus unsupported); `snapshot.ts` holds the html2canvas guards and the first-capture scale fix; `browser-env.ts` loads `html2canvas-pro` (pinned npm dependency, lazy chunk) and the vendored script on demand. The navbar renders state through `useLiquidGlass()`. `capturing` shows the CSS glass so recaptures crossfade instead of blinking; the loop pauses when the tab is hidden; a post-scroll check recaptures only if the page height changed while scrolling. End-to-end tests assert the glass reaches ready on home (after the hero entrance) and on a post, survives a theme switch, toggles off and on, and keeps its texture consistent with the page.
