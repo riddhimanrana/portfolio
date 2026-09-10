@@ -1,0 +1,262 @@
+---
+import { Image } from "astro:assets";
+import { ArrowUpRight, Download, ExternalLink } from "lucide-react";
+
+import Layout from "@/layouts/Layout.astro";
+import { ContactDialog } from "@/components/shell/contact-dialog";
+import { HeroProductMap } from "@/components/home/hero-product-map";
+import { WorkExperience } from "@/components/home/work-experience";
+import { SkillsSection } from "@/components/home/skills-section";
+import { Badge } from "@/components/ui/badge";
+import { buttonVariants } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import awardsData from "@/data/awards.json";
+import experienceData from "@/data/experience.json";
+import { asset, optimized } from "@/lib/images";
+import type { Experience, ExperienceView } from "@/types/experience";
+import { personJsonLd } from "@/lib/seo";
+
+const topAwardIds = [
+  "usaco-platinum",
+  "usaaio-round-1-2026",
+  "mathkangaroo-camp-25",
+  "amc-10a-25",
+];
+
+const topAwards = await Promise.all(
+  topAwardIds.flatMap((id) => {
+    const award = awardsData.find((a) => a.id === id);
+    return award ? [award] : [];
+  }).map(async (award) => ({ ...award, image: await asset(award.image) }))
+);
+
+const experiences: ExperienceView[] = await Promise.all(
+  (experienceData as Experience[]).map(async (experience) => ({
+    ...experience,
+    logo: await optimized(experience.logo, { width: 48 }),
+  }))
+);
+
+// The portrait panel is 472px wide on desktop; 1x/2x candidates in webp.
+const portrait = await optimized("/portraits/point-cloud-source.jpeg", { width: 472 });
+const depth = await optimized("/portraits/depth-anything-3-image.webp", { width: 472 });
+
+const dicyIcon = await asset("/icon-192.png");
+const letsAssistIcon = await asset("/logos/lets-assist.png");
+
+const products = [
+  {
+    name: "Dicy",
+    logo: dicyIcon,
+    href: "https://dicy.app",
+    metric: "1.5k+ users across 4+ states",
+    description:
+      "A grade app for Infinite Campus and Schoology with what-if grades, final-grade calculations, and a cleaner experience across iOS, Android, and web.",
+  },
+  {
+    name: "Let's Assist",
+    logo: letsAssistIcon,
+    href: "https://lets-assist.com",
+    metric: "300+ users",
+    description:
+      "A volunteer management platform for discovering opportunities, managing signups, and verifying service hours without spreadsheets or paper logs.",
+  },
+];
+
+const founderLinkClass =
+  "group inline-flex items-center text-foreground transition-colors hover:text-blue-500 font-medium";
+const founderIconClass =
+  "text-blue-500 transition-all duration-300 ease-out opacity-0 scale-50 w-0 group-hover:w-3 group-hover:opacity-100 group-hover:scale-100 group-hover:ml-1 h-3";
+---
+
+<Layout ogImage="/og/default.png" jsonLd={[personJsonLd]}>
+  <main>
+    <div class="site-shell">
+      <section
+        class="grid gap-10 border-b border-border py-16 sm:py-24 lg:grid-cols-[1.1fr_0.9fr] lg:items-center"
+      >
+        <div>
+          <div
+            class="hero-fade mb-6 flex flex-wrap items-center gap-2 text-sm text-muted-foreground"
+          >
+            <span>Founder of</span>
+            <a href="https://dicy.app" target="_blank" rel="noopener noreferrer" class={founderLinkClass}>
+              <Image
+                src={dicyIcon}
+                alt=""
+                width={18}
+                densities={[1, 2]}
+                format="webp"
+                class="mr-1 rounded-full object-contain"
+                style="width:18px;height:18px"
+              />
+              Dicy
+              <ExternalLink className={founderIconClass} />
+            </a>
+            <span>and</span>
+            <a href="https://lets-assist.com" target="_blank" rel="noopener noreferrer" class={founderLinkClass}>
+              <Image
+                src={letsAssistIcon}
+                alt=""
+                width={18}
+                densities={[1, 2]}
+                format="webp"
+                class="mr-1 rounded-full object-contain"
+              />
+              Let's Assist
+              <ExternalLink className={founderIconClass} />
+            </a>
+          </div>
+
+          <h1
+            class="hero-fade text-4xl font-medium tracking-[-0.055em] text-foreground sm:text-6xl"
+            style="--hero-delay:0.1s"
+          >
+            hi, i'm <span class="diffusion-name cursor-default">riddhiman</span>.
+          </h1>
+
+          <p
+            class="hero-fade mt-5 max-w-3xl text-2xl leading-9 tracking-[-0.035em] sm:text-4xl sm:leading-[1.15]"
+            style="--hero-delay:0.25s"
+          >
+            i build products i'm truly <span class="luxury-gold-text">proud</span> of and{" "}
+            <span class="luxury-silver-text">believe</span> in.
+          </p>
+
+          <div
+            class="hero-fade mt-8 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8"
+            style="--hero-delay:0.4s"
+          >
+            <p>
+              I'm a rising junior at Dougherty Valley High School, founder of Dicy and Let's Assist
+              (1.8k+ users combined), a USACO Platinum competitor, and an applied AI researcher
+              working on Orion.
+            </p>
+          </div>
+
+          <div
+            class="hero-fade mt-8 flex flex-wrap gap-2"
+            style="--hero-delay:0.55s"
+            data-hero-last
+          >
+            <a href="/projects" class={buttonVariants()}>Projects</a>
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              class={buttonVariants({ variant: "outline" })}
+            >
+              <Download data-icon="inline-start" />
+              Resume
+            </a>
+            <ContactDialog client:idle />
+          </div>
+        </div>
+
+        <HeroProductMap client:media="(min-width: 1024px)" portrait={portrait} depth={depth} />
+      </section>
+
+      <section class="py-14 sm:py-20">
+        <div class="flex items-center justify-between gap-4 border-b border-border pb-4">
+          <h2 class="text-2xl font-medium tracking-[-0.035em]">Top awards</h2>
+          <a href="/awards" class={buttonVariants({ variant: "ghost", size: "sm", className: "-mr-3" })}>
+            View all
+            <ArrowUpRight data-icon="inline-end" />
+          </a>
+        </div>
+        <div class="grid sm:grid-cols-2">
+          {
+            topAwards.map((award) => (
+              <a
+                href={`/awards?id=${award.id}`}
+                class="grid grid-cols-[3rem_1fr] gap-4 border-b border-border py-5 sm:odd:border-r sm:odd:pr-7 sm:even:pl-7"
+              >
+                <div class="logo-tile size-12 rounded-xl p-1.5">
+                  <Image
+                    src={award.image}
+                    alt=""
+                    width={40}
+                    densities={[1, 2]}
+                    format="webp"
+                    class="max-h-full object-contain"
+                  />
+                </div>
+                <div>
+                  <h3 class="font-medium">{award.name}</h3>
+                  <p class="mt-1 text-sm leading-6 text-muted-foreground">{award.description}</p>
+                </div>
+              </a>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="pb-14 sm:pb-20">
+        <div class="flex items-center justify-between gap-4 border-b border-border pb-4">
+          <h2 class="text-2xl font-medium tracking-[-0.035em]">Work experience</h2>
+        </div>
+        <WorkExperience client:visible experiences={experiences} />
+      </section>
+
+      <section class="pb-16 sm:pb-24">
+        <div class="flex items-center justify-between gap-4 border-b border-border pb-4">
+          <h2 class="text-2xl font-medium tracking-[-0.035em]">Products</h2>
+          <a href="/projects" class={buttonVariants({ variant: "ghost", size: "sm", className: "-mr-3" })}>
+            View all
+            <ArrowUpRight data-icon="inline-end" />
+          </a>
+        </div>
+        <div>
+          {
+            products.map((product, index) => (
+              <div>
+                {index > 0 && <Separator />}
+                <a
+                  href={product.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="group grid gap-4 py-7 sm:grid-cols-[4rem_1fr_auto] sm:items-center"
+                >
+                  <div class="logo-tile size-16 rounded-2xl p-2">
+                    <Image
+                      src={product.logo}
+                      alt={`${product.name} logo`}
+                      width={54}
+                      densities={[1, 2]}
+                      format="webp"
+                      class="max-h-full object-contain"
+                    />
+                  </div>
+                  <div>
+                    <div class="flex flex-wrap items-center gap-3">
+                      <h3 class="text-xl font-medium">{product.name}</h3>
+                      <Badge variant="secondary">{product.metric}</Badge>
+                    </div>
+                    <p class="mt-2 max-w-3xl leading-7 text-muted-foreground">
+                      {product.description}
+                    </p>
+                  </div>
+                  <ArrowUpRight className="text-muted-foreground transition-colors group-hover:text-primary" />
+                </a>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <SkillsSection />
+    </div>
+  </main>
+</Layout>
+
+<script>
+  // The navbar waits for the hero entrance before starting the liquid-glass
+  // snapshot (see navbar.tsx). Signal completion from the last animated block.
+  const last = document.querySelector<HTMLElement>("[data-hero-last]");
+  const done = () => {
+    (window as any).__portfolioHeroMotionDone = true;
+    window.dispatchEvent(new Event("portfolio:hero-motion-complete"));
+  };
+  if (last) last.addEventListener("animationend", done, { once: true });
+  else done();
+</script>

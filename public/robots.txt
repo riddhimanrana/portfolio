@@ -6,4 +6,4 @@ Allow: /
 Host: https://riddhimanrana.com
 
 # Sitemaps
-Sitemap: https://riddhimanrana.com/sitemap.xml
+Sitemap: https://riddhimanrana.com/sitemap-index.xml

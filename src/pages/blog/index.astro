@@ -1,0 +1,59 @@
+---
+import { getCollection } from "astro:content";
+import { ArrowRight } from "lucide-react";
+
+import Layout from "@/layouts/Layout.astro";
+import { Separator } from "@/components/ui/separator";
+import { formatDate } from "@/lib/utils";
+
+const posts = (await getCollection("blog")).sort((a, b) =>
+  a.data.date < b.data.date ? 1 : -1
+);
+---
+
+<Layout
+  title="Blog | Riddhiman Rana"
+  description="Thoughts, tutorials, and insights on web development and competitive programming"
+  ogImage="/og/blog.png"
+>
+  <main class="site-shell py-12 sm:py-16">
+    <header class="mb-8">
+      <h1 class="page-title">Blog</h1>
+    </header>
+
+    <div class="border-t border-border">
+      {
+        posts.map((post, index) => {
+          const readTime = Math.max(
+            1,
+            Math.ceil(post.body!.split(/\s+/).length / 200)
+          );
+
+          return (
+            <div>
+              {index > 0 && <Separator />}
+              <a
+                href={`/blog/${post.id}`}
+                class="group grid gap-4 py-7 sm:grid-cols-[8rem_1fr_auto] sm:items-start"
+              >
+                <div class="text-sm text-muted-foreground">
+                  <p>{formatDate(post.data.date)}</p>
+                  <p class="mt-1">{readTime} min read</p>
+                </div>
+                <div>
+                  <h2 class="text-xl font-medium leading-snug tracking-tight transition-colors group-hover:text-primary sm:text-2xl">
+                    {post.data.title}
+                  </h2>
+                  <p class="mt-2 max-w-3xl leading-7 text-muted-foreground">
+                    {post.data.excerpt}
+                  </p>
+                </div>
+                <ArrowRight className="mt-1 size-4 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-primary" />
+              </a>
+            </div>
+          );
+        })
+      }
+    </div>
+  </main>
+</Layout>

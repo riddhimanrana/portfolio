@@ -1,0 +1,17 @@
+# Domain glossary
+
+Terms used in code, data and docs for this site. Use these names; do not invent synonyms.
+
+- **Page** — a route under `src/pages/`. Pages are static HTML built once. Interactive pieces are placed as **islands**.
+- **Island** — a React component hydrated in the browser via a `client:*` directive from a `.astro` page. Everything else renders to plain HTML. Islands live under `src/components/<area>/` (`shell`, `home`, `projects`, `awards`, `blog`); `src/components/ui/` is shadcn. Current islands: NavBar, Footer, ContactDialog, HeroProductMap, WorkExperience, ProjectsPage, AwardsPage, TableOfContents.
+- **Shell** — the layout shared by every page (`src/layouts/Layout.astro`): head metadata, theme pre-paint script, navbar, footer, analytics loader.
+- **Liquid glass** — the WebGL refraction effect on the navbar capsule (`public/scripts/liquidGL.js`, vendored). It snapshots the page with html2canvas and refracts it behind the nav. Users can turn it off; the fallback is the CSS blur capsule.
+- **Theme** — `light`, `dark` or `system`, stored in `localStorage.theme` (default `dark`). Resolved to a `dark` class on `<html>` before first paint. `src/lib/shims/theme.ts` is the only reader/writer.
+- **Post** — a blog entry in `src/content/blog/*.md`, validated by the `blog` collection schema (title, date `YYYY-MM-DD`, excerpt, tags). Rendered at build time. Conventions inside a post: fence meta `title=…` sets the code block header; an image alt starting with `small|` renders at 400px.
+- **Project** — an entry in `src/data/projects.json` (id, title, tagline, description, tags, year, optional logo/image/links). Listed on `/projects`, opened in a dialog.
+- **Product** — the two shipped apps (Dicy, Let's Assist) featured on the home page. A product is also a project; the home list is curated by hand in `src/pages/index.astro`.
+- **Award** — an entry in `src/data/awards.json`. Has a **difficulty** of `major`, `notable` or `honorable` (rendered gold, bronze, silver). `/awards?id=<award id>` deep-links to one.
+- **Experience** — an entry in `src/data/experience.json`, shown as the work-experience accordion on the home page.
+- **Asset** — an image under `src/assets/`, referenced from data files by a root-relative path such as `/awards/usaco.png`. Pages resolve assets with `src/lib/images.ts` (`optimized()` for islands, `asset()` for `<Image>` in Astro markup); islands receive an **OptimizedImage** (`src`, `srcSet`, `width`, `height`) and never load files themselves. Blog images live next to their post and are referenced with `./<slug>/file`. Only `public/` holds files fetched at runtime by scripts (`pointcloud.bin`, `liquidGL.js`, fonts, resume, favicon).
+- **Card** — the Open Graph image for a page (`/og/<page>.png`, `/og/blog/<slug>.png`), rendered at build time by `src/lib/og.ts` from `OG_PAGES` in `src/lib/seo.ts` or a post's frontmatter. `src/lib/seo.ts` also owns the site identity (name, URLs, social profiles) and the JSON-LD builders; the layout emits WebSite JSON-LD on every page, Person on the home page, BlogPosting on posts.
+- **Shim** — a drop-in replacement for a Next.js API kept so components ported from the old site did not need edits: `Link`, `Image`, `useTheme` under `src/lib/shims/`.
