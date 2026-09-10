@@ -59,6 +59,7 @@ const socials = [
 const LIQUID_GL_OPTS = {
   target: ".nav-glass-pane",
   snapshot: "body",
+  resolution: 2,
   refraction: 0.026,
   bevelDepth: 0.119,
   bevelWidth: 0.057,
@@ -96,6 +97,35 @@ const SNAPSHOT_EFFECT_PROPS = [
   "filter",
 ] as const;
 
+let maxTextureSizeCache = 0;
+function maxTextureSize(): number {
+  if (maxTextureSizeCache) return maxTextureSizeCache;
+  try {
+    const gl =
+      document.createElement("canvas").getContext("webgl2") ??
+      document.createElement("canvas").getContext("webgl");
+    maxTextureSizeCache = Number(gl?.getParameter(gl.MAX_TEXTURE_SIZE)) || 8192;
+  } catch {
+    maxTextureSizeCache = 8192;
+  }
+  return maxTextureSizeCache;
+}
+
+// liquidGL's constructor takes its first snapshot before it assigns
+// `_snapshotResolution`, so that capture asks html2canvas for scale = NaN
+// (rejected as "Scale must be a number") and, worse, stores NaN as the
+// renderer's scaleFactor. Reproduce the library's own formula for that first
+// capture and write the result back so the texture and the UV math agree.
+function snapshotScale(width: number, height: number) {
+  const maxTex = maxTextureSize();
+  let scale = Math.min(LIQUID_GL_OPTS.resolution, maxTex / width, maxTex / height);
+  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+    const over = (Math.max(width, height) * scale) / 4096;
+    if (over > 1) scale /= over;
+  }
+  return Math.max(0.1, scale);
+}
+
 function installHtml2CanvasSnapshotGuards() {
   const win = window as any;
   if (!win.html2canvas || win.__portfolioHtml2CanvasGuarded) return;
@@ -105,16 +135,12 @@ function installHtml2CanvasSnapshotGuards() {
     const callerIgnore = options.ignoreElements;
     const callerOnClone = options.onclone;
 
-    // liquidGL takes its first snapshot from its constructor, before it has
-    // assigned the resolution it derives `scale` from, so the first attempt
-    // sends NaN and html2canvas rejects it ("Scale must be a number"). The
-    // library retries 500ms later; supplying the device scale instead makes
-    // the first attempt succeed and drops the error from every page load.
-    const scale = Number.isFinite(options.scale)
-      ? options.scale
-      : Math.min(2, window.devicePixelRatio || 1);
+    const scaleWasInvalid = !Number.isFinite(options.scale);
+    const scale = scaleWasInvalid
+      ? snapshotScale(options.width || element.scrollWidth, options.height || element.scrollHeight)
+      : options.scale;
 
-    return originalHtml2Canvas(element, {
+    const capture = originalHtml2Canvas(element, {
       ...options,
       scale,
       ignoreElements: (node: Element) => {
@@ -199,6 +225,13 @@ function installHtml2CanvasSnapshotGuards() {
           });
         });
       },
+    });
+
+    if (!scaleWasInvalid) return capture;
+    return capture.then((canvas: HTMLCanvasElement) => {
+      const renderer = win.__liquidGLRenderer__;
+      if (renderer && !Number.isFinite(renderer.scaleFactor)) renderer.scaleFactor = scale;
+      return canvas;
     });
   };
 
@@ -368,40 +401,29 @@ export default function NavBar({
     return () => clearTimeout(id);
   }, [mounted, resolvedTheme]);
 
-  // liquidGL's own scroll throttle can render a stale/garbled frame while
-  // scrolling fast (the lens briefly samples last frame's texture region).
-  // Drop to the CSS fallback glass during active scroll and fade the real
-  // WebGL glass back in once scrolling settles, so the glitch is never shown.
+  // liquidGL re-captures the page when the body's height changes, but it
+  // drops that request outright while the page is scrolling and never
+  // re-arms it. A layout change mid-scroll (an accordion opening, images
+  // arriving) would leave the texture misaligned with the page. Check once
+  // scrolling settles and recapture only if the two disagree.
   useEffect(() => {
     if (!mounted) return;
-
-    let hideTimeout: ReturnType<typeof setTimeout> | undefined;
-    let hidden = false;
-
+    let timer: ReturnType<typeof setTimeout> | undefined;
     const onScroll = () => {
-      const renderer = (window as any).__liquidGLRenderer__;
-      if (!renderer || !glEnabledRef.current) return;
-
-      if (!hidden) {
-        hidden = true;
-        setGlReady(false);
-        if (renderer.canvas) renderer.canvas.style.opacity = "0";
-      }
-
-      if (hideTimeout) clearTimeout(hideTimeout);
-      hideTimeout = setTimeout(() => {
-        hidden = false;
-        if (!glEnabledRef.current) return;
-        renderer.render?.();
-        if (renderer.canvas) renderer.canvas.style.opacity = "1";
-        setGlReady(true);
-      }, 260);
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => {
+        const renderer = (window as any).__liquidGLRenderer__;
+        if (!renderer || !glEnabledRef.current || renderer._capturing) return;
+        const expected = Math.round(document.body.scrollHeight * renderer.scaleFactor);
+        if (Math.abs(expected - renderer.textureHeight) > 2) {
+          renderer.captureSnapshot?.();
+        }
+      }, 300);
     };
-
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", onScroll);
-      if (hideTimeout) clearTimeout(hideTimeout);
+      if (timer) clearTimeout(timer);
     };
   }, [mounted]);
 
