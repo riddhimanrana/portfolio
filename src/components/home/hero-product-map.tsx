@@ -31,6 +31,11 @@ export function HeroProductMap({
   const [mode, setMode] = useState<SpatialMode>("original");
   const modeRef = useRef<SpatialMode>("original");
   const [isLocked, setIsLocked] = useState(false);
+  // three.js, the 3.8 MB point cloud and the WebGL renderer are only loaded
+  // once the visitor reaches for the 3d mode (hover on the toggle or select
+  // it). Until then the page pays nothing for them.
+  const [wantsThree, setWantsThree] = useState(false);
+  const [cloudReady, setCloudReady] = useState(false);
   const scrollPercent = useRef(0);
   const layers = useRef<{
     scene?: Object3D;
@@ -52,11 +57,30 @@ export function HeroProductMap({
 
   useEffect(() => {
     applyMode(mode);
+    if (mode === "three") setWantsThree(true);
   }, [mode]);
+
+  // Reveal the mode toggle on mount, independent of the 3D scene.
+  useEffect(() => {
+    scope.current = createScope({
+      root,
+      mediaQueries: { reducedMotion: "(prefers-reduced-motion: reduce)" },
+    }).add((self) => {
+      if (!self || self.matches.reducedMotion) return;
+      animate(".point-cloud-label", {
+        opacity: [0, 1],
+        y: [12, 0],
+        duration: 900,
+        delay: 180,
+        ease: "out(3)",
+      });
+    });
+    return () => scope.current?.revert();
+  }, []);
 
   useEffect(() => {
     const container = mount.current;
-    if (!container) return;
+    if (!container || !wantsThree) return;
 
     let disposed = false;
     let frameId = 0;
@@ -200,21 +224,7 @@ export function HeroProductMap({
         layers.current.color = colorPoints;
 
         applyMode(modeRef.current);
-
-        scope.current = createScope({
-          root,
-          mediaQueries: { reducedMotion: "(prefers-reduced-motion: reduce)" },
-        }).add((self) => {
-          if (!self || self.matches.reducedMotion) return;
-
-          animate(".point-cloud-label", {
-            opacity: [0, 1],
-            y: [12, 0],
-            duration: 900,
-            delay: 180,
-            ease: "out(3)",
-          });
-        });
+        setCloudReady(true);
 
         const render = () => {
           if (disposed) return;
@@ -294,7 +304,6 @@ export function HeroProductMap({
       document.removeEventListener("pointerlockchange", handleLockChange);
       container.removeEventListener("wheel", handleWheel);
       container.removeEventListener("dblclick", handleCanvasDblClick);
-      scope.current?.revert();
       renderer.dispose();
       layers.current = {};
       container.replaceChildren();
@@ -305,8 +314,9 @@ export function HeroProductMap({
       disposed = true;
       resetCameraRef.current = undefined;
       cleanup?.();
+      setCloudReady(false);
     };
-  }, []);
+  }, [wantsThree]);
 
   const onPointerMove = (event: PointerEvent<HTMLDivElement>) => {
     const rect = event.currentTarget.getBoundingClientRect();
@@ -401,7 +411,7 @@ export function HeroProductMap({
             : "Double click to lock cursor | Scroll to zoom | Move to rotate"}
         </div>
       )} */}
-      {mode === "three" && (
+      {mode === "three" && cloudReady && (
         <button
           onClick={() => resetCameraRef.current?.()}
           className="absolute bottom-6 right-6 z-10 rounded-full border border-border/50 bg-background/85 px-4 py-1.5 text-xs font-semibold text-muted-foreground hover:text-foreground hover:bg-muted/70 backdrop-blur-xl transition-all cursor-pointer shadow-sm"
@@ -412,8 +422,10 @@ export function HeroProductMap({
       <div
         className="absolute inset-4 overflow-hidden rounded-[2.4rem]"
         style={{
-          opacity: mode === "original" ? 1 : 0,
+          // The photo stays up while the point cloud is still loading.
+          opacity: mode === "original" || (mode === "three" && !cloudReady) ? 1 : 0,
           pointerEvents: mode === "original" ? "auto" : "none",
+          transition: "opacity 300ms ease",
         }}
       >
         <Image
@@ -442,7 +454,10 @@ export function HeroProductMap({
           sizes="472px"
         />
       </div>
-      <div className="point-cloud-label absolute bottom-6 left-6 opacity-0">
+      <div
+        className="point-cloud-label absolute bottom-6 left-6 opacity-0"
+        onPointerEnter={() => setWantsThree(true)}
+      >
         <ToggleGroup
           type="single"
           value={mode}

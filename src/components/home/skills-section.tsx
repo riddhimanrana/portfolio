@@ -132,7 +132,7 @@ export function SkillsSection() {
               className="group/row flex flex-col sm:grid sm:grid-cols-[16rem_1fr] sm:items-center border-b border-border/80 py-6 transition-all duration-300 hover:bg-muted/10"
             >
               <div className="flex items-center gap-4 select-none mb-4 sm:mb-0">
-                <span className="font-mono text-2xs text-muted-foreground/50 tracking-wider">
+                <span className="font-mono text-2xs text-muted-foreground/80 tracking-wider">
                   0{categoryIndex + 1}
                 </span>
                 <div className="flex items-center gap-2.5 font-medium text-foreground">
