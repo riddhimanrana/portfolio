@@ -7,6 +7,11 @@
 //    which Tailwind v4 emits everywhere. The cloned document gets those
 //    replaced with plain fallbacks, and the navbar itself is blanked out of
 //    the snapshot (otherwise the glass would refract a picture of itself).
+//    The clone is a live document: CSS transitions would animate towards the
+//    blanking styles instead of applying them, and keyframe animations
+//    restart from their first frame, so the hero copy would be captured at
+//    opacity 0. Transitions are switched off and time-based animations are
+//    jumped to their final frame before html2canvas reads any style.
 // 2. liquidGL's constructor takes its first snapshot before it has assigned
 //    the resolution it derives `scale` from, so that call asks for
 //    scale = NaN and would store NaN as the renderer's scaleFactor. The
@@ -41,6 +46,7 @@ const CLONE_PATCH_CSS = `
   *, *::before, *::after {
     --tw-ring-color: transparent !important;
     --tw-shadow-color: transparent !important;
+    transition: none !important;
   }
   body::before,
   body::after,
@@ -98,6 +104,7 @@ export function patchClonedDocument(clonedDoc: Document) {
 
   clonedDoc.querySelectorAll<HTMLElement>("*").forEach((node) => {
     const computed = clonedWin.getComputedStyle(node);
+    freezeAnimation(node, computed);
     for (const [prop, fallback] of COLOR_PROPS) {
       const value = computed.getPropertyValue(prop);
       if (value && UNSUPPORTED_COLOR.test(value)) node.style.setProperty(prop, fallback, "important");
@@ -113,6 +120,22 @@ export function patchClonedDocument(clonedDoc: Document) {
       }
     }
   });
+}
+
+/**
+ * Jumps a time-based keyframe animation to its last frame so the clone shows
+ * the element's resting state. Scroll-driven animations (animation-timeline)
+ * are left alone: their progress comes from the timeline, not the clock.
+ */
+function freezeAnimation(node: HTMLElement, computed: CSSStyleDeclaration) {
+  const name = computed.animationName;
+  if (!name || name === "none") return;
+  const timeline = computed.getPropertyValue("animation-timeline");
+  if (timeline && timeline !== "auto") return;
+  node.style.setProperty("animation-duration", "0s", "important");
+  node.style.setProperty("animation-delay", "0s", "important");
+  node.style.setProperty("animation-iteration-count", "1", "important");
+  node.style.setProperty("animation-fill-mode", "forwards", "important");
 }
 
 /**

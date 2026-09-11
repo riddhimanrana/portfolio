@@ -27,7 +27,7 @@
     "id": "dicy",
     "title": "Dicy",
     "tagline": "A modern grade experience for Infinite Campus and Schoology across iOS, Android, and web",
-    "description": "I reverse engineered Infinite Campus and Schoology to create a substantially better way for students to view grades, test what-if scenarios, calculate final-grade targets, and use a growing set of academic tools. Dicy grew to more than 1,500 users across four-plus states while facing direct competition from other student products. I rejected acquisition interest, kept innovating, and used product design and direct marketing to regain market share.",
+    "description": "I reverse engineered Infinite Campus and Schoology to create a substantially better way for students to view grades, test what-if scenarios, calculate final-grade targets, and use a growing set of academic tools. Dicy grew to more than 1,800 users across four-plus states while facing direct competition from other student products. I rejected acquisition interest, kept innovating, and used product design and direct marketing to regain market share.",
     "logo": "/icon-192.png",
     "tags": ["Expo", "React Native", "Next.js", "Cloudflare"],
     "year": "2026",

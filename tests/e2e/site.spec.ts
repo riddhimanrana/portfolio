@@ -146,6 +146,47 @@ test.describe("liquid glass", () => {
       .toBe(true);
     await glassReady(page);
   });
+
+  test("snapshot texture blanks the navbar and includes the entrance-animated hero", async ({ page }) => {
+    test.skip(isMobile(page), "desktop only");
+    await page.goto("/");
+    await glassReady(page);
+
+    // Re-capture through the guarded html2canvas and inspect what the shader
+    // will refract: nothing where the capsule sits, real content where the
+    // hero copy sits.
+    const bands = await page.evaluate(async () => {
+      const r = (window as any).__liquidGLRenderer__;
+      const win = window as any;
+      const orig = win.html2canvas;
+      let snap: HTMLCanvasElement | undefined;
+      win.html2canvas = (el: HTMLElement, o: unknown) =>
+        orig(el, o).then((c: HTMLCanvasElement) => ((snap = c), c));
+      await r.captureSnapshot();
+      win.html2canvas = orig;
+      const s = r.scaleFactor as number;
+      const ctx = snap!.getContext("2d")!;
+      const visibleRatio = (rect: DOMRect) => {
+        const d = ctx.getImageData(
+          Math.round(rect.left * s),
+          Math.round((rect.top + window.scrollY) * s),
+          Math.max(1, Math.round(rect.width * s)),
+          Math.max(1, Math.round(rect.height * s))
+        ).data;
+        let visible = 0;
+        for (let i = 0; i < d.length; i += 4) {
+          if (d[i + 3] > 10 && d[i] + d[i + 1] + d[i + 2] > 90) visible++;
+        }
+        return visible / (d.length / 4);
+      };
+      return {
+        nav: visibleRatio(document.querySelector(".nav-capsule")!.getBoundingClientRect()),
+        hero: visibleRatio(document.querySelector("h1.hero-fade")!.getBoundingClientRect()),
+      };
+    });
+    expect(bands.nav).toBeLessThan(0.01);
+    expect(bands.hero).toBeGreaterThan(0.05);
+  });
 });
 
 test.describe("projects", () => {

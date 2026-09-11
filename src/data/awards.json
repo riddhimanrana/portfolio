@@ -1,5 +1,16 @@
 [
   {
+    "id": "yc-startup-school-2026",
+    "name": "Y Combinator Startup School",
+    "description": "Attended YC Startup School",
+    "detailedDescription": "Attended Y Combinator's Startup School, YC's program for founders on building, launching, and growing early-stage startups, covering product, fundraising, and go-to-market from YC partners and alumni founders.",
+    "date": "2026-06-01",
+    "image": "/awards/y-combinator.svg",
+    "difficulty": "notable",
+    "isIconRoundedFull": false,
+    "link": "https://www.startupschool.org/"
+  },
+  {
     "id": "usaco-platinum",
     "name": "USACO Platinum Contest",
     "description": "Scored 667/1000 and promoted to Platinum",

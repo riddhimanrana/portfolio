@@ -1,10 +1,18 @@
 [
   {
+    "title": "Vela (YC W26)",
+    "subtext": "Founding Engineer",
+    "logo": "/logos/vela.svg",
+    "date": "June 2025 - Present",
+    "details": "Joined Vela, an AI scheduling coordinator for recruiting teams, as a software engineering intern in June 2025 and became a Founding Engineer in September 2025. Restructured the company's internal operations and led the SOC 2 compliance effort. Designed the company's custom fonts, theme, and brand language, along with custom animated icon sets, the landing page, and the product's animations and loading states. Built the backend architecture for the product's interfaces and did extensive hands-on UX work across the app. Led projects with three other interns, taking initiative on scoping, planning, and delivery.",
+    "link": "https://tryvela.ai"
+  },
+  {
     "title": "AlphaStar Academy",
     "subtext": "CS Instructor",
     "logo": "/logos/alphastar.png",
-    "date": "September 2025 - May 2026",
-    "details": "Mentoring highly gifted students from the Bay Area in advanced python courses for a paid internship as part of the AlphaStar-Carina Scholarship Program. Providing 1:1 instruction for 32 weeks (2 hours/week) during the fall and spring terms. Responsibilities include teaching the cirriculum, monitoring student progress, and participating in monthly meetings with supervisors to discuss student development.",
+    "date": "June 2025 - Present",
+    "details": "Teaching highly gifted students from the Bay Area as part of the AlphaStar-Carina Scholarship Program, a paid internship. In the first session I mentored students 1:1 through advanced Python courses for 32 weeks (2 hours/week) across the fall and spring terms, teaching the curriculum, monitoring student progress, and meeting monthly with supervisors to discuss student development. Now in session 2, I teach USACO Bronze, introducing students to competitive programming, algorithmic problem solving, and contest strategy.",
     "link": "https://alphastar.academy/carina-scholarship/"
   },
   {
