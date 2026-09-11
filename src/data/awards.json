@@ -2,9 +2,9 @@
   {
     "id": "yc-startup-school-2026",
     "name": "Y Combinator Startup School",
-    "description": "Attended YC Startup School",
-    "detailedDescription": "Attended Y Combinator's Startup School, YC's program for founders on building, launching, and growing early-stage startups, covering product, fundraising, and go-to-market from YC partners and alumni founders.",
-    "date": "2026-06-01",
+    "description": "Attended YC Startup School, July 25-26, 2026",
+    "detailedDescription": "Attended Y Combinator's Startup School on July 25-26, 2026, YC's program for founders on building, launching, and growing early-stage startups, covering product, fundraising, and go-to-market from YC partners and alumni founders.",
+    "date": "2026-07-25",
     "image": "/awards/y-combinator.svg",
     "difficulty": "notable",
     "isIconRoundedFull": false,
@@ -90,7 +90,6 @@
     "isIconRoundedFull": true,
     "difficulty": "major",
     "link": "https://maa.org/student-programs/amc/"
-    
   },
   {
     "id": "mathkangaroo-25",

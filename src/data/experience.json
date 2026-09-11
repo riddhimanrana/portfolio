@@ -1,10 +1,10 @@
 [
   {
-    "title": "Vela Energy",
+    "title": "Vela",
     "subtext": "Founding Engineer",
     "logo": "/logos/vela.svg",
     "date": "June 2025 - Present",
-    "details": "Vela builds AI agents for the procurement, engineering studies, and permitting work behind large-load energy projects, so developers, utilities, and data centers can move through the interconnection queue faster. Backed by a16z speedrun and Z Fellows with a $1.3M pre-seed round. I joined as a software engineering intern in June 2025 and became a Founding Engineer in September 2025. Restructured the company's internal operations and led the SOC 2 compliance effort. Designed the company's custom fonts, theme, and brand language, along with custom animated icon sets, the landing page, and the product's animations and loading states. Built the backend architecture for the product's interfaces and did extensive hands-on UX work across the app. Led projects with three other interns, taking initiative on scoping, planning, and delivery.",
+    "details": "Vela is an energy startup building AI agents that take on the procurement, engineering studies, and permitting work behind large-load energy projects, so developers, utilities, and data centers can move through the interconnection queue faster. Backed by a16z speedrun and Z Fellows with a $1.3M pre-seed round. I joined as a software engineering intern in June 2025 and became a Founding Engineer in September 2025. Restructured the company's internal operations and led the SOC 2 compliance effort. Designed the company's custom fonts, theme, and brand language, along with custom animated icon sets, the landing page, and the product's animations and loading states. Built the backend architecture for the product's interfaces and did extensive hands-on UX work across the app. Led projects with three other interns, taking initiative on scoping, planning, and delivery.",
     "link": "https://www.velaenergy.ai"
   },
   {
