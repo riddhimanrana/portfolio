@@ -1,14 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Vela">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="440 440 1180 1220" role="img" aria-label="Vela Energy">
+  <!-- Paths from Vela's BIMI mark; sails in black for the white logo tile. -->
   <defs>
-    <linearGradient id="vela-wave" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#1B3FBF"/>
-      <stop offset="1" stop-color="#2F7BFF"/>
+    <linearGradient id="velaBlue" gradientUnits="userSpaceOnUse" x1="5056.465" y1="1544.189" x2="4656.019" y2="1660.131" gradientTransform="matrix(1.28501 0 0 1.28501 -5002.977 -607.646)">
+      <stop offset="0" stop-color="#0084ff"/>
+      <stop offset="1" stop-color="#003099"/>
     </linearGradient>
   </defs>
-  <!-- main sail -->
-  <path fill="#111111" d="M96 26c58 26 92 82 100 144 2 12-4 20-16 20H84c-2-48 4-110 12-164z"/>
-  <!-- jib -->
-  <path fill="#111111" d="M70 88c6 30 8 60 6 96H26c8-30 22-64 44-96z"/>
-  <!-- wave -->
-  <path fill="url(#vela-wave)" d="M18 214c40-18 78-18 116-4 34 12 66 10 104-8-30 30-70 42-112 32-36-8-70-16-108-20z"/>
+  <g transform="matrix(1.28501 0 0 1.28501 -5002.977 -607.646)">
+    <path d="M4582,842C4582,842 4760.731,1172.274 4646,1524C4646,1524 4750.341,1480.46 4875,1485C4875,1485 5117.154,1498.401 5042,1318C5042,1318 4913.067,931.865 4582,842" fill="#0a0a0a"/>
+    <path d="M4561,1073C4561,1073 4504.648,1350.94 4372,1499C4372.177,1497.268 4409.828,1510.412 4420,1507C4415.016,1511.973 4327.027,1545.657 4263,1647C4263,1647 4685.036,1682.306 4561,1073Z" fill="#0a0a0a"/>
+    <path d="M5080,1509C5080,1509 4949.916,1741.152 4692,1630C4692,1630 4622.676,1605.442 4532,1606L5080,1509Z" fill="url(#velaBlue)"/>
+  </g>
 </svg>
