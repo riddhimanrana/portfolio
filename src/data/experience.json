@@ -25,7 +25,7 @@
   },
   {
     "title": "AlphaStar Academy",
-    "subtext": "CS Instructor",
+    "subtext": "CS Instructor, Advanced Python",
     "logo": "/logos/alphastar.png",
     "date": "Aug 2025 - May 2026",
     "details": "Taught advanced Python through the AlphaStar-Carina Scholarship Program.\nLed multiple course tracks, mentored students 1:1, tracked progress, and coordinated with program supervisors.",
@@ -61,7 +61,7 @@
     "subtext": "Founder, CEO & Product Developer",
     "logo": "/logos/lets-assist.png",
     "date": "December 2024 - Present",
-    "details": "Built a volunteer-management platform used by 900+ students and community members.\nHandles opportunity discovery, signups, attendance, service-hour verification, and school/organization workflows in one system.",
+    "details": "Built a volunteer platform used by 900+ students and community members, bringing signups, QR check-ins, waivers, and verified service hours into one place.\nExpanded from Troop 941 event coordination into DVHS CSF, with membership records, attendance, point submissions, and officer review.\nBuilt organization-specific tools around how volunteers and club officers actually work, including Google Sheets imports and syncing.",
     "link": "https://lets-assist.com"
   },
   {

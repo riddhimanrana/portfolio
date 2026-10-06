@@ -33,7 +33,7 @@ export type LiquidGlassStatus =
   | "idle"
   /** Scripts loading, renderer being created, or the first snapshot in flight. */
   | "loading"
-  /** Renderer live; a fresh snapshot is being taken (CSS glass covers the gap). */
+  /** Snapshot stale or updating; CSS glass covers the gap. */
   | "capturing"
   /** Renderer live and drawing. */
   | "ready"

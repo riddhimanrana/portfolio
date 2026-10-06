@@ -94,7 +94,7 @@ const proseClass = [
             </p>
           </header>
 
-          <article>
+          <article data-post={post.id}>
             <Separator className="mb-10" />
             <div class="max-w-3xl">
               <div class={proseClass}>
@@ -124,6 +124,17 @@ const proseClass = [
     </div>
   </div>
 </Layout>
+
+<style>
+  /* Frame the supplied phone screenshot around the original meeting video. */
+  :global([data-post="lets-assist-beyond-the-demo"] img[alt="Speaking at the SRVUSD Board of Education meeting"]) {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1170 / 658;
+    object-fit: cover;
+    object-position: center 7.5%;
+  }
+</style>
 
 <script>
   // Copy buttons for code blocks (markup is produced at build time).

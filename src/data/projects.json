@@ -43,7 +43,7 @@
     "id": "lets-assist",
     "title": "Let's Assist",
     "tagline": "Volunteer infrastructure for students, schools, and community organizations",
-    "description": "Let's Assist replaces fragmented SignUpGenius forms, spreadsheets, emails, and paper hour logs with one platform for opportunity discovery, registration, coordination, attendance, and service verification. It now serves 900+ users and is expanding across school and community organizations.",
+    "description": "Let's Assist brings volunteer signups, QR check-ins, waivers, and verified hours into one place for 900+ students and community members. It grew from coordinating Troop 941 events into running DVHS CSF's membership, attendance, activity posts, and point submissions. I built the CSF tools around officer workflows, including spreadsheet imports, supporting evidence, and review of account connections. Along the way, meetings with teachers, local organizations, and district staff have shaped both the product and how I introduce it to a community.",
     "image": "/projects/lets-assist.png",
     "logo": "/projects/logos/lets-assist.png",
     "tags": [

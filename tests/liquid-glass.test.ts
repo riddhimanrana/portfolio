@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { createLiquidGlass, HERO_MOTION_EVENT, STORAGE_KEY } from "../src/lib/liquid-glass/controller";
+import { createLiquidGlass, HERO_MOTION_EVENT, LAYOUT_CHANGE_EVENT, STORAGE_KEY } from "../src/lib/liquid-glass/controller";
 import { snapshotScale } from "../src/lib/liquid-glass/snapshot";
 import type { LiquidGLOptions, LiquidGLRenderer, LiquidGlassEnv } from "../src/lib/liquid-glass/types";
 
@@ -46,7 +46,10 @@ function fakeEnv(overrides: Partial<LiquidGlassEnv> = {}) {
     },
     requestIdle: (cb) => {
       idle.push(cb);
-      return () => {};
+      return () => {
+        const i = idle.indexOf(cb);
+        if (i >= 0) idle.splice(i, 1);
+      };
     },
     addWindowListener: (type, cb) => {
       listeners.set(type, (listeners.get(type) ?? new Set()).add(cb));
@@ -207,7 +210,42 @@ describe("createLiquidGlass", () => {
     r.textureHeight = 4000; // stale
     f.fire("scroll");
     f.runTimers();
+    f.runIdle();
     expect(capture.mock.calls.length).toBe(before + 1);
+  });
+
+  it("does not capture during layout changes and refreshes once after scrolling", async () => {
+    const f = fakeEnv();
+    const glass = createLiquidGlass(f.env);
+    glass.init({ waitForHero: false });
+    f.runIdle();
+    await flush();
+    const r = f.renderer()!;
+    const capture = r.captureSnapshot as ReturnType<typeof vi.fn>;
+    r.texture = {} as WebGLTexture;
+    await flush();
+    await flush();
+
+    for (let i = 0; i < 6; i++) f.fire(LAYOUT_CHANGE_EVENT);
+    f.runTimers();
+    f.runIdle();
+    expect(capture).not.toHaveBeenCalled();
+    expect(r.canvas.style.opacity).toBe("0");
+    expect(glass.getState().status).toBe("capturing");
+
+    f.fire("scroll");
+    f.runTimers();
+    f.fire(LAYOUT_CHANGE_EVENT); // A new animation cancels pending idle work.
+    f.runIdle();
+    expect(capture).not.toHaveBeenCalled();
+    f.fire("scroll");
+    f.runTimers();
+    f.runIdle();
+    await flush();
+    expect(capture).toHaveBeenCalledTimes(1);
+    expect(glass.getState().status).toBe("ready");
+    expect(r.canvas.style.opacity).toBe("1");
+    glass.dispose();
   });
 
   it("toggling off pauses and hides; toggling on resumes and re-snapshots", async () => {

@@ -15,14 +15,15 @@ import type {
 // The controller owns every decision the navbar used to make inline:
 // when to start (after the hero entrance on the home page, otherwise when
 // the browser is idle), how "ready" is determined (the renderer's texture
-// exists, not a timer), what to do while a fresh snapshot is being taken
+// exists, not a timer), what to do while the snapshot is stale or updating
 // (report `capturing`, so the CSS glass covers the gap instead of a blink),
 // pausing while the tab is hidden, and recapturing after theme changes or a
-// page-height change that happened during scrolling (which liquidGL drops).
+// page-height changes once the next scroll settles.
 // The UI subscribes and renders the state; it never touches the renderer.
 
 export const STORAGE_KEY = "liquidgl-enabled";
 export const HERO_MOTION_EVENT = "portfolio:hero-motion-complete";
+export const LAYOUT_CHANGE_EVENT = "portfolio:layout-change";
 const HERO_MOTION_FALLBACK_MS = 1800;
 const IDLE_TIMEOUT_MS = 1200;
 const THEME_RECAPTURE_DELAY_MS = 180;
@@ -65,6 +66,10 @@ export function createLiquidGlass(env: LiquidGlassEnv): LiquidGlassController {
   let initStarted = false;
   let disposed = false;
   let runLoopPatched = false;
+  let layoutRevision = 0;
+  let snapshotDirty = false;
+  let cancelIdleCapture: (() => void) | undefined;
+  let cancelScrollSettle: (() => void) | undefined;
 
   const emit = () => listeners.forEach((fn) => fn());
   const set = (patch: Partial<LiquidGlassState>) => {
@@ -105,34 +110,53 @@ export function createLiquidGlass(env: LiquidGlassEnv): LiquidGlassController {
 
     const original = renderer.captureSnapshot.bind(renderer);
     renderer.captureSnapshot = async () => {
+      if (renderer._capturing || disposed || !state.enabled) return false;
+      const revision = layoutRevision;
       if (state.enabled && state.status === "ready") setStatus("capturing");
-      try {
-        return await original();
-      } finally {
-        if (state.enabled && state.status === "capturing") setStatus("ready");
+      const success = await original();
+      if (success && revision === layoutRevision) snapshotDirty = false;
+      if (!disposed && state.enabled && !snapshotDirty) {
+        showCanvas(renderer, true);
+        if (!env.isDocumentHidden()) resumeLoop(renderer);
+        setStatus("ready");
       }
+      return success;
     };
 
     cleanups.push(
       env.addWindowListener("visibilitychange", () => {
         if (!state.enabled) return;
         if (env.isDocumentHidden()) pauseLoop(renderer);
-        else resumeLoop(renderer);
+        else if (!snapshotDirty) resumeLoop(renderer);
       })
     );
 
-    // liquidGL drops its own recapture while the page is scrolling and never
-    // retries; check once scrolling settles.
-    let settle: (() => void) | undefined;
+    cleanups.push(env.addWindowListener(LAYOUT_CHANGE_EVENT, () => {
+      layoutRevision++;
+      snapshotDirty = true;
+      cancelIdleCapture?.();
+      cancelScrollSettle?.();
+      showCanvas(renderer, false);
+      pauseLoop(renderer);
+      if (state.enabled) setStatus("capturing");
+    }));
+
+    // Keep CSS glass during content animations. Rebuild one texture when the
+    // user next scrolls and settles, outside the accordion's interaction.
     cleanups.push(
       env.addWindowListener(
         "scroll",
         () => {
-          settle?.();
-          settle = env.setTimeout(() => {
+          cancelIdleCapture?.();
+          cancelScrollSettle?.();
+          cancelScrollSettle = env.setTimeout(() => {
             if (!state.enabled || renderer._capturing || !Number.isFinite(renderer.scaleFactor)) return;
             const expected = Math.round(env.bodyScrollHeight() * renderer.scaleFactor);
-            if (Math.abs(expected - renderer.textureHeight) > 2) void renderer.captureSnapshot();
+            if (snapshotDirty || Math.abs(expected - renderer.textureHeight) > 2) {
+              cancelIdleCapture = env.requestIdle(() => {
+                if (!disposed && state.enabled) void renderer.captureSnapshot();
+              }, IDLE_TIMEOUT_MS);
+            }
           }, SCROLL_SETTLE_MS);
         },
         { passive: true }
@@ -216,6 +240,8 @@ export function createLiquidGlass(env: LiquidGlassEnv): LiquidGlassController {
     const renderer = env.getRenderer();
 
     if (!enabled) {
+      cancelIdleCapture?.();
+      cancelScrollSettle?.();
       set({ enabled, status: "idle" });
       if (renderer) {
         pauseLoop(renderer);
@@ -234,14 +260,12 @@ export function createLiquidGlass(env: LiquidGlassEnv): LiquidGlassController {
     resumeLoop(renderer);
     showCanvas(renderer, true);
     // The page may have changed while the effect was off.
-    void renderer.captureSnapshot().finally(() => {
-      if (state.enabled && state.status === "capturing") setStatus("ready");
-    });
+    void renderer.captureSnapshot();
   }
 
   function refresh() {
     const renderer = env.getRenderer();
-    if (!renderer || !state.enabled || state.status !== "ready") return;
+    if (!renderer || !state.enabled || state.status === "loading") return;
     cleanups.push(
       env.setTimeout(() => {
         void renderer.captureSnapshot();
@@ -259,6 +283,8 @@ export function createLiquidGlass(env: LiquidGlassEnv): LiquidGlassController {
 
   function dispose() {
     disposed = true;
+    cancelIdleCapture?.();
+    cancelScrollSettle?.();
     cleanups.splice(0).forEach((fn) => fn());
     listeners.clear();
   }

@@ -130,6 +130,36 @@ test.describe("liquid glass", () => {
   const glassReady = (page: Page) =>
     expect(page.locator("header .nav-capsule")).toHaveClass(/nav-capsule-liquid-active/, { timeout: 20_000 });
 
+  test("accordion animations skip snapshots and scrolling refreshes once", async ({ page }) => {
+    await page.goto("/");
+    await glassReady(page);
+    const vela = page.getByRole("region", { name: "Vela", exact: true });
+    await vela.scrollIntoViewIfNeeded();
+    await hydrated(page, "work-experience");
+    await page.waitForTimeout(700);
+    await glassReady(page);
+    await page.evaluate(() => {
+      const win = window as any;
+      const original = win.html2canvas;
+      win.__accordionCaptures = 0;
+      win.html2canvas = (...args: unknown[]) => {
+        win.__accordionCaptures++;
+        return original(...args);
+      };
+    });
+
+    const role = vela.getByRole("button", { name: /Part-time Founding Engineer/ });
+    for (let i = 0; i < 4; i++) {
+      await role.click();
+      await page.waitForTimeout(400);
+    }
+    expect(await page.evaluate(() => (window as any).__accordionCaptures)).toBe(0);
+    await expect(page.locator("header .nav-capsule")).not.toHaveClass(/nav-capsule-liquid-active/);
+    await page.evaluate(() => window.scrollBy(0, 80));
+    await glassReady(page);
+    expect(await page.evaluate(() => (window as any).__accordionCaptures)).toBe(1);
+  });
+
   test("reaches the ready state on a post, survives a theme switch, and toggles off and on", async ({ page }) => {
     test.skip(isMobile(page), "desktop only: the settings popover is hidden on mobile");
     await page.goto("/blog/escaping-icloud-photos");

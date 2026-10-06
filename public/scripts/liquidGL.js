@@ -140,7 +140,15 @@
       window.addEventListener("resize", onResize, { passive: true });
 
       if ("ResizeObserver" in window) {
-        new ResizeObserver(onResize).observe(this.snapshotTarget);
+        // Content animations invalidate the texture without cloning the page
+        // on every accordion frame. The controller refreshes after scrolling.
+        let previousHeight = this.snapshotTarget.scrollHeight;
+        new ResizeObserver(() => {
+          const height = this.snapshotTarget.scrollHeight;
+          if (height === previousHeight) return;
+          previousHeight = height;
+          window.dispatchEvent(new Event("portfolio:layout-change"));
+        }).observe(this.snapshotTarget);
       }
 
       /* --------------------------------------------------
