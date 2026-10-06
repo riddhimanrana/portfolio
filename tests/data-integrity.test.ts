@@ -45,6 +45,7 @@ const experienceSchema = z.object({
   date: z.string().min(1),
   details: z.string().min(1),
   link: z.string().url().optional(),
+  paperLink: z.string().url().optional(),
 });
 
 describe("awards.json", () => {
