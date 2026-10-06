@@ -10,7 +10,7 @@ const dist = join(root, "dist");
 const publicDir = join(root, "public");
 
 const blogSlugs = readdirSync(join(root, "src/content/blog"))
-  .filter((f) => f.endsWith(".md"))
+  .filter((f) => f.endsWith(".md") && !f.startsWith("_"))
   .map((f) => f.replace(/\.md$/, ""));
 
 const expectedRoutes = [
@@ -55,6 +55,20 @@ describe("built output", () => {
   it("emits every expected route", () => {
     for (const route of expectedRoutes) {
       expect(existsSync(join(dist, route)), route).toBe(true);
+    }
+  });
+
+  it("keeps unpublished drafts out of routes and discovery", () => {
+    const drafts = readdirSync(join(root, "src/content/blog"))
+      .filter((f) => f.startsWith("_") && f.endsWith(".md"))
+      .map((f) => f.slice(1).replace(/\.md$/, ""));
+    const discovery = ["blog/index.html", "rss.xml", "sitemap-0.xml"]
+      .map((file) => readFileSync(join(dist, file), "utf8"))
+      .join("\n");
+    for (const slug of drafts) {
+      expect(existsSync(join(dist, `blog/${slug}/index.html`)), slug).toBe(false);
+      expect(existsSync(join(dist, `og/blog/${slug}.png`)), slug).toBe(false);
+      expect(discovery, slug).not.toContain(`/blog/${slug}`);
     }
   });
 
