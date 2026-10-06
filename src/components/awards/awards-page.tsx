@@ -342,7 +342,6 @@ export default function AwardsPage({ awards: awardsProp }: { awards: Award[] }) 
 function TimelineRow({ award }: { award: Award }) {
   const meta = difficultyMeta[award.difficulty];
   const Icon = meta.icon;
-  const youtubeEmbedUrl = getYouTubeEmbedUrl(award.submissionLink);
 
   return (
     <>
@@ -401,6 +400,7 @@ function AwardInspector({
 }) {
   const meta = difficultyMeta[award.difficulty];
   const Icon = meta.icon;
+  const youtubeEmbedUrl = getYouTubeEmbedUrl(award.submissionLink);
 
   return (
     <Card
