@@ -5,6 +5,8 @@ excerpt: "Why I started Dicy, figuring out Infinite Campus, and getting Wrapped 
 tags: ["Dicy", "Dicy Wrapped"]
 ---
 
+**These are temporary placeholder blogs. I will go back and rewrite these properly.**
+
 My first post about Dicy was pretty simple. "bessy is broken :(" followed by "so i built the next version."
 
 I wanted to check what would happen to my grade if I changed an assignment score, or what I needed on a final. Bessy had made that easy. When it stopped working, I started building something I could use myself. The first announcement even said it looked and felt like Bessy. I wasn't trying to hide where the idea came from.

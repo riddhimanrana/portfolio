@@ -5,6 +5,8 @@ excerpt: "The first hackathon version, a year away, and the long process of gett
 tags: ["Let's Assist", "CSF"]
 ---
 
+**These are temporary placeholder blogs. I will go back and rewrite these properly.**
+
 Let's Assist started in 2023, after a trip to Santa Cruz where I saw trash on the beach and started picking it up. I wanted an easier way to get other people involved in something like that. At school, CJSF gave me another reason to work on it. Finding volunteer opportunities and getting hours signed off involved a lot of separate steps.
 
 I built the first version with a friend for HarvestHacks that November. We had mostly done competitive programming before, so a full-stack website was new to us. I worked on the frontend, login, APIs, and database connection. We started with fake data, then tried connecting the real database. That meant reworking parts of the app, dealing with authentication problems, and fixing requests that kept returning 404s.
