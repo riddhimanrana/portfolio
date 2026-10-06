@@ -22,6 +22,8 @@ const awardSchema = z.object({
   difficulty: z.enum(["major", "notable", "honorable"]),
   link: z.string().url().optional(),
   submissionLink: z.string().url().optional(),
+  proofImage: z.string().startsWith("/").optional(),
+  proofCaption: z.string().min(1).optional(),
   isIconRoundedFull: z.boolean().optional(),
 });
 
@@ -71,6 +73,9 @@ describe("awards.json", () => {
   it("every award image exists in public/", () => {
     for (const award of awardsData) {
       expect(existsSync(join(assetsDir, award.image)), award.image).toBe(true);
+      if (award.proofImage) {
+        expect(existsSync(join(assetsDir, award.proofImage)), award.proofImage).toBe(true);
+      }
     }
   });
 });

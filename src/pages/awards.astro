@@ -10,6 +10,9 @@ const awards: AwardView[] = await Promise.all(
   (awardsData as Award[]).map(async (award) => ({
     ...award,
     image: await optimized(award.image, { width: 56 }),
+    proofImage: award.proofImage
+      ? await optimized(award.proofImage, { width: 560, format: "png" })
+      : undefined,
   }))
 );
 ---

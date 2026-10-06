@@ -211,10 +211,12 @@ test.describe("awards", () => {
     await page.goto("/awards?id=usaco-platinum");
     await hydrated(page, "awards-page");
     if (isMobile(page)) {
-      await expect(page.getByRole("dialog")).toContainText("USACO Platinum Contest");
+      await expect(page.getByRole("dialog")).toContainText("USACO Platinum");
+      await expect(page.getByRole("dialog").getByRole("img", { name: "USACO 2026 Gold result: certified 667/1000, rank 126, promoted to Platinum." })).toBeVisible();
       await page.keyboard.press("Escape");
     } else {
-      await expect(page.locator("aside")).toContainText("USACO Platinum Contest");
+      await expect(page.locator("aside")).toContainText("USACO Platinum");
+      await expect(page.locator("aside").getByRole("img", { name: "USACO 2026 Gold result: certified 667/1000, rank 126, promoted to Platinum." })).toBeVisible();
     }
 
     await page.getByPlaceholder("Search awards").fill("kangaroo");

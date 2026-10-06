@@ -453,6 +453,26 @@ function AwardInspector({
           ))}
         </div>
 
+        {award.proofImage && (
+          <figure className="mt-6">
+            <a href={award.proofImage.src} target="_blank" rel="noopener noreferrer">
+              <Image
+                src={award.proofImage.src}
+                srcSet={award.proofImage.srcSet}
+                width={award.proofImage.width}
+                height={award.proofImage.height}
+                alt={award.proofCaption ?? `${award.name} account confirmation`}
+                className="w-full rounded-xl border border-border bg-white p-3"
+              />
+            </a>
+            {award.proofCaption && (
+              <figcaption className="mt-2 text-xs leading-5 text-muted-foreground">
+                {award.proofCaption}
+              </figcaption>
+            )}
+          </figure>
+        )}
+
         {youtubeEmbedUrl && (
           <div className="mt-6 overflow-hidden rounded-xl border border-border bg-black">
             <div className="aspect-video">

@@ -10,10 +10,15 @@ export interface Award {
   difficulty: AwardDifficulty
   link?: string
   submissionLink?: string
+  proofImage?: string
+  proofCaption?: string
   isIconRoundedFull?: boolean // Changed from iconRadius: number
 }
 
 import type { OptimizedImage } from "./image";
 
 /** Award with its image resolved by the page (see src/lib/images.ts). */
-export type AwardView = Omit<Award, "image"> & { image: OptimizedImage };
+export type AwardView = Omit<Award, "image" | "proofImage"> & {
+  image: OptimizedImage;
+  proofImage?: OptimizedImage;
+};
