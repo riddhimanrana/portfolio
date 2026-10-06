@@ -1,18 +1,34 @@
 [
   {
     "title": "Vela",
-    "subtext": "Part-time Founding Engineer · previously SWE Intern",
+    "subtext": "Part-time Founding Engineer",
     "logo": "/logos/vela.svg",
-    "date": "Jun 2025 - Present",
-    "details": "SWE Intern (Jun 2025–Aug 2026); Part-time Founding Engineer (Sep 2026–Present), working in person in San Francisco on weekends and remotely/hybrid after school.\nLed SOC 2 and ISO security/compliance work plus internal company operations.\nDesigned Vela’s custom font, theme, brand language, animated icon system, landing pages, product motion, and core UI/UX for agent workflows.\nProduced eight investor/public demo films using Three.js, custom interaction capture, technical visualization, and high-fidelity motion design.",
+    "date": "Sep 2026 - Present",
+    "details": "Work in person in San Francisco on weekends and remotely/hybrid after school.\nLead SOC 2, ISO, security/compliance, and internal company operations.\nOwn product and brand systems across UI/UX, agent workflows, custom typography, theme, animated icons, landing pages, and product motion.\nBuilt eight investor/public demo films with Three.js, technical visualization, interaction capture, and high-fidelity motion design.",
+    "link": "https://www.velaenergy.ai"
+  },
+  {
+    "title": "Vela",
+    "subtext": "Software Engineering Intern",
+    "logo": "/logos/vela.svg",
+    "date": "Jun 2025 - Aug 2026",
+    "details": "Built core product UI/UX and agent-workflow interfaces across Vela’s energy software.\nHelped establish the company’s visual system, landing experience, product animations, and internal engineering/operations foundations.",
     "link": "https://www.velaenergy.ai"
   },
   {
     "title": "AlphaStar Academy",
     "subtext": "CS Instructor",
     "logo": "/logos/alphastar.png",
-    "date": "Aug 2025 - May 2026 · Aug 2026 - May 2027",
-    "details": "Teach advanced Python and USACO Bronze to gifted Bay Area students through the AlphaStar-Carina Scholarship Program.\nBuilt and taught multiple course tracks, mentored students 1:1, monitored progress, and coordinated regularly with program supervisors.",
+    "date": "Aug 2026 - May 2027",
+    "details": "Teach USACO Bronze and algorithmic problem solving to gifted Bay Area students.\nRun structured lessons, mentor students 1:1, track progress, and coordinate with program supervisors.",
+    "link": "https://alphastar.academy/carina-scholarship/"
+  },
+  {
+    "title": "AlphaStar Academy",
+    "subtext": "CS Instructor",
+    "logo": "/logos/alphastar.png",
+    "date": "Aug 2025 - May 2026",
+    "details": "Taught advanced Python through the AlphaStar-Carina Scholarship Program.\nLed multiple course tracks, mentored students 1:1, tracked progress, and coordinated with program supervisors.",
     "link": "https://alphastar.academy/carina-scholarship/"
   },
   {
