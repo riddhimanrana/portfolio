@@ -1,5 +1,5 @@
 
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, FileText } from "lucide-react";
 import Image from "@/lib/shims/image";
 import Link from "@/lib/shims/link";
 
@@ -51,16 +51,33 @@ export function WorkExperience({ experiences }: { experiences: Experience[] }) {
               <p className="mb-4 text-sm leading-7 text-muted-foreground sm:hidden">
                 {experience.date}
               </p>
-              <p className="text-sm leading-7 text-muted-foreground sm:text-base">
-                {experience.details}
-              </p>
-              {experience.link && (
-                <Button variant="outline" size="sm" className="mt-5" asChild>
-                  <Link href={experience.link} target="_blank">
-                    Visit website
-                    <ArrowUpRight data-icon="inline-end" />
-                  </Link>
-                </Button>
+              <ul className="space-y-2 text-sm leading-7 text-muted-foreground sm:text-base">
+                {experience.details.split("\n").map((detail) => (
+                  <li key={detail} className="flex gap-3">
+                    <span className="mt-[0.72rem] size-1 shrink-0 rounded-full bg-current opacity-60" />
+                    <span>{detail}</span>
+                  </li>
+                ))}
+              </ul>
+              {(experience.link || experience.paperLink) && (
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {experience.link && (
+                    <Button variant="outline" size="sm" asChild>
+                      <Link href={experience.link} target="_blank">
+                        Visit website
+                        <ArrowUpRight data-icon="inline-end" />
+                      </Link>
+                    </Button>
+                  )}
+                  {experience.paperLink && (
+                    <Button variant="outline" size="sm" asChild>
+                      <Link href={experience.paperLink} target="_blank">
+                        Research paper
+                        <FileText data-icon="inline-end" />
+                      </Link>
+                    </Button>
+                  )}
+                </div>
               )}
             </div>
           </AccordionContent>
