@@ -23,7 +23,15 @@ But being interested in the idea wasn't the same as being able to use it. A teac
 
 She also asked for recurring events, calendar integration, and saved drafts. I worked on those while trying to keep up with school. In one October email, I asked her to wait until the next afternoon while I finished the changes. The next day, I was still dealing with Google verification and had a chapter test. It was taking longer than I'd told her.
 
-I spoke at the SRVUSD board meeting on October 14, 2025. Afterward, I worked through my CS teacher, counselor, and school administrators to reach IT. By January, I'd contacted more than 70 clubs, teachers, administrators, PTA members, and local organizations. A lot of that was follow-up emails and trying to find a lunch or after-school meeting that worked.
+I spoke at the SRVUSD board meeting on October 14, 2025. Afterward, I worked through my CS teacher, counselor, and school administrators to reach IT. By January, I'd contacted more than 70 clubs, teachers, administrators, PTA members, and local organizations.
+
+I had to get better at explaining what I was asking them to try. In person, I had about 30 seconds to make it clear before getting into the details. Afterward, I'd think about what I'd explained badly or spent too much time on. I also had to get comfortable walking up to adults, asking for their time, and following up when they hadn't answered.
+
+A pattern I kept coming back to was talking in person, sending an email that day, then checking in a few days later. Teachers already had a lot to deal with. An unanswered email didn't tell me much by itself. Sometimes they hadn't seen it; sometimes they weren't interested. I had to figure out when another follow-up made sense. Even a reply could mean waiting another week while someone spoke to their board.
+
+I started putting screenshots into the emails and using the P.S. for extra details. Asking someone to watch a three-minute demo was another thing they had to find time for. A screenshot let them see the part relevant to their event straight away. I still had to keep the email short enough that they'd read it.
+
+Referrals helped too. A teacher might have no use for Let's Assist themselves but know someone who ran volunteer events. Then I had a reason to introduce myself to that person, and someone they knew had already heard about the project. I started paying more attention to those conversations instead of only looking for an immediate yes.
 
 ![Speaking at the SRVUSD Board of Education meeting](./lets-assist-beyond-the-demo/board-meeting.png)
 
@@ -35,7 +43,11 @@ In January, I met with an Interact advisor and Scott Gerbert, who also worked wi
 
 We first discussed Truck Time, then Run for Education. By the end of the month, the Education Foundation had decided to use an established system with tech support. I'd already spent time building around the conversations, so that was hard to hear. Scott still wanted to help me find somewhere to test it.
 
-I sent him a pretty long reply. I was worried people saw Let's Assist as a high-school project I would drop after college applications. I wanted it to be something I kept working on for years, but saying that in an email wasn't enough to make someone comfortable putting their event on it.
+I sent him a pretty long reply. I was worried people saw Let's Assist as a high-school project I would drop after college applications. I wanted it to be something I kept working on for years, but saying that in an email wasn't enough to make someone comfortable putting their event on it. I started trying to address that question earlier, because people needed to know who would keep it running before they committed to using it.
+
+In my notes, I wrote out about 15 steps between someone opening my email and an organization actually using the platform. Someone could like the demo, take it to a board, bring back questions, and still never get to a trial. If the board agreed, there was still setup, then getting members to sign up and use it for their events. I could spend weeks talking to one person and still be near the beginning of that list.
+
+Some clubs were already struggling to keep their existing activities going. Switching systems was more work for them, even if I thought the new system would help. I was asking someone to make time for a meeting, explain my app to other people, and sometimes advocate for it when I wasn't there. I needed to thank them for that and make the next step easier, rather than keep sending them more features.
 
 Troop 941 gave me somewhere to use it for real. We'd been talking about it since the previous summer. By February, I was presenting it to the troop and showing how signups, waivers, and reports would work together. Having leadership willing to try it meant I could find problems during real events instead of only showing another demo.
 
@@ -62,3 +74,5 @@ That work took much longer than putting an event page on the site. Meanwhile, I 
 ![Another view of the Let's Assist presentation at the DVHS CSF meeting](./lets-assist-beyond-the-demo/csf-meeting-wide.jpg)
 
 By September, we were introducing Let's Assist at CSF for posts, activities, and point submissions. The platform now has 900+ users. That meeting came after months of asking people to try it, following up, and changing the app around what they needed. I still have district conversations and integrations to work through. But at CSF, I could finally show it to the people who would be using it.
+
+I'm also planning to go through CSF's existing posts and club lists to find organizations already offering volunteer opportunities. I want to understand what each group uses now before reaching out. Automating some of that research across Bay Area organizations is an idea I'm exploring, but I still need to have the conversations.
