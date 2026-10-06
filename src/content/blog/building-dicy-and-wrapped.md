@@ -17,11 +17,7 @@ The portal didn't hand me a finished grade tracker. Course grades and assignment
 
 Then came the calculations. Showing a grade is one thing. Letting someone change a score and telling them what their grade would become means getting the weighting right. An assignment's percentage doesn't tell you how much it affects the course. A what-if result is useless if it disagrees with the grade people see at school.
 
-![small|An early Dicy grades screen from April](./building-dicy-and-wrapped/first-version.png)
-
-*An early version from April 17. Most of the screenshots around it are slightly different versions of the same screens.*
-
-That was a lot of the early work. Change something, compare it with the portal, find another case, change it again. The screenshots aren't a neat sequence where each one suddenly looks better. There are a lot of near-duplicates.
+That was a lot of the early work. Change something, compare it with the portal, find another case, change it again.
 
 ## Getting it into people's hands
 
