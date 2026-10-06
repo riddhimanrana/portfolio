@@ -57,6 +57,29 @@ function formatAwardDate(date: string, includeYear = true) {
   });
 }
 
+
+function getYouTubeEmbedUrl(url?: string) {
+  if (!url) return null;
+
+  try {
+    const parsed = new URL(url);
+    let id = "";
+
+    if (parsed.hostname === "youtu.be") {
+      id = parsed.pathname.slice(1).split("/")[0] ?? "";
+    } else if (parsed.hostname.includes("youtube.com")) {
+      id =
+        parsed.searchParams.get("v") ??
+        parsed.pathname.match(/^\/(?:embed|shorts)\/([^/?]+)/)?.[1] ??
+        "";
+    }
+
+    return id ? `https://www.youtube-nocookie.com/embed/${id}` : null;
+  } catch {
+    return null;
+  }
+}
+
 export default function AwardsPage({ awards: awardsProp }: { awards: Award[] }) {
   const awards = useMemo(
     () =>
@@ -319,6 +342,7 @@ export default function AwardsPage({ awards: awardsProp }: { awards: Award[] }) 
 function TimelineRow({ award }: { award: Award }) {
   const meta = difficultyMeta[award.difficulty];
   const Icon = meta.icon;
+  const youtubeEmbedUrl = getYouTubeEmbedUrl(award.submissionLink);
 
   return (
     <>
@@ -428,6 +452,21 @@ function AwardInspector({
             <p key={paragraph}>{paragraph}</p>
           ))}
         </div>
+
+        {youtubeEmbedUrl && (
+          <div className="mt-6 overflow-hidden rounded-xl border border-border bg-black">
+            <div className="aspect-video">
+              <iframe
+                src={youtubeEmbedUrl}
+                title={`${award.name} submission`}
+                className="h-full w-full"
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            </div>
+          </div>
+        )}
       </CardContent>
 
       {(award.submissionLink || award.link) && (
@@ -440,7 +479,7 @@ function AwardInspector({
           {award.submissionLink && (
             <Button asChild className="justify-between">
               <Link href={award.submissionLink} target="_blank">
-                View submission
+                {youtubeEmbedUrl ? "Open video" : "View submission"}
                 <Eye data-icon="inline-end" />
               </Link>
             </Button>
