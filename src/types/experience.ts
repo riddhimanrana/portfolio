@@ -7,6 +7,7 @@ export interface Experience {
   date: string;
   details: string;
   link?: string;
+  paperLink?: string;
 }
 
 /** Experience with its logo resolved by the page (see src/lib/images.ts). */
