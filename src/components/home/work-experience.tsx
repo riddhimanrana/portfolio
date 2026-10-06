@@ -17,8 +17,8 @@ export function WorkExperience({ experiences }: { experiences: Experience[] }) {
     <Accordion type="single" collapsible className="border-t border-border">
       {experiences.map((experience) => (
         <AccordionItem
-          key={experience.title}
-          value={experience.title}
+          key={`${experience.title}-${experience.subtext}-${experience.date}`}
+          value={`${experience.title}-${experience.subtext}-${experience.date}`}
           className="border-border"
         >
           <AccordionTrigger className="group py-6 text-left hover:no-underline">
