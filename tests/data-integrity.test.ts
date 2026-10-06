@@ -24,6 +24,8 @@ const awardSchema = z.object({
   submissionLink: z.string().url().optional(),
   proofImage: z.string().startsWith("/").optional(),
   proofCaption: z.string().min(1).optional(),
+  submissionTitle: z.string().min(1).optional(),
+  submissionText: z.string().min(1).optional(),
   isIconRoundedFull: z.boolean().optional(),
 });
 
