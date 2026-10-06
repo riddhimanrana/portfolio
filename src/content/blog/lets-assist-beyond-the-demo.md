@@ -59,4 +59,6 @@ That work took much longer than putting an event page on the site. Meanwhile, I 
 
 ![Introducing Let's Assist at the DVHS CSF meeting](./lets-assist-beyond-the-demo/csf-meeting.jpg)
 
+![Another view of the Let's Assist presentation at the DVHS CSF meeting](./lets-assist-beyond-the-demo/csf-meeting-wide.jpg)
+
 By September, we were introducing Let's Assist at CSF for posts, activities, and point submissions. The platform now has 900+ users. That meeting came after months of asking people to try it, following up, and changing the app around what they needed. I still have district conversations and integrations to work through. But at CSF, I could finally show it to the people who would be using it.
