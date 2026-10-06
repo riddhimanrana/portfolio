@@ -98,6 +98,34 @@ test.describe("shell", () => {
   });
 });
 
+test.describe("work experience", () => {
+  test("groups roles under one employer and keeps each role expandable", async ({ page }) => {
+    await page.goto("/");
+    const vela = page.getByRole("region", { name: "Vela", exact: true });
+    await vela.scrollIntoViewIfNeeded();
+    await hydrated(page, "work-experience");
+    await expect(page.getByRole("heading", { name: "Vela", exact: true })).toHaveCount(1);
+    await expect(page.getByRole("img", { name: "Vela logo", exact: true })).toHaveCount(1);
+    await expect(vela).toContainText("Sep 2026 - Present");
+    await expect(vela).toContainText("Jun 2025 - Aug 2026");
+    const founding = vela.getByRole("button", { name: /Part-time Founding Engineer/ });
+    const intern = vela.getByRole("button", { name: /Software Engineering Intern/ });
+    await founding.click();
+    await intern.click();
+    await expect(founding).toHaveAttribute("aria-expanded", "true");
+    await expect(intern).toHaveAttribute("aria-expanded", "true");
+    await expect(vela.getByText("Worked in person in San Francisco.", { exact: true })).toBeVisible();
+
+    const alphastar = page.getByRole("region", { name: "AlphaStar Academy", exact: true });
+    await expect(page.getByRole("heading", { name: "AlphaStar Academy", exact: true })).toHaveCount(1);
+    await expect(page.getByRole("img", { name: "AlphaStar Academy logo", exact: true })).toHaveCount(1);
+    await alphastar.getByRole("button", { name: /CS Instructor, USACO Bronze/ }).click();
+    await expect(alphastar).toContainText("Aug 2026 - May 2027");
+    await expect(alphastar).toContainText("Aug 2025 - May 2026");
+    await expect(alphastar.getByText("Teach USACO Bronze and algorithmic problem solving to gifted Bay Area students.", { exact: true })).toBeVisible();
+  });
+});
+
 test.describe("liquid glass", () => {
   const glassReady = (page: Page) =>
     expect(page.locator("header .nav-capsule")).toHaveClass(/nav-capsule-liquid-active/, { timeout: 20_000 });
