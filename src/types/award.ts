@@ -12,8 +12,6 @@ export interface Award {
   submissionLink?: string
   proofImage?: string
   proofCaption?: string
-  submissionTitle?: string
-  submissionText?: string
   isIconRoundedFull?: boolean // Changed from iconRadius: number
 }
 

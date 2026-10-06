@@ -21,11 +21,9 @@ const awardSchema = z.object({
   image: z.string().startsWith("/"),
   difficulty: z.enum(["major", "notable", "honorable"]),
   link: z.string().url().optional(),
-  submissionLink: z.string().url().optional(),
+  submissionLink: z.union([z.string().url(), z.string().regex(/^\/submissions\/[a-z0-9-]+\.pdf$/)]).optional(),
   proofImage: z.string().startsWith("/").optional(),
   proofCaption: z.string().min(1).optional(),
-  submissionTitle: z.string().min(1).optional(),
-  submissionText: z.string().min(1).optional(),
   isIconRoundedFull: z.boolean().optional(),
 });
 
@@ -75,6 +73,9 @@ describe("awards.json", () => {
   it("every award image exists in public/", () => {
     for (const award of awardsData) {
       expect(existsSync(join(assetsDir, award.image)), award.image).toBe(true);
+      if (award.submissionLink?.startsWith("/")) {
+        expect(existsSync(join(root, "public", award.submissionLink)), award.submissionLink).toBe(true);
+      }
       if (award.proofImage) {
         expect(existsSync(join(assetsDir, award.proofImage)), award.proofImage).toBe(true);
       }

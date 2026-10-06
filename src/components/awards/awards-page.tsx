@@ -453,17 +453,6 @@ function AwardInspector({
           ))}
         </div>
 
-        {award.submissionText && (
-          <details className="mt-6 rounded-xl border border-border p-4">
-            <summary className="cursor-pointer text-sm font-medium">
-              Read {award.submissionTitle ?? "submission"}
-            </summary>
-            <p className="mt-5 whitespace-pre-wrap font-serif text-sm leading-7">
-              {award.submissionText}
-            </p>
-          </details>
-        )}
-
         {award.proofImage && (
           <figure className="mt-6">
             <a href={award.proofImage.src} target="_blank" rel="noopener noreferrer">
