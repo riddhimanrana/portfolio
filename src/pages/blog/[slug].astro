@@ -126,6 +126,22 @@ const proseClass = [
 </Layout>
 
 <style>
+  :global([data-post="building-dicy-and-wrapped"] .post-image-small) {
+    max-width: 260px;
+  }
+
+  :global([data-post="building-dicy-and-wrapped"] p:has(img[alt="An early Dicy Wrapped share screen"])) {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  :global([data-post="building-dicy-and-wrapped"] p:has(img[alt="An early Dicy Wrapped share screen"]) img) {
+    width: calc((100% - 1rem) / 2);
+    margin: 0;
+  }
+
   /* Frame the supplied phone screenshot around the original meeting video. */
   :global([data-post="lets-assist-beyond-the-demo"] img[alt="Speaking at the SRVUSD Board of Education meeting"]) {
     width: 100%;
