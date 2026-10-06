@@ -1,34 +1,35 @@
 [
   {
     "title": "Vela",
-    "subtext": "Founding Engineer",
+    "subtext": "Part-time Founding Engineer · previously SWE Intern",
     "logo": "/logos/vela.svg",
-    "date": "June 2025 - Present",
-    "details": "Vela is an energy startup building AI agents that take on the procurement, engineering studies, and permitting work behind large-load energy projects, so developers, utilities, and data centers can move through the interconnection queue faster. Backed by a16z speedrun and Z Fellows with a $1.3M pre-seed round. I joined as a software engineering intern in June 2025 and became a Founding Engineer in September 2025. Restructured the company's internal operations and led the SOC 2 compliance effort. Designed the company's custom fonts, theme, and brand language, along with custom animated icon sets, the landing page, and the product's animations and loading states. Built the backend architecture for the product's interfaces and did extensive hands-on UX work across the app. Led projects with three other interns, taking initiative on scoping, planning, and delivery.",
+    "date": "Jun 2025 - Present",
+    "details": "SWE Intern (Jun 2025–Aug 2026); Part-time Founding Engineer (Sep 2026–Present), working in person in San Francisco on weekends and remotely/hybrid after school.\nLed SOC 2 and ISO security/compliance work plus internal company operations.\nDesigned Vela’s custom font, theme, brand language, animated icon system, landing pages, product motion, and core UI/UX for agent workflows.\nProduced eight investor/public demo films using Three.js, custom interaction capture, technical visualization, and high-fidelity motion design.",
     "link": "https://www.velaenergy.ai"
   },
   {
     "title": "AlphaStar Academy",
     "subtext": "CS Instructor",
     "logo": "/logos/alphastar.png",
-    "date": "June 2025 - Present",
-    "details": "Teaching highly gifted students from the Bay Area as part of the AlphaStar-Carina Scholarship Program, a paid internship. In the first session I mentored students 1:1 through advanced Python courses for 32 weeks (2 hours/week) across the fall and spring terms, teaching the curriculum, monitoring student progress, and meeting monthly with supervisors to discuss student development. Now in session 2, I teach USACO Bronze, introducing students to competitive programming, algorithmic problem solving, and contest strategy.",
+    "date": "Aug 2025 - May 2026 · Aug 2026 - May 2027",
+    "details": "Teach advanced Python and USACO Bronze to gifted Bay Area students through the AlphaStar-Carina Scholarship Program.\nBuilt and taught multiple course tracks, mentored students 1:1, monitored progress, and coordinated regularly with program supervisors.",
     "link": "https://alphastar.academy/carina-scholarship/"
   },
   {
     "title": "Algoverse",
     "subtext": "Applied AI Researcher",
     "logo": "/logos/algoverse.png",
-    "date": "August 2025 - Present",
-    "details": "Conducting a 3-month intensive applied research program focused on advancing real-time visual perception systems for privacy-sensitive and resource-constrained environments. Designing and implementing a high-dimensional vector database and dynamic relational graph model to enable persistent contextual memory, sophisticated temporal reasoning, and causal analysis of evolving visual scenes. Prioritized privacy and low-latency inference by optimizing visual encoding and captioning for mobile devices, achieving sub-1GB RAM usage and rapid response times. Extending the system to automatically detect, track, and articulate changes across video frames, supporting complex queries about temporal visual events and their contextual implications.",
-    "link": "https://algoverseairesearch.org/"
+    "date": "Aug 2025 - Jun 2026",
+    "details": "Conducted applied AI research on persistent memory and temporal reasoning for real-time visual perception systems.\nBuilt vector-memory and dynamic relational-graph components for privacy-sensitive, resource-constrained environments.\nResearch paper available on OpenReview.",
+    "link": "https://algoverseairesearch.org/",
+    "paperLink": "https://openreview.net/pdf?id=Tu0PwHgwcZ"
   },
   {
     "title": "Mustang Math",
     "subtext": "Platform Developer for Math Tournament Tech Team",
     "logo": "/logos/mustang-math.png",
-    "date": "July 2025 - Present",
-    "details": "Working on the Mustang Math tech team for a national competition with 1800+ combined in-person participants in collaboration with the Stanford Math Tournament team. Contributed to developing and maintaining COMPOSE, a custom tournament problem-writing platform used by Mustang Math and Stanford Math Tournament. Participated in weekly team meetings, collaborated with other developers, and contributed to feature development and platform improvements.",
+    "date": "Jul 2025 - Jul 2026",
+    "details": "Built tournament infrastructure for Mustang Math and contributed to COMPOSE, the shared problem-writing platform used with Stanford Math Tournament.\nShipped platform improvements with the tournament tech team supporting large national competitions.",
     "link": "https://www.mustangmath.com/our-team"
   },
   {
@@ -36,7 +37,7 @@
     "subtext": "Founder & Instructor",
     "logo": "/logos/tulip-coaching.png",
     "date": "June 2025 - Present",
-    "details": "Ran a tutoring service for middle school students with no experience to learn Python. Developed a curriculum that introduces programming concepts through engaging projects and hands-on exercises. Currently finished a 4-week course with 5 students, focusing on fundamental foundational skills in programming and continuing in an advanced 8-week course.",
+    "details": "Founded and taught project-based Python courses for middle school students.\nHave run multiple courses for multiple students, from beginner programming fundamentals through more advanced follow-on material.",
     "link": "https://tulipcoaching.org"
   },
   {
@@ -44,19 +45,12 @@
     "subtext": "Founder, CEO & Product Developer",
     "logo": "/logos/lets-assist.png",
     "date": "December 2024 - Present",
-    "details": "Created a comprehensive online volunteering platform that helps organizations and high school CSF programs manage, automatically track, and coordinate volunteering activities for students and communities. It simplifies the process for organizations to create and manage volunteer events, track student contributions, and verify hours securely using QR codes. Currently working on expansion into Tri-Valley schools and organizations.",
+    "details": "Built a volunteer-management platform used by 900+ students and community members.\nHandles opportunity discovery, signups, attendance, service-hour verification, and school/organization workflows in one system.",
     "link": "https://lets-assist.com"
   },
   {
-    "title": "Windemere Ranch Middle School Coding Club",
-    "subtext": "Club Secretary",
-    "logo": "/logos/wrms.png",
-    "date": "January 2024 - May 2024",
-    "details": "Organized club meetings and facilitated communication between members and faculty advisors. Helped develop educational content to teach fellow students programming fundamentals through hands-on projects."
-  },
-  {
     "title": "Boy Scouts of America",
-    "subtext": "First Class Scout at Troop 941",
+    "subtext": "Star Scout at Troop 941",
     "logo": "/logos/bsa.png",
     "date": "December 2022 - Present",
     "details": "Developed leadership skills and community service experience through active participation in troop activities. Completed numerous merit badges focused on outdoor skills, citizenship, and personal development. Participated in camping trips, service projects, and leadership training sessions.",
