@@ -12,6 +12,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import awardsData from "@/data/awards.json";
 import experienceData from "@/data/experience.json";
+import projectsData from "@/data/projects.json";
 import { asset, optimized } from "@/lib/images";
 import type { Experience, ExperienceView } from "@/types/experience";
 import { personJsonLd } from "@/lib/seo";
@@ -41,7 +42,9 @@ const experiences: ExperienceView[] = await Promise.all(
 const portrait = await optimized("/portraits/point-cloud-source.jpeg", { width: 472 });
 const depth = await optimized("/portraits/depth-anything-3-image.webp", { width: 472 });
 
-const dicyIcon = await asset("/icon-192.png");
+const dicyProject = projectsData.find((project) => project.id === "dicy");
+if (!dicyProject?.logo) throw new Error("Missing Dicy project logo");
+const dicyIcon = await asset(dicyProject.logo);
 const letsAssistIcon = await asset("/logos/lets-assist.png");
 
 const products = [
@@ -50,8 +53,7 @@ const products = [
     logo: dicyIcon,
     href: "https://dicy.app",
     metric: "3K+ users",
-    description:
-      "A grade app for Infinite Campus and Schoology with what-if grades, final-grade calculations, and a cleaner experience across iOS, Android, and web.",
+    description: dicyProject.description,
   },
   {
     name: "Let's Assist",
@@ -87,7 +89,7 @@ const founderIconClass =
                 width={18}
                 densities={[1, 2]}
                 format="webp"
-                class="mr-1 rounded-full object-contain"
+                class="mr-1 object-contain"
                 style="width:18px;height:18px"
               />
               Dicy

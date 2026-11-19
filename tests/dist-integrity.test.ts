@@ -3,6 +3,7 @@ import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 
 import { KNOWN_MISSING_BLOG_IMAGES } from "./known-missing";
+import projectsData from "../src/data/projects.json";
 
 // These tests validate the built output. Run `astro build` first (npm run verify does).
 const root = join(import.meta.dirname, "..");
@@ -146,6 +147,18 @@ describe("built output", () => {
     const scripts = [...post.matchAll(/(?:src|component-url)="(\/_astro\/[^"]+\.js)"/g)].map((m) => m[1]);
     expect(scripts.some((s) => /markdown|katex|highlight/i.test(s))).toBe(false);
     expect(scripts.some((s) => /toc\./.test(s)), "TOC island present").toBe(true);
+  });
+
+  it("renders the current Dicy branding on the home and projects pages", () => {
+    const dicy = projectsData.find((project) => project.id === "dicy")!;
+    const home = readFileSync(join(dist, "index.html"), "utf8");
+    const projects = readFileSync(join(dist, "projects/index.html"), "utf8");
+    expect(home).toContain(dicy.description);
+    expect(projects).toContain(dicy.tagline);
+    for (const html of [home, projects]) {
+      expect(html).toMatch(/src="\/_astro\/dicy[.][^"]+\.webp"/);
+      expect(html).not.toContain("Infinite Campus and Schoology");
+    }
   });
 
   it("home page ships three.js only as a lazy chunk", () => {

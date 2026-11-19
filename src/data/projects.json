@@ -26,9 +26,9 @@
   {
     "id": "dicy",
     "title": "Dicy",
-    "tagline": "A modern grade experience for Infinite Campus and Schoology across iOS, Android, and web",
-    "description": "I reverse engineered Infinite Campus and Schoology to build a substantially better grade experience across iOS, Android, and web. Dicy now serves 3,000+ users with grade tracking, what-if scenarios, final-grade targets, assignment tools, and a growing set of student utilities.",
-    "logo": "/icon-192.png",
+    "tagline": "Track your Schoology grades on iOS, Android, and web.",
+    "description": "Dicy helps students see their Schoology grades, check upcoming assignments, and follow grade trends. Try a what-if score or calculate what you need on a final without changing anything in Schoology.",
+    "logo": "/logos/dicy.png",
     "tags": [
       "Expo",
       "React Native",
